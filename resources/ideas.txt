@@ -7,4 +7,49 @@ Shoot ‘Em Up Game
 
 A game where the player controls a space ship battles waves of enemies. Conflict occurs through firing massive amounts of bullets. The player can pick up power-ups to change how they play. When the player destroys a ship, the player gains points. If the player is hit, they lose a life. If the player loses all their lives, game over.
 
+- Player ship (*)
+- Move (*)
+- Shoot (*)
+- Lives (*)
+- Enemies (*)
+- Score (*)
+- Waves (*)
+- Power-ups (*)
+- Soundtrack (*)
+- SFX (*)
+- Animations (*)
+- High score (?)
+- Enemy variation (?)
+- Power-up (?)
+- Different player types (?)
+- Different weapon types/skill shots (?)
+- Level variations (?)
+- Boss rounds (?)
 
+
+H+S Platformer
+
+1) Setting: Vietnam War/Asian
+2) Perspective: Side scrolling
+3) Number of players: One (local MP optional, up to 4)
+4) Control scheme: keys
+
+- Player (*)
+- Move (*)
+- Melee attack (*)
+- Health (*)
+- Stamina (*)
+- Enemies (*)
+- Items - Health, Stamina (*)
+- Skills (*)
+- Animations (*)
+- Ranged attack (?)
+- Different items (?)
+- Addition skills (?)
+
+Top-down Driving game
+
+1) Setting: 
+2) Perspective: 
+3) Number of players: 
+4) Control scheme: 
