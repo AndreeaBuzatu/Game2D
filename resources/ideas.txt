@@ -1,1 +1,10 @@
-ideas
+Shoot ‘Em Up Game
+
+1) Setting: Sci-fi
+2) Perspective: Top down
+3) Number of players: One
+4) Control Scheme: keys, controller (optional)
+
+A game where the player controls a space ship battles waves of enemies. Conflict occurs through firing massive amounts of bullets. The player can pick up power-ups to change how they play. When the player destroys a ship, the player gains points. If the player is hit, they lose a life. If the player loses all their lives, game over.
+
+
