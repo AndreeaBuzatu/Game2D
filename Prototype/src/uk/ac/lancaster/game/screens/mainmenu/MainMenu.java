@@ -113,7 +113,7 @@ public class MainMenu extends Screen {
 
             previousOption = selectedOption;
 
-            if (key == Keyboard.Key.W) {
+            if (key == Keyboard.Key.W || key == Keyboard.Key.UP) {
                 // Loop back around to the bottom option if at the top option
                 if (selectedOptionIndex <= 0) {
                     selectedOptionIndex = menuOptions.length - 1;
@@ -124,7 +124,7 @@ public class MainMenu extends Screen {
 
                 selectOption();
 
-            } else if (key == Keyboard.Key.S) {
+            } else if (key == Keyboard.Key.S || key == Keyboard.Key.DOWN) {
                 // Loop back around to the top option if at the bottom option
                 if (selectedOptionIndex >= menuOptions.length - 1) {
                     selectedOptionIndex = 0;

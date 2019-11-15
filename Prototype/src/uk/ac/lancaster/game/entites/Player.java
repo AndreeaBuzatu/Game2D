@@ -47,16 +47,16 @@ public class Player extends SpaceShip {
         float rotation = sprite.getRotation();
 
         // We need to get input then move to prevent incorrect (read insane) movement speeds
-        if (Keyboard.isKeyPressed(Keyboard.Key.W)) {
+        if (Keyboard.isKeyPressed(Keyboard.Key.W) || Keyboard.isKeyPressed(Keyboard.Key.UP)) {
             newY = -SPEED;
 
-        } else if (Keyboard.isKeyPressed(Keyboard.Key.S)) {
+        } else if (Keyboard.isKeyPressed(Keyboard.Key.S) || Keyboard.isKeyPressed(Keyboard.Key.DOWN)) {
             newY = SPEED;
 
-        } else if (Keyboard.isKeyPressed(Keyboard.Key.A)) {
+        } else if (Keyboard.isKeyPressed(Keyboard.Key.A) || Keyboard.isKeyPressed(Keyboard.Key.LEFT)) {
             newX = -SPEED;
 
-        } else if (Keyboard.isKeyPressed(Keyboard.Key.D)) {
+        } else if (Keyboard.isKeyPressed(Keyboard.Key.D) || Keyboard.isKeyPressed(Keyboard.Key.RIGHT)) {
             newX = SPEED;
 
         } else if (Keyboard.isKeyPressed(Keyboard.Key.Q)) {
