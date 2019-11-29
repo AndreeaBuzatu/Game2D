@@ -65,7 +65,7 @@ public class SpaceShip extends Entity {
             );
              */
 
-            Vector2f test = new Vector2f(200, 200);
+            Vector2f test = Vector2f.add(spritePos, new Vector2f(angleX, -60));
 
             //System.out.println("Actual: " + sprite.getPosition() + "Rotated: " + sprite.getTransform().transformPoint(spritePos));
 
