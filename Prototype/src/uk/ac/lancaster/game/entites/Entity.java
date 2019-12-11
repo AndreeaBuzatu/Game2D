@@ -49,6 +49,7 @@ public abstract class Entity {
         float maxDown = Main.WINDOW_HEIGHT + height;
          */
 
+        /*
         float width = sprite.getLocalBounds().width;
 
         float height = -sprite.getLocalBounds().height;
@@ -74,6 +75,54 @@ public abstract class Entity {
 
         } else if (pos.y > maxDown) { // Bottom
             sprite.setPosition(pos.x, maxDown);
+
+            return true;
+        }
+         */
+
+        FloatRect globalBounds = sprite.getGlobalBounds();
+
+        float width = sprite.getTextureRect().width;
+
+        float height = sprite.getTextureRect().height;
+
+        float maxRight = Game.WINDOW_WIDTH - globalBounds.width;
+
+        float maxDown = Game.WINDOW_HEIGHT - globalBounds.height;
+
+        System.out.println("Global bounds: " + globalBounds);
+
+        if (globalBounds.left <= 0) { // Left
+            //sprite.setPosition(globalBounds.width - pos.x, pos.y);
+
+            sprite.setPosition(globalBounds.width - pos.x - 1, pos.y);
+
+            System.out.println("Left");
+
+            return true;
+
+        } else if (globalBounds.top < 0) { // Top
+            sprite.setPosition(pos.x, pos.y - globalBounds.top - 1);
+
+            System.out.println("Top");
+
+            return true;
+
+        } else if (globalBounds.left > maxRight) { // Right
+            //sprite.setPosition(maxRight, pos.y);
+
+            sprite.setPosition(pos.x - width - 1, pos.y);
+
+            System.out.println("Right");
+
+            return true;
+
+        } else if (globalBounds.top > maxDown) { // Bottom
+            //sprite.setPosition(pos.x, maxDown);
+
+            sprite.setPosition(pos.x, pos.y - height - 1);
+
+            System.out.println("Bottom");
 
             return true;
         }

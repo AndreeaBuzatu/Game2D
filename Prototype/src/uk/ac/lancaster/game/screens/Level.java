@@ -36,7 +36,7 @@ public class Level extends Screen {
 
         entities.add(player);
 
-        entities.add(new Enemy(new Vector2f(300, 300)));
+        //entities.add(new Enemy(new Vector2f(300, 300)));
 
         livesText = new Text(String.format("Lives: %d", player.getLives()), Assets.loadFont("courier.ttf"));
 

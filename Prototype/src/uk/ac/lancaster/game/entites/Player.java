@@ -1,5 +1,6 @@
 package uk.ac.lancaster.game.entites;
 
+import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
 
 public class Player extends SpaceShip {

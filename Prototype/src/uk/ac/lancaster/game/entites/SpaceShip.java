@@ -22,7 +22,7 @@ public class SpaceShip extends Entity {
         firingTimer = new Clock();
 
         // Rotate around the front of the sprite, not the middle
-        //sprite.setOrigin(sprite.getLocalBounds().width / 2, -sprite.getLocalBounds().height);
+        sprite.setOrigin(sprite.getLocalBounds().width / 2, -sprite.getLocalBounds().height);
     }
 
     @Override
@@ -50,26 +50,26 @@ public class SpaceShip extends Entity {
         if (firingTimer.getElapsedTime().asSeconds() > FIRING_GAP.asSeconds()) {
             Vector2f spritePos = sprite.getPosition();
 
-            Vector2f rotatedPos = sprite.getTransform().transformPoint(spritePos);
-
             float rotation = sprite.getRotation();
 
             float angleX = (float) Math.cos(Math.toRadians(rotation));
 
             float angleY = (float) Math.sin(Math.toRadians(rotation));
 
-            /*
+            Bullet bullet = new Bullet(null, rotation);
+
             Vector2f test = new Vector2f(
-                    spritePos.x + angleX,
+                    (spritePos.x  - (bullet.sprite.getTextureRect().width)) + angleX,
                     spritePos.y + angleY
             );
-             */
 
-            Vector2f test = Vector2f.add(spritePos, new Vector2f(angleX, -60));
+            bullet.sprite.setPosition(test);
+
+            //Vector2f test = Vector2f.add(spritePos, new Vector2f(angleX, -60));
 
             //System.out.println("Actual: " + sprite.getPosition() + "Rotated: " + sprite.getTransform().transformPoint(spritePos));
 
-            projectiles.add(new Bullet(test, rotation));
+            projectiles.add(bullet);
 
             firingTimer.restart();
         }
