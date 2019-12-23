@@ -3,18 +3,15 @@ package uk.ac.lancaster.scc210;
 import org.jsfml.graphics.IntRect;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
+import uk.ac.lancaster.scc210.content.SpriteManager;
 
 import java.io.IOException;
 import java.nio.file.Paths;
 
-class SpriteSheet {
-    private final int TEXTURE_HEIGHT = 64;
-
-    private final int TEXTURE_WIDTH = 64;
-
+public class SpriteSheet {
     private Texture spriteSheet;
 
-    SpriteSheet() throws IOException {
+    public SpriteSheet() throws IOException {
         spriteSheet = new Texture();
 
         // TODO: Add proper resource loading
@@ -27,12 +24,12 @@ class SpriteSheet {
      * @param row  row to capture from the spritesheet
      * @return a sprite with the spritesheet with the spritesheet as it's texture and a rectangle containing the requested sprite
      */
-    Sprite getSprite(final int column, final int row) {
+    public Sprite get(final int column, final int row) {
         Sprite sprite = new Sprite();
 
         sprite.setTexture(spriteSheet);
 
-        sprite.setTextureRect(new IntRect(column * TEXTURE_HEIGHT, row * TEXTURE_WIDTH, TEXTURE_HEIGHT, TEXTURE_WIDTH));
+        sprite.setTextureRect(new IntRect(column * SpriteManager.SPRITE_HEIGHT, row * SpriteManager.SPRITE_WIDTH, SpriteManager.SPRITE_HEIGHT, SpriteManager.SPRITE_WIDTH));
 
         return sprite;
     }
