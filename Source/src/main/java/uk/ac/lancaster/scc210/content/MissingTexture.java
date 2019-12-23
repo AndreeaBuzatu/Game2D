@@ -2,17 +2,17 @@ package uk.ac.lancaster.scc210.content;
 
 import org.jsfml.graphics.*;
 
-class MissingSprite {
+class MissingTexture {
     private final Color PURPLE = new Color(255, 0, 255);
 
     private final Texture texture;
 
     private Image image;
 
-    MissingSprite() {
+    MissingTexture() {
         image = new Image();
 
-        image.create(SpriteManager.SPRITE_WIDTH, SpriteManager.SPRITE_HEIGHT);
+        image.create(TextureManager.SPRITE_WIDTH, TextureManager.SPRITE_HEIGHT);
 
         createImage();
 
@@ -33,23 +33,23 @@ class MissingSprite {
      * This is used for for when SpriteManager is unable to find the sprite from the key
      */
     private void createImage() {
-        final int halfWidth = SpriteManager.SPRITE_WIDTH / 2;
+        final int halfWidth = TextureManager.SPRITE_WIDTH / 2;
 
-        final int halfHeight = SpriteManager.SPRITE_HEIGHT / 2;
+        final int halfHeight = TextureManager.SPRITE_HEIGHT / 2;
 
-        for (int x = 0; x < SpriteManager.SPRITE_WIDTH; x++) {
-            for (int y = 0; y < SpriteManager.SPRITE_HEIGHT; y++) {
+        for (int x = 0; x < TextureManager.SPRITE_WIDTH; x++) {
+            for (int y = 0; y < TextureManager.SPRITE_HEIGHT; y++) {
                 if ((x < halfWidth && y < halfHeight) || (x > halfWidth && y > halfWidth)) {
                     image.setPixel(x, y, PURPLE);
 
                 } else {
-                    image.setPixel(x, y, Color.WHITE);
+                    image.setPixel(x, y, Color.BLACK);
                 }
             }
         }
     }
 
-    Sprite getSprite() {
-        return new Sprite(texture);
+    Texture getTexture() {
+        return texture;
     }
 }
