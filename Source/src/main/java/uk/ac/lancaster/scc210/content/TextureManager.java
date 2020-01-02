@@ -1,32 +1,18 @@
 package uk.ac.lancaster.scc210.content;
 
 import org.jsfml.graphics.Texture;
-import org.jsfml.graphics.TextureCreationException;
-import uk.ac.lancaster.scc210.TextureAtlas;
-
-import java.io.IOException;
+import uk.ac.lancaster.scc210.resources.ResourceNotFoundException;
 
 public class TextureManager extends ContentManager<Texture> {
-    private static final TextureManager INSTANCE = new TextureManager();
+    private static final int SPRITE_WIDTH = 64;
 
-    public static final int SPRITE_HEIGHT = 64;
+    private static final int SPRITE_HEIGHT = 64;
 
-    public static final int SPRITE_WIDTH = 64;
+    public TextureManager() throws ResourceNotFoundException {
+        super(new MissingTexture(SPRITE_WIDTH, SPRITE_HEIGHT).getTexture());
 
-    private TextureManager() {
-        super(new MissingTexture().getTexture());
+        TextureAtlas textureAtlas = new TextureAtlas("spritesheet.png", SPRITE_WIDTH, SPRITE_HEIGHT);
 
-        try {
-            TextureAtlas textureAtlas = new TextureAtlas();
-
-            put("example", textureAtlas.get(0, 0));
-
-        } catch (IOException | TextureCreationException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static TextureManager getInstance() {
-        return INSTANCE;
+        put("example", textureAtlas.get(0, 0));
     }
 }

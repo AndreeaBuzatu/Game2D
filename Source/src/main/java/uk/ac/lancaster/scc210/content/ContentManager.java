@@ -17,7 +17,7 @@ public class ContentManager<T> {
         content.put(key, value);
     }
 
-    public T get(String key) {
+    public T get(final String key) {
         return content.getOrDefault(key, alternative);
     }
 }
