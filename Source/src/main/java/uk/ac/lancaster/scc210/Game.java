@@ -5,6 +5,7 @@ import org.jsfml.graphics.View;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
+import uk.ac.lancaster.scc210.content.SpaceShipManager;
 import uk.ac.lancaster.scc210.content.TextureManager;
 import uk.ac.lancaster.scc210.resources.ResourceNotFoundException;
 import uk.ac.lancaster.scc210.resources.ResourceProvider;
@@ -45,6 +46,7 @@ public class Game {
 
         window.setFramerateLimit(FPS);
 
+        // TODO: Add proper handling here
         try {
             resourceProvider = new ResourceProvider();
 
@@ -89,5 +91,9 @@ public class Game {
 
     public TextureManager getTextureManager() {
         return resourceProvider.getTextureManager();
+    }
+
+    public SpaceShipManager getSpaceShipManager() {
+        return resourceProvider.getSpaceShipManager();
     }
 }

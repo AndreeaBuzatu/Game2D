@@ -4,8 +4,6 @@ import org.jsfml.graphics.RenderTarget;
 import org.jsfml.graphics.Sprite;
 import uk.ac.lancaster.scc210.Game;
 import uk.ac.lancaster.scc210.ecs.World;
-import uk.ac.lancaster.scc210.ecs.component.SpriteComponent;
-import uk.ac.lancaster.scc210.ecs.entity.Entity;
 import uk.ac.lancaster.scc210.ecs.system.MovementSystem;
 import uk.ac.lancaster.scc210.ecs.system.RenderSystem;
 
@@ -14,17 +12,27 @@ public class Level implements State {
 
     private World world;
 
-    private Entity player;
-
-    private RenderSystem renderSystem;
+    //private Entity player;
 
     @Override
     public void setup(Game game) {
         //sprites = new Sprite[7];
 
-        player = new Entity();
+        //Properties playerProperties = game.getPropertyManager().get("thing");
 
-        player.addComponent(new SpriteComponent(new Sprite(game.getTextureManager().get("example"))));
+        //player = new Entity();
+
+        /*
+        if (playerProperties.containsKey("texture")) {
+            player.addComponent(new SpriteComponent(new Sprite(game.getTextureManager().get(playerProperties.getProperty("texture")))));
+        }
+
+        if (playerProperties.containsKey("speed")) {
+            player.addComponent(new SpeedComponent(Integer.parseInt(playerProperties.getProperty("speed"))));
+        }
+         */
+
+        //player.addComponent(new SpriteComponent(new Sprite(game.getTextureManager().get("example"))));
 
         world = new World();
 
@@ -32,7 +40,11 @@ public class Level implements State {
 
         world.addSystem(new MovementSystem(world));
 
-        world.addEntity(player);
+        world.addEntity(game.getSpaceShipManager().get("player"));
+
+        world.addEntity(game.getSpaceShipManager().get("other"));
+
+        //world.addEntity(player);
 
         /*
         for (int i = 0; i < sprites.length; i++) {
