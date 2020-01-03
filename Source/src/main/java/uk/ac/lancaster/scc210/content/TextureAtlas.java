@@ -8,14 +8,14 @@ import uk.ac.lancaster.scc210.resources.ImageAdapter;
 import uk.ac.lancaster.scc210.resources.ResourceLoader;
 import uk.ac.lancaster.scc210.resources.ResourceNotFoundException;
 
-class TextureAtlas {
+public class TextureAtlas {
     private final String fileName;
 
     private final int spriteWidth, spriteHeight;
 
     private Image textureAtlas;
 
-    TextureAtlas(final String fileName, final int spriteWidth, final int spriteHeight) throws ResourceNotFoundException {
+    public TextureAtlas(final String fileName, final int spriteWidth, final int spriteHeight) throws ResourceNotFoundException {
         this.fileName = fileName;
         this.spriteWidth = spriteWidth;
         this.spriteHeight = spriteHeight;
@@ -32,7 +32,7 @@ class TextureAtlas {
      * @param row    row to capture from the texture atlas
      * @return a texture with the texture atlas as it's texture and a rectangle containing the requested sprite
      */
-    Texture get(final int column, final int row) throws ResourceNotFoundException {
+    public Texture get(final int column, final int row) throws ResourceNotFoundException {
         Texture texture = new Texture();
 
         IntRect area = new IntRect(column * spriteHeight, row * spriteWidth, spriteHeight, spriteWidth);
