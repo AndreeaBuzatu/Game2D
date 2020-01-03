@@ -43,7 +43,7 @@ public class World {
         }
     }
 
-    public Entity createEntity(Component... components) {
+    public static Entity createEntity(Component... components) {
         return new Entity(Arrays.asList(components));
     }
 

@@ -15,4 +15,8 @@ public abstract class Resource<T> {
     void setResource(T resource) {
         this.resource = resource;
     }
+
+    T getResource() {
+        return resource;
+    }
 }
