@@ -9,10 +9,6 @@ import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
 public class MovementSystem extends IterativeSystem {
-    private SpriteComponent spriteComponent;
-
-    private SpeedComponent speedComponent;
-
     public MovementSystem(World world) {
         super(world, SpriteComponent.class, SpeedComponent.class);
     }
@@ -20,9 +16,9 @@ public class MovementSystem extends IterativeSystem {
     @Override
     public void update() {
         for (Entity entity : entities) {
-            spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
+            SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
 
-            speedComponent = (SpeedComponent) entity.findComponent(SpeedComponent.class);
+            SpeedComponent speedComponent = (SpeedComponent) entity.findComponent(SpeedComponent.class);
 
             int moveY = 0;
 

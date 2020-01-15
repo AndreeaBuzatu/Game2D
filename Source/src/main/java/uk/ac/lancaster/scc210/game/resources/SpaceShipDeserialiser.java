@@ -7,7 +7,7 @@ import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
 import uk.ac.lancaster.scc210.engine.resources.deserialise.Deserialiser;
 
 public class SpaceShipDeserialiser extends Deserialiser<SerialisedSpaceShip> {
-    SpaceShipDeserialiser(Document document) throws ResourceNotFoundException {
+    public SpaceShipDeserialiser(Document document) throws ResourceNotFoundException {
         super(document, "spaceship");
     }
 
