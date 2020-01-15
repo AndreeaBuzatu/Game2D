@@ -13,12 +13,8 @@ public class TextureManager extends ContentManager<Texture> {
     public TextureManager(List<SerialisedTextureAtlas> serialisedTextureAtlases) {
         super(new MissingTexture(SPRITE_WIDTH, SPRITE_HEIGHT).getTexture());
 
-        serialisedTextureAtlases.forEach(serialisedTextureAtlas -> {
-            TextureAtlas textureAtlas = serialisedTextureAtlas.getTextureAtlas();
-
-            serialisedTextureAtlas.getSerialisedTextures()
-                    .parallelStream()
-                    .forEach(texture -> put(texture.getName(), texture.getTexture()));
-        });
+        serialisedTextureAtlases.forEach(serialisedTextureAtlas -> serialisedTextureAtlas.getSerialisedTextures()
+                .parallelStream()
+                .forEach(texture -> put(texture.getName(), texture.getTexture())));
     }
 }
