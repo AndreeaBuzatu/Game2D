@@ -3,37 +3,25 @@ package uk.ac.lancaster.scc210.resources.deserialise;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import uk.ac.lancaster.scc210.content.TextureAtlas;
 import uk.ac.lancaster.scc210.resources.ResourceNotFoundException;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class TextureAtlasDeserialiser {
-    private List<SerialisedTextureAtlas> serialisedTextureAtlases;
-
-    private Document document;
-
+public class TextureAtlasDeserialiser extends Deserialiser<SerialisedTextureAtlas> {
     public TextureAtlasDeserialiser(Document document) throws ResourceNotFoundException {
-        this.document = document;
-
-        serialisedTextureAtlases = new ArrayList<>();
-
-        deserialise();
+        super(document, document.getElementsByTagName("atlas"), "atlas");
     }
 
-    private void deserialise() throws ResourceNotFoundException {
-        NodeList nodes = document.getElementsByTagName("atlas");
-
-        if (nodes == null) {
+    public void deserialise() throws ResourceNotFoundException {
+        if (document == null) {
             throw new ResourceNotFoundException("Could not find texture_atlas");
         }
+
+        nodes = document.getElementsByTagName("atlas");
 
         for (int i = 0; i < nodes.getLength(); i++) {
             Node node = nodes.item(i);
 
-            if (node.getNodeType() == Node.ELEMENT_NODE) {
+            if (foundNode(node)) {
                 Element elem = (Element) node;
 
                 String src = elem.getAttribute("src");
@@ -44,16 +32,12 @@ public class TextureAtlasDeserialiser {
 
                 TextureAtlas textureAtlas = new TextureAtlas(src, textureWidth, textureHeight);
 
-                serialisedTextureAtlases.add(
-                        new SerialisedTextureAtlas(
-                                textureAtlas,
-                                TextureDeserialiser.deserialise(textureAtlas, elem.getChildNodes())));
+                TextureDeserialiser textureDeserialiser = new TextureDeserialiser(elem.getChildNodes(), textureAtlas);
+
+                serialised.add(new SerialisedTextureAtlas(textureAtlas, textureDeserialiser.serialised));
             }
         }
-    }
 
-    public List<SerialisedTextureAtlas> getSerialisedTextureAtlases() {
-        return serialisedTextureAtlases;
     }
 }
 

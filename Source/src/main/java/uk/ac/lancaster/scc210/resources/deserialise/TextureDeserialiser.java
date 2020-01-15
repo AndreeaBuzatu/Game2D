@@ -6,17 +6,24 @@ import org.w3c.dom.NodeList;
 import uk.ac.lancaster.scc210.content.TextureAtlas;
 import uk.ac.lancaster.scc210.resources.ResourceNotFoundException;
 
-import java.util.ArrayList;
-import java.util.List;
+class TextureDeserialiser extends Deserialiser<SerialisedTexture> {
+    private TextureAtlas textureAtlas;
 
-class TextureDeserialiser {
-    static List<SerialisedTexture> deserialise(TextureAtlas textureAtlas, NodeList textureNodes) throws ResourceNotFoundException {
-        List<SerialisedTexture> textures = new ArrayList<>();
+    TextureDeserialiser(NodeList nodes, TextureAtlas textureAtlas) throws ResourceNotFoundException {
+        super(null, "texture");
 
-        for (int i = 0; i < textureNodes.getLength(); i++) {
-            Node node = textureNodes.item(i);
+        this.nodes = nodes;
+        this.textureAtlas = textureAtlas;
 
-            if (node.getNodeType() == Node.ELEMENT_NODE) {
+        deserialise();
+    }
+
+    @Override
+    protected void deserialise() throws ResourceNotFoundException {
+        for (int i = 0; i < nodes.getLength(); i++) {
+            Node node = nodes.item(i);
+
+            if (foundNode(node)) {
                 Element elem = (Element) node;
 
                 String name = elem.getAttribute("name");
@@ -25,11 +32,10 @@ class TextureDeserialiser {
 
                 int column = Integer.parseInt(elem.getAttribute("column"));
 
-                textures.add(new SerialisedTexture(name, textureAtlas.get(row, column)));
+                serialised.add(new SerialisedTexture(name, textureAtlas.get(row, column)));
             }
         }
 
-        return textures;
     }
 }
 
