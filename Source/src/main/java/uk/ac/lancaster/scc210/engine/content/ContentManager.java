@@ -1,8 +1,10 @@
 package uk.ac.lancaster.scc210.engine.content;
 
+import uk.ac.lancaster.scc210.engine.service.Service;
+
 import java.util.HashMap;
 
-public class ContentManager<T> {
+public class ContentManager<T> implements Service {
     private final HashMap<String, T> content;
 
     private final T alternative;
