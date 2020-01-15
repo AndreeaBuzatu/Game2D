@@ -2,9 +2,9 @@ package uk.ac.lancaster.scc210.game.states;
 
 import org.jsfml.graphics.RenderTarget;
 import org.jsfml.graphics.Sprite;
+import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.states.State;
-import uk.ac.lancaster.scc210.game.Game;
 import uk.ac.lancaster.scc210.game.ecs.system.MovementSystem;
 import uk.ac.lancaster.scc210.game.ecs.system.RenderSystem;
 
@@ -16,7 +16,7 @@ public class Level implements State {
     //private Entity player;
 
     @Override
-    public void setup(Game game) {
+    public void setup(StateBasedGame game) {
         //sprites = new Sprite[7];
 
         //Properties playerProperties = game.getPropertyManager().get("thing");
@@ -41,9 +41,9 @@ public class Level implements State {
 
         world.addSystem(new MovementSystem(world));
 
-        world.addEntity(game.getSpaceShipManager().get("player"));
+        //world.addEntity(game.getSpaceShipManager().get("player"));
 
-        world.addEntity(game.getSpaceShipManager().get("other"));
+        //world.addEntity(game.getSpaceShipManager().get("other"));
 
         //world.addEntity(player);
 
