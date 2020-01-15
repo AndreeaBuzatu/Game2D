@@ -3,7 +3,7 @@ package uk.ac.lancaster.scc210.engine.resources;
 import java.io.IOException;
 import java.nio.file.Path;
 
-abstract class Resource<T> {
+public abstract class Resource<T> {
     T resource;
 
     Resource(T resource) {
