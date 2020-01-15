@@ -17,10 +17,6 @@ public class Entity {
         this.components.addAll(components);
     }
 
-    public void addComponent(Component component) {
-        components.add(component);
-    }
-
     List<Component> getComponents() {
         return components;
     }
