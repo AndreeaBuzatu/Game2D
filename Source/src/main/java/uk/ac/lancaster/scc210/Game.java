@@ -7,8 +7,8 @@ import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
 import uk.ac.lancaster.scc210.content.SpaceShipManager;
 import uk.ac.lancaster.scc210.content.TextureManager;
+import uk.ac.lancaster.scc210.resources.DeserialiserProvider;
 import uk.ac.lancaster.scc210.resources.ResourceNotFoundException;
-import uk.ac.lancaster.scc210.resources.ResourceProvider;
 import uk.ac.lancaster.scc210.states.Level;
 import uk.ac.lancaster.scc210.states.State;
 
@@ -25,13 +25,17 @@ public class Game {
 
     private final int FPS = 60;
 
-    private RenderWindow window;
+    private final RenderWindow window;
 
-    private ResourceProvider resourceProvider;
+    private DeserialiserProvider deserialiserProvider;
 
-    private View view;
+    private SpaceShipManager spaceShipManager;
 
-    private State currentState;
+    private TextureManager textureManager;
+
+    private final View view;
+
+    private final State currentState;
 
     private Event event;
 
@@ -48,7 +52,11 @@ public class Game {
 
         // TODO: Add proper handling here
         try {
-            resourceProvider = new ResourceProvider();
+            deserialiserProvider = new DeserialiserProvider();
+
+            textureManager = new TextureManager(deserialiserProvider.getTextureAtlasDeserialiser().getSerialised());
+
+            spaceShipManager = new SpaceShipManager(textureManager, deserialiserProvider.getSpaceShipDeserialiser().getSerialised());
 
         } catch (ResourceNotFoundException e) {
             window.close();
@@ -89,11 +97,7 @@ public class Game {
         window.display();
     }
 
-    public TextureManager getTextureManager() {
-        return resourceProvider.getTextureManager();
-    }
-
     public SpaceShipManager getSpaceShipManager() {
-        return resourceProvider.getSpaceShipManager();
+        return spaceShipManager;
     }
 }

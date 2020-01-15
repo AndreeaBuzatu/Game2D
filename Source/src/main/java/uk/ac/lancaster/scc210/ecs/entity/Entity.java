@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class Entity {
-    private List<Component> components;
+    private final List<Component> components;
 
     public Entity() {
         components = new ArrayList<>();

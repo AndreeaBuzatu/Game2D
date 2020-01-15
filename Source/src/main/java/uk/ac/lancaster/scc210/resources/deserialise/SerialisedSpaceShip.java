@@ -1,9 +1,10 @@
 package uk.ac.lancaster.scc210.resources.deserialise;
 
-public class SerialisedSpaceShip {
-    private String name, texture;
+public class SerialisedSpaceShip implements Serialised {
+    private final String name;
+    private final String texture;
 
-    private int speed;
+    private final int speed;
 
     SerialisedSpaceShip(String name, String texture, int speed) {
         this.name = name;

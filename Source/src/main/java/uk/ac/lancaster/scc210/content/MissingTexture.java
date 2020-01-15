@@ -12,7 +12,7 @@ class MissingTexture {
 
     private final int spriteWidth, spriteHeight;
 
-    private Image image;
+    private final Image image;
 
     MissingTexture(final int spriteWidth, final int spriteHeight) {
         this.spriteWidth = spriteWidth;

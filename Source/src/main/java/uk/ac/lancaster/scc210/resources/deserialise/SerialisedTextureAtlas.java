@@ -4,10 +4,10 @@ import uk.ac.lancaster.scc210.content.TextureAtlas;
 
 import java.util.List;
 
-public class SerialisedTextureAtlas {
-    private TextureAtlas textureAtlas;
+public class SerialisedTextureAtlas implements Serialised {
+    private final TextureAtlas textureAtlas;
 
-    private List<SerialisedTexture> serialisedTextures;
+    private final List<SerialisedTexture> serialisedTextures;
 
     SerialisedTextureAtlas(TextureAtlas textureAtlas, List<SerialisedTexture> serialisedTextures) {
         this.textureAtlas = textureAtlas;

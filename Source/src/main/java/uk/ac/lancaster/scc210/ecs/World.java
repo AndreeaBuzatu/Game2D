@@ -11,9 +11,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class World {
-    private Set<Entity> entities;
+    private final Set<Entity> entities;
 
-    private Set<EntitySystem> systems;
+    private final Set<EntitySystem> systems;
 
     public World() {
         entities = new LinkedHashSet<>();

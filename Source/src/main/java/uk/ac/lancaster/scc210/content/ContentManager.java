@@ -3,9 +3,9 @@ package uk.ac.lancaster.scc210.content;
 import java.util.HashMap;
 
 public class ContentManager<T> {
-    private HashMap<String, T> content;
+    private final HashMap<String, T> content;
 
-    private T alternative;
+    private final T alternative;
 
     ContentManager(T alternative) {
         this.alternative = alternative;

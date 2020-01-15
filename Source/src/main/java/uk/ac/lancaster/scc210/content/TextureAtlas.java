@@ -13,7 +13,7 @@ public class TextureAtlas {
 
     private final int spriteWidth, spriteHeight;
 
-    private Image textureAtlas;
+    private final Image textureAtlas;
 
     public TextureAtlas(final String fileName, final int spriteWidth, final int spriteHeight) throws ResourceNotFoundException {
         this.fileName = fileName;

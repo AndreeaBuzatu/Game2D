@@ -1,7 +1,7 @@
 package uk.ac.lancaster.scc210.ecs.component;
 
 public class SpeedComponent implements Component {
-    private int speed;
+    private final int speed;
 
     public SpeedComponent(int speed) {
         this.speed = speed;

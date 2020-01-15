@@ -9,9 +9,9 @@ import java.util.Set;
 public abstract class IterativeSystem implements EntitySystem {
     Set<Entity> entities;
 
-    private Class<? extends Component>[] components;
+    private final Class<? extends Component>[] components;
 
-    private World world;
+    private final World world;
 
     @SafeVarargs
     IterativeSystem(World world, Class<? extends Component>... components) {

@@ -2,10 +2,10 @@ package uk.ac.lancaster.scc210.resources.deserialise;
 
 import org.jsfml.graphics.Texture;
 
-public class SerialisedTexture {
-    private String name;
+public class SerialisedTexture implements Serialised {
+    private final String name;
 
-    private Texture texture;
+    private final Texture texture;
 
     SerialisedTexture(String name, Texture texture) {
         this.name = name;
