@@ -1,13 +1,11 @@
 package uk.ac.lancaster.scc210.engine;
 
 import org.jsfml.graphics.RenderWindow;
-import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.View;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
 import org.w3c.dom.Document;
-import uk.ac.lancaster.scc210.engine.animation.TextureAnimation;
 import uk.ac.lancaster.scc210.engine.content.TextureAnimationManager;
 import uk.ac.lancaster.scc210.engine.content.TextureAtlasManager;
 import uk.ac.lancaster.scc210.engine.content.TextureManager;
