@@ -1,15 +1,20 @@
 package uk.ac.lancaster.scc210.engine;
 
 import org.jsfml.graphics.RenderWindow;
+import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.View;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
 import org.w3c.dom.Document;
+import uk.ac.lancaster.scc210.engine.animation.TextureAnimation;
+import uk.ac.lancaster.scc210.engine.content.TextureAnimationManager;
+import uk.ac.lancaster.scc210.engine.content.TextureAtlasManager;
 import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.resources.ResourceLoader;
 import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
 import uk.ac.lancaster.scc210.engine.resources.XMLAdapter;
+import uk.ac.lancaster.scc210.engine.resources.deserialise.AnimationDeserialiser;
 import uk.ac.lancaster.scc210.engine.resources.deserialise.TextureAtlasDeserialiser;
 import uk.ac.lancaster.scc210.engine.service.ServiceProvider;
 import uk.ac.lancaster.scc210.engine.states.State;
@@ -18,7 +23,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class StateBasedGame {
-    private final int FPS = 60;
+    private static final int FPS = 60;
 
     private final Queue<State> states;
 
@@ -29,6 +34,8 @@ public class StateBasedGame {
     protected final ServiceProvider serviceProvider;
 
     private TextureAtlasDeserialiser textureAtlasDeserialiser;
+
+    private AnimationDeserialiser animationDeserialiser;
 
     private State currentState;
 
@@ -49,16 +56,26 @@ public class StateBasedGame {
 
         states.add(currentState);
 
+        serviceProvider = new ServiceProvider();
+
         try {
             textureAtlasDeserialiser = new TextureAtlasDeserialiser(deserialiseXML("textures.xml"));
+
+            TextureAtlasManager atlasManager = new TextureAtlasManager(textureAtlasDeserialiser.getSerialised());
+
+            animationDeserialiser = new AnimationDeserialiser(atlasManager, deserialiseXML("animations.xml"));
+
+            TextureAnimationManager textureAnimationManager = new TextureAnimationManager(animationDeserialiser.getSerialised());
+
+            serviceProvider.put(TextureAnimationManager.class, textureAnimationManager);
 
         } catch (ResourceNotFoundException e) {
             window.close();
         }
 
-        serviceProvider = new ServiceProvider();
+        TextureManager textureManager = new TextureManager(textureAtlasDeserialiser.getSerialised());
 
-        serviceProvider.put(TextureManager.class, new TextureManager(textureAtlasDeserialiser.getSerialised()));
+        serviceProvider.put(TextureManager.class, textureManager);
     }
 
     public void run() {
@@ -92,7 +109,15 @@ public class StateBasedGame {
     private void draw() {
         window.clear();
 
-        currentState.draw(window);
+        TextureAnimationManager textureAnimationManager = (TextureAnimationManager) serviceProvider.get(TextureAnimationManager.class);
+
+        TextureAnimation textureAnimation = textureAnimationManager.get("player-ship");
+
+        Sprite sprite = new Sprite(textureAnimation.getTexture());
+
+        window.draw(sprite);
+
+        //currentState.draw(window);
 
         window.display();
     }
