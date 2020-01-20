@@ -109,15 +109,7 @@ public class StateBasedGame {
     private void draw() {
         window.clear();
 
-        TextureAnimationManager textureAnimationManager = (TextureAnimationManager) serviceProvider.get(TextureAnimationManager.class);
-
-        TextureAnimation textureAnimation = textureAnimationManager.get("player-ship");
-
-        Sprite sprite = new Sprite(textureAnimation.getTexture());
-
-        window.draw(sprite);
-
-        //currentState.draw(window);
+        currentState.draw(window);
 
         window.display();
     }

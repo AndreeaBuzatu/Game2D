@@ -1,6 +1,7 @@
 package uk.ac.lancaster.scc210.game;
 
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
+import uk.ac.lancaster.scc210.engine.content.TextureAnimationManager;
 import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
 import uk.ac.lancaster.scc210.game.content.SpaceShipManager;
@@ -18,9 +19,11 @@ public class Game extends StateBasedGame {
         try {
             TextureManager textureManager = (TextureManager) serviceProvider.get(TextureManager.class);
 
+            TextureAnimationManager animationManager = (TextureAnimationManager) serviceProvider.get(TextureAnimationManager.class);
+
             SpaceShipDeserialiser spaceShipDeserialiser = new SpaceShipDeserialiser(deserialiseXML("spaceships.xml"));
 
-            serviceProvider.put(SpaceShipManager.class, new SpaceShipManager(textureManager, spaceShipDeserialiser.getSerialised()));
+            serviceProvider.put(SpaceShipManager.class, new SpaceShipManager(animationManager, spaceShipDeserialiser.getSerialised()));
 
         } catch (ResourceNotFoundException e) {
             window.close();
