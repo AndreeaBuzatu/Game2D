@@ -10,9 +10,18 @@ import uk.ac.lancaster.scc210.game.states.Level;
 
 import java.util.logging.Logger;
 
+/**
+ * The type Game.
+ */
 public class Game extends StateBasedGame {
+    /**
+     * The constant LOGGER.
+     */
     public static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
+    /**
+     * Instantiates a new Game.
+     */
     public Game() {
         super("Shooter", 500, 500, new Level());
 

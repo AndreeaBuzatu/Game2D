@@ -6,7 +6,16 @@ import org.w3c.dom.Node;
 import uk.ac.lancaster.scc210.engine.content.TextureAtlas;
 import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
 
+/**
+ * The type Texture atlas deserialiser.
+ */
 public class TextureAtlasDeserialiser extends Deserialiser<SerialisedTextureAtlas> {
+    /**
+     * Instantiates a new Texture atlas deserialiser.
+     *
+     * @param document the document
+     * @throws ResourceNotFoundException the resource not found exception
+     */
     public TextureAtlasDeserialiser(Document document) throws ResourceNotFoundException {
         super(document, document.getElementsByTagName("atlas"), "atlas");
     }

@@ -7,7 +7,15 @@ import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.game.ecs.component.AnimationComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
+/**
+ * The type Render system.
+ */
 public class RenderSystem extends IterativeSystem {
+    /**
+     * Instantiates a new Render system.
+     *
+     * @param world the world
+     */
     public RenderSystem(World world) {
         super(world, SpriteComponent.class, AnimationComponent.class);
     }

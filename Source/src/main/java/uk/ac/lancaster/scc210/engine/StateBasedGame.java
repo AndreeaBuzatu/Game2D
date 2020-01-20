@@ -20,15 +20,24 @@ import uk.ac.lancaster.scc210.engine.states.State;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * The type State based game.
+ */
 public class StateBasedGame {
     private static final int FPS = 60;
 
     private final Queue<State> states;
 
+    /**
+     * The Window.
+     */
     protected final RenderWindow window;
 
     private final View view;
 
+    /**
+     * The Service provider.
+     */
     protected final ServiceProvider serviceProvider;
 
     private TextureAtlasDeserialiser textureAtlasDeserialiser;
@@ -39,6 +48,14 @@ public class StateBasedGame {
 
     private Event event;
 
+    /**
+     * Instantiates a new State based game.
+     *
+     * @param name         the name
+     * @param windowWidth  the window width
+     * @param windowHeight the window height
+     * @param state        the state
+     */
     protected StateBasedGame(final String name, final int windowWidth, final int windowHeight, final State state) {
         this.currentState = state;
 
@@ -76,6 +93,9 @@ public class StateBasedGame {
         serviceProvider.put(TextureManager.class, textureManager);
     }
 
+    /**
+     * Run.
+     */
     public void run() {
         currentState.setup(this);
 
@@ -118,6 +138,12 @@ public class StateBasedGame {
         currentState = states.peek();
     }
 
+    /**
+     * Deserialise xml document.
+     *
+     * @param fileName the file name
+     * @return the document
+     */
     protected Document deserialiseXML(final String fileName) {
         XMLAdapter xmlAdapter = new XMLAdapter();
 
@@ -133,6 +159,11 @@ public class StateBasedGame {
         return null;
     }
 
+    /**
+     * Gets service provider.
+     *
+     * @return the service provider
+     */
     public ServiceProvider getServiceProvider() {
         return serviceProvider;
     }

@@ -8,7 +8,15 @@ import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
+/**
+ * The type Movement system.
+ */
 public class MovementSystem extends IterativeSystem {
+    /**
+     * Instantiates a new Movement system.
+     *
+     * @param world the world
+     */
     public MovementSystem(World world) {
         super(world, SpriteComponent.class, SpeedComponent.class);
     }

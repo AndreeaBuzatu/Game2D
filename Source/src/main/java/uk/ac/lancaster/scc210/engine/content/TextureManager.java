@@ -5,11 +5,19 @@ import uk.ac.lancaster.scc210.engine.resources.deserialise.SerialisedTextureAtla
 
 import java.util.List;
 
+/**
+ * The type Texture manager.
+ */
 public class TextureManager extends ContentManager<Texture> {
     private static final int SPRITE_WIDTH = 32;
 
     private static final int SPRITE_HEIGHT = 32;
 
+    /**
+     * Instantiates a new Texture manager.
+     *
+     * @param serialisedTextureAtlases the serialised texture atlases
+     */
     public TextureManager(List<SerialisedTextureAtlas> serialisedTextureAtlases) {
         super(new MissingTexture(SPRITE_WIDTH, SPRITE_HEIGHT).getTexture());
 

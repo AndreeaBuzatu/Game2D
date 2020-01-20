@@ -12,7 +12,16 @@ import uk.ac.lancaster.scc210.game.resources.SerialisedSpaceShip;
 
 import java.util.List;
 
+/**
+ * The type Space ship manager.
+ */
 public class SpaceShipManager extends ContentManager<Entity> {
+    /**
+     * Instantiates a new Space ship manager.
+     *
+     * @param animationManager     the animation manager
+     * @param serialisedSpaceShips the serialised space ships
+     */
     public SpaceShipManager(TextureAnimationManager animationManager, List<SerialisedSpaceShip> serialisedSpaceShips) {
         super(new Entity());
 

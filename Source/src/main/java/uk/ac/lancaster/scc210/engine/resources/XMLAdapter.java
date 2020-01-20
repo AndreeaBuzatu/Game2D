@@ -10,7 +10,13 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 
+/**
+ * The type Xml adapter.
+ */
 public class XMLAdapter extends Resource<Document> {
+    /**
+     * Instantiates a new Xml adapter.
+     */
     public XMLAdapter() {
         super(null);
     }

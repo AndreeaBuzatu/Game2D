@@ -8,6 +8,9 @@ import uk.ac.lancaster.scc210.game.content.SpaceShipManager;
 import uk.ac.lancaster.scc210.game.ecs.system.MovementSystem;
 import uk.ac.lancaster.scc210.game.ecs.system.RenderSystem;
 
+/**
+ * The type Level.
+ */
 public class Level implements State {
     private World world;
 

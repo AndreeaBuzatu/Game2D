@@ -5,6 +5,9 @@ import org.jsfml.graphics.Image;
 import org.jsfml.graphics.Texture;
 import org.jsfml.graphics.TextureCreationException;
 
+/**
+ * The type Missing texture.
+ */
 class MissingTexture {
     private final Color PURPLE = new Color(255, 0, 255);
 
@@ -14,6 +17,12 @@ class MissingTexture {
 
     private final Image image;
 
+    /**
+     * Instantiates a new Missing texture.
+     *
+     * @param spriteWidth  the sprite width
+     * @param spriteHeight the sprite height
+     */
     MissingTexture(final int spriteWidth, final int spriteHeight) {
         this.spriteWidth = spriteWidth;
         this.spriteHeight = spriteHeight;
@@ -57,6 +66,11 @@ class MissingTexture {
         }
     }
 
+    /**
+     * Gets texture.
+     *
+     * @return the texture
+     */
     Texture getTexture() {
         return texture;
     }

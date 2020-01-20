@@ -8,9 +8,20 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.Level;
 
+/**
+ * The type Resource loader.
+ */
 public class ResourceLoader {
     private static final String ERROR_TITLE = "Unable to load resource";
 
+    /**
+     * Load from file.
+     *
+     * @param <T>      the type parameter
+     * @param resource the resource
+     * @param fileName the file name
+     * @throws ResourceNotFoundException the resource not found exception
+     */
     public static<T extends Resource> void loadFromFile(T resource, String fileName) throws ResourceNotFoundException {
         Path path = loadFromRes(fileName);
 
