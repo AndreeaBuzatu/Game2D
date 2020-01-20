@@ -36,8 +36,8 @@ class MissingTexture {
 
     /**
      * Generate an image in the pattern of:
-     * P W
-     * W P
+     * P B
+     * B P
      * This is used for for when SpriteManager is unable to find the sprite from the key
      */
     private void createImage() {
