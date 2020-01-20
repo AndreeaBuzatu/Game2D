@@ -28,14 +28,16 @@ public class TextureAtlas {
     /**
      * Get a Texture from the texture atlas. The row and columns are 0 indexed
      *
+     * @param row row to capture from the texture atlas
      * @param column column to capture from the texture atlas
-     * @param row    row to capture from the texture atlas
      * @return a texture with the texture atlas as it's texture and a rectangle containing the requested sprite
      */
-    public Texture get(final int column, final int row) throws ResourceNotFoundException {
+    public Texture get(final int row, final int column) throws ResourceNotFoundException {
         Texture texture = new Texture();
 
-        IntRect area = new IntRect(column * spriteHeight, row * spriteWidth, spriteHeight, spriteWidth);
+        //System.out.printf("Row: %d, Column: %d\n", row, column);
+
+        IntRect area = new IntRect(column * spriteWidth, row * spriteHeight, spriteWidth, spriteHeight);
 
         try {
             texture.loadFromImage(textureAtlas, area);
@@ -45,5 +47,13 @@ public class TextureAtlas {
         } catch (TextureCreationException e) {
             throw new ResourceNotFoundException(fileName);
         }
+    }
+
+    public int getColumns() {
+        return textureAtlas.getSize().x / spriteWidth;
+    }
+
+    String getFileName() {
+        return fileName;
     }
 }

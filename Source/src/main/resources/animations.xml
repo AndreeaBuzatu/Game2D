@@ -1,0 +1,2 @@
+<animation name="player-ship" atlas="spritesheet.png" row="0" column="0" num_frames="3">
+</animation>
