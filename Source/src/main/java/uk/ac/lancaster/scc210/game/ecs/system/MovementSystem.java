@@ -21,6 +21,7 @@ public class MovementSystem extends IterativeSystem {
             SpeedComponent speedComponent = (SpeedComponent) entity.findComponent(SpeedComponent.class);
 
             int moveY = 0;
+            int moveX = 0;
 
             if (Keyboard.isKeyPressed(Keyboard.Key.W)) {
                 moveY = -speedComponent.getSpeed();
@@ -29,7 +30,14 @@ public class MovementSystem extends IterativeSystem {
                 moveY = speedComponent.getSpeed();
             }
 
-            spriteComponent.getSprite().move(0, moveY);
+            if (Keyboard.isKeyPressed(Keyboard.Key.A)) {
+                moveX = -speedComponent.getSpeed();
+
+            } else if (Keyboard.isKeyPressed(Keyboard.Key.D)) {
+                moveX = speedComponent.getSpeed();
+            }
+
+            spriteComponent.getSprite().move(moveX, moveY);
         }
     }
 
