@@ -13,7 +13,7 @@ import uk.ac.lancaster.scc210.game.pooling.BulletPool;
 public class FiringSystem extends IterativeSystem {
     private final int BULLET_Y_PADDING = -20;
 
-    private BulletPool bulletPool;
+    private final BulletPool bulletPool;
 
     /**
      * Instantiates a new Iterative system.

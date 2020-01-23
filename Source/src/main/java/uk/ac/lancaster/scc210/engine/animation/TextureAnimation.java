@@ -14,11 +14,11 @@ public class TextureAnimation {
 
     private Clock animationTimer;
 
-    private Texture[] frames;
+    private final Texture[] frames;
 
     private int currentFrame;
 
-    private float frameTimeRemaning;
+    private float frameTimeRemaining;
 
     /**
      * Instantiates a new Texture animation.
@@ -34,7 +34,7 @@ public class TextureAnimation {
 
         currentFrame = 0;
 
-        frameTimeRemaning = FPS;
+        frameTimeRemaining = FPS;
 
         int currentRow = startingRow;
 
@@ -66,9 +66,9 @@ public class TextureAnimation {
             animationTimer = new Clock();
         }
 
-        frameTimeRemaning -= animationTimer.getElapsedTime().asSeconds();
+        frameTimeRemaining -= animationTimer.getElapsedTime().asSeconds();
 
-        if (frameTimeRemaning <= 0) {
+        if (frameTimeRemaining <= 0) {
             currentFrame++;
 
             // Loop back around to the start
@@ -76,7 +76,7 @@ public class TextureAnimation {
                 currentFrame = 0;
             }
 
-            frameTimeRemaning = FPS;
+            frameTimeRemaining = FPS;
 
             animationTimer.restart();
         }

@@ -10,7 +10,7 @@ import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
 public class SerialisedAnimation implements Serialised {
     private TextureAnimation animation;
 
-    private String name;
+    private final String name;
 
     /**
      * Instantiates a new Serialised animation.

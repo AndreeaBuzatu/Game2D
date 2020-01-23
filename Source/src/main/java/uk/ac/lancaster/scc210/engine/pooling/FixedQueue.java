@@ -2,7 +2,7 @@ package uk.ac.lancaster.scc210.engine.pooling;
 
 import java.util.LinkedList;
 
-public class FixedQueue<T> extends LinkedList<T> {
+class FixedQueue<T> extends LinkedList<T> {
     private final int capacity;
 
     FixedQueue(final int capacity) {

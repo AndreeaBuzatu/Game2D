@@ -7,7 +7,7 @@ public class RotationComponent implements Component {
 
     public static final float MIN_ROTATION = 0;
 
-    private float rotationAmount;
+    private final float rotationAmount;
 
     public RotationComponent(final float rotationAmount) {
         this.rotationAmount = rotationAmount;

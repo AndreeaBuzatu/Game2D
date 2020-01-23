@@ -6,7 +6,7 @@ import uk.ac.lancaster.scc210.engine.service.Service;
 import java.util.Queue;
 
 public abstract class Pool implements Service {
-    protected Queue<Entity> entities;
+    protected final Queue<Entity> entities;
 
     protected Pool(final int capacity) {
         entities = new FixedQueue<>(capacity);

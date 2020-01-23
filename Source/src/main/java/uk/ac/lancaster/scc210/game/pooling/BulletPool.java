@@ -14,7 +14,7 @@ public class BulletPool extends Pool {
     // Who cares if it's static? I don't
     private static final int INITIAL_BULLETS = 100;
 
-    private ServiceProvider serviceProvider;
+    private final ServiceProvider serviceProvider;
 
     public BulletPool(ServiceProvider serviceProvider) {
         super(INITIAL_BULLETS);

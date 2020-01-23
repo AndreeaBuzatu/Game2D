@@ -10,9 +10,9 @@ import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
 
 public class RenderSystem extends IterativeSystem {
-    private WindowSize windowSize;
+    private final WindowSize windowSize;
 
-    private BulletPool bulletPool;
+    private final BulletPool bulletPool;
 
     /**
      * Instantiates a new Iterative system.
