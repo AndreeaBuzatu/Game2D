@@ -44,9 +44,7 @@ public class TextureAnimation {
 
             frames[i] = textureAtlas.get(currentRow, currentColumn);
 
-            System.out.printf("Column: %d, Row: %d\n", currentColumn, currentRow);
-
-            if (currentColumn < textureAtlas.getColumns() - 1) {
+            if (currentColumn < textureAtlas.getColumns()) {
                 currentColumn++;
 
             } else {

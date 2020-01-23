@@ -47,8 +47,6 @@ public class TextureAtlas {
     public Texture get(final int row, final int column) throws ResourceNotFoundException {
         Texture texture = new Texture();
 
-        //System.out.printf("Row: %d, Column: %d\n", row, column);
-
         IntRect area = new IntRect(column * spriteWidth, row * spriteHeight, spriteWidth, spriteHeight);
 
         try {
@@ -67,7 +65,8 @@ public class TextureAtlas {
      * @return the columns
      */
     public int getColumns() {
-        return textureAtlas.getSize().x / spriteWidth;
+        // Subtract one to account for the 0-indexing
+        return (textureAtlas.getSize().x / spriteWidth) - 1;
     }
 
     /**

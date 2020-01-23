@@ -1,7 +1,6 @@
 package uk.ac.lancaster.scc210.engine;
 
 import org.jsfml.graphics.RenderWindow;
-import org.jsfml.graphics.View;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
@@ -33,7 +32,7 @@ public class StateBasedGame {
      */
     protected final RenderWindow window;
 
-    private final View view;
+    //private final View view;
 
     /**
      * The Service provider.
@@ -61,9 +60,9 @@ public class StateBasedGame {
 
         window = new RenderWindow(new VideoMode(windowWidth, windowHeight), name);
 
-        view = new View();
+        //view = new View();
 
-        window.setView(view);
+        //window.setView(view);
 
         window.setFramerateLimit(FPS);
 
@@ -91,6 +90,8 @@ public class StateBasedGame {
         TextureManager textureManager = new TextureManager(textureAtlasDeserialiser.getSerialised());
 
         serviceProvider.put(TextureManager.class, textureManager);
+
+        serviceProvider.put(WindowSize.class, new WindowSize(windowWidth, windowHeight));
     }
 
     /**
@@ -101,8 +102,6 @@ public class StateBasedGame {
 
         while (window.isOpen()) {
             update();
-
-            currentState.draw(window);
 
             draw();
         }
@@ -119,9 +118,9 @@ public class StateBasedGame {
                     window.close();
                 }
             }
-
-            currentState.update();
         }
+
+        currentState.update();
     }
 
     private void draw() {

@@ -17,7 +17,7 @@ public abstract class IterativeSystem implements EntitySystem {
 
     private final Class<? extends Component>[] components;
 
-    private final World world;
+    protected final World world;
 
     /**
      * Instantiates a new Iterative system.
@@ -34,7 +34,7 @@ public abstract class IterativeSystem implements EntitySystem {
     }
 
     @Override
-    public void entityAdded() {
+    public void entityChanged() {
         this.entities = world.getEntitiesFor(components);
     }
 }

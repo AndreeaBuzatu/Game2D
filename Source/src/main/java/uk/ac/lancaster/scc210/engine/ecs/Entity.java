@@ -1,20 +1,20 @@
 package uk.ac.lancaster.scc210.engine.ecs;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * The type Entity.
  */
 public class Entity {
-    private final List<Component> components;
+    private final Set<Component> components;
 
     /**
      * Instantiates a new Entity.
      */
     public Entity() {
-        components = new ArrayList<>();
+        components = new HashSet<>();
     }
 
     /**
@@ -23,7 +23,7 @@ public class Entity {
      * @param components the components
      */
     Entity(Collection<Component> components) {
-        this.components = new ArrayList<>();
+        this.components = new HashSet<>();
 
         this.components.addAll(components);
     }
@@ -33,8 +33,12 @@ public class Entity {
      *
      * @return the components
      */
-    List<Component> getComponents() {
+    Set<Component> getComponents() {
         return components;
+    }
+
+    public boolean hasComponent(Class<? extends Component> component) {
+        return findComponent(component) != null;
     }
 
     /**
@@ -45,7 +49,7 @@ public class Entity {
      */
     public Component findComponent(Class<? extends Component> component) {
         return components
-                .stream()
+                .parallelStream()
                 .filter(component::isInstance)
                 .findAny()
                 .orElse(null);

@@ -7,9 +7,9 @@ import org.jsfml.graphics.RenderTarget;
  */
 public interface EntitySystem {
     /**
-     * Entity added.
+     * Entity changed.
      */
-    void entityAdded();
+    void entityChanged();
 
     /**
      * Update.
