@@ -11,6 +11,8 @@ import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
 
 public class FiringSystem extends IterativeSystem {
+    private final int BULLET_Y_PADDING = -20;
+
     private BulletPool bulletPool;
 
     /**
@@ -34,13 +36,10 @@ public class FiringSystem extends IterativeSystem {
 
                 SpriteComponent bulletSprite = (SpriteComponent) bullet.findComponent(SpriteComponent.class);
 
-                Vector2f spritePos = entitySprite.getSprite().getPosition();
-
+                // Find the half-width of the entity sprite and the half-width of the bullet sprite
                 float halfWidth = (entitySprite.getSprite().getLocalBounds().width / 2) - (bulletSprite.getSprite().getLocalBounds().width / 2);
 
-                System.out.println(bulletSprite.getSprite().getLocalBounds().width / 2);
-
-                Vector2f middleCentre = new Vector2f(halfWidth, -20);
+                Vector2f middleCentre = new Vector2f(halfWidth, BULLET_Y_PADDING);
 
                 Vector2f bulletPos = entitySprite.getSprite().getTransform().transformPoint(middleCentre);
 

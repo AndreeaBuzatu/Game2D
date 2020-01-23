@@ -39,8 +39,6 @@ public class RenderSystem extends IterativeSystem {
             target.draw(spriteComponent.getSprite());
 
             if (windowSize.outOfBounds(spriteComponent.getSprite())) {
-                System.out.println("Hello, world");
-
                 world.removeEntity(entity);
 
                 // TODO: Move somewhere else
