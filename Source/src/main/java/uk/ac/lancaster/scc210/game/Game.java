@@ -5,6 +5,7 @@ import uk.ac.lancaster.scc210.engine.content.TextureAnimationManager;
 import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
 import uk.ac.lancaster.scc210.game.content.SpaceShipManager;
+import uk.ac.lancaster.scc210.game.pooling.BulletPool;
 import uk.ac.lancaster.scc210.game.resources.SpaceShipDeserialiser;
 import uk.ac.lancaster.scc210.game.states.Level;
 
@@ -37,5 +38,7 @@ public class Game extends StateBasedGame {
         } catch (ResourceNotFoundException e) {
             window.close();
         }
+
+        serviceProvider.put(BulletPool.class, new BulletPool(serviceProvider));
     }
 }
