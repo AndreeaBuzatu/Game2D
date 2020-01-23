@@ -4,9 +4,8 @@ import org.jsfml.graphics.RenderTarget;
 import uk.ac.lancaster.scc210.engine.ecs.system.EntitySystem;
 import uk.ac.lancaster.scc210.engine.service.ServiceProvider;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -15,9 +14,9 @@ import java.util.stream.Collectors;
  */
 public class World {
     // TODO: Consider moving away from the Set type
-    private final Set<Entity> entities;
+    private final ArrayList<Entity> entities;
 
-    private final Set<EntitySystem> systems;
+    private final ArrayList<EntitySystem> systems;
 
     private final ServiceProvider serviceProvider;
 
@@ -27,9 +26,9 @@ public class World {
     public World(ServiceProvider serviceProvider) {
         this.serviceProvider = serviceProvider;
 
-        entities = new LinkedHashSet<>();
+        entities = new ArrayList<>();
 
-        systems = new LinkedHashSet<>();
+        systems = new ArrayList<>();
     }
 
     /**
@@ -38,9 +37,11 @@ public class World {
      * @param entity the entity
      */
     public void addEntity(Entity entity) {
-        entities.add(entity);
+        if (!entities.contains(entity)) {
+            entities.add(entity);
 
-        systems.forEach(EntitySystem::entityChanged);
+            systems.forEach(EntitySystem::entityChanged);
+        }
     }
 
     public void removeEntity(Entity entity) {
@@ -55,7 +56,9 @@ public class World {
      * @param system the system
      */
     public void addSystem(EntitySystem system) {
-        systems.add(system);
+        if (!systems.contains(system)) {
+            systems.add(system);
+        }
     }
 
     /**
@@ -96,16 +99,9 @@ public class World {
      */
     @SafeVarargs
     public final Set<Entity> getEntitiesFor(Class<? extends Component>... components) {
-        Set<Class<? extends Component>> componentSet = new HashSet<>(Arrays.asList(components));
-
         return entities
                 .parallelStream()
-                .filter(entity -> {
-                    Set<Class<? extends Component>> actualComponents =
-                            entity.getComponents().parallelStream().map(Component::getClass).collect(Collectors.toSet());
-
-                    return actualComponents.containsAll(componentSet);
-                })
+                .filter(entity -> entity.getComponents().keySet().containsAll(Arrays.asList(components)))
                 .collect(Collectors.toSet());
     }
 

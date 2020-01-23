@@ -1,20 +1,19 @@
 package uk.ac.lancaster.scc210.engine.ecs;
 
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
 
 /**
  * The type Entity.
  */
 public class Entity {
-    private final Set<Component> components;
+    private final HashMap<Class<? extends Component>, Component> components;
 
     /**
      * Instantiates a new Entity.
      */
     public Entity() {
-        components = new HashSet<>();
+        components = new HashMap<>();
     }
 
     /**
@@ -23,9 +22,16 @@ public class Entity {
      * @param components the components
      */
     Entity(Collection<Component> components) {
-        this.components = new HashSet<>();
+        this.components = new HashMap<>();
 
-        this.components.addAll(components);
+        // TODO: Clean this up
+        for (Component component : components) {
+            Class<? extends Component> componentClass = component.getClass();
+
+            if (!this.components.containsKey(componentClass)) {
+                this.components.put(componentClass, component);
+            }
+        }
     }
 
     /**
@@ -33,12 +39,12 @@ public class Entity {
      *
      * @return the components
      */
-    Set<Component> getComponents() {
+    HashMap<Class<? extends Component>, Component> getComponents() {
         return components;
     }
 
     public boolean hasComponent(Class<? extends Component> component) {
-        return findComponent(component) != null;
+        return components.containsKey(component);
     }
 
     /**
@@ -48,10 +54,6 @@ public class Entity {
      * @return the component
      */
     public Component findComponent(Class<? extends Component> component) {
-        return components
-                .parallelStream()
-                .filter(component::isInstance)
-                .findAny()
-                .orElse(null);
+        return components.getOrDefault(component, null);
     }
 }
