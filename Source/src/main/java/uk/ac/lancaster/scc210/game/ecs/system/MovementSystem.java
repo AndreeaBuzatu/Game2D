@@ -23,7 +23,18 @@ public class MovementSystem extends IterativeSystem {
         for (Entity entity : entities) {
             SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
 
-            spriteComponent.getSprite().move(5, 5);
+            SpeedComponent speedComponent = (SpeedComponent) entity.findComponent(SpeedComponent.class);
+
+            float speed = speedComponent.getSpeed();
+
+            float angle = spriteComponent.getSprite().getRotation();
+
+            // This is likely wrong, but I works... I'm not a mathematician
+            float posX = (float) (speed * Math.sin(Math.toRadians(angle)));
+
+            float posY = (float) (speed * -Math.cos(Math.toRadians(angle)));
+
+            spriteComponent.getSprite().move(posX, posY);
         }
     }
 

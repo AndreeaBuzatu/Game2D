@@ -1,6 +1,7 @@
 package uk.ac.lancaster.scc210.game.ecs.system;
 
 import org.jsfml.graphics.RenderTarget;
+import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
@@ -33,7 +34,19 @@ public class FiringSystem extends IterativeSystem {
 
                 SpriteComponent bulletSprite = (SpriteComponent) bullet.findComponent(SpriteComponent.class);
 
-                bulletSprite.getSprite().setPosition(entitySprite.getSprite().getPosition());
+                Vector2f spritePos = entitySprite.getSprite().getPosition();
+
+                float halfWidth = (entitySprite.getSprite().getLocalBounds().width / 2) - (bulletSprite.getSprite().getLocalBounds().width / 2);
+
+                System.out.println(bulletSprite.getSprite().getLocalBounds().width / 2);
+
+                Vector2f middleCentre = new Vector2f(halfWidth, -20);
+
+                Vector2f bulletPos = entitySprite.getSprite().getTransform().transformPoint(middleCentre);
+
+                bulletSprite.getSprite().setPosition(bulletPos);
+
+                bulletSprite.getSprite().setRotation(entitySprite.getSprite().getRotation());
 
                 world.addEntity(bullet);
             }

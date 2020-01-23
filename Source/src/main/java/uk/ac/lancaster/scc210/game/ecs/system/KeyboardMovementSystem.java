@@ -5,6 +5,7 @@ import org.jsfml.window.Keyboard;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
+import uk.ac.lancaster.scc210.game.ecs.component.RotationComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
@@ -18,7 +19,7 @@ public class KeyboardMovementSystem extends IterativeSystem {
      * @param world the world
      */
     public KeyboardMovementSystem(World world) {
-        super(world, SpriteComponent.class, SpeedComponent.class);
+        super(world, SpriteComponent.class, SpeedComponent.class, RotationComponent.class);
     }
 
     @Override
@@ -27,6 +28,12 @@ public class KeyboardMovementSystem extends IterativeSystem {
             SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
 
             SpeedComponent speedComponent = (SpeedComponent) entity.findComponent(SpeedComponent.class);
+
+            RotationComponent rotationComponent = (RotationComponent) entity.findComponent(RotationComponent.class);
+
+            float angle = spriteComponent.getSprite().getRotation();
+
+            float rotationAmount = rotationComponent.getRotationAmount();
 
             int moveY = 0;
             int moveX = 0;
@@ -43,6 +50,23 @@ public class KeyboardMovementSystem extends IterativeSystem {
 
             } else if (Keyboard.isKeyPressed(Keyboard.Key.D)) {
                 moveX = speedComponent.getSpeed();
+            }
+
+            if (Keyboard.isKeyPressed(Keyboard.Key.Q)) {
+                if (angle >= RotationComponent.MAX_ROTATION) {
+                    spriteComponent.getSprite().setRotation(RotationComponent.MIN_ROTATION);
+
+                } else {
+                    spriteComponent.getSprite().rotate(rotationAmount);
+                }
+
+            } else if (Keyboard.isKeyPressed(Keyboard.Key.E)) {
+                if (angle <= RotationComponent.MIN_ROTATION) {
+                    spriteComponent.getSprite().setRotation(RotationComponent.MAX_ROTATION);
+
+                } else {
+                    spriteComponent.getSprite().rotate(-rotationAmount);
+                }
             }
 
             spriteComponent.getSprite().move(moveX, moveY);
