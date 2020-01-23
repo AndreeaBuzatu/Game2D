@@ -1,23 +1,34 @@
 package uk.ac.lancaster.scc210.game.ecs.system;
 
 import org.jsfml.graphics.RenderTarget;
+import uk.ac.lancaster.scc210.engine.WindowSize;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
-import uk.ac.lancaster.scc210.game.ecs.component.AnimationComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.BulletComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
+import uk.ac.lancaster.scc210.game.pooling.BulletPool;
 
-/**
- * The type Render system.
- */
 public class RenderSystem extends IterativeSystem {
+    private WindowSize windowSize;
+
+    private BulletPool bulletPool;
+
     /**
-     * Instantiates a new Render system.
+     * Instantiates a new Iterative system.
      *
-     * @param world the world
+     * @param world      the world
      */
     public RenderSystem(World world) {
-        super(world, SpriteComponent.class, AnimationComponent.class);
+        super(world, SpriteComponent.class);
+
+        windowSize = (WindowSize) world.getServiceProvider().get(WindowSize.class);
+
+        bulletPool = (BulletPool) world.getServiceProvider().get(BulletPool.class);
+    }
+
+    @Override
+    public void update() {
     }
 
     @Override
@@ -25,16 +36,18 @@ public class RenderSystem extends IterativeSystem {
         for (Entity entity : entities) {
             SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
 
-            AnimationComponent animationComponent = (AnimationComponent) entity.findComponent(AnimationComponent.class);
-
-            spriteComponent.getSprite().setTexture(animationComponent.getTextureAnimation().getTexture());
-
             target.draw(spriteComponent.getSprite());
+
+            if (windowSize.outOfBounds(spriteComponent.getSprite())) {
+                System.out.println("Hello, world");
+
+                world.removeEntity(entity);
+
+                // TODO: Move somewhere else
+                if (entity.hasComponent(BulletComponent.class)) {
+                    bulletPool.returnEntity(entity);
+                }
+            }
         }
-    }
-
-    @Override
-    public void update() {
-
     }
 }
