@@ -2,8 +2,10 @@ package uk.ac.lancaster.scc210.engine.ecs;
 
 import org.jsfml.graphics.RenderTarget;
 import uk.ac.lancaster.scc210.engine.ecs.system.EntitySystem;
+import uk.ac.lancaster.scc210.engine.service.ServiceProvider;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -12,14 +14,19 @@ import java.util.stream.Collectors;
  * The type World.
  */
 public class World {
+    // TODO: Consider moving away from the Set type
     private final Set<Entity> entities;
 
     private final Set<EntitySystem> systems;
 
+    private final ServiceProvider serviceProvider;
+
     /**
      * Instantiates a new World.
      */
-    public World() {
+    public World(ServiceProvider serviceProvider) {
+        this.serviceProvider = serviceProvider;
+
         entities = new LinkedHashSet<>();
 
         systems = new LinkedHashSet<>();
@@ -33,7 +40,13 @@ public class World {
     public void addEntity(Entity entity) {
         entities.add(entity);
 
-        systems.forEach(EntitySystem::entityAdded);
+        systems.forEach(EntitySystem::entityChanged);
+    }
+
+    public void removeEntity(Entity entity) {
+        entities.remove(entity);
+
+        systems.forEach(EntitySystem::entityChanged);
     }
 
     /**
@@ -83,14 +96,20 @@ public class World {
      */
     @SafeVarargs
     public final Set<Entity> getEntitiesFor(Class<? extends Component>... components) {
+        Set<Class<? extends Component>> componentSet = new HashSet<>(Arrays.asList(components));
+
         return entities
                 .parallelStream()
                 .filter(entity -> {
-                    Set<Class<? extends Component>> componentSet =
+                    Set<Class<? extends Component>> actualComponents =
                             entity.getComponents().parallelStream().map(Component::getClass).collect(Collectors.toSet());
 
-                    return componentSet.containsAll(Arrays.asList(components));
+                    return actualComponents.containsAll(componentSet);
                 })
                 .collect(Collectors.toSet());
+    }
+
+    public ServiceProvider getServiceProvider() {
+        return serviceProvider;
     }
 }
