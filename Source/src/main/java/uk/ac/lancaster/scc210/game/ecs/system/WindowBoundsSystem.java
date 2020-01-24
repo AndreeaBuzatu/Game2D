@@ -2,7 +2,6 @@ package uk.ac.lancaster.scc210.game.ecs.system;
 
 import org.jsfml.graphics.RenderTarget;
 import uk.ac.lancaster.scc210.engine.WindowSize;
-import uk.ac.lancaster.scc210.engine.ecs.Component;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
@@ -46,6 +45,5 @@ public class WindowBoundsSystem extends IterativeSystem {
 
     @Override
     public void draw(RenderTarget target) {
-
     }
 }
