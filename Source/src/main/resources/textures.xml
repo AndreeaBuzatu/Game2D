@@ -7,4 +7,7 @@
     <atlas src="bullets.png" texture_width="16" texture_height="16">
         <texture name="example_bullet" row="0" column="0"/>
     </atlas>
+    <atlas src="enemy-spritesheet.png" texture_width="128" texture_height="128">
+        <texture name="example_bullet" row="0" column="0"/>
+    </atlas>
 </atlases>
