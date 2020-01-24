@@ -24,7 +24,6 @@ public class Entity {
     Entity(Collection<Component> components) {
         this.components = new HashMap<>();
 
-        // TODO: Clean this up
         for (Component component : components) {
             Class<? extends Component> componentClass = component.getClass();
 

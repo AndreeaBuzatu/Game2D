@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
  * The type World.
  */
 public class World {
-    // TODO: Consider moving away from the Set type
     private final ArrayList<Entity> entities;
 
     private final ArrayList<EntitySystem> systems;
