@@ -24,7 +24,7 @@ public class Game extends StateBasedGame {
      * Instantiates a new Game.
      */
     public Game() {
-        super("Shooter", 500, 500, new Level());
+        super("Shooter", 1280, 720, new Level());
 
         try {
             TextureManager textureManager = (TextureManager) serviceProvider.get(TextureManager.class);
