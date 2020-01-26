@@ -73,7 +73,7 @@ public class StateBasedGame {
         serviceProvider = new ServiceProvider();
 
         try {
-            textureAtlasDeserialiser = new TextureAtlasDeserialiser(deserialiseXML("textures.xml"));
+            textureAtlasDeserialiser = new TextureAtlasDeserialiser(deserialiseXML("atlases.xml"));
 
             TextureAtlasManager atlasManager = new TextureAtlasManager(textureAtlasDeserialiser.getSerialised());
 
