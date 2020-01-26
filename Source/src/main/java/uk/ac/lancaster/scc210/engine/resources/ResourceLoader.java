@@ -9,13 +9,13 @@ import java.nio.file.Paths;
 import java.util.logging.Level;
 
 /**
- * The type Resource loader.
+ * Contains the functionality and error handling for loading a resource
  */
 public class ResourceLoader {
     private static final String ERROR_TITLE = "Unable to load resource";
 
     /**
-     * Load from file.
+     * Given a resource, load it. If the resource fails to load, show an error message in the box
      *
      * @param <T>      the type parameter
      * @param resource the resource

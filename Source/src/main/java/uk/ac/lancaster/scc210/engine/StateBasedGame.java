@@ -20,7 +20,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * The type State based game.
+ * Contains the basic functionality for a state based game.
  */
 public class StateBasedGame {
     private static final int FPS = 60;
@@ -28,14 +28,14 @@ public class StateBasedGame {
     private final Queue<State> states;
 
     /**
-     * The Window.
+     * The Window which is presented to the player.
      */
     protected final RenderWindow window;
 
     //private final View view;
 
     /**
-     * The Service provider.
+     * The Service provider. Used to access services throughout the game
      */
     protected final ServiceProvider serviceProvider;
 
@@ -50,10 +50,10 @@ public class StateBasedGame {
     /**
      * Instantiates a new State based game.
      *
-     * @param name         the name
+     * @param name         the name of the game. Place onto the window title bar
      * @param windowWidth  the window width
      * @param windowHeight the window height
-     * @param state        the state
+     * @param state        the default starting state of the game
      */
     protected StateBasedGame(final String name, final int windowWidth, final int windowHeight, final State state) {
         this.currentState = state;
@@ -95,7 +95,7 @@ public class StateBasedGame {
     }
 
     /**
-     * Run.
+     * Run the game.
      */
     public void run() {
         currentState.setup(this);
@@ -138,10 +138,10 @@ public class StateBasedGame {
     }
 
     /**
-     * Deserialise xml document.
+     * Deserialise xml document from a given file name.
      *
      * @param fileName the file name
-     * @return the document
+     * @return the Document created from the fileName
      */
     protected Document deserialiseXML(final String fileName) {
         XMLAdapter xmlAdapter = new XMLAdapter();

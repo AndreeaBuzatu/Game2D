@@ -7,7 +7,7 @@ import uk.ac.lancaster.scc210.engine.content.TextureAtlasManager;
 import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
 
 /**
- * The type Animation deserialiser.
+ * Given appropriate XML, attempts to deserialise into a SerialisedAnimation
  */
 public class AnimationDeserialiser extends Deserialiser<SerialisedAnimation> {
     private TextureAtlasManager atlasManager;
@@ -15,9 +15,9 @@ public class AnimationDeserialiser extends Deserialiser<SerialisedAnimation> {
     /**
      * Instantiates a new Animation deserialiser.
      *
-     * @param atlasManager the atlas manager
-     * @param document     the document
-     * @throws ResourceNotFoundException the resource not found exception
+     * @param atlasManager the atlas manager. Used to get frames for the Animation
+     * @param document     the XML document
+     * @throws ResourceNotFoundException if the animation can't be found or constructed
      */
     public AnimationDeserialiser(TextureAtlasManager atlasManager, Document document) throws ResourceNotFoundException {
         super(document, "animation");

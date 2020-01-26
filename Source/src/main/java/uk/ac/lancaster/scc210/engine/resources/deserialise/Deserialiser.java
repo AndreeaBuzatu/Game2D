@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The type Deserialiser.
+ * Deserialiser object. Used to take an Object and create a Java Object.
  *
  * @param <T> the type parameter
  */
@@ -34,9 +34,9 @@ public abstract class Deserialiser<T extends Serialised> {
     /**
      * Instantiates a new Deserialiser.
      *
-     * @param document the document
-     * @param tagName  the tag name
-     * @throws ResourceNotFoundException the resource not found exception
+     * @param document the xml document
+     * @param tagName  the global tag name
+     * @throws ResourceNotFoundException if the resource cannot be created or found
      */
     protected Deserialiser(Document document, String tagName) throws ResourceNotFoundException {
         this.document = document;
@@ -54,10 +54,10 @@ public abstract class Deserialiser<T extends Serialised> {
     /**
      * Instantiates a new Deserialiser.
      *
-     * @param document the document
-     * @param nodes    the nodes
-     * @param tagName  the tag name
-     * @throws ResourceNotFoundException the resource not found exception
+     * @param document the xml document
+     * @param nodes    the child nodes used to deserialise
+     * @param tagName  the global tag name
+     * @throws ResourceNotFoundException if the resource cannot be created or found
      */
     Deserialiser(Document document, NodeList nodes, String tagName) throws ResourceNotFoundException {
         this.document = document;
@@ -70,17 +70,17 @@ public abstract class Deserialiser<T extends Serialised> {
     }
 
     /**
-     * Deserialise.
+     * Deserialise the given XML document into a Java Object.
      *
-     * @throws ResourceNotFoundException the resource not found exception
+     * @throws ResourceNotFoundException the resource cannot be created
      */
     protected abstract void deserialise() throws ResourceNotFoundException;
 
     /**
-     * Found node boolean.
+     * Given a Node attempt to see if the node == tagName.
      *
-     * @param node the node
-     * @return the boolean
+     * @param node the node which to be found
+     * @return if the node is found or not
      */
     protected boolean foundNode(Node node) {
         return node.getNodeType() == Node.ELEMENT_NODE && node.getNodeName().equals(tagName);
@@ -89,7 +89,7 @@ public abstract class Deserialiser<T extends Serialised> {
     /**
      * Gets serialised.
      *
-     * @return the serialised
+     * @return serialised
      */
     public List<T> getSerialised() {
         return serialised;

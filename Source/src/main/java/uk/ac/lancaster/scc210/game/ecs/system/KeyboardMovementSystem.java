@@ -10,13 +10,13 @@ import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
 /**
- * The type Movement system.
+ * System which handles keyboard input. Used to move the player around the screen
  */
 public class KeyboardMovementSystem extends IterativeSystem {
     /**
      * Instantiates a new Movement system.
      *
-     * @param world the world
+     * @param world the world to draw entities from
      */
     public KeyboardMovementSystem(World world) {
         super(world, SpriteComponent.class, SpeedComponent.class, RotationComponent.class);

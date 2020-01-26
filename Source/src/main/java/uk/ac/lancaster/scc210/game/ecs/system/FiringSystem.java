@@ -10,6 +10,10 @@ import uk.ac.lancaster.scc210.game.ecs.component.AnimationComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
 
+/**
+ * System which handles Entities firing. This system has a pool of pre-allocated bullets which it draws from.
+ * The system places Bullets (Entities) into the front-middle of the entity.
+ */
 public class FiringSystem extends IterativeSystem {
     private final int BULLET_Y_PADDING = -20;
 
@@ -18,7 +22,7 @@ public class FiringSystem extends IterativeSystem {
     /**
      * Instantiates a new Iterative system.
      *
-     * @param world the world
+     * @param world the world to draw entities from
      */
     public FiringSystem(World world) {
         super(world, SpriteComponent.class, AnimationComponent.class);
@@ -54,6 +58,5 @@ public class FiringSystem extends IterativeSystem {
 
     @Override
     public void draw(RenderTarget target) {
-
     }
 }

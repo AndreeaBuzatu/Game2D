@@ -1,7 +1,7 @@
 package uk.ac.lancaster.scc210.engine.ecs;
 
 /**
- * The interface Component.
+ * An empty interface used to indicate that an Object is an Component.
  */
 public interface Component {
 }

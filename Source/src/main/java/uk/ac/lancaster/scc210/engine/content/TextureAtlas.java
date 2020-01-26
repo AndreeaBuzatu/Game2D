@@ -9,7 +9,9 @@ import uk.ac.lancaster.scc210.engine.resources.ResourceLoader;
 import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
 
 /**
- * The type Texture atlas.
+ * TextureAtlas represents a single image which is organised into a grid pattern.
+ * A TextureAtlas can be subdivided into Textures per the grid.
+ * The grid must have a fixed width and height (although they can be different).
  */
 public class TextureAtlas {
     private final String fileName;
@@ -21,10 +23,10 @@ public class TextureAtlas {
     /**
      * Instantiates a new Texture atlas.
      *
-     * @param fileName     the file name
+     * @param fileName     the file name from the file system
      * @param spriteWidth  the sprite width
      * @param spriteHeight the sprite height
-     * @throws ResourceNotFoundException the resource not found exception
+     * @throws ResourceNotFoundException occurs when the image cannot be found on the file system
      */
     public TextureAtlas(final String fileName, final int spriteWidth, final int spriteHeight) throws ResourceNotFoundException {
         this.fileName = fileName;
@@ -42,7 +44,7 @@ public class TextureAtlas {
      * @param row    row to capture from the texture atlas
      * @param column column to capture from the texture atlas
      * @return a texture with the texture atlas as it's texture and a rectangle containing the requested sprite
-     * @throws ResourceNotFoundException the resource not found exception
+     * @throws ResourceNotFoundException when a texture cannot be created from the given row and column
      */
     public Texture get(final int row, final int column) throws ResourceNotFoundException {
         Texture texture = new Texture();
@@ -60,7 +62,7 @@ public class TextureAtlas {
     }
 
     /**
-     * Gets columns.
+     * Get the number of columns in the TextureAtlas 0-indexed.
      *
      * @return the columns
      */

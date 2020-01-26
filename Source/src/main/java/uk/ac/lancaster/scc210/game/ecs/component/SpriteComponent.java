@@ -4,7 +4,7 @@ import org.jsfml.graphics.Sprite;
 import uk.ac.lancaster.scc210.engine.ecs.Component;
 
 /**
- * The type Sprite component.
+ * Indicates that an Entity has a Sprite. Usually used to indicate that an Entity is drawable
  */
 public class SpriteComponent implements Component {
     private final Sprite sprite;

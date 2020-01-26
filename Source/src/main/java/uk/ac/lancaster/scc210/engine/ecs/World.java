@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * The type World.
+ * World contains all the entities and systems in the game.
  */
 public class World {
     private final ArrayList<Entity> entities;
@@ -31,7 +31,7 @@ public class World {
     }
 
     /**
-     * Add entity.
+     * Add entity to the world. The world will update all the systems that a new entity has been added.
      *
      * @param entity the entity
      */
@@ -50,7 +50,7 @@ public class World {
     }
 
     /**
-     * Add system.
+     * Add a System to the world. It will be iterated upon in the next loop.
      *
      * @param system the system
      */
@@ -61,7 +61,7 @@ public class World {
     }
 
     /**
-     * Update.
+     * Update all the Systems contained in World.
      */
     public void update() {
         for (EntitySystem system : systems) {
@@ -70,9 +70,9 @@ public class World {
     }
 
     /**
-     * Draw.
+     * Draw all the Systems contained in World.
      *
-     * @param target the target
+     * @param target the target. Usually RenderWindow
      */
     public void draw(RenderTarget target) {
         for (EntitySystem system : systems) {
@@ -81,17 +81,17 @@ public class World {
     }
 
     /**
-     * Create entity entity.
+     * Create an Entity from a given array of Components.
      *
-     * @param components the components
-     * @return the entity
+     * @param components components to add to the new entity.
+     * @return the new entity
      */
     public static Entity createEntity(Component... components) {
         return new Entity(Arrays.asList(components));
     }
 
     /**
-     * Gets entities for.
+     * Given an array of components, find all the entities which have that set
      *
      * @param components the components
      * @return the entities for

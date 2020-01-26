@@ -9,6 +9,9 @@ import uk.ac.lancaster.scc210.game.ecs.component.BulletComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
 
+/**
+ * System used to prevent an entity from going off screen
+ */
 public class WindowBoundsSystem extends IterativeSystem {
     private WindowSize windowSize;
 
@@ -17,7 +20,7 @@ public class WindowBoundsSystem extends IterativeSystem {
     /**
      * Instantiates a new Iterative system.
      *
-     * @param world      the world
+     * @param world the world to draw entities from
      */
     public WindowBoundsSystem(World world) {
         super(world, SpriteComponent.class);

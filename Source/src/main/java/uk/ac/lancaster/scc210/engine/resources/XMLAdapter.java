@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 /**
- * The type Xml adapter.
+ * Adapts the loading of an XML document into a generic Resource.
  */
 public class XMLAdapter extends Resource<Document> {
     /**

@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 /**
- * The type Resource.
+ * Represents a generic Resource found within the game. This could be textures, sounds, text etc.
  *
- * @param <T> the type parameter
+ * @param <T> resource to load from
  */
 public abstract class Resource<T> {
     /**
@@ -24,24 +24,15 @@ public abstract class Resource<T> {
     }
 
     /**
-     * Load from file.
+     * Load the given resource from a path.
      *
      * @param path the path
-     * @throws IOException the io exception
+     * @throws IOException if the image can't be found
      */
     public abstract void loadFromFile(Path path) throws IOException;
 
     /**
-     * Sets resource.
-     *
-     * @param resource the resource
-     */
-    void setResource(T resource) {
-        this.resource = resource;
-    }
-
-    /**
-     * Gets resource.
+     * Gets the current resource.
      *
      * @return the resource
      */

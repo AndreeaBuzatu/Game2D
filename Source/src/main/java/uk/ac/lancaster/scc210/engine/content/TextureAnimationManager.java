@@ -6,11 +6,11 @@ import uk.ac.lancaster.scc210.engine.resources.deserialise.SerialisedAnimation;
 import java.util.List;
 
 /**
- * The type Texture animation manager.
+ * A ContentManager for storing TextureAnimations.
  */
 public class TextureAnimationManager extends ContentManager<TextureAnimation> {
     /**
-     * Instantiates a new Texture animation manager.
+     * From a list of SerialisedAnimations, place them into the manager
      *
      * @param serialisedAnimations the serialised animations
      */

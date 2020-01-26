@@ -7,11 +7,11 @@ import uk.ac.lancaster.scc210.engine.ecs.World;
 import java.util.Set;
 
 /**
- * The type Iterative system.
+ * Used for Systems which simply iterate through the entities in the World.
  */
 public abstract class IterativeSystem implements EntitySystem {
     /**
-     * The Entities.
+     * The Set of Entities given to the system from World.
      */
     protected Set<Entity> entities;
 
@@ -22,8 +22,8 @@ public abstract class IterativeSystem implements EntitySystem {
     /**
      * Instantiates a new Iterative system.
      *
-     * @param world      the world
-     * @param components the components
+     * @param world      the world containing entities to use
+     * @param components the components which this system uses
      */
     @SafeVarargs
     protected IterativeSystem(World world, Class<? extends Component>... components) {

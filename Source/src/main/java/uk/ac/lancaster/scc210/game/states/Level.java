@@ -8,7 +8,7 @@ import uk.ac.lancaster.scc210.game.content.SpaceShipManager;
 import uk.ac.lancaster.scc210.game.ecs.system.*;
 
 /**
- * The type Level.
+ * Represents the actual game-play state.
  */
 public class Level implements State {
     private World world;

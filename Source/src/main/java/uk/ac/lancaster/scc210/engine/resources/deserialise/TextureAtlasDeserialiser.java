@@ -7,14 +7,14 @@ import uk.ac.lancaster.scc210.engine.content.TextureAtlas;
 import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
 
 /**
- * The type Texture atlas deserialiser.
+ * Used to deserialise a TextureAtlas from a XML file
  */
 public class TextureAtlasDeserialiser extends Deserialiser<SerialisedTextureAtlas> {
     /**
      * Instantiates a new Texture atlas deserialiser.
      *
-     * @param document the document
-     * @throws ResourceNotFoundException the resource not found exception
+     * @param document the xml document
+     * @throws ResourceNotFoundException when the document can't be found or created
      */
     public TextureAtlasDeserialiser(Document document) throws ResourceNotFoundException {
         super(document, document.getElementsByTagName("atlas"), "atlas");

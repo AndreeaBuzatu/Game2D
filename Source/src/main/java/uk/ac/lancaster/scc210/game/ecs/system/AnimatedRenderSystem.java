@@ -8,13 +8,13 @@ import uk.ac.lancaster.scc210.game.ecs.component.AnimationComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
 /**
- * The type Render system.
+ * System used to render TextureAnimations to the RenderTarget (usually the RenderWindow)
  */
 public class AnimatedRenderSystem extends IterativeSystem {
     /**
      * Instantiates a new Render system.
      *
-     * @param world the world
+     * @param world the world to take from entities
      */
     public AnimatedRenderSystem(World world) {
         super(world, SpriteComponent.class, AnimationComponent.class);
@@ -35,6 +35,5 @@ public class AnimatedRenderSystem extends IterativeSystem {
 
     @Override
     public void update() {
-
     }
 }

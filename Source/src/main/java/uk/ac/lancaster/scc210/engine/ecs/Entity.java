@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 /**
- * The type Entity.
+ * Represents an Entity in the world. Each entity contains a set of Components which Systems use.
  */
 public class Entity {
     private final HashMap<Class<? extends Component>, Component> components;
@@ -19,7 +19,7 @@ public class Entity {
     /**
      * Instantiates a new Entity.
      *
-     * @param components the components
+     * @param components the components which the entity has
      */
     Entity(Collection<Component> components) {
         this.components = new HashMap<>();
@@ -34,7 +34,7 @@ public class Entity {
     }
 
     /**
-     * Gets components.
+     * Gets components which the entity has.
      *
      * @return the components
      */
@@ -47,10 +47,10 @@ public class Entity {
     }
 
     /**
-     * Find component component.
+     * Given a component class, find an instance of the component for the current Entity.
      *
-     * @param component the component
-     * @return the component
+     * @param component the component to search for
+     * @return the component found or null
      */
     public Component findComponent(Class<? extends Component> component) {
         return components.getOrDefault(component, null);

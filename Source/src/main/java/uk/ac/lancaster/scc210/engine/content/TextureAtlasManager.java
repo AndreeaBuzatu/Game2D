@@ -5,11 +5,12 @@ import uk.ac.lancaster.scc210.engine.resources.deserialise.SerialisedTextureAtla
 import java.util.List;
 
 /**
- * The type Texture atlas manager.
+ * ContentManager for TextureAtlases
  */
 public class TextureAtlasManager extends ContentManager<TextureAtlas> {
     /**
-     * Instantiates a new Texture atlas manager.
+     * Instantiates a new TextureAtlasManager.
+     * From a list of SerialisedTextureAtlases, create TextureAtlases from them
      *
      * @param serialisedTextureAtlases the serialised texture atlases
      */

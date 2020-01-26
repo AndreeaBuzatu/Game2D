@@ -6,7 +6,7 @@ import uk.ac.lancaster.scc210.engine.resources.deserialise.SerialisedTextureAtla
 import java.util.List;
 
 /**
- * The type Texture manager.
+ * ContentManager for Textures.
  */
 public class TextureManager extends ContentManager<Texture> {
     private static final int SPRITE_WIDTH = 32;
@@ -14,9 +14,12 @@ public class TextureManager extends ContentManager<Texture> {
     private static final int SPRITE_HEIGHT = 32;
 
     /**
-     * Instantiates a new Texture manager.
+     * Instantiates a new TextureManager.
+     * From a list of SerialisedTextureAtlases, place the textures into the TextureManager.
+     * Note: Textures are namespaced from the filename of their TextureAtlas.
+     * E.g. spritesheet.png containg 'example' will be stored as spritesheet.png:example
      *
-     * @param serialisedTextureAtlases the serialised texture atlases
+     * @param serialisedTextureAtlases when the Textures cannot be found
      */
     public TextureManager(List<SerialisedTextureAtlas> serialisedTextureAtlases) {
         super(new MissingTexture(SPRITE_WIDTH, SPRITE_HEIGHT).getTexture());

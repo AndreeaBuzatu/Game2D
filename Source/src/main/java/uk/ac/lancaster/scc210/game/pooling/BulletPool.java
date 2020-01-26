@@ -10,12 +10,20 @@ import uk.ac.lancaster.scc210.game.ecs.component.BulletComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
+/**
+ * Pool which stores bullets.
+ */
 public class BulletPool extends Pool {
     // Who cares if it's static? I don't
     private static final int INITIAL_BULLETS = 100;
 
     private final ServiceProvider serviceProvider;
 
+    /**
+     * Instantiate a BulletPool
+     *
+     * @param serviceProvider used to access the PoolService
+     */
     public BulletPool(ServiceProvider serviceProvider) {
         super(INITIAL_BULLETS);
 
@@ -26,6 +34,11 @@ public class BulletPool extends Pool {
         }
     }
 
+    /**
+     * Create a Bullet Entity from the Pool.
+     *
+     * @return an entity from the pool
+     */
     @Override
     protected Entity create() {
         TextureManager textureManager = (TextureManager) serviceProvider.get(TextureManager.class);

@@ -3,11 +3,11 @@ package uk.ac.lancaster.scc210.engine.service;
 import java.util.HashMap;
 
 /**
- * The type Service provider.
+ * A manager for services. Wraps a HashMap around HashMap<Class<? extends Service>, Service>.
+ * This is used to share objects around the program without directly sharing many instances and passing many parameters.
  *
- * @param <T> the type parameter
  */
-public class ServiceProvider<T extends Service> {
+public class ServiceProvider {
     private final HashMap<Class<? extends Service>, Service> services;
 
     /**
@@ -18,20 +18,20 @@ public class ServiceProvider<T extends Service> {
     }
 
     /**
-     * Put.
+     * Put a new service into the services.
      *
-     * @param klass   the klass
-     * @param service the service
+     * @param klass   the class of the Service to place into the ServiceProvider
+     * @param service the instance of the Service to place into the ServiceProvider
      */
     public void put(Class<? extends Service> klass, Service service) {
         services.put(klass, service);
     }
 
     /**
-     * Get service.
+     * Get a Service from the ServiceProvider.
      *
-     * @param klass the klass
-     * @return the service
+     * @param klass the class to find in the ServiceProvider
+     * @return the Service found or null
      */
     public Service get(final Class<? extends Service> klass) {
         return services.get(klass);

@@ -7,14 +7,14 @@ import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
 import uk.ac.lancaster.scc210.engine.resources.deserialise.Deserialiser;
 
 /**
- * The type Space ship deserialiser.
+ * Given appropriate XML, attempts to deserialise into a SerialisedSpaceShip
  */
 public class SpaceShipDeserialiser extends Deserialiser<SerialisedSpaceShip> {
     /**
      * Instantiates a new Space ship deserialiser.
      *
-     * @param document the document
-     * @throws ResourceNotFoundException the resource not found exception
+     * @param document the XML document
+     * @throws ResourceNotFoundException the resource could not be found or created
      */
     public SpaceShipDeserialiser(Document document) throws ResourceNotFoundException {
         super(document, "spaceship");

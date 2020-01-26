@@ -4,7 +4,7 @@ import uk.ac.lancaster.scc210.engine.animation.TextureAnimation;
 import uk.ac.lancaster.scc210.engine.ecs.Component;
 
 /**
- * The type Animation component.
+ * Component used to indicate that an Entity uses TextureAnimations.
  */
 public class AnimationComponent implements Component {
     private final TextureAnimation textureAnimation;

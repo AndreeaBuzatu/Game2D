@@ -8,11 +8,14 @@ import uk.ac.lancaster.scc210.game.ecs.component.BulletComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
+/**
+ * System which handles entities moving around the screen which are not keyboard controlled
+ */
 public class MovementSystem extends IterativeSystem {
     /**
      * Instantiates a new Iterative system.
      *
-     * @param world      the world
+     * @param world      the world to draw entities from
      */
     public MovementSystem(World world) {
         super(world, SpriteComponent.class, SpeedComponent.class, BulletComponent.class);

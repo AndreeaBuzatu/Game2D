@@ -3,7 +3,7 @@ package uk.ac.lancaster.scc210.game.resources;
 import uk.ac.lancaster.scc210.engine.resources.deserialise.Serialised;
 
 /**
- * The type Serialised space ship.
+ * Represents a Serialised Space Ship. Created from an XML document
  */
 public class SerialisedSpaceShip implements Serialised {
     private final String name;
@@ -14,9 +14,9 @@ public class SerialisedSpaceShip implements Serialised {
     /**
      * Instantiates a new Serialised space ship.
      *
-     * @param name      the name
-     * @param animation the animation
-     * @param speed     the speed
+     * @param name      the name of the spaceship
+     * @param animation the animation of the spaceship
+     * @param speed     the speed of the spaceship
      */
     SerialisedSpaceShip(String name, String animation, int speed) {
         this.name = name;

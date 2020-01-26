@@ -6,7 +6,7 @@ import org.jsfml.graphics.Texture;
 import org.jsfml.graphics.TextureCreationException;
 
 /**
- * The type Missing texture.
+ * The alternative for TextureManager. When drawn a P B checker pattern is drawin
  */
 class MissingTexture {
     private final Color PURPLE = new Color(255, 0, 255);
@@ -20,8 +20,8 @@ class MissingTexture {
     /**
      * Instantiates a new Missing texture.
      *
-     * @param spriteWidth  the sprite width
-     * @param spriteHeight the sprite height
+     * @param spriteWidth  width at which to draw MissingTexture
+     * @param spriteHeight height at which to draw MissingTexture
      */
     MissingTexture(final int spriteWidth, final int spriteHeight) {
         this.spriteWidth = spriteWidth;

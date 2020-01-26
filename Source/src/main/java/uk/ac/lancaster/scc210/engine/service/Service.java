@@ -1,7 +1,7 @@
 package uk.ac.lancaster.scc210.engine.service;
 
 /**
- * The interface Service.
+ * Empty interface used to indicate that an Object is a Service.
  */
 public interface Service {
 }

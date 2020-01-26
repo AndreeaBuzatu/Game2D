@@ -6,13 +6,13 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 /**
- * The type Image adapter.
+ * Adapts the loading of a SFML image into a generic Resource.
  */
 public class ImageAdapter extends Resource<Image> {
     /**
      * Instantiates a new Image adapter.
      *
-     * @param image the image
+     * @param image the image to load
      */
     public ImageAdapter(Image image) {
         super(image);
