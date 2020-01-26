@@ -13,9 +13,9 @@ import uk.ac.lancaster.scc210.game.pooling.BulletPool;
  * System used to prevent an entity from going off screen
  */
 public class WindowBoundsSystem extends IterativeSystem {
-    private WindowSize windowSize;
+    private final WindowSize windowSize;
 
-    private BulletPool bulletPool;
+    private final BulletPool bulletPool;
 
     /**
      * Instantiates a new Iterative system.

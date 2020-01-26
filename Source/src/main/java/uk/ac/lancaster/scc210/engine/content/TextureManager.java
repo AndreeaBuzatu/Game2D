@@ -17,7 +17,7 @@ public class TextureManager extends ContentManager<Texture> {
      * Instantiates a new TextureManager.
      * From a list of SerialisedTextureAtlases, place the textures into the TextureManager.
      * Note: Textures are namespaced from the filename of their TextureAtlas.
-     * E.g. spritesheet.png containg 'example' will be stored as spritesheet.png:example
+     * E.g. spritesheet.png containing 'example' will be stored as spritesheet.png:example
      *
      * @param serialisedTextureAtlases when the Textures cannot be found
      */

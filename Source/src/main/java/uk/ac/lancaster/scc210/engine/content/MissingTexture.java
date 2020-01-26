@@ -6,7 +6,7 @@ import org.jsfml.graphics.Texture;
 import org.jsfml.graphics.TextureCreationException;
 
 /**
- * The alternative for TextureManager. When drawn a P B checker pattern is drawin
+ * The alternative for TextureManager. When drawn a P B checker pattern is drawing
  */
 class MissingTexture {
     private final Color PURPLE = new Color(255, 0, 255);
