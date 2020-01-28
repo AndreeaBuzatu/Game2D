@@ -30,7 +30,7 @@ public class Level implements State {
 
         world.addSystem(new MovementSystem(world));
 
-        world.addSystem(new WindowBoundsSystem(world));
+        world.addSystem(new ViewBoundsSystem(world));
 
         SpaceShipManager spaceShipManager = (SpaceShipManager) game.getServiceProvider().get(SpaceShipManager.class);
 
