@@ -1,7 +1,7 @@
 package uk.ac.lancaster.scc210.game.ecs.system;
 
 import org.jsfml.graphics.RenderTarget;
-import uk.ac.lancaster.scc210.engine.WindowSize;
+import uk.ac.lancaster.scc210.engine.ViewSize;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.component.PooledComponent;
@@ -12,18 +12,18 @@ import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 /**
  * System used to prevent an entity from going off screen
  */
-public class WindowBoundsSystem extends IterativeSystem {
-    private final WindowSize windowSize;
+public class ViewBoundsSystem extends IterativeSystem {
+    private final ViewSize viewSize;
 
     /**
      * Instantiates a new Iterative system.
      *
      * @param world the world to draw entities from
      */
-    public WindowBoundsSystem(World world) {
+    public ViewBoundsSystem(World world) {
         super(world, SpriteComponent.class);
 
-        windowSize = (WindowSize) world.getServiceProvider().get(WindowSize.class);
+        viewSize = (ViewSize) world.getServiceProvider().get(ViewSize.class);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class WindowBoundsSystem extends IterativeSystem {
         for (Entity entity : entities) {
             SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
 
-            if (windowSize.outOfBounds(spriteComponent.getSprite())) {
+            if (viewSize.outOfBounds(spriteComponent.getSprite())) {
                 world.removeEntity(entity);
 
                 if (entity.hasComponent(PooledComponent.class)) {

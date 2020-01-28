@@ -7,7 +7,7 @@ import uk.ac.lancaster.scc210.engine.service.Service;
 /**
  * Service for accessing the current size of the window
  */
-public class WindowSize implements Service {
+public class ViewSize implements Service {
     private final int X_MIN = 0;
 
     private final int Y_MIN = 0;
@@ -19,7 +19,7 @@ public class WindowSize implements Service {
      *
      * @param viewBounds bounds of the view
      */
-    WindowSize(final FloatRect viewBounds) {
+    ViewSize(final FloatRect viewBounds) {
         this.viewBounds = viewBounds;
     }
 

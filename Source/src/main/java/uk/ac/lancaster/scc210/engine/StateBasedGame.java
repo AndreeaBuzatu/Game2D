@@ -46,7 +46,7 @@ public class StateBasedGame {
      */
     protected final ServiceProvider serviceProvider;
 
-    private WindowSize windowSize;
+    private ViewSize viewSize;
 
     private State currentState;
 
@@ -106,10 +106,10 @@ public class StateBasedGame {
 
         Vector2f viewSize = view.getSize();
 
-        windowSize = new WindowSize(new FloatRect(viewCentre.x - viewSize.x / 2,
+        this.viewSize = new ViewSize(new FloatRect(viewCentre.x - viewSize.x / 2,
                 viewCentre.y - viewSize.y / 2, viewSize.x, viewSize.y));
 
-        serviceProvider.put(WindowSize.class, windowSize);
+        serviceProvider.put(ViewSize.class, this.viewSize);
     }
 
     /**
