@@ -1,6 +1,9 @@
 package uk.ac.lancaster.scc210.engine;
 
+import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.RenderWindow;
+import org.jsfml.graphics.View;
+import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
@@ -25,6 +28,8 @@ import java.util.Queue;
 public class StateBasedGame {
     private static final int FPS = 60;
 
+    private final float ZOOM_AMOUNT = 2.0f;
+
     private final Queue<State> states;
 
     /**
@@ -32,16 +37,16 @@ public class StateBasedGame {
      */
     protected final RenderWindow window;
 
-    //private final View view;
+    private final View view;
+
+    private final int windowWidth, windowHeight;
 
     /**
      * The Service provider. Used to access services throughout the game
      */
     protected final ServiceProvider serviceProvider;
 
-    private TextureAtlasDeserialiser textureAtlasDeserialiser;
-
-    private AnimationDeserialiser animationDeserialiser;
+    private WindowSize windowSize;
 
     private State currentState;
 
@@ -56,13 +61,19 @@ public class StateBasedGame {
      * @param state        the default starting state of the game
      */
     protected StateBasedGame(final String name, final int windowWidth, final int windowHeight, final State state) {
+        this.windowWidth = windowWidth;
+        this.windowHeight = windowHeight;
         this.currentState = state;
 
         window = new RenderWindow(new VideoMode(windowWidth, windowHeight), name);
 
-        //view = new View();
+        // Set the centre of the view to (0, 0) window by finding half the width of the window width and height
+        view = new View(new Vector2f((windowWidth >> 1) * ZOOM_AMOUNT, (windowHeight >> 1) * ZOOM_AMOUNT),
+                new Vector2f(windowWidth, windowHeight));
 
-        //window.setView(view);
+        view.zoom(ZOOM_AMOUNT);
+
+        window.setView(view);
 
         window.setFramerateLimit(FPS);
 
@@ -73,11 +84,11 @@ public class StateBasedGame {
         serviceProvider = new ServiceProvider();
 
         try {
-            textureAtlasDeserialiser = new TextureAtlasDeserialiser(deserialiseXML("atlases.xml"));
+            TextureAtlasDeserialiser textureAtlasDeserialiser = new TextureAtlasDeserialiser(deserialiseXML("atlases.xml"));
 
             TextureAtlasManager atlasManager = new TextureAtlasManager(textureAtlasDeserialiser.getSerialised());
 
-            animationDeserialiser = new AnimationDeserialiser(atlasManager, deserialiseXML("animations.xml"));
+            AnimationDeserialiser animationDeserialiser = new AnimationDeserialiser(atlasManager, deserialiseXML("animations.xml"));
 
             TextureAnimationManager textureAnimationManager = new TextureAnimationManager(animationDeserialiser.getSerialised());
 
@@ -91,7 +102,14 @@ public class StateBasedGame {
             window.close();
         }
 
-        serviceProvider.put(WindowSize.class, new WindowSize(windowWidth, windowHeight));
+        Vector2f viewCentre = view.getCenter();
+
+        Vector2f viewSize = view.getSize();
+
+        windowSize = new WindowSize(new FloatRect(viewCentre.x - viewSize.x / 2,
+                viewCentre.y - viewSize.y / 2, viewSize.x, viewSize.y));
+
+        serviceProvider.put(WindowSize.class, windowSize);
     }
 
     /**
@@ -109,14 +127,28 @@ public class StateBasedGame {
 
     private void update() {
         while ((event = window.pollEvent()) != null) {
-            if (event.type == Event.Type.CLOSED) {
-                window.close();
-            }
-
-            if (event.type == Event.Type.KEY_PRESSED) {
-                if (event.asKeyEvent().key == Keyboard.Key.ESCAPE) {
+            switch (event.type) {
+                case CLOSED:
                     window.close();
-                }
+
+                    break;
+
+                case KEY_PRESSED:
+                    if (event.asKeyEvent().key == Keyboard.Key.ESCAPE) {
+                        window.close();
+                    }
+
+                    break;
+
+                case RESIZED:
+                    float aspectRatio = (float) window.getSize().x / window.getSize().y;
+
+                    view.setSize(windowWidth * aspectRatio, windowHeight * aspectRatio);
+
+                    break;
+
+                default:
+                    break;
             }
         }
 
@@ -165,5 +197,9 @@ public class StateBasedGame {
      */
     public ServiceProvider getServiceProvider() {
         return serviceProvider;
+    }
+
+    private Vector2f setViewSize() {
+        return new Vector2f((windowWidth >> 1) * ZOOM_AMOUNT, (windowHeight >> 1) * ZOOM_AMOUNT);
     }
 }

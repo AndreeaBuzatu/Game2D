@@ -12,17 +12,15 @@ public class WindowSize implements Service {
 
     private final int Y_MIN = 0;
 
-    private final int width, height;
+    private final FloatRect viewBounds;
 
     /**
      * Instantiates the WindowSize service
      *
-     * @param width  width of the window
-     * @param height height of the window
+     * @param viewBounds bounds of the view
      */
-    WindowSize(final int width, final int height) {
-        this.width = width;
-        this.height = height;
+    WindowSize(final FloatRect viewBounds) {
+        this.viewBounds = viewBounds;
     }
 
     /**
@@ -34,9 +32,9 @@ public class WindowSize implements Service {
     public boolean outOfBounds(Sprite sprite) {
         FloatRect globalBounds = sprite.getGlobalBounds();
 
-        float maxRight = width - globalBounds.width;
+        float maxRight = viewBounds.width - globalBounds.width;
 
-        float maxDown = height - globalBounds.height;
+        float maxDown = viewBounds.height - globalBounds.height;
 
         return globalBounds.left < X_MIN || globalBounds.top < Y_MIN
                 || globalBounds.left > maxRight || globalBounds.top > maxDown;
