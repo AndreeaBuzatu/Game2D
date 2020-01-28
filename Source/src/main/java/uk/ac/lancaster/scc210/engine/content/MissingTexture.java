@@ -4,6 +4,7 @@ import org.jsfml.graphics.Color;
 import org.jsfml.graphics.Image;
 import org.jsfml.graphics.Texture;
 import org.jsfml.graphics.TextureCreationException;
+import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
 
 /**
  * The alternative for TextureManager. When drawn a P B checker pattern is drawing
@@ -23,7 +24,7 @@ class MissingTexture {
      * @param spriteWidth  width at which to draw MissingTexture
      * @param spriteHeight height at which to draw MissingTexture
      */
-    MissingTexture(final int spriteWidth, final int spriteHeight) {
+    MissingTexture(final int spriteWidth, final int spriteHeight) throws ResourceNotFoundException {
         this.spriteWidth = spriteWidth;
         this.spriteHeight = spriteHeight;
 
@@ -35,11 +36,10 @@ class MissingTexture {
 
         texture = new Texture();
 
-        // TODO: Handle this properly
         try {
             texture.loadFromImage(image);
         } catch (TextureCreationException e) {
-            e.printStackTrace();
+            throw new ResourceNotFoundException("Could not create missing texture");
         }
     }
 
