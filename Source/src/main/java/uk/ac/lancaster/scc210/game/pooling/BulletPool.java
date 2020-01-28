@@ -4,9 +4,9 @@ import org.jsfml.graphics.Sprite;
 import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
+import uk.ac.lancaster.scc210.engine.ecs.component.PooledComponent;
 import uk.ac.lancaster.scc210.engine.pooling.Pool;
 import uk.ac.lancaster.scc210.engine.service.ServiceProvider;
-import uk.ac.lancaster.scc210.game.ecs.component.BulletComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
@@ -47,6 +47,8 @@ public class BulletPool extends Pool {
 
         SpeedComponent speedComponent = new SpeedComponent(5);
 
-        return World.createEntity(spriteComponent, speedComponent, new BulletComponent());
+        PooledComponent pooledComponent = new PooledComponent(this.getClass());
+
+        return World.createEntity(spriteComponent, speedComponent, pooledComponent);
     }
 }

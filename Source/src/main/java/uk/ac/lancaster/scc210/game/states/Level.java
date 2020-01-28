@@ -6,6 +6,7 @@ import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.states.State;
 import uk.ac.lancaster.scc210.game.content.SpaceShipManager;
 import uk.ac.lancaster.scc210.game.ecs.system.*;
+import uk.ac.lancaster.scc210.game.pooling.BulletPool;
 
 /**
  * Represents the actual game-play state.
@@ -16,6 +17,8 @@ public class Level implements State {
     @Override
     public void setup(StateBasedGame game) {
         world = new World(game.getServiceProvider());
+
+        world.addPool((BulletPool) game.getServiceProvider().get(BulletPool.class));
 
         world.addSystem(new AnimatedRenderSystem(world));
 

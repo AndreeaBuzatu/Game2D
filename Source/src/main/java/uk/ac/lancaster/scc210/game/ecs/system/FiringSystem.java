@@ -6,6 +6,7 @@ import org.jsfml.window.Keyboard;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
+import uk.ac.lancaster.scc210.engine.pooling.Pool;
 import uk.ac.lancaster.scc210.game.ecs.component.AnimationComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
@@ -17,7 +18,7 @@ import uk.ac.lancaster.scc210.game.pooling.BulletPool;
 public class FiringSystem extends IterativeSystem {
     private final int BULLET_Y_PADDING = -20;
 
-    private final BulletPool bulletPool;
+    private final Pool bulletPool;
 
     /**
      * Instantiates a new Iterative system.
@@ -27,7 +28,7 @@ public class FiringSystem extends IterativeSystem {
     public FiringSystem(World world) {
         super(world, SpriteComponent.class, AnimationComponent.class);
 
-        bulletPool = (BulletPool) world.getServiceProvider().get(BulletPool.class);
+        bulletPool = world.getPool(BulletPool.class);
     }
 
     @Override

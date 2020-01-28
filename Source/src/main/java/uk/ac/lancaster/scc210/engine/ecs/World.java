@@ -2,6 +2,7 @@ package uk.ac.lancaster.scc210.engine.ecs;
 
 import org.jsfml.graphics.RenderTarget;
 import uk.ac.lancaster.scc210.engine.ecs.system.EntitySystem;
+import uk.ac.lancaster.scc210.engine.pooling.Pool;
 import uk.ac.lancaster.scc210.engine.service.ServiceProvider;
 
 import java.util.ArrayList;
@@ -17,6 +18,8 @@ public class World {
 
     private final ArrayList<EntitySystem> systems;
 
+    private final ArrayList<Pool> pools;
+
     private final ServiceProvider serviceProvider;
 
     /**
@@ -28,6 +31,8 @@ public class World {
         entities = new ArrayList<>();
 
         systems = new ArrayList<>();
+
+        pools = new ArrayList<>();
     }
 
     /**
@@ -52,11 +57,22 @@ public class World {
     /**
      * Add a System to the world. It will be iterated upon in the next loop.
      *
-     * @param system the system
+     * @param system the system to add
      */
     public void addSystem(EntitySystem system) {
         if (!systems.contains(system)) {
             systems.add(system);
+        }
+    }
+
+    /**
+     * Add a pool to the world. Should be added before any systems are added.
+     *
+     * @param pool the pool to add
+     */
+    public void addPool(Pool pool) {
+        if (!pools.contains(pool)) {
+            pools.add(pool);
         }
     }
 
@@ -102,6 +118,20 @@ public class World {
                 .parallelStream()
                 .filter(entity -> entity.getComponents().keySet().containsAll(Arrays.asList(components)))
                 .collect(Collectors.toSet());
+    }
+
+    /**
+     * From a Class<Pool> return the associate Pool
+     *
+     * @param klass the Pool to find
+     * @return the Pool or null if the Pool can't be found
+     */
+    public Pool getPool(Class<? extends Pool> klass) {
+        return pools
+                .parallelStream()
+                .filter(pool -> pool.getClass().equals(klass))
+                .findFirst()
+                .orElse(null);
     }
 
     public ServiceProvider getServiceProvider() {
