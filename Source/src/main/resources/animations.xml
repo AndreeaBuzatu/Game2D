@@ -1,0 +1,6 @@
+<animations>
+    <animation name="player-ship" atlas="enemy-spritesheet.png" row="0" column="0" num_frames="4">
+    </animation>
+    <animation name="alien-ship" atlas="spritesheet.png" row="0" column="1" num_frames="1">
+    </animation>
+</animations>
