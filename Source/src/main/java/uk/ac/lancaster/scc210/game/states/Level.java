@@ -22,7 +22,7 @@ public class Level implements State {
 
         world.addSystem(new AnimatedRenderSystem(world));
 
-        world.addSystem(new KeyboardMovementSystem(world));
+        world.addSystem(new PlayerMovementSystem(world));
 
         world.addSystem(new RenderSystem(world));
 
