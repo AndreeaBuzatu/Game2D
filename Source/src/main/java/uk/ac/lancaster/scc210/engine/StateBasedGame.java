@@ -83,13 +83,13 @@ public class StateBasedGame {
 
             serviceProvider.put(TextureAnimationManager.class, textureAnimationManager);
 
+            TextureManager textureManager = new TextureManager(textureAtlasDeserialiser.getSerialised());
+
+            serviceProvider.put(TextureManager.class, textureManager);
+
         } catch (ResourceNotFoundException e) {
             window.close();
         }
-
-        TextureManager textureManager = new TextureManager(textureAtlasDeserialiser.getSerialised());
-
-        serviceProvider.put(TextureManager.class, textureManager);
 
         serviceProvider.put(WindowSize.class, new WindowSize(windowWidth, windowHeight));
     }

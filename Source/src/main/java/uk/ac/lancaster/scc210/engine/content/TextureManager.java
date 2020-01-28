@@ -1,6 +1,7 @@
 package uk.ac.lancaster.scc210.engine.content;
 
 import org.jsfml.graphics.Texture;
+import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
 import uk.ac.lancaster.scc210.engine.resources.deserialise.SerialisedTextureAtlas;
 
 import java.util.List;
@@ -20,8 +21,9 @@ public class TextureManager extends ContentManager<Texture> {
      * E.g. spritesheet.png containing 'example' will be stored as spritesheet.png:example
      *
      * @param serialisedTextureAtlases when the Textures cannot be found
+     * @throws ResourceNotFoundException when MissingTexture cannot be created
      */
-    public TextureManager(List<SerialisedTextureAtlas> serialisedTextureAtlases) {
+    public TextureManager(List<SerialisedTextureAtlas> serialisedTextureAtlases) throws ResourceNotFoundException {
         super(new MissingTexture(SPRITE_WIDTH, SPRITE_HEIGHT).getTexture());
 
         serialisedTextureAtlases.forEach(serialisedTextureAtlas -> serialisedTextureAtlas.getSerialisedTextures()
