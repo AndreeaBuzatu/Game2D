@@ -7,6 +7,7 @@ import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.engine.pooling.Pool;
+import uk.ac.lancaster.scc210.game.controller.ControllerButton;
 import uk.ac.lancaster.scc210.game.ecs.component.AnimationComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
@@ -36,7 +37,7 @@ public class FiringSystem extends IterativeSystem {
         for (Entity entity : entities) {
             SpriteComponent entitySprite = (SpriteComponent) entity.findComponent(SpriteComponent.class);
 
-            if (Keyboard.isKeyPressed(Keyboard.Key.SPACE)) {
+            if (Keyboard.isKeyPressed(Keyboard.Key.SPACE) || ControllerButton.A_BUTTON.isPressed()) {
                 Entity bullet = bulletPool.borrowEntity();
 
                 SpriteComponent bulletSprite = (SpriteComponent) bullet.findComponent(SpriteComponent.class);
