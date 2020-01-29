@@ -1,4 +1,4 @@
-package uk.ac.lancaster.scc210.game.controller;
+package uk.ac.lancaster.scc210.engine.controller;
 
 import org.jsfml.window.Joystick;
 
