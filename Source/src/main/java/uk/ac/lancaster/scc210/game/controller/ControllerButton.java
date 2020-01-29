@@ -25,11 +25,15 @@ public enum ControllerButton {
 
     private final int id;
 
+    private final int controllerId;
+
     ControllerButton(final int id) {
         this.id = id;
+
+        controllerId = Controller.getControllerId();
     }
 
     public boolean isPressed() {
-        return Joystick.isButtonPressed(Controller.CONTROLLER_ID, id);
+        return Joystick.isButtonPressed(controllerId, id);
     }
 }

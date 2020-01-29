@@ -19,16 +19,20 @@ public enum ControllerAxis {
 
     private final Joystick.Axis axis;
 
+    private final int controllerId;
+
     ControllerAxis(Joystick.Axis axis) {
         this.axis = axis;
+
+        controllerId = Controller.getControllerId();
     }
 
     public float getAxisPosition() {
-        return Joystick.getAxisPosition(Controller.CONTROLLER_ID, this.axis);
+        return Joystick.getAxisPosition(controllerId, axis);
     }
 
     public boolean hasAxis() {
-        return Joystick.hasAxis(Controller.CONTROLLER_ID, this.axis);
+        return Joystick.hasAxis(controllerId, axis);
     }
 
     public boolean axisMoved() {
