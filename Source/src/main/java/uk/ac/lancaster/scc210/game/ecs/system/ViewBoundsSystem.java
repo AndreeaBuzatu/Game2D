@@ -8,6 +8,7 @@ import uk.ac.lancaster.scc210.engine.ecs.component.PooledComponent;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.engine.pooling.Pool;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.WaveComponent;
 
 /**
  * System used to prevent an entity from going off screen
@@ -31,7 +32,7 @@ public class ViewBoundsSystem extends IterativeSystem {
         for (Entity entity : entities) {
             SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
 
-            if (viewSize.outOfBounds(spriteComponent.getSprite())) {
+            if (viewSize.outOfBounds(spriteComponent.getSprite()) && !entity.hasComponent(WaveComponent.class)) {
                 world.removeEntity(entity);
 
                 if (entity.hasComponent(PooledComponent.class)) {
