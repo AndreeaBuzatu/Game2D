@@ -4,9 +4,11 @@ import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 
 public abstract class Wave {
-    Vector2f origin, direction;
+    final Vector2f origin;
 
-    private Vector2f destination;
+    Vector2f direction;
+
+    private final Vector2f destination;
 
     private double vectorDistance;
 

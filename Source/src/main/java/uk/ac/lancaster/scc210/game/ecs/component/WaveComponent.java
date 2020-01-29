@@ -4,7 +4,7 @@ import uk.ac.lancaster.scc210.engine.ecs.Component;
 import uk.ac.lancaster.scc210.game.waves.Wave;
 
 public class WaveComponent implements Component {
-    private Wave wave;
+    private final Wave wave;
 
     public WaveComponent(Wave wave) {
         this.wave = wave;

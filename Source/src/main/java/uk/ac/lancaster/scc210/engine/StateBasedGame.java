@@ -46,7 +46,7 @@ public class StateBasedGame {
      */
     protected final ServiceProvider serviceProvider;
 
-    private ViewSize viewSize;
+    private final ViewSize viewSize;
 
     private State currentState;
 

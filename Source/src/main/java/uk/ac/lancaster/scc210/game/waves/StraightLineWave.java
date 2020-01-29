@@ -8,7 +8,7 @@ import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
 public class StraightLineWave extends Wave {
-    private Clock clock;
+    private final Clock clock;
 
     public StraightLineWave(Vector2f origin, Vector2f destination) {
         super(origin, destination);
