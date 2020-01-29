@@ -6,6 +6,7 @@ import org.jsfml.window.Keyboard;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
+import uk.ac.lancaster.scc210.game.controller.Controller;
 import uk.ac.lancaster.scc210.game.controller.ControllerAxis;
 import uk.ac.lancaster.scc210.game.controller.ControllerButton;
 import uk.ac.lancaster.scc210.game.ecs.component.RotationComponent;
@@ -30,9 +31,12 @@ public class PlayerMovementSystem extends IterativeSystem {
 
         hasAxises = false;
 
-        hasAxises = ControllerAxis.RIGHT_JOYSTICK_UP_DOWN.hasAxis();
+        // Don't bother to detect if a controller hasn't been found
+        if (Controller.hasController()) {
+            hasAxises = ControllerAxis.RIGHT_JOYSTICK_UP_DOWN.hasAxis();
 
-        hasAxises = ControllerAxis.RIGHT_JOYSTICK_LEFT_RIGHT.hasAxis();
+            hasAxises = ControllerAxis.RIGHT_JOYSTICK_LEFT_RIGHT.hasAxis();
+        }
     }
 
     @Override
@@ -57,9 +61,9 @@ public class PlayerMovementSystem extends IterativeSystem {
     }
 
     private void handleMovement(Sprite sprite, int speed) {
-        int moveY = 0;
+        int moveY;
 
-        int moveX = 0;
+        int moveX;
 
         moveX = handleJoystickMove(ControllerAxis.LEFT_JOYSTICK_LEFT_RIGHT, speed);
 
