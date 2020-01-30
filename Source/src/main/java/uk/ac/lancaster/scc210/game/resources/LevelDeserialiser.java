@@ -12,6 +12,9 @@ import uk.ac.lancaster.scc210.game.ecs.entity.SpaceShip;
 import uk.ac.lancaster.scc210.game.level.Level;
 import uk.ac.lancaster.scc210.game.level.LevelStage;
 import uk.ac.lancaster.scc210.game.level.LevelWave;
+import uk.ac.lancaster.scc210.game.waves.SineWave;
+import uk.ac.lancaster.scc210.game.waves.StraightLineWave;
+import uk.ac.lancaster.scc210.game.waves.Wave;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +41,7 @@ public class LevelDeserialiser extends Deserialiser<Level> {
     }
 
     @Override
-    protected void deserialise() {
+    protected void deserialise() throws ResourceNotFoundException {
         if (spaceShipManager == null) {
             return;
         }
@@ -52,7 +55,7 @@ public class LevelDeserialiser extends Deserialiser<Level> {
         }
     }
 
-    private List<LevelStage> deserialiseStage(NodeList nodes) {
+    private List<LevelStage> deserialiseStage(NodeList nodes) throws ResourceNotFoundException {
         List<LevelStage> stages = new ArrayList<>();
 
         for (int i = 0; i < nodes.getLength(); i++) {
@@ -66,7 +69,7 @@ public class LevelDeserialiser extends Deserialiser<Level> {
         return stages;
     }
 
-    private List<LevelWave> deserialiseWave(NodeList nodes) {
+    private List<LevelWave> deserialiseWave(NodeList nodes) throws ResourceNotFoundException {
         List<LevelWave> waves = new ArrayList<>();
 
         for (int i = 0; i < nodes.getLength(); i++) {
@@ -74,8 +77,6 @@ public class LevelDeserialiser extends Deserialiser<Level> {
 
             if (foundNode(node, WAVE_TAG)) {
                 Element elem = (Element) node;
-
-                String waveType = elem.getAttribute("type");
 
                 float originX = Float.parseFloat(elem.getAttribute("start_x"));
 
@@ -93,12 +94,27 @@ public class LevelDeserialiser extends Deserialiser<Level> {
 
                 Vector2f destination = new Vector2f(destinationX, destinationY);
 
+                Wave wave = deserialiseWaveName(elem.getAttribute("type"), origin, destination);
+
                 SpaceShip spaceShip = spaceShipManager.get(shipName);
 
-                waves.add(new LevelWave(waveType, origin, destination, numShips, spaceShip));
+                waves.add(new LevelWave(wave, origin, destination, numShips, spaceShip));
             }
         }
 
         return waves;
+    }
+
+    private Wave deserialiseWaveName(String wave, Vector2f origin, Vector2f destination) throws ResourceNotFoundException {
+        switch (wave) {
+            case "straight":
+                return new StraightLineWave(origin, destination);
+
+            case "sine":
+                return new SineWave(origin, destination);
+
+            default:
+                throw new ResourceNotFoundException(String.format("Could not find given wave: %s.", wave));
+        }
     }
 }

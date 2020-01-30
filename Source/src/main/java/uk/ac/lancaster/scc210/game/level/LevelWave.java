@@ -6,8 +6,6 @@ import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.WaveComponent;
 import uk.ac.lancaster.scc210.game.ecs.entity.SpaceShip;
-import uk.ac.lancaster.scc210.game.waves.SineWave;
-import uk.ac.lancaster.scc210.game.waves.StraightLineWave;
 import uk.ac.lancaster.scc210.game.waves.Wave;
 
 public class LevelWave {
@@ -21,32 +19,14 @@ public class LevelWave {
 
     private final int numShips;
 
-    public LevelWave(String wave, Vector2f origin, Vector2f destination, int numShips, SpaceShip spaceShip) {
+    public LevelWave(Wave wave, Vector2f origin, Vector2f destination, int numShips, SpaceShip spaceShip) {
+        this.wave = wave;
         this.numShips = numShips;
         this.spaceShip = spaceShip;
 
         entities = new Entity[numShips];
 
-        switch (wave) {
-            case "straight":
-                this.wave = new StraightLineWave(origin, destination);
-
-                break;
-
-            case "sine":
-                this.wave = new SineWave(origin, destination);
-
-                break;
-
-            default:
-                System.out.println("Fix this");
-
-                break;
-        }
-
         waveComponent = new WaveComponent(this.wave);
-
-        System.out.println(this.wave.direction(origin, destination));
 
         Vector2f direction = this.wave.direction(origin, destination);
 
