@@ -4,7 +4,7 @@ import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 
 public abstract class Wave {
-    Vector2f origin;
+    final Vector2f origin;
 
     Vector2f direction;
 

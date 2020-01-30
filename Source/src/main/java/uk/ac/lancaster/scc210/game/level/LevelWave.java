@@ -11,9 +11,9 @@ import uk.ac.lancaster.scc210.game.waves.Wave;
 public class LevelWave {
     private final Entity[] entities;
 
-    private Wave wave;
+    private final Wave wave;
 
-    private WaveComponent waveComponent;
+    private final WaveComponent waveComponent;
 
     private final SpaceShip spaceShip;
 

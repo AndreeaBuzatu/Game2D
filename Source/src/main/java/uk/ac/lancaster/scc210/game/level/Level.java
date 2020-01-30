@@ -7,7 +7,7 @@ import java.util.List;
 public class Level implements Serialised {
     private final List<LevelStage> stages;
 
-    private int currentStage;
+    private final int currentStage;
 
     public Level(List<LevelStage> stages) {
         this.stages = stages;
