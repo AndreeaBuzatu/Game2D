@@ -9,6 +9,7 @@ import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.engine.pooling.Pool;
 import uk.ac.lancaster.scc210.game.ecs.component.AnimationComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
 
@@ -27,7 +28,7 @@ public class FiringSystem extends IterativeSystem {
      * @param world the world to draw entities from
      */
     public FiringSystem(World world) {
-        super(world, SpriteComponent.class, AnimationComponent.class);
+        super(world, SpriteComponent.class, AnimationComponent.class, PlayerComponent.class);
 
         bulletPool = world.getPool(BulletPool.class);
     }

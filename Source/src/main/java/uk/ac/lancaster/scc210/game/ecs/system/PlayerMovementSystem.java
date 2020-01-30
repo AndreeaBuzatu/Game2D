@@ -9,6 +9,7 @@ import uk.ac.lancaster.scc210.engine.controller.ControllerButton;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
+import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.RotationComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
@@ -27,7 +28,7 @@ public class PlayerMovementSystem extends IterativeSystem {
      * @param world the world to draw entities from
      */
     public PlayerMovementSystem(World world) {
-        super(world, SpriteComponent.class, SpeedComponent.class, RotationComponent.class);
+        super(world, SpriteComponent.class, SpeedComponent.class, RotationComponent.class, PlayerComponent.class);
 
         hasAxises = false;
 
