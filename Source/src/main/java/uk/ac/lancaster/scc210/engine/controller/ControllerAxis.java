@@ -32,13 +32,18 @@ public enum ControllerAxis {
     }
 
     public boolean hasAxis() {
-        return Joystick.hasAxis(controllerId, axis);
+        return Controller.hasController(controllerId) && Joystick.hasAxis(controllerId, axis);
     }
 
     public boolean axisMoved() {
-        float axisPosition = getAxisPosition();
+        if (hasAxis()) {
+            float axisPosition = getAxisPosition();
 
-        return axisPosition <= AXIS_NEGATIVE_THRESHOLD || axisPosition >= AXIS_POSITIVE_THRESHOLD;
+            return axisPosition <= AXIS_NEGATIVE_THRESHOLD || axisPosition >= AXIS_POSITIVE_THRESHOLD;
+
+        }
+
+        return false;
     }
 
     public boolean axisesMoved(ControllerAxis other) {

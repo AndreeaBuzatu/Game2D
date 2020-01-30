@@ -21,4 +21,8 @@ public class Controller {
     public static boolean hasController() {
         return getControllerId() > UNKNOWN_CONTROLLER;
     }
+
+    static boolean hasController(final int controllerID) {
+        return controllerID > UNKNOWN_CONTROLLER;
+    }
 }
