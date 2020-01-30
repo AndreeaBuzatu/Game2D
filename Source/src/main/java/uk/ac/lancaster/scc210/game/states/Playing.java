@@ -1,24 +1,22 @@
 package uk.ac.lancaster.scc210.game.states;
 
 import org.jsfml.graphics.RenderTarget;
-import org.jsfml.graphics.Sprite;
-import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
-import uk.ac.lancaster.scc210.engine.content.TextureManager;
+import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.states.State;
+import uk.ac.lancaster.scc210.game.content.LevelManager;
 import uk.ac.lancaster.scc210.game.content.SpaceShipManager;
-import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.WaveComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
 import uk.ac.lancaster.scc210.game.ecs.system.*;
+import uk.ac.lancaster.scc210.game.level.Level;
+import uk.ac.lancaster.scc210.game.level.LevelWave;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
-import uk.ac.lancaster.scc210.game.waves.SineWave;
 
 /**
  * Represents the actual game-play state.
  */
-public class Level implements State {
+public class Playing implements State {
     private World world;
 
     @Override
@@ -43,8 +41,23 @@ public class Level implements State {
 
         SpaceShipManager spaceShipManager = (SpaceShipManager) game.getServiceProvider().get(SpaceShipManager.class);
 
-        world.addEntity(spaceShipManager.get("player"));
+        Entity player = spaceShipManager.get("player").createEntity();
 
+        player.addComponent(new PlayerComponent());
+
+        world.addEntity(player);
+
+        LevelManager levelManager = (LevelManager) game.getServiceProvider().get(LevelManager.class);
+
+        Level level = levelManager.get("0");
+
+        for (LevelWave wave : level.getCurrentStage().getWaves()) {
+            for (Entity entity : wave.getEntities()) {
+                world.addEntity(entity);
+            }
+        }
+
+        /*
         Sprite sprite = new Sprite(((TextureManager) game.getServiceProvider().get(TextureManager.class)).get("spritesheet.png:other"));
 
         SpriteComponent spriteComponent = new SpriteComponent(sprite);
@@ -54,6 +67,7 @@ public class Level implements State {
         WaveComponent waveComponent = new WaveComponent(new SineWave(new Vector2f(0, 0), new Vector2f(500, 500)));
 
         world.addEntity(World.createEntity(spriteComponent, speedComponent, waveComponent));
+         */
     }
 
     @Override

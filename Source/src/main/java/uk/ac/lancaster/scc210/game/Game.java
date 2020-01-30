@@ -4,10 +4,12 @@ import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import uk.ac.lancaster.scc210.engine.content.TextureAnimationManager;
 import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
+import uk.ac.lancaster.scc210.game.content.LevelManager;
 import uk.ac.lancaster.scc210.game.content.SpaceShipManager;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
+import uk.ac.lancaster.scc210.game.resources.LevelDeserialiser;
 import uk.ac.lancaster.scc210.game.resources.SpaceShipDeserialiser;
-import uk.ac.lancaster.scc210.game.states.Level;
+import uk.ac.lancaster.scc210.game.states.Playing;
 
 import java.util.logging.Logger;
 
@@ -24,7 +26,7 @@ public class Game extends StateBasedGame {
      * Instantiates a new Game.
      */
     public Game() {
-        super("Shooter", 1280, 720, new Level());
+        super("Shooter", 1280, 720, new Playing());
 
         try {
             TextureManager textureManager = (TextureManager) serviceProvider.get(TextureManager.class);
@@ -33,7 +35,15 @@ public class Game extends StateBasedGame {
 
             SpaceShipDeserialiser spaceShipDeserialiser = new SpaceShipDeserialiser(deserialiseXML("spaceships.xml"));
 
-            serviceProvider.put(SpaceShipManager.class, new SpaceShipManager(animationManager, spaceShipDeserialiser.getSerialised()));
+            SpaceShipManager spaceShipManager = new SpaceShipManager(animationManager, spaceShipDeserialiser.getSerialised());
+
+            serviceProvider.put(SpaceShipManager.class, spaceShipManager);
+
+            LevelDeserialiser levelDeserialiser = new LevelDeserialiser(spaceShipManager, deserialiseXML("levels.xml"));
+
+            LevelManager levelManager = new LevelManager(levelDeserialiser.getSerialised());
+
+            serviceProvider.put(LevelManager.class, levelManager);
 
         } catch (ResourceNotFoundException e) {
             window.close();
