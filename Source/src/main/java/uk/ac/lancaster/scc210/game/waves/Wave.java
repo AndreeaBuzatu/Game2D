@@ -4,7 +4,7 @@ import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 
 public abstract class Wave {
-    final Vector2f origin;
+    Vector2f origin;
 
     Vector2f direction;
 
@@ -41,5 +41,9 @@ public abstract class Wave {
         double length = length(vec);
 
         return new Vector2f((float) (vec.x / length), (float) (vec.y / length));
+    }
+
+    public Vector2f direction(Vector2f left, Vector2f right) {
+        return normalise(Vector2f.sub(right, left));
     }
 }
