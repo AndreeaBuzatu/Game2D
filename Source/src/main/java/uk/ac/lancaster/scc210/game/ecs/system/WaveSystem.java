@@ -4,8 +4,8 @@ import org.jsfml.graphics.RenderTarget;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
+import uk.ac.lancaster.scc210.game.ecs.component.AnimationComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.WaveComponent;
 
 public class WaveSystem extends IterativeSystem {
@@ -15,7 +15,7 @@ public class WaveSystem extends IterativeSystem {
      * @param world the world containing entities to use
      */
     public WaveSystem(World world) {
-        super(world, SpriteComponent.class, SpeedComponent.class, WaveComponent.class);
+        super(world, AnimationComponent.class, SpeedComponent.class, WaveComponent.class);
     }
 
     @Override
@@ -24,6 +24,8 @@ public class WaveSystem extends IterativeSystem {
             WaveComponent waveComponent = (WaveComponent) entity.findComponent(WaveComponent.class);
 
             waveComponent.getWave().update(entity);
+
+
         }
     }
 
