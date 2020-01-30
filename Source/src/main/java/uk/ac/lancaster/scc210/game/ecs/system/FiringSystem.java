@@ -36,24 +36,48 @@ public class FiringSystem extends IterativeSystem {
     public void update() {
         for (Entity entity : entities) {
             SpriteComponent entitySprite = (SpriteComponent) entity.findComponent(SpriteComponent.class);
-
             if (Keyboard.isKeyPressed(Keyboard.Key.SPACE) || ControllerButton.A_BUTTON.isPressed()) {
-                Entity bullet = bulletPool.borrowEntity();
 
-                SpriteComponent bulletSprite = (SpriteComponent) bullet.findComponent(SpriteComponent.class);
+               Entity[] bullet = new Entity[8];
+                SpriteComponent[] bulletSprite = new SpriteComponent[8];
+               for(int i = 0; i < 8; i++)
+               {
+                   bullet[i] = bulletPool.borrowEntity();
+                   bulletSprite[i] = (SpriteComponent) bullet[i].findComponent(SpriteComponent.class);
+               }
+
 
                 // Find the half-width of the entity sprite and the half-width of the bullet sprite
-                float halfWidth = (entitySprite.getSprite().getLocalBounds().width / 2) - (bulletSprite.getSprite().getLocalBounds().width / 2);
+                float startPoint =  - bulletSprite[1].getSprite().getLocalBounds().width/2;
+                float width = entitySprite.getSprite().getLocalBounds().width;
+                float difference = (float) (width*(Math.sqrt(2) - 1)/2);
 
-                Vector2f middleCentre = new Vector2f(halfWidth, BULLET_Y_PADDING);
 
-                Vector2f bulletPos = entitySprite.getSprite().getTransform().transformPoint(middleCentre);
 
-                bulletSprite.getSprite().setPosition(bulletPos);
+                Vector2f[] bulletPos = new Vector2f[8];
+                Vector2f[] coordonates = new Vector2f[8];
 
-                bulletSprite.getSprite().setRotation(entitySprite.getSprite().getRotation());
+                 coordonates[0] = new Vector2f(startPoint , startPoint);
+                 coordonates[1] = new Vector2f( startPoint +width/2 ,  - difference);
+                 coordonates[2] = new Vector2f(startPoint/2 + width , startPoint);
+                 coordonates[3] = new Vector2f(startPoint + width + difference  , startPoint + width/2);
+                 coordonates[4] = new Vector2f( width,  width);
+                 coordonates[5] = new Vector2f(-startPoint + width/2 , width + difference );
+                 coordonates[6] = new Vector2f( -startPoint, width - startPoint);
+                 coordonates[7] = new Vector2f(-startPoint - difference , -startPoint + width/2);
 
-                world.addEntity(bullet);
+
+
+                 for(int i = 0; i < 8; i++)
+                {
+                    bulletPos[i] = entitySprite.getSprite().getTransform().transformPoint(coordonates[i]);
+                    bulletSprite[i].getSprite().setPosition(bulletPos[i]);
+                    bulletSprite[i].getSprite().setRotation(entitySprite.getSprite().getRotation() + (i -1)*45);
+                    world.addEntity(bullet[i]);
+
+
+                }
+
             }
         }
     }
