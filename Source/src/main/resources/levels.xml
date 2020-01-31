@@ -1,7 +1,7 @@
 <levels>
     <level name="thing">
         <stage>
-            <wave type="straight" start_x="0" start_y="0" end_x="1280" end_y="720" num_ships="100" ship_name="player"/>
+            <wave type="straight" start_x="0" start_y="0" end_x="1280" end_y="720" num_ships="5" ship_name="player"/>
         </stage>
     </level>
 </levels>

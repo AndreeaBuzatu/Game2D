@@ -39,23 +39,33 @@ public class LevelWave {
 
             Vector2f spritePos = sprite.getPosition();
 
+            Vector2f spriteCentre = new Vector2f(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
+
             float width = sprite.getGlobalBounds().width;
 
             float height = sprite.getGlobalBounds().height;
 
             if (direction.x > 0) {
-                sprite.setPosition((spritePos.x - width) * i, sprite.getPosition().y);
+            //    sprite.setPosition(((spritePos.x + spriteCentre.x) - width) * i, sprite.getPosition().y);
 
-                System.out.println("X:" + (spritePos.x - width) * i);
+             //   System.out.println("X:" + (spritePos.x - width) * i);
             }
 
             if (direction.y > 0) {
-                sprite.setPosition(sprite.getPosition().x, (spritePos.y - height) * i);
+             //   sprite.setPosition(sprite.getPosition().x, ((spritePos.y + spriteCentre.y) - height) * i);
             }
+
+            int newX = (int) ((origin.x - spriteCentre.x) - (direction.x )) * i ;
+
+            int newY = (int)  ((origin.y - spriteCentre.y) - (direction.y )) * i ;
+
+            sprite.setPosition(newX, newY);
+
+            //System.out.println(direction);
 
             //sprite.setPosition((float) Math.random() * 100, (float) Math.random() * 100);
 
-            System.out.println(spritePos);
+            //System.out.println(sprite.getPosition());
 
             entities[i] = entity;
 

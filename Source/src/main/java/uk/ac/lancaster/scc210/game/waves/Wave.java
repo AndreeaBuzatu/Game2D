@@ -23,6 +23,8 @@ public abstract class Wave {
         vectorDistance = distance(origin, destination);
 
         direction = normalise(Vector2f.sub(destination, origin));
+
+      //  System.out.println("Distance: " + vectorDistance + ", Direction: " + direction);
     }
 
     private double length(Vector2f vector) {

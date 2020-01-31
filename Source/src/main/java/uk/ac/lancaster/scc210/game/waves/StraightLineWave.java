@@ -13,6 +13,8 @@ public class StraightLineWave extends Wave {
     public StraightLineWave(Vector2f origin, Vector2f destination) {
         super(origin, destination);
 
+        System.out.println("Origin: " + origin);
+
         clock = new Clock();
     }
 
@@ -26,16 +28,22 @@ public class StraightLineWave extends Wave {
 
         float speed = speedComponent.getSpeed();
 
+        Vector2f spritePos = sprite.getPosition();
+
+        System.out.println("Position: " + sprite.getPosition());
+
         calculateMoveToPoint();
 
         // If the entity goes out of bounds, reset the entity back to it's starting position
         if (pastDestination(sprite.getPosition())) {
-            sprite.setPosition(origin);
+            //sprite.setPosition(origin);
 
             clock.restart();
 
         } else {
+            ///System.out.println("Direction: " + direction);
             sprite.move(direction.x * speed, direction.y * speed);
+            //sprite.move(1 * speed, 1 * speed);
         }
     }
 }

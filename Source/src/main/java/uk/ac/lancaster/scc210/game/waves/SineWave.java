@@ -40,6 +40,7 @@ public class SineWave extends Wave {
 
         Vector2f wave = new Vector2f((float) (perpendicular.x * waveCurve), (float) (perpendicular.y * waveCurve));
 
+        /*
         // If the entity goes out of bounds, reset the entity back to it's starting position
         if (pastDestination(sprite.getPosition())) {
             sprite.setPosition(origin);
@@ -49,5 +50,6 @@ public class SineWave extends Wave {
         } else {
             sprite.move((direction.x * speed) + wave.x, (direction.y * speed) + wave.y);
         }
+         */
     }
 }
