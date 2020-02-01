@@ -47,11 +47,7 @@ public abstract class Wave {
         return new Vector2f((float) (vec.x / length), (float) (vec.y / length));
     }
 
-    float rotateSprite(Vector2f direction) {
-        double angle = Math.atan2(direction.x, direction.y);
-
-        double degrees = Math.toDegrees(angle);
-
-        return (MAX_DEGREES + Math.round(degrees) % MAX_DEGREES);
+    float rotateSprite() {
+        return (float) Math.toDegrees(Math.atan2(-destination.y - -origin.y, destination.x - origin.x)) + 180;
     }
 }

@@ -26,7 +26,7 @@ public class StraightLineWave extends Wave {
 
             float speed = speedComponent.getSpeed();
 
-            sprite.setRotation(rotateSprite(direction));
+            sprite.setRotation(rotateSprite());
 
             // If the entity goes out of bounds, reset the entity back to it's starting position
             if (passedDestination(sprite.getPosition())) {
