@@ -5,8 +5,12 @@ import java.util.List;
 public class LevelStage {
     private final List<LevelWave> waves;
 
+    private final LevelWave currentWave;
+
     public LevelStage(List<LevelWave> waves) {
         this.waves = waves;
+
+        currentWave = waves.get(0);
     }
 
     boolean complete() {
@@ -16,5 +20,9 @@ public class LevelStage {
 
     public List<LevelWave> getWaves() {
         return waves;
+    }
+
+    LevelWave getCurrentWave() {
+        return currentWave;
     }
 }

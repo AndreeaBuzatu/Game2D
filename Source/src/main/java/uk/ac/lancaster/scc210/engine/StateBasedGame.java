@@ -26,7 +26,7 @@ import java.util.Queue;
  * Contains the basic functionality for a state based game.
  */
 public class StateBasedGame {
-    private static final int FPS = 60;
+    public static final int FPS = 60;
 
     private final float ZOOM_AMOUNT = 2.0f;
 
