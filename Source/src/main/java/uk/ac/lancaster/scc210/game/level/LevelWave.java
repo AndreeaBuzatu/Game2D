@@ -81,6 +81,12 @@ public class LevelWave {
 
         Sprite sprite = spriteComponent.getSprite();
 
+        FloatRect localBounds = sprite.getLocalBounds();
+
+        Vector2f centreMiddle = new Vector2f(localBounds.width / 2, localBounds.height / 2);
+
+        sprite.setOrigin(centreMiddle);
+
         sprite.setPosition(Vector2f.sub(destination, origin));
 
         return entity;
