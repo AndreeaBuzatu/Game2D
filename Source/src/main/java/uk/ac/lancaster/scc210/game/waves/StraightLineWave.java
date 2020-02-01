@@ -1,49 +1,40 @@
 package uk.ac.lancaster.scc210.game.waves;
 
 import org.jsfml.graphics.Sprite;
-import org.jsfml.system.Clock;
 import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
-public class StraightLineWave extends Wave {
-    private final Clock clock;
+import java.util.Set;
 
+public class StraightLineWave extends Wave {
     public StraightLineWave(Vector2f origin, Vector2f destination) {
         super(origin, destination);
-
-        System.out.println("Origin: " + origin);
-
-        clock = new Clock();
     }
 
     @Override
-    public void update(Entity entity) {
-        SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
+    public void update(Set<Entity> entities) {
+        for (Entity entity : entities) {
+            SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
 
-        SpeedComponent speedComponent = (SpeedComponent) entity.findComponent(SpeedComponent.class);
+            SpeedComponent speedComponent = (SpeedComponent) entity.findComponent(SpeedComponent.class);
 
-        Sprite sprite = spriteComponent.getSprite();
+            Sprite sprite = spriteComponent.getSprite();
 
-        float speed = speedComponent.getSpeed();
+            calculateMoveToPoint(sprite.getPosition());
 
-        Vector2f spritePos = sprite.getPosition();
+            float speed = speedComponent.getSpeed();
 
-        System.out.println("Position: " + sprite.getPosition());
+            sprite.setRotation(rotateSprite(direction));
 
-        calculateMoveToPoint();
+            // If the entity goes out of bounds, reset the entity back to it's starting position
+            if (passedDestination(sprite.getPosition())) {
+                sprite.setPosition(origin);
 
-        // If the entity goes out of bounds, reset the entity back to it's starting position
-        if (pastDestination(sprite.getPosition())) {
-            //sprite.setPosition(origin);
-
-            clock.restart();
-
-        } else {
-            ///System.out.println("Direction: " + direction);
-            sprite.move(direction.x * speed, direction.y * speed);
-            //sprite.move(1 * speed, 1 * speed);
+            } else {
+                sprite.move(direction.x * speed, direction.y * speed);
+            }
         }
     }
 }

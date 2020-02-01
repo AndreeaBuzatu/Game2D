@@ -3,28 +3,30 @@ package uk.ac.lancaster.scc210.game.waves;
 import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 
-public abstract class Wave {
-    final Vector2f origin;
+import java.util.Set;
 
-    Vector2f direction;
+public abstract class Wave {
+    private final int MAX_DEGREES = 360;
 
     private final Vector2f destination;
 
     private double vectorDistance;
+
+    final Vector2f origin;
+
+    Vector2f direction;
 
     Wave(Vector2f origin, Vector2f destination) {
         this.origin = origin;
         this.destination = destination;
     }
 
-    public abstract void update(Entity entity);
+    public abstract void update(Set<Entity> entities);
 
-    void calculateMoveToPoint() {
-        vectorDistance = distance(origin, destination);
+    void calculateMoveToPoint(Vector2f spritePos) {
+        vectorDistance = distance(spritePos, destination);
 
         direction = normalise(Vector2f.sub(destination, origin));
-
-      //  System.out.println("Distance: " + vectorDistance + ", Direction: " + direction);
     }
 
     private double length(Vector2f vector) {
@@ -35,7 +37,7 @@ public abstract class Wave {
         return length(Vector2f.sub(right, left));
     }
 
-    boolean pastDestination(Vector2f entityPosition) {
+    boolean passedDestination(Vector2f entityPosition) {
         return distance(origin, entityPosition) >= vectorDistance;
     }
 
@@ -45,7 +47,11 @@ public abstract class Wave {
         return new Vector2f((float) (vec.x / length), (float) (vec.y / length));
     }
 
-    public Vector2f direction(Vector2f left, Vector2f right) {
-        return normalise(Vector2f.sub(right, left));
+    float rotateSprite(Vector2f direction) {
+        double angle = Math.atan2(direction.x, direction.y);
+
+        double degrees = Math.toDegrees(angle);
+
+        return (MAX_DEGREES + Math.round(degrees) % MAX_DEGREES);
     }
 }
