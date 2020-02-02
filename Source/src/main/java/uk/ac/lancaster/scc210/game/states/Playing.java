@@ -12,17 +12,35 @@ import uk.ac.lancaster.scc210.game.ecs.system.*;
 import uk.ac.lancaster.scc210.game.level.Level;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
 
+import java.util.Iterator;
+
 /**
  * Represents the actual game-play state.
  */
 public class Playing implements State {
+    private Iterator<Level> levelIterator;
+
     private World world;
 
     private Level level;
 
+    private LevelSystem levelSystem;
+
+    private boolean completed;
+
     @Override
     public void setup(StateBasedGame game) {
+        completed = false;
+
+        LevelManager levelManager = (LevelManager) game.getServiceProvider().get(LevelManager.class);
+
+        levelIterator = levelManager.getIterator();
+
+        level = levelIterator.next();
+
         world = new World(game.getServiceProvider());
+
+        levelSystem = new LevelSystem(world, level);
 
         world.addPool((BulletPool) game.getServiceProvider().get(BulletPool.class));
 
@@ -40,6 +58,8 @@ public class Playing implements State {
 
         world.addSystem(new BulletCollision(world));
 
+        world.addSystem(levelSystem);
+
         SpaceShipManager spaceShipManager = (SpaceShipManager) game.getServiceProvider().get(SpaceShipManager.class);
 
         Entity player = spaceShipManager.get("player").createEntity();
@@ -47,21 +67,36 @@ public class Playing implements State {
         player.addComponent(new PlayerComponent());
 
         world.addEntity(player);
-
-        LevelManager levelManager = (LevelManager) game.getServiceProvider().get(LevelManager.class);
-
-        level = levelManager.get("0");
     }
 
     @Override
     public void draw(RenderTarget target) {
-        world.draw(target);
+        if (!completed) {
+            world.draw(target);
+        }
     }
 
     @Override
     public void update() {
-        world.update();
+        if (!completed) {
+            world.update();
+        }
 
-        level.update(world);
+        if (level.complete()) {
+            System.out.println("Complete level");
+
+            if (levelIterator.hasNext()) {
+                level = levelIterator.next();
+
+                levelSystem.setLevel(level);
+
+            } else {
+                System.out.println("Completed the game");
+
+                completed = true;
+            }
+        }
+
+        //level.update();
     }
 }
