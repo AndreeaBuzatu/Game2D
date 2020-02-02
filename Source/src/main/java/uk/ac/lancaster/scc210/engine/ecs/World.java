@@ -44,14 +44,14 @@ public class World {
         if (!entities.contains(entity)) {
             entities.add(entity);
 
-            systems.forEach(EntitySystem::entityChanged);
+            systems.forEach(system -> system.entityAdded(entity));
         }
     }
 
     public void removeEntity(Entity entity) {
         entities.remove(entity);
 
-        systems.forEach(EntitySystem::entityChanged);
+        systems.forEach(system -> system.entityRemoved(entity));
     }
 
     /**
