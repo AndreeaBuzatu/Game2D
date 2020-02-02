@@ -1,4 +1,4 @@
-package uk.ac.lancaster.scc210.game.ecs.entity;
+package uk.ac.lancaster.scc210.game.prototypes;
 
 import org.jsfml.graphics.Sprite;
 import uk.ac.lancaster.scc210.engine.content.TextureAnimationManager;
@@ -6,20 +6,20 @@ import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.game.ecs.component.*;
 
-public class SpaceShip {
+public class SpaceShipPrototype implements Prototype {
     private final TextureAnimationManager animationManager;
 
     private final String animation;
 
     private final int speed;
 
-    public SpaceShip(TextureAnimationManager animationManager, String animation, int speed) {
+    public SpaceShipPrototype(TextureAnimationManager animationManager, String animation, int speed) {
         this.animationManager = animationManager;
         this.animation = animation;
         this.speed = speed;
     }
 
-    public Entity createEntity() {
+    public Entity create() {
         final AnimationComponent animationComponent = new AnimationComponent(animationManager.get(animation));
 
         final SpriteComponent spriteComponent = new SpriteComponent(new Sprite(animationComponent.getTextureAnimation().getTexture()));

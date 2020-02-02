@@ -9,7 +9,7 @@ import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.WaveComponent;
-import uk.ac.lancaster.scc210.game.ecs.entity.SpaceShip;
+import uk.ac.lancaster.scc210.game.prototypes.SpaceShipPrototype;
 import uk.ac.lancaster.scc210.game.waves.Wave;
 
 import java.util.HashSet;
@@ -22,7 +22,7 @@ public class LevelWave {
 
     private final Vector2f origin, destination;
 
-    private final SpaceShip spaceShip;
+    private final SpaceShipPrototype spaceShip;
 
     private final Clock spawnTimer;
 
@@ -32,7 +32,7 @@ public class LevelWave {
 
     private int numLeftToSpawn;
 
-    public LevelWave(Wave wave, Vector2f origin, Vector2f destination, int numShips, SpaceShip spaceShip) {
+    public LevelWave(Wave wave, Vector2f origin, Vector2f destination, int numShips, SpaceShipPrototype spaceShip) {
         this.wave = wave;
         this.origin = origin;
         this.destination = destination;
@@ -93,7 +93,7 @@ public class LevelWave {
     }
 
     private Entity createShip() {
-        Entity entity = spaceShip.createEntity();
+        Entity entity = spaceShip.create();
 
         entity.addComponent(new WaveComponent(this));
 

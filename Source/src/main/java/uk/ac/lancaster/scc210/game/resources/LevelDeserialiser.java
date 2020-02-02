@@ -7,11 +7,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
 import uk.ac.lancaster.scc210.engine.resources.deserialise.Deserialiser;
-import uk.ac.lancaster.scc210.game.content.SpaceShipManager;
-import uk.ac.lancaster.scc210.game.ecs.entity.SpaceShip;
+import uk.ac.lancaster.scc210.game.content.SpaceShipPrototypeManager;
 import uk.ac.lancaster.scc210.game.level.Level;
 import uk.ac.lancaster.scc210.game.level.LevelStage;
 import uk.ac.lancaster.scc210.game.level.LevelWave;
+import uk.ac.lancaster.scc210.game.prototypes.SpaceShipPrototype;
 import uk.ac.lancaster.scc210.game.waves.SineWave;
 import uk.ac.lancaster.scc210.game.waves.StraightLineWave;
 import uk.ac.lancaster.scc210.game.waves.Wave;
@@ -24,7 +24,7 @@ public class LevelDeserialiser extends Deserialiser<Level> {
 
     private final String WAVE_TAG = "wave";
 
-    private final SpaceShipManager spaceShipManager;
+    private final SpaceShipPrototypeManager spaceShipManager;
 
     /**
      * Instantiates a new Deserialiser.
@@ -32,7 +32,7 @@ public class LevelDeserialiser extends Deserialiser<Level> {
      * @param document the xml document
      * @throws ResourceNotFoundException if the resource cannot be created or found
      */
-    public LevelDeserialiser(SpaceShipManager spaceShipManager, Document document) throws ResourceNotFoundException {
+    public LevelDeserialiser(SpaceShipPrototypeManager spaceShipManager, Document document) throws ResourceNotFoundException {
         super(document, "level");
 
         this.spaceShipManager = spaceShipManager;
@@ -96,7 +96,7 @@ public class LevelDeserialiser extends Deserialiser<Level> {
 
                 Wave wave = deserialiseWaveName(elem.getAttribute("type"), origin, destination);
 
-                SpaceShip spaceShip = spaceShipManager.get(shipName);
+                SpaceShipPrototype spaceShip = spaceShipManager.get(shipName);
 
                 waves.add(new LevelWave(wave, origin, destination, numShips, spaceShip));
             }

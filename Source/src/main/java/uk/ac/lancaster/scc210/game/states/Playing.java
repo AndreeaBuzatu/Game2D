@@ -6,7 +6,7 @@ import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.states.State;
 import uk.ac.lancaster.scc210.game.content.LevelManager;
-import uk.ac.lancaster.scc210.game.content.SpaceShipManager;
+import uk.ac.lancaster.scc210.game.content.SpaceShipPrototypeManager;
 import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
 import uk.ac.lancaster.scc210.game.ecs.system.*;
 import uk.ac.lancaster.scc210.game.level.Level;
@@ -60,9 +60,9 @@ public class Playing implements State {
 
         world.addSystem(levelSystem);
 
-        SpaceShipManager spaceShipManager = (SpaceShipManager) game.getServiceProvider().get(SpaceShipManager.class);
+        SpaceShipPrototypeManager spaceShipManager = (SpaceShipPrototypeManager) game.getServiceProvider().get(SpaceShipPrototypeManager.class);
 
-        Entity player = spaceShipManager.get("player").createEntity();
+        Entity player = spaceShipManager.get("player").create();
 
         player.addComponent(new PlayerComponent());
 

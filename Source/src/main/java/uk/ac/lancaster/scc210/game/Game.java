@@ -5,7 +5,7 @@ import uk.ac.lancaster.scc210.engine.content.TextureAnimationManager;
 import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
 import uk.ac.lancaster.scc210.game.content.LevelManager;
-import uk.ac.lancaster.scc210.game.content.SpaceShipManager;
+import uk.ac.lancaster.scc210.game.content.SpaceShipPrototypeManager;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
 import uk.ac.lancaster.scc210.game.resources.LevelDeserialiser;
 import uk.ac.lancaster.scc210.game.resources.SpaceShipDeserialiser;
@@ -36,9 +36,9 @@ public class Game extends StateBasedGame {
 
             SpaceShipDeserialiser spaceShipDeserialiser = new SpaceShipDeserialiser(deserialiseXML("spaceships.xml"));
 
-            SpaceShipManager spaceShipManager = new SpaceShipManager(animationManager, spaceShipDeserialiser.getSerialised());
+            SpaceShipPrototypeManager spaceShipManager = new SpaceShipPrototypeManager(animationManager, spaceShipDeserialiser.getSerialised());
 
-            serviceProvider.put(SpaceShipManager.class, spaceShipManager);
+            serviceProvider.put(SpaceShipPrototypeManager.class, spaceShipManager);
 
             LevelDeserialiser levelDeserialiser = new LevelDeserialiser(spaceShipManager, deserialiseXML("levels.xml"));
 
