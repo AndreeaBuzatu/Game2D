@@ -10,7 +10,7 @@ public class Level implements Serialised {
 
     private final Iterator<LevelStage> stageIterator;
 
-    private LevelStage currentStage;
+    private final LevelStage currentStage;
 
     public Level(List<LevelStage> stages) {
         this.stages = stages;

@@ -9,7 +9,7 @@ import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
 public class BulletPrototype implements Prototype {
-    private TextureManager textureManager;
+    private final TextureManager textureManager;
 
     public BulletPrototype(TextureManager textureManager) {
         this.textureManager = textureManager;
