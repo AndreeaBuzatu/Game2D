@@ -38,6 +38,8 @@ public class Playing implements State {
 
         world.addSystem(new ViewBoundsSystem(world));
 
+        world.addSystem(new BulletCollision(world));
+
         SpaceShipManager spaceShipManager = (SpaceShipManager) game.getServiceProvider().get(SpaceShipManager.class);
 
         Entity player = spaceShipManager.get("player").createEntity();

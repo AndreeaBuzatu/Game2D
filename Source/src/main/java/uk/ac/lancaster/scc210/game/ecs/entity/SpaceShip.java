@@ -4,10 +4,7 @@ import org.jsfml.graphics.Sprite;
 import uk.ac.lancaster.scc210.engine.content.TextureAnimationManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
-import uk.ac.lancaster.scc210.game.ecs.component.AnimationComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.RotationComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.*;
 
 public class SpaceShip {
     private final TextureAnimationManager animationManager;
@@ -31,6 +28,8 @@ public class SpaceShip {
 
         final RotationComponent rotationComponent = new RotationComponent(2f);
 
-        return World.createEntity(animationComponent, spriteComponent, speedComponent, rotationComponent);
+        final SpaceShipComponent spaceShipComponent = new SpaceShipComponent();
+
+        return World.createEntity(animationComponent, spriteComponent, speedComponent, rotationComponent, spaceShipComponent);
     }
 }
