@@ -3,6 +3,7 @@ package uk.ac.lancaster.scc210.game.content;
 import uk.ac.lancaster.scc210.engine.content.ContentManager;
 import uk.ac.lancaster.scc210.game.level.Level;
 
+import java.util.Iterator;
 import java.util.List;
 
 public class LevelManager extends ContentManager<Level> {
@@ -16,15 +17,10 @@ public class LevelManager extends ContentManager<Level> {
 
             i++;
         }
+    }
 
-        /*
-        for (Playing level : levels) {
-            for (LevelStage stage : level.getStages()) {
-                for (LevelWave wave : stage.getWaves()) {
-                    wave.
-                }
-            }
-        }
-         */
+    public Iterator<Level> getIterator() {
+        return values().iterator();
     }
 }
+
