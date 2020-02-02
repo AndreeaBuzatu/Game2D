@@ -2,8 +2,8 @@ package uk.ac.lancaster.scc210.engine.pooling;
 
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.component.PooledComponent;
+import uk.ac.lancaster.scc210.engine.prototypes.Prototype;
 import uk.ac.lancaster.scc210.engine.service.Service;
-import uk.ac.lancaster.scc210.game.prototypes.Prototype;
 
 import java.util.Queue;
 
