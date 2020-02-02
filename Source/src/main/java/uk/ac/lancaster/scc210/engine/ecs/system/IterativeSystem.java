@@ -34,7 +34,12 @@ public abstract class IterativeSystem implements EntitySystem {
     }
 
     @Override
-    public void entityChanged() {
+    public void entityAdded(Entity entity) {
+        this.entities = world.getEntitiesFor(components);
+    }
+
+    @Override
+    public void entityRemoved(Entity entity) {
         this.entities = world.getEntitiesFor(components);
     }
 }

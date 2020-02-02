@@ -1,6 +1,5 @@
 package uk.ac.lancaster.scc210.game.ecs.system;
 
-import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.RenderTarget;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
@@ -26,8 +25,8 @@ public class BulletCollision extends IterativeSystem {
     }
 
     @Override
-    public void entityChanged() {
-        super.entityChanged();
+    public void entityAdded(Entity entity) {
+        super.entityAdded(entity);
 
         spaceShips = world.getEntitiesFor(SpaceShipComponent.class);
     }
@@ -36,8 +35,6 @@ public class BulletCollision extends IterativeSystem {
     public void update() {
         for (Entity entity : entities) {
             SpriteComponent bulletSpriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
-
-            FloatRect spriteBounds = bulletSpriteComponent.getSprite().getGlobalBounds();
 
             for (Entity spaceShip : spaceShips) {
                 SpriteComponent spaceShipSprite = (SpriteComponent) spaceShip.findComponent(SpriteComponent.class);
