@@ -3,6 +3,7 @@ package uk.ac.lancaster.scc210.game.ecs.system;
 import org.jsfml.graphics.RenderTarget;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
+import uk.ac.lancaster.scc210.engine.ecs.component.PooledComponent;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.game.ecs.component.BulletComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
@@ -42,7 +43,14 @@ public class BulletCollision extends IterativeSystem {
                 boolean collision = spaceShipSprite.getSprite().getGlobalBounds().contains(bulletSpriteComponent.getSprite().getPosition());
 
                 if (collision) {
+                    PooledComponent pooledComponent = (PooledComponent) entity.findComponent(PooledComponent.class);
+
                     world.removeEntity(spaceShip);
+
+                    // Return the bullet back to the pool and remove it from the world
+                    world.getPool(pooledComponent.getPoolClass()).returnEntity(entity);
+
+                    world.removeEntity(entity);
                 }
             }
         }
