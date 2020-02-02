@@ -9,6 +9,7 @@ import uk.ac.lancaster.scc210.game.content.SpaceShipManager;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
 import uk.ac.lancaster.scc210.game.resources.LevelDeserialiser;
 import uk.ac.lancaster.scc210.game.resources.SpaceShipDeserialiser;
+import uk.ac.lancaster.scc210.game.states.Completion;
 import uk.ac.lancaster.scc210.game.states.Playing;
 
 import java.util.logging.Logger;
@@ -50,5 +51,7 @@ public class Game extends StateBasedGame {
         }
 
         serviceProvider.put(BulletPool.class, new BulletPool(serviceProvider));
+
+        super.addState(new Completion());
     }
 }

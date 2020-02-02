@@ -71,16 +71,17 @@ public class Playing implements State {
 
     @Override
     public void draw(RenderTarget target) {
-        if (!completed) {
-            world.draw(target);
-        }
+        world.draw(target);
+    }
+
+    @Override
+    public boolean complete() {
+        return completed;
     }
 
     @Override
     public void update() {
-        if (!completed) {
-            world.update();
-        }
+        world.update();
 
         if (level.complete()) {
             System.out.println("Complete level");
@@ -91,12 +92,8 @@ public class Playing implements State {
                 levelSystem.setLevel(level);
 
             } else {
-                System.out.println("Completed the game");
-
                 completed = true;
             }
         }
-
-        //level.update();
     }
 }
