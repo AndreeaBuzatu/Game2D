@@ -1,18 +1,22 @@
 package uk.ac.lancaster.scc210.engine.pooling;
 
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
+import uk.ac.lancaster.scc210.engine.ecs.component.PooledComponent;
 import uk.ac.lancaster.scc210.engine.service.Service;
+import uk.ac.lancaster.scc210.game.prototypes.Prototype;
 
 import java.util.Queue;
 
 public abstract class Pool implements Service {
     protected final Queue<Entity> entities;
 
-    protected Pool(final int capacity) {
+    private final Prototype prototype;
+
+    protected Pool(final int capacity, final Prototype prototype) {
+        this.prototype = prototype;
+
         entities = new FixedQueue<>(capacity);
     }
-
-    protected abstract Entity create();
 
     public Entity borrowEntity() {
         Entity entity;
@@ -22,6 +26,15 @@ public abstract class Pool implements Service {
         }
 
         return entity;
+    }
+
+    protected Entity create() {
+        Entity created = prototype.create();
+
+        // Add the pooled component here to differentiate it between non-pooled and pooled
+        created.addComponent(new PooledComponent(this.getClass()));
+
+        return created;
     }
 
     public void returnEntity(Entity entity) {
