@@ -5,24 +5,18 @@ import java.util.List;
 public class LevelStage {
     private final List<LevelWave> waves;
 
-    private final LevelWave currentWave;
-
     public LevelStage(List<LevelWave> waves) {
         this.waves = waves;
-
-        currentWave = waves.get(0);
     }
 
-    boolean complete() {
-        // All the waves have been completed
-        return waves.parallelStream().distinct().count() <= 1;
+    public boolean complete() {
+        // All are complete
+        //System.out.println(waves.parallelStream().map(LevelWave::complete).collect(Collectors.toList()));
+
+        return waves.parallelStream().allMatch(LevelWave::complete);
     }
 
     public List<LevelWave> getWaves() {
         return waves;
-    }
-
-    LevelWave getCurrentWave() {
-        return currentWave;
     }
 }

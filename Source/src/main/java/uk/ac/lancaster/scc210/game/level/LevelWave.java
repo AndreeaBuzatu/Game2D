@@ -16,12 +16,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class LevelWave {
-    private final Set<Entity> entities;
+    private Set<Entity> entities;
 
     private final Wave wave;
 
-    private final Vector2f origin;
-    private final Vector2f destination;
+    private final Vector2f origin, destination;
 
     private final SpaceShip spaceShip;
 
@@ -30,6 +29,8 @@ public class LevelWave {
     private float spawnGap;
 
     private final int numShips;
+
+    private int numLeftToSpawn;
 
     public LevelWave(Wave wave, Vector2f origin, Vector2f destination, int numShips, SpaceShip spaceShip) {
         this.wave = wave;
@@ -41,11 +42,13 @@ public class LevelWave {
         entities = new HashSet<>();
 
         spawnTimer = new Clock();
+
+        numLeftToSpawn = numShips;
     }
 
-    Entity spawnNew() {
+    public Entity spawnNew() {
         // Create the initial ship - ignore the timer for the first one.
-        if (entities.isEmpty()) {
+        if (numLeftToSpawn == numShips) {
             Entity entity = createShip();
 
             SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
@@ -56,15 +59,19 @@ public class LevelWave {
 
             spawnGap = findSpawnGap(spriteComponent, speedComponent);
 
+            numLeftToSpawn--;
+
             return entity;
         }
 
-        if (spawnTimer.getElapsedTime().asSeconds() > spawnGap && entities.size() < numShips) {
+        if (spawnTimer.getElapsedTime().asSeconds() > spawnGap && !allSpawned()) {
             Entity entity = createShip();
 
             entities.add(entity);
 
             spawnTimer.restart();
+
+            numLeftToSpawn--;
 
             return entity;
         }
@@ -72,10 +79,23 @@ public class LevelWave {
         return null;
     }
 
+    public void remove(Entity entity) {
+        entities.remove(entity);
+    }
+
+    private boolean allSpawned() {
+        return numLeftToSpawn == 0;
+    }
+
+    boolean complete() {
+        // All the spaceships are now dead
+        return entities.isEmpty() && allSpawned();
+    }
+
     private Entity createShip() {
         Entity entity = spaceShip.createEntity();
 
-        entity.addComponent(new WaveComponent());
+        entity.addComponent(new WaveComponent(this));
 
         SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
 
@@ -105,17 +125,12 @@ public class LevelWave {
         return (widthTime + heightTime) / 2;
     }
 
-    boolean complete() {
-        // All the spaceships are now dead
-        return entities.isEmpty();
-    }
-
-    boolean allSpawned() {
-        return entities.size() == numShips;
-    }
-
-    Wave getWave() {
+    public Wave getWave() {
         return wave;
+    }
+
+    public void setEntities(Set<Entity> entities) {
+        this.entities = entities;
     }
 
     public Set<Entity> getEntities() {
