@@ -51,13 +51,15 @@ public class Playing implements State {
 
         world.addSystem(new RenderSystem(world));
 
-        world.addSystem(new FiringSystem(world));
+        world.addSystem(new PlayerFiringSystem(world));
 
         world.addSystem(new MovementSystem(world));
 
         world.addSystem(new ViewBoundsSystem(world));
 
         world.addSystem(new BulletCollision(world));
+
+        world.addSystem(new EnemyFiringSystem(world));
 
         world.addSystem(levelSystem);
 

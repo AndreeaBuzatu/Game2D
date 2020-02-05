@@ -5,6 +5,7 @@ import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
+import uk.ac.lancaster.scc210.game.ecs.component.EnemyComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.WaveComponent;
@@ -101,6 +102,8 @@ public class LevelWave {
         Entity entity = spaceShip.create();
 
         entity.addComponent(new WaveComponent(this));
+
+        entity.addComponent(new EnemyComponent());
 
         SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
 
