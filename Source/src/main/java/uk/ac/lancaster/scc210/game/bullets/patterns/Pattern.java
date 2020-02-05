@@ -1,33 +1,32 @@
 package uk.ac.lancaster.scc210.game.bullets.patterns;
 
+import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.pooling.Pool;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
 
-public abstract class Pattern {
-    Entity[] bullets;
+abstract class Pattern {
+    private final Pool pool;
 
-    SpriteComponent spaceShipSprite, bulletSprite;
+    final Entity[] bullets;
 
-    private Entity spaceSphip;
+    final Vector2f[] coords;
 
-    Pool pool;
+    final SpriteComponent spaceShipSprite, bulletSprite;
 
-    World world;
+    final World world;
 
-
-    Pattern(World world, Entity spaceShip, Entity[] bullets)
-    {
+    Pattern(World world, Entity spaceShip, Entity[] bullets) {
         this.bullets = bullets;
-        this.spaceSphip = spaceShip;
         this.world = world;
 
         pool = world.getPool(BulletPool.class);
 
-        for(int i = 0; i < 8; i++)
-        {
+        coords = new Vector2f[bullets.length];
+
+        for (int i = 0; i < bullets.length; i++) {
             bullets[i] = pool.borrowEntity();
         }
 
@@ -36,7 +35,5 @@ public abstract class Pattern {
         bulletSprite = (SpriteComponent) bullets[0].findComponent(SpriteComponent.class);
     }
 
-    abstract void fire();
-
-
+    public abstract void fire();
 }
