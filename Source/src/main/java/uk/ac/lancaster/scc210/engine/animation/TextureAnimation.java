@@ -1,7 +1,7 @@
 package uk.ac.lancaster.scc210.engine.animation;
 
 import org.jsfml.graphics.Texture;
-import org.jsfml.system.Clock;
+import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.content.TextureAtlas;
 import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
 
@@ -13,10 +13,10 @@ import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
  * Frames are typically sourced from a Texture Atlas where they are loaded left to right, line-by-line.
  */
 public class TextureAnimation {
-    // 24 FPS is the standard speed for animation
-    private final float FPS = 24;
+    private static final int STARTING_FRAME = 0;
 
-    private Clock animationTimer;
+    // The number of seconds taken per frame. This acts like a count down.
+    private final float FPS = 1.5f;
 
     private final Texture[] frames;
 
@@ -64,13 +64,8 @@ public class TextureAnimation {
      *
      * @return the texture
      */
-    public Texture getTexture() {
-        if (animationTimer == null) {
-            // The constructor starts the clock, so initialise it later
-            animationTimer = new Clock();
-        }
-
-        frameTimeRemaining -= animationTimer.getElapsedTime().asSeconds();
+    public Texture getTexture(Time deltaTime) {
+        frameTimeRemaining -= deltaTime.asSeconds();
 
         if (frameTimeRemaining <= 0) {
             currentFrame++;
@@ -81,10 +76,18 @@ public class TextureAnimation {
             }
 
             frameTimeRemaining = FPS;
-
-            animationTimer.restart();
         }
 
         return frames[currentFrame];
+    }
+
+    /**
+     * Gets the texture of the first frame. It is assumed that if no delta time is given, then
+     * return the first frame in the animation
+     *
+     * @return the first frame in the animation array.
+     */
+    public Texture getTexture() {
+        return frames[STARTING_FRAME];
     }
 }

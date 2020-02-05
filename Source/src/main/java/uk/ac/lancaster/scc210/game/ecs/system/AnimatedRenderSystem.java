@@ -26,15 +26,18 @@ public class AnimatedRenderSystem extends IterativeSystem {
         for (Entity entity : entities) {
             SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
 
-            AnimationComponent animationComponent = (AnimationComponent) entity.findComponent(AnimationComponent.class);
-
-            spriteComponent.getSprite().setTexture(animationComponent.getTextureAnimation().getTexture());
-
             target.draw(spriteComponent.getSprite());
         }
     }
 
     @Override
     public void update(Time deltaTime) {
+        for (Entity entity : entities) {
+            SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
+
+            AnimationComponent animationComponent = (AnimationComponent) entity.findComponent(AnimationComponent.class);
+
+            spriteComponent.getSprite().setTexture(animationComponent.getTextureAnimation().getTexture(deltaTime));
+        }
     }
 }
