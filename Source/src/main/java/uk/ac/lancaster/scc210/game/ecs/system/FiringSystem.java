@@ -1,6 +1,7 @@
 package uk.ac.lancaster.scc210.game.ecs.system;
 
 import org.jsfml.graphics.RenderTarget;
+import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
 import uk.ac.lancaster.scc210.engine.controller.ControllerButton;
@@ -35,7 +36,7 @@ public class FiringSystem extends IterativeSystem {
     }
 
     @Override
-    public void update() {
+    public void update(Time deltaTime) {
         for (Entity entity : entities) {
             SpriteComponent entitySprite = (SpriteComponent) entity.findComponent(SpriteComponent.class);
 

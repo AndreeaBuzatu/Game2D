@@ -2,6 +2,7 @@ package uk.ac.lancaster.scc210.game.ecs.system;
 
 import org.jsfml.graphics.RenderTarget;
 import org.jsfml.graphics.Sprite;
+import org.jsfml.system.Time;
 import org.jsfml.window.Keyboard;
 import uk.ac.lancaster.scc210.engine.controller.Controller;
 import uk.ac.lancaster.scc210.engine.controller.ControllerAxis;
@@ -41,7 +42,7 @@ public class PlayerMovementSystem extends IterativeSystem {
     }
 
     @Override
-    public void update() {
+    public void update(Time deltaTime) {
         for (Entity entity : entities) {
             SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
 

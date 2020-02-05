@@ -1,6 +1,7 @@
 package uk.ac.lancaster.scc210.game.states;
 
 import org.jsfml.graphics.RenderTarget;
+import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
@@ -80,8 +81,8 @@ public class Playing implements State {
     }
 
     @Override
-    public void update() {
-        world.update();
+    public void update(Time deltaTime) {
+        world.update(deltaTime);
 
         if (level.complete()) {
             System.out.println("Complete level");

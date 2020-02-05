@@ -1,7 +1,7 @@
 package uk.ac.lancaster.scc210.engine.animation;
 
 import org.jsfml.graphics.Texture;
-import org.jsfml.system.Clock;
+import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.content.TextureAtlas;
 import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
 
@@ -13,10 +13,9 @@ import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
  * Frames are typically sourced from a Texture Atlas where they are loaded left to right, line-by-line.
  */
 public class TextureAnimation {
-    // 24 FPS is the standard speed for animation
-    private final float FPS = 24;
 
-    private Clock animationTimer;
+    // The number of seconds taken per frame. This acts like a count down.
+    private final float FPS = 0.5f;
 
     private final Texture[] frames;
 
@@ -38,7 +37,7 @@ public class TextureAnimation {
 
         currentFrame = 0;
 
-        frameTimeRemaining = FPS;
+        frameTimeRemaining = 0;
 
         int currentRow = startingRow;
 
@@ -59,18 +58,11 @@ public class TextureAnimation {
     }
 
     /**
-     * Gets the texture at this point in time for the animation speed.
-     * This should be used to update a sprite.
+     * Changes the texture at this point in time for the animation speed.
      *
-     * @return the texture
      */
-    public Texture getTexture() {
-        if (animationTimer == null) {
-            // The constructor starts the clock, so initialise it later
-            animationTimer = new Clock();
-        }
-
-        frameTimeRemaining -= animationTimer.getElapsedTime().asSeconds();
+    public void animate(Time deltaTime) {
+        frameTimeRemaining -= deltaTime.asSeconds();
 
         if (frameTimeRemaining <= 0) {
             currentFrame++;
@@ -81,10 +73,15 @@ public class TextureAnimation {
             }
 
             frameTimeRemaining = FPS;
-
-            animationTimer.restart();
         }
+    }
 
+    /**
+     * Gets the current texture for the current frame
+     *
+     * @return Texture the current texture
+     */
+    public Texture getTexture() {
         return frames[currentFrame];
     }
 }

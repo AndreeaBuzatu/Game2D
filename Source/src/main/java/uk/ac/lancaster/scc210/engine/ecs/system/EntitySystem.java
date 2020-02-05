@@ -1,6 +1,7 @@
 package uk.ac.lancaster.scc210.engine.ecs.system;
 
 import org.jsfml.graphics.RenderTarget;
+import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 
 /**
@@ -19,8 +20,10 @@ public interface EntitySystem {
 
     /**
      * Called World.update(). Should be used to update the entities.
+     *
+     * @param deltaTime deltaTime to update
      */
-    void update();
+    void update(Time deltaTime);
 
     /**
      * Called in World.draw(). Should be used to draw the entities.

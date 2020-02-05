@@ -1,5 +1,6 @@
 package uk.ac.lancaster.scc210.game.waves;
 
+import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 
@@ -21,7 +22,7 @@ public abstract class Wave {
         this.destination = destination;
     }
 
-    public abstract void update(Set<Entity> entities);
+    public abstract void update(Set<Entity> entities, Time deltaTime);
 
     void calculateMoveToPoint(Vector2f spritePos) {
         vectorDistance = distance(spritePos, destination);

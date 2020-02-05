@@ -2,9 +2,8 @@ package uk.ac.lancaster.scc210.game.level;
 
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Sprite;
-import org.jsfml.system.Clock;
+import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
-import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
@@ -16,6 +15,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class LevelWave {
+    private final float SPAWN_TIMER = 0.5f;
+
+    private final float COUNT_START = 0;
+
     private Set<Entity> entities;
 
     private final Wave wave;
@@ -24,9 +27,8 @@ public class LevelWave {
 
     private final SpaceShipPrototype spaceShip;
 
-    private final Clock spawnTimer;
-
-    private float spawnGap;
+    private float spawnCountUp;
+    private final float spawnTime;
 
     private final int numShips;
 
@@ -41,12 +43,14 @@ public class LevelWave {
 
         entities = new HashSet<>();
 
-        spawnTimer = new Clock();
-
         numLeftToSpawn = numShips;
+
+        spawnTime = SPAWN_TIMER;
+
+        spawnCountUp = COUNT_START;
     }
 
-    public Entity spawnNew() {
+    public Entity spawnNew(Time deltaTime) {
         // Create the initial ship - ignore the timer for the first one.
         if (numLeftToSpawn == numShips) {
             Entity entity = createShip();
@@ -57,19 +61,19 @@ public class LevelWave {
 
             entities.add(entity);
 
-            spawnGap = findSpawnGap(spriteComponent, speedComponent);
-
             numLeftToSpawn--;
 
             return entity;
         }
 
-        if (spawnTimer.getElapsedTime().asSeconds() > spawnGap && !allSpawned()) {
+        spawnCountUp += deltaTime.asSeconds();
+
+        if (spawnCountUp >= spawnTime && !allSpawned()) {
             Entity entity = createShip();
 
             entities.add(entity);
 
-            spawnTimer.restart();
+            spawnCountUp = 0;
 
             numLeftToSpawn--;
 
@@ -110,19 +114,6 @@ public class LevelWave {
         sprite.setPosition(Vector2f.sub(destination, origin));
 
         return entity;
-    }
-
-    private float findSpawnGap(SpriteComponent spriteComponent, SpeedComponent speedComponent) {
-        FloatRect localBounds = spriteComponent.getSprite().getLocalBounds();
-
-        float speed = speedComponent.getSpeed();
-
-        // Find the amount of time taken for the sprite to move from (0, 0) to (width, 0) based upon it's speed and FPS
-        float widthTime = localBounds.width / speed / StateBasedGame.FPS;
-
-        float heightTime = localBounds.height / speed / StateBasedGame.FPS;
-
-        return (widthTime + heightTime) / 2;
     }
 
     public Wave getWave() {

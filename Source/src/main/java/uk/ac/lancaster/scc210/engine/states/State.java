@@ -1,6 +1,7 @@
 package uk.ac.lancaster.scc210.engine.states;
 
 import org.jsfml.graphics.RenderTarget;
+import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
 
 /**
@@ -16,8 +17,10 @@ public interface State {
 
     /**
      * Update the current state of the screen.
+     *
+     * @param deltaTime the delta time
      */
-    void update();
+    void update(Time deltaTime);
 
     /**
      * Draw the current state to the screen.
