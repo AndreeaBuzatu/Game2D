@@ -25,4 +25,11 @@ public interface State {
      * @param target the target usually RenderWindow
      */
     void draw(RenderTarget target);
+
+    /**
+     * Indicates that the current state is complete. The game will transition to the next state.
+     *
+     * @return if the state is complete or not
+     */
+    boolean complete();
 }

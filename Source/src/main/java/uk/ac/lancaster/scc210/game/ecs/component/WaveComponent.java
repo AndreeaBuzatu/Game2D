@@ -1,16 +1,16 @@
 package uk.ac.lancaster.scc210.game.ecs.component;
 
 import uk.ac.lancaster.scc210.engine.ecs.Component;
-import uk.ac.lancaster.scc210.game.waves.Wave;
+import uk.ac.lancaster.scc210.game.level.LevelWave;
 
 public class WaveComponent implements Component {
-    private final Wave wave;
+    private final LevelWave wave;
 
-    public WaveComponent(Wave wave) {
+    public WaveComponent(LevelWave wave) {
         this.wave = wave;
     }
 
-    public Wave getWave() {
+    public LevelWave getWave() {
         return wave;
     }
 }

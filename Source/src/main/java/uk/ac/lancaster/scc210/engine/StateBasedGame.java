@@ -26,7 +26,7 @@ import java.util.Queue;
  * Contains the basic functionality for a state based game.
  */
 public class StateBasedGame {
-    private static final int FPS = 60;
+    public static final int FPS = 60;
 
     private final float ZOOM_AMOUNT = 2.0f;
 
@@ -116,7 +116,7 @@ public class StateBasedGame {
      * Run the game.
      */
     public void run() {
-        currentState.setup(this);
+        states.forEach(state -> state.setup(this));
 
         while (window.isOpen()) {
             update();
@@ -152,6 +152,16 @@ public class StateBasedGame {
             }
         }
 
+        if (currentState.complete()) {
+            states.remove();
+
+            State state = states.peek();
+
+            if (state != null) {
+                currentState = states.peek();
+            }
+        }
+
         currentState.update();
     }
 
@@ -163,7 +173,7 @@ public class StateBasedGame {
         window.display();
     }
 
-    private void addState(State state) {
+    protected void addState(State state) {
         states.add(state);
 
         currentState = states.peek();

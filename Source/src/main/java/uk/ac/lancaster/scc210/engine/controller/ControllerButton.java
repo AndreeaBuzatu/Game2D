@@ -34,6 +34,6 @@ public enum ControllerButton {
     }
 
     public boolean isPressed() {
-        return Joystick.isButtonPressed(controllerId, id);
+        return Controller.hasController(controllerId) && Joystick.isButtonPressed(controllerId, id);
     }
 }
