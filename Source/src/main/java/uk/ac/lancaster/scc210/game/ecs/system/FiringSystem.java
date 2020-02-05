@@ -1,15 +1,15 @@
 package uk.ac.lancaster.scc210.game.ecs.system;
 
 import org.jsfml.graphics.RenderTarget;
-import org.jsfml.system.Vector2f;
+import org.jsfml.system.Time;
 import org.jsfml.window.Keyboard;
+import uk.ac.lancaster.scc210.engine.controller.ControllerButton;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.engine.pooling.Pool;
-import uk.ac.lancaster.scc210.game.bullets.patterns.StarPattern;
-import uk.ac.lancaster.scc210.game.controller.ControllerButton;
 import uk.ac.lancaster.scc210.game.ecs.component.AnimationComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.FiringPatternComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
 
@@ -21,7 +21,6 @@ public class FiringSystem extends IterativeSystem {
     private final int BULLET_Y_PADDING = -20;
 
     private final Pool bulletPool;
-    StarPattern starPattern;
 
     /**
      * Instantiates a new Iterative system.
@@ -32,18 +31,21 @@ public class FiringSystem extends IterativeSystem {
         super(world, SpriteComponent.class, AnimationComponent.class);
 
         bulletPool = world.getPool(BulletPool.class);
-
     }
 
     @Override
-    public void update() {
+    public void update(Time deltaTime) {
         for (Entity entity : entities) {
-            starPattern = new StarPattern(world,entity);
-            SpriteComponent entitySprite = (SpriteComponent) entity.findComponent(SpriteComponent.class);
+            //SpriteComponent entitySprite = (SpriteComponent) entity.findComponent(SpriteComponent.class);
+
+            FiringPatternComponent firingPatternComponent = (FiringPatternComponent) entity.findComponent(FiringPatternComponent.class);
+
             if (Keyboard.isKeyPressed(Keyboard.Key.SPACE) || ControllerButton.A_BUTTON.isPressed()) {
+                // TODO: Add world.addEntities
+                for (Entity bullet : firingPatternComponent.getPattern().create()) {
+                    world.addEntity(bullet);
+                }
 
-
-                starPattern.fire();
               /* Entity[] bullet = new Entity[8];
                 SpriteComponent[] bulletSprite = new SpriteComponent[8];
                for(int i = 0; i < 8; i++)

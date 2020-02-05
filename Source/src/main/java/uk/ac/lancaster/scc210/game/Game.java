@@ -2,7 +2,6 @@ package uk.ac.lancaster.scc210.game;
 
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import uk.ac.lancaster.scc210.engine.content.TextureAnimationManager;
-import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
 import uk.ac.lancaster.scc210.game.content.LevelManager;
 import uk.ac.lancaster.scc210.game.content.SpaceShipPrototypeManager;
@@ -30,13 +29,15 @@ public class Game extends StateBasedGame {
         super("Shooter", 1280, 720, new Playing());
 
         try {
-            TextureManager textureManager = (TextureManager) serviceProvider.get(TextureManager.class);
+            BulletPool bulletPool = new BulletPool(serviceProvider);
 
             TextureAnimationManager animationManager = (TextureAnimationManager) serviceProvider.get(TextureAnimationManager.class);
 
             SpaceShipDeserialiser spaceShipDeserialiser = new SpaceShipDeserialiser(deserialiseXML("spaceships.xml"));
 
-            SpaceShipPrototypeManager spaceShipManager = new SpaceShipPrototypeManager(animationManager, spaceShipDeserialiser.getSerialised());
+            SpaceShipPrototypeManager spaceShipManager = new SpaceShipPrototypeManager(animationManager, bulletPool, spaceShipDeserialiser.getSerialised());
+
+            serviceProvider.put(BulletPool.class, new BulletPool(serviceProvider));
 
             serviceProvider.put(SpaceShipPrototypeManager.class, spaceShipManager);
 
@@ -49,8 +50,6 @@ public class Game extends StateBasedGame {
         } catch (ResourceNotFoundException e) {
             window.close();
         }
-
-        serviceProvider.put(BulletPool.class, new BulletPool(serviceProvider));
 
         super.addState(new Completion());
     }
