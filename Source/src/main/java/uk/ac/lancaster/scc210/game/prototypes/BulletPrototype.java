@@ -18,7 +18,7 @@ public class BulletPrototype implements Prototype {
     public Entity create() {
         final SpriteComponent spriteComponent = new SpriteComponent(new Sprite(textureManager.get("bullets.png:example_bullet")));
 
-        final SpeedComponent speedComponent = new SpeedComponent(5);
+        final SpeedComponent speedComponent = new SpeedComponent(10);
 
         return World.createEntity(spriteComponent, speedComponent);
     }
