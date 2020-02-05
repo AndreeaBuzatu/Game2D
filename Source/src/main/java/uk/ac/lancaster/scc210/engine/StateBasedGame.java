@@ -183,7 +183,7 @@ public class StateBasedGame {
     private void draw() {
         window.clear();
 
-        currentState.draw(window);
+        currentState.draw(window, deltaTime);
 
         window.display();
     }

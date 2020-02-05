@@ -1,6 +1,7 @@
 package uk.ac.lancaster.scc210.engine.states;
 
 import org.jsfml.graphics.RenderTarget;
+import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
 
 /**
@@ -23,8 +24,9 @@ public interface State {
      * Draw the current state to the screen.
      *
      * @param target the target usually RenderWindow
+     * @param deltaTime the delta time
      */
-    void draw(RenderTarget target);
+    void draw(RenderTarget target, Time deltaTime);
 
     /**
      * Indicates that the current state is complete. The game will transition to the next state.

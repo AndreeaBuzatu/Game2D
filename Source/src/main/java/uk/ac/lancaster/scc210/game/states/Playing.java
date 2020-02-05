@@ -1,6 +1,7 @@
 package uk.ac.lancaster.scc210.game.states;
 
 import org.jsfml.graphics.RenderTarget;
+import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
@@ -70,7 +71,7 @@ public class Playing implements State {
     }
 
     @Override
-    public void draw(RenderTarget target) {
+    public void draw(RenderTarget target, Time deltaTime) {
         world.draw(target);
     }
 
