@@ -28,25 +28,15 @@ import java.util.Queue;
  * Contains the basic functionality for a state based game.
  */
 public class StateBasedGame {
-    public static final int FPS = 60;
+    private final int FPS = 60;
 
     private final float ZOOM_AMOUNT = 2.0f;
 
     private final Queue<State> states;
 
-    /**
-     * The Window which is presented to the player.
-     */
-    protected final RenderWindow window;
-
     private final View view;
 
     private final int windowWidth, windowHeight;
-
-    /**
-     * The Service provider. Used to access services throughout the game
-     */
-    protected final ServiceProvider serviceProvider;
 
     private final ViewSize viewSize;
 
@@ -54,9 +44,19 @@ public class StateBasedGame {
 
     private Event event;
 
-    private Clock clock;
+    private final Clock clock;
 
     private Time deltaTime, elapsedTime;
+
+    /**
+     * The Window which is presented to the player.
+     */
+    protected final RenderWindow window;
+
+    /**
+     * The Service provider. Used to access services throughout the game
+     */
+    protected final ServiceProvider serviceProvider;
 
     /**
      * Instantiates a new State based game.

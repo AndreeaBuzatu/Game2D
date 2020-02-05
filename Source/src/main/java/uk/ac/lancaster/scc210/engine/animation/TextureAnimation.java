@@ -13,7 +13,6 @@ import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
  * Frames are typically sourced from a Texture Atlas where they are loaded left to right, line-by-line.
  */
 public class TextureAnimation {
-    private static final int STARTING_FRAME = 0;
 
     // The number of seconds taken per frame. This acts like a count down.
     private final float FPS = 0.5f;

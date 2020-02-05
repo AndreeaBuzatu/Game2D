@@ -27,7 +27,8 @@ public class LevelWave {
 
     private final SpaceShipPrototype spaceShip;
 
-    private float spawnCountUp, spawnTime;
+    private float spawnCountUp;
+    private final float spawnTime;
 
     private final int numShips;
 
