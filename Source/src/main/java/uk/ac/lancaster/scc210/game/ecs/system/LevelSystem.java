@@ -49,7 +49,7 @@ public class LevelSystem extends IterativeSystem {
         } else {
             if (currentStage != null) {
                 for (LevelWave wave : currentStage.getWaves()) {
-                    Entity newShip = wave.spawnNew();
+                    Entity newShip = wave.spawnNew(deltaTime);
 
                     if (newShip != null) {
                         world.addEntity(newShip);
