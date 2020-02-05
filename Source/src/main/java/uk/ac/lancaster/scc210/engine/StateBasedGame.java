@@ -177,13 +177,13 @@ public class StateBasedGame {
             }
         }
 
-        currentState.update();
+        currentState.update(deltaTime);
     }
 
     private void draw() {
         window.clear();
 
-        currentState.draw(window, deltaTime);
+        currentState.draw(window);
 
         window.display();
     }

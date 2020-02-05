@@ -71,7 +71,7 @@ public class Playing implements State {
     }
 
     @Override
-    public void draw(RenderTarget target, Time deltaTime) {
+    public void draw(RenderTarget target) {
         world.draw(target);
     }
 
@@ -81,7 +81,7 @@ public class Playing implements State {
     }
 
     @Override
-    public void update() {
+    public void update(Time deltaTime) {
         world.update();
 
         if (level.complete()) {

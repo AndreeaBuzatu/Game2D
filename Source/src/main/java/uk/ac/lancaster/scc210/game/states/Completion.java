@@ -11,12 +11,12 @@ public class Completion implements State {
     }
 
     @Override
-    public void update() {
+    public void update(Time deltaTime) {
         System.out.println("Player has won!!!!!");
     }
 
     @Override
-    public void draw(RenderTarget target, Time deltaTime) {
+    public void draw(RenderTarget target) {
     }
 
     @Override

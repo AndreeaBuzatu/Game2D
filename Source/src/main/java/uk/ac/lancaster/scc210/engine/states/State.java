@@ -17,16 +17,17 @@ public interface State {
 
     /**
      * Update the current state of the screen.
+     *
+     * @param deltaTime the delta time
      */
-    void update();
+    void update(Time deltaTime);
 
     /**
      * Draw the current state to the screen.
      *
      * @param target the target usually RenderWindow
-     * @param deltaTime the delta time
      */
-    void draw(RenderTarget target, Time deltaTime);
+    void draw(RenderTarget target);
 
     /**
      * Indicates that the current state is complete. The game will transition to the next state.
