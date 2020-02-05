@@ -55,7 +55,7 @@ public class LevelSystem extends IterativeSystem {
                         world.addEntity(newShip);
                     }
 
-                    wave.getWave().update(wave.getEntities());
+                    wave.getWave().update(wave.getEntities(), deltaTime);
                 }
             }
         }

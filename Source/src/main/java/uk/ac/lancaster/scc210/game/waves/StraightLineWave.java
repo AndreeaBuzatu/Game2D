@@ -1,6 +1,7 @@
 package uk.ac.lancaster.scc210.game.waves;
 
 import org.jsfml.graphics.Sprite;
+import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
@@ -14,7 +15,7 @@ public class StraightLineWave extends Wave {
     }
 
     @Override
-    public void update(Set<Entity> entities) {
+    public void update(Set<Entity> entities, Time deltaTime) {
         for (Entity entity : entities) {
             SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
 
