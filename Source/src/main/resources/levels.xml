@@ -1,0 +1,14 @@
+<levels>
+    <level name="thing">
+        <stage>
+            <wave type="straight" start_x="0" start_y="0" end_x="700" end_y="700" num_ships="1" ship_name="player"/>
+            <wave type="sine" start_x="0" start_y="300" end_x="700" end_y="700" num_ships="3" ship_name="player"/>
+        </stage>
+    </level>
+    <level name="other">
+        <stage>
+            <wave type="straight" start_x="300" start_y="300" end_x="700" end_y="700" num_ships="1" ship_name="player"/>
+            <wave type="sine" start_x="0" start_y="0" end_x="700" end_y="700" num_ships="3" ship_name="player"/>
+        </stage>
+    </level>
+</levels>

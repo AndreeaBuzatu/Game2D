@@ -87,6 +87,17 @@ public abstract class Deserialiser<T extends Serialised> {
     }
 
     /**
+     * Given a Node attempt to see if the node == tagName.
+     *
+     * @param node    the node which to be found
+     * @param tagName tagName to search for
+     * @return if the node is found or not
+     */
+    protected boolean foundNode(Node node, String tagName) {
+        return node.getNodeType() == Node.ELEMENT_NODE && node.getNodeName().equals(tagName);
+    }
+
+    /**
      * Gets serialised.
      *
      * @return serialised

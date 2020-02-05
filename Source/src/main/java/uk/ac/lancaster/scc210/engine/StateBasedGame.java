@@ -3,6 +3,8 @@ package uk.ac.lancaster.scc210.engine;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.View;
+import org.jsfml.system.Clock;
+import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.VideoMode;
@@ -26,31 +28,35 @@ import java.util.Queue;
  * Contains the basic functionality for a state based game.
  */
 public class StateBasedGame {
-    private static final int FPS = 60;
+    private final int FPS = 60;
 
     private final float ZOOM_AMOUNT = 2.0f;
 
     private final Queue<State> states;
+
+    private final View view;
+
+    private final int windowWidth, windowHeight;
+
+    private final ViewSize viewSize;
+
+    private State currentState;
+
+    private Event event;
+
+    private final Clock clock;
+
+    private Time deltaTime, elapsedTime;
 
     /**
      * The Window which is presented to the player.
      */
     protected final RenderWindow window;
 
-    private final View view;
-
-    private final int windowWidth, windowHeight;
-
     /**
      * The Service provider. Used to access services throughout the game
      */
     protected final ServiceProvider serviceProvider;
-
-    private ViewSize viewSize;
-
-    private State currentState;
-
-    private Event event;
 
     /**
      * Instantiates a new State based game.
@@ -110,13 +116,17 @@ public class StateBasedGame {
                 viewCentre.y - viewSize.y / 2, viewSize.x, viewSize.y));
 
         serviceProvider.put(ViewSize.class, this.viewSize);
+
+        clock = new Clock();
+
+        elapsedTime = Time.ZERO;
     }
 
     /**
      * Run the game.
      */
     public void run() {
-        currentState.setup(this);
+        states.forEach(state -> state.setup(this));
 
         while (window.isOpen()) {
             update();
@@ -126,6 +136,11 @@ public class StateBasedGame {
     }
 
     private void update() {
+        // Get the elapsed time and restart the clock
+        deltaTime = clock.restart();
+
+        elapsedTime = Time.add(elapsedTime, deltaTime);
+
         while ((event = window.pollEvent()) != null) {
             switch (event.type) {
                 case CLOSED:
@@ -152,7 +167,17 @@ public class StateBasedGame {
             }
         }
 
-        currentState.update();
+        if (currentState.complete()) {
+            states.remove();
+
+            State state = states.peek();
+
+            if (state != null) {
+                currentState = states.peek();
+            }
+        }
+
+        currentState.update(deltaTime);
     }
 
     private void draw() {
@@ -163,7 +188,7 @@ public class StateBasedGame {
         window.display();
     }
 
-    private void addState(State state) {
+    protected void addState(State state) {
         states.add(state);
 
         currentState = states.peek();

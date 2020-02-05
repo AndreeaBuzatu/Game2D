@@ -2,6 +2,7 @@ package uk.ac.lancaster.scc210.engine.content;
 
 import uk.ac.lancaster.scc210.engine.service.Service;
 
+import java.util.Collection;
 import java.util.HashMap;
 
 /**
@@ -44,5 +45,9 @@ public class ContentManager<T> implements Service {
      */
     public T get(final String key) {
         return content.getOrDefault(key, alternative);
+    }
+
+    protected Collection<T> values() {
+        return content.values();
     }
 }

@@ -33,6 +33,14 @@ public class Entity {
         }
     }
 
+    public void addComponent(Component component) {
+        Class<? extends Component> componentClass = component.getClass();
+
+        if (!this.components.containsKey(componentClass)) {
+            components.put(componentClass, component);
+        }
+    }
+
     /**
      * Gets components which the entity has.
      *

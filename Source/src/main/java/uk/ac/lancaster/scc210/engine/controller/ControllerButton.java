@@ -1,4 +1,4 @@
-package uk.ac.lancaster.scc210.game.controller;
+package uk.ac.lancaster.scc210.engine.controller;
 
 import org.jsfml.window.Joystick;
 
@@ -25,11 +25,15 @@ public enum ControllerButton {
 
     private final int id;
 
+    private final int controllerId;
+
     ControllerButton(final int id) {
         this.id = id;
+
+        controllerId = Controller.getControllerId();
     }
 
     public boolean isPressed() {
-        return Joystick.isButtonPressed(Controller.CONTROLLER_ID, id);
+        return Controller.hasController(controllerId) && Joystick.isButtonPressed(controllerId, id);
     }
 }
