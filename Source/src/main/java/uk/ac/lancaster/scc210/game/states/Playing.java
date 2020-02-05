@@ -82,7 +82,7 @@ public class Playing implements State {
 
     @Override
     public void update(Time deltaTime) {
-        world.update();
+        world.update(deltaTime);
 
         if (level.complete()) {
             System.out.println("Complete level");

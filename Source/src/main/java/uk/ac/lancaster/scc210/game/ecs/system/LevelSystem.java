@@ -1,6 +1,7 @@
 package uk.ac.lancaster.scc210.game.ecs.system;
 
 import org.jsfml.graphics.RenderTarget;
+import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
@@ -39,7 +40,7 @@ public class LevelSystem extends IterativeSystem {
     }
 
     @Override
-    public void update() {
+    public void update(Time deltaTime) {
         if (currentStage != null && currentStage.complete()) {
             System.out.println("Completed wave");
 

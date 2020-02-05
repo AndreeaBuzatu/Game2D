@@ -1,6 +1,7 @@
 package uk.ac.lancaster.scc210.game.ecs.system;
 
 import org.jsfml.graphics.RenderTarget;
+import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ViewSize;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
@@ -28,7 +29,7 @@ public class ViewBoundsSystem extends IterativeSystem {
     }
 
     @Override
-    public void update() {
+    public void update(Time deltaTime) {
         for (Entity entity : entities) {
             SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
 

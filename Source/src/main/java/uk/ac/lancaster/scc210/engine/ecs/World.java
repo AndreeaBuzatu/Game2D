@@ -1,6 +1,7 @@
 package uk.ac.lancaster.scc210.engine.ecs;
 
 import org.jsfml.graphics.RenderTarget;
+import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.system.EntitySystem;
 import uk.ac.lancaster.scc210.engine.pooling.Pool;
 import uk.ac.lancaster.scc210.engine.service.ServiceProvider;
@@ -79,9 +80,9 @@ public class World {
     /**
      * Update all the Systems contained in World.
      */
-    public void update() {
+    public void update(Time deltaTime) {
         for (EntitySystem system : systems) {
-            system.update();
+            system.update(deltaTime);
         }
     }
 
