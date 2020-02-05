@@ -19,18 +19,19 @@ public class LevelWave {
 
     private final float COUNT_START = 0;
 
-    private Set<Entity> entities;
-
     private final Wave wave;
 
     private final Vector2f origin, destination;
 
     private final SpaceShipPrototype spaceShip;
 
-    private float spawnCountUp;
     private final float spawnTime;
 
     private final int numShips;
+
+    private Set<Entity> entities;
+
+    private float spawnCountUp;
 
     private int numLeftToSpawn;
 
@@ -88,7 +89,7 @@ public class LevelWave {
     }
 
     private boolean allSpawned() {
-        return numLeftToSpawn == 0;
+        return numLeftToSpawn <= 0;
     }
 
     boolean complete() {
