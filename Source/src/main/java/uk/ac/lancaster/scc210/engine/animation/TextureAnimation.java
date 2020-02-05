@@ -16,7 +16,7 @@ public class TextureAnimation {
     private static final int STARTING_FRAME = 0;
 
     // The number of seconds taken per frame. This acts like a count down.
-    private final float FPS = 1.5f;
+    private final float FPS = 0.5f;
 
     private final Texture[] frames;
 
@@ -38,7 +38,7 @@ public class TextureAnimation {
 
         currentFrame = 0;
 
-        frameTimeRemaining = FPS;
+        frameTimeRemaining = 0;
 
         int currentRow = startingRow;
 
@@ -59,12 +59,10 @@ public class TextureAnimation {
     }
 
     /**
-     * Gets the texture at this point in time for the animation speed.
-     * This should be used to update a sprite.
+     * Changes the texture at this point in time for the animation speed.
      *
-     * @return the texture
      */
-    public Texture getTexture(Time deltaTime) {
+    public void animate(Time deltaTime) {
         frameTimeRemaining -= deltaTime.asSeconds();
 
         if (frameTimeRemaining <= 0) {
@@ -77,17 +75,14 @@ public class TextureAnimation {
 
             frameTimeRemaining = FPS;
         }
-
-        return frames[currentFrame];
     }
 
     /**
-     * Gets the texture of the first frame. It is assumed that if no delta time is given, then
-     * return the first frame in the animation
+     * Gets the current texture for the current frame
      *
-     * @return the first frame in the animation array.
+     * @return Texture the current texture
      */
     public Texture getTexture() {
-        return frames[STARTING_FRAME];
+        return frames[currentFrame];
     }
 }
