@@ -3,6 +3,8 @@ package uk.ac.lancaster.scc210.engine;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.View;
+import org.jsfml.system.Clock;
+import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.VideoMode;
@@ -51,6 +53,10 @@ public class StateBasedGame {
     private State currentState;
 
     private Event event;
+
+    private Clock clock;
+
+    private Time deltaTime, elapsedTime;
 
     /**
      * Instantiates a new State based game.
@@ -110,6 +116,10 @@ public class StateBasedGame {
                 viewCentre.y - viewSize.y / 2, viewSize.x, viewSize.y));
 
         serviceProvider.put(ViewSize.class, this.viewSize);
+
+        clock = new Clock();
+
+        elapsedTime = Time.ZERO;
     }
 
     /**
@@ -126,6 +136,11 @@ public class StateBasedGame {
     }
 
     private void update() {
+        // Get the elapsed time and restart the clock
+        deltaTime = clock.restart();
+
+        elapsedTime = Time.add(elapsedTime, deltaTime);
+
         while ((event = window.pollEvent()) != null) {
             switch (event.type) {
                 case CLOSED:
