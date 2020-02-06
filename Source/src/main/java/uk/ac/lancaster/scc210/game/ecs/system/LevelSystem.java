@@ -5,6 +5,7 @@ import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
+import uk.ac.lancaster.scc210.game.ecs.component.StationaryComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.WaveComponent;
 import uk.ac.lancaster.scc210.game.level.Level;
 import uk.ac.lancaster.scc210.game.level.LevelStage;
@@ -26,16 +27,26 @@ public class LevelSystem extends IterativeSystem {
         this.level = level;
 
         currentStage = level.getCurrentStage();
+
+        // TODO: Use world.addAll here
+        for (Entity entity : currentStage.getStationaryEntities()) {
+            world.addEntity(entity);
+        }
     }
 
     @Override
     public void entityRemoved(Entity entity) {
         super.entityRemoved(entity);
 
-        WaveComponent waveComponent = (WaveComponent) entity.findComponent(WaveComponent.class);
+        if (entity.hasComponent(WaveComponent.class)) {
+            WaveComponent waveComponent = (WaveComponent) entity.findComponent(WaveComponent.class);
 
-        if (waveComponent != null) {
             waveComponent.getWave().remove(entity);
+        }
+
+        // Remove a stationary entity from the List<Entity> stationaryEntities
+        if (entity.hasComponent(StationaryComponent.class)) {
+            level.getCurrentStage().removeStationaryEntity(entity);
         }
     }
 
