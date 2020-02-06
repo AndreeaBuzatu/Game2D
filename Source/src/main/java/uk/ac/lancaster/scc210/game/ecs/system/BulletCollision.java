@@ -9,6 +9,7 @@ import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.game.ecs.component.BulletComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
+import uk.ac.lancaster.scc210.game.prototypes.ItemPrototype;
 
 import java.util.Set;
 
@@ -46,6 +47,8 @@ public class BulletCollision extends IterativeSystem {
                 if (collision) {
                     PooledComponent pooledComponent = (PooledComponent) entity.findComponent(PooledComponent.class);
 
+                    ItemPrototype test = null; //TODO: instantiate (note: this is just a test)
+                    world.addEntity(test.create());
                     world.removeEntity(spaceShip);
 
                     // Return the bullet back to the pool and remove it from the world
