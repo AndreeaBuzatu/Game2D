@@ -41,6 +41,10 @@ public class Entity {
         }
     }
 
+    public void removeComponent(Class<? extends Component> component) {
+        components.remove(component);
+    }
+
     /**
      * Gets components which the entity has.
      *
