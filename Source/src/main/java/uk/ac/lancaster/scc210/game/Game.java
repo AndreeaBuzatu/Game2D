@@ -40,7 +40,7 @@ public class Game extends StateBasedGame {
 
             serviceProvider.put(SpaceShipPrototypeManager.class, spaceShipManager);
 
-            LevelDeserialiser levelDeserialiser = new LevelDeserialiser(spaceShipManager, deserialiseXML("levels.xml"));
+            LevelDeserialiser levelDeserialiser = new LevelDeserialiser(spaceShipManager, textureManager, deserialiseXML("levels.xml"));
 
             LevelManager levelManager = new LevelManager(levelDeserialiser.getSerialised());
 
