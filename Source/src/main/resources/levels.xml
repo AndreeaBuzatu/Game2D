@@ -3,6 +3,8 @@
         <stage>
             <wave type="straight" start_x="0" start_y="0" end_x="700" end_y="700" num_ships="1" ship_name="player"/>
             <wave type="sine" start_x="0" start_y="300" end_x="700" end_y="700" num_ships="3" ship_name="player"/>
+            <stationary pos_x="500" pos_y="500" entity_type="spaceship" ship_name="other"/>
+            <stationary pos_x="800" pos_y="800" entity_type="spaceship" ship_name="player"/>
         </stage>
     </level>
     <level name="other">
