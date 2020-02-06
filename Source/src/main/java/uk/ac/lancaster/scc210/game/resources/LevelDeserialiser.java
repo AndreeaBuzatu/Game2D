@@ -112,7 +112,7 @@ public class LevelDeserialiser extends Deserialiser<Level> {
         return waves;
     }
 
-    private List<Entity> deserialiseStationary(NodeList nodes) throws ResourceNotFoundException {
+    private List<Entity> deserialiseStationary(NodeList nodes) {
         List<Entity> entities = new ArrayList<>();
 
         for (int i = 0; i < nodes.getLength(); i++) {
