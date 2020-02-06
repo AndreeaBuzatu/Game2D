@@ -24,8 +24,8 @@ public abstract class Wave {
 
     public abstract void update(Set<Entity> entities, Time deltaTime);
 
-    void calculateMoveToPoint(Vector2f spritePos) {
-        vectorDistance = distance(spritePos, destination);
+    void calculateMoveToPoint(Vector2f pos) {
+        vectorDistance = distance(pos, destination);
 
         direction = normalise(Vector2f.sub(destination, origin));
     }
