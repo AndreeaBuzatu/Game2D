@@ -5,9 +5,10 @@ import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
+import uk.ac.lancaster.scc210.engine.prototypes.Prototype;
+import uk.ac.lancaster.scc210.game.ecs.component.AsteroidComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.WaveComponent;
-import uk.ac.lancaster.scc210.game.prototypes.SpaceShipPrototype;
 import uk.ac.lancaster.scc210.game.waves.Wave;
 
 import java.util.HashSet;
@@ -22,37 +23,38 @@ public class LevelWave {
 
     private final Wave wave;
 
-    private final Vector2f origin, destination;
+    private final Vector2f origin, destination, spriteStart;
 
-    private final SpaceShipPrototype spaceShip;
+    private final Prototype prototype;
 
-    private float spawnCountUp;
-    private final float spawnTime;
+    private float spawnCountUp, spawnTime;
 
     private final int numShips;
 
     private int numLeftToSpawn;
 
-    public LevelWave(Wave wave, Vector2f origin, Vector2f destination, int numShips, SpaceShipPrototype spaceShip) {
+    public LevelWave(Wave wave, Vector2f origin, Vector2f destination, int numShips, Prototype prototype) {
         this.wave = wave;
         this.origin = origin;
         this.destination = destination;
         this.numShips = numShips;
-        this.spaceShip = spaceShip;
+        this.prototype = prototype;
 
         entities = new HashSet<>();
 
-        numLeftToSpawn = numShips;
+        spriteStart = Vector2f.sub(destination, origin);
 
         spawnTime = SPAWN_TIMER;
 
         spawnCountUp = COUNT_START;
+
+        numLeftToSpawn = numShips;
     }
 
     public Entity spawnNew(Time deltaTime) {
         // Create the initial ship - ignore the timer for the first one.
         if (numLeftToSpawn == numShips) {
-            Entity entity = createShip();
+            Entity entity = create();
 
             entities.add(entity);
 
@@ -64,7 +66,7 @@ public class LevelWave {
         spawnCountUp += deltaTime.asSeconds();
 
         if (spawnCountUp >= spawnTime && !allSpawned()) {
-            Entity entity = createShip();
+            Entity entity = create();
 
             entities.add(entity);
 
@@ -91,22 +93,24 @@ public class LevelWave {
         return entities.isEmpty() && allSpawned();
     }
 
-    private Entity createShip() {
-        Entity entity = spaceShip.create();
+    private Entity create() {
+        Entity entity = prototype.create();
 
         entity.addComponent(new WaveComponent(this));
 
-        SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
+        if (entity.hasComponent(SpriteComponent.class)) {
+            SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
 
-        Sprite sprite = spriteComponent.getSprite();
+            Sprite sprite = spriteComponent.getSprite();
 
-        FloatRect localBounds = sprite.getLocalBounds();
+            positionSprite(sprite);
+        }
 
-        Vector2f centreMiddle = new Vector2f(localBounds.width / 2, localBounds.height / 2);
+        if (entity.hasComponent(AsteroidComponent.class)) {
+            AsteroidComponent asteroidComponent = (AsteroidComponent) entity.findComponent(AsteroidComponent.class);
 
-        sprite.setOrigin(centreMiddle);
-
-        sprite.setPosition(Vector2f.sub(destination, origin));
+            asteroidComponent.getCircle().setPosition(spriteStart);
+        }
 
         return entity;
     }
@@ -121,5 +125,15 @@ public class LevelWave {
 
     public Set<Entity> getEntities() {
         return entities;
+    }
+
+    private void positionSprite(Sprite sprite) {
+        FloatRect localBounds = sprite.getLocalBounds();
+
+        Vector2f centreMiddle = new Vector2f(localBounds.width / 2, localBounds.height / 2);
+
+        sprite.setOrigin(centreMiddle);
+
+        sprite.setPosition(spriteStart);
     }
 }
