@@ -15,7 +15,7 @@ public class ItemPrototype implements Prototype {
     }
 
     public Entity create() {
-        final SpriteComponent spriteComponent = new SpriteComponent(new Sprite(textureManager.get("spritesheet.png:example_bullet"))); //TODO: what goes here?
+        final SpriteComponent spriteComponent = new SpriteComponent(new Sprite(textureManager.get("spritesheet.png"))); //TODO: what goes here?
 
         return World.createEntity(spriteComponent);
     }
