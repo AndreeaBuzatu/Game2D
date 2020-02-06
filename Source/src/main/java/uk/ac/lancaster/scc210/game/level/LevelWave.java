@@ -23,20 +23,20 @@ public class LevelWave {
 
     private final Wave wave;
 
-    private final Vector2f origin, destination, spriteStart;
+    private final Vector2f spriteStart;
 
     private final Prototype prototype;
 
-    private float spawnCountUp, spawnTime;
+    private final float spawnTime;
 
     private final int numShips;
+
+    private float spawnCountUp;
 
     private int numLeftToSpawn;
 
     public LevelWave(Wave wave, Vector2f origin, Vector2f destination, int numShips, Prototype prototype) {
         this.wave = wave;
-        this.origin = origin;
-        this.destination = destination;
         this.numShips = numShips;
         this.prototype = prototype;
 
