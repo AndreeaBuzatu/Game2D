@@ -6,6 +6,7 @@ import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.states.State;
+import uk.ac.lancaster.scc210.game.content.ItemPrototypeManager;
 import uk.ac.lancaster.scc210.game.content.LevelManager;
 import uk.ac.lancaster.scc210.game.content.SpaceShipPrototypeManager;
 import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
@@ -63,11 +64,15 @@ public class Playing implements State {
 
         SpaceShipPrototypeManager spaceShipManager = (SpaceShipPrototypeManager) game.getServiceProvider().get(SpaceShipPrototypeManager.class);
 
+        ItemPrototypeManager itemPrototypeManager = (ItemPrototypeManager) game.getServiceProvider().get(ItemPrototypeManager.class);
+
         Entity player = spaceShipManager.get("player").create();
 
         player.addComponent(new PlayerComponent());
 
         world.addEntity(player);
+
+        world.addEntity(itemPrototypeManager.get("test-item").create());
     }
 
     @Override

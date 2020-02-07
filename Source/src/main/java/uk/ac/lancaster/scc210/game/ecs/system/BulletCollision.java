@@ -47,8 +47,6 @@ public class BulletCollision extends IterativeSystem {
                 if (collision) {
                     PooledComponent pooledComponent = (PooledComponent) entity.findComponent(PooledComponent.class);
 
-                    ItemPrototype test = null; //TODO: instantiate (note: this is just a test)
-                    world.addEntity(test.create());
                     world.removeEntity(spaceShip);
 
                     // Return the bullet back to the pool and remove it from the world
