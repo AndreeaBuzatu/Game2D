@@ -62,6 +62,8 @@ public class Playing implements State {
 
         world.addSystem(new ItemDropSystem(world));
 
+        world.addSystem(new ItemCollisionSystem(world));
+
         world.addSystem(levelSystem);
 
         SpaceShipPrototypeManager spaceShipManager = (SpaceShipPrototypeManager) game.getServiceProvider().get(SpaceShipPrototypeManager.class);
