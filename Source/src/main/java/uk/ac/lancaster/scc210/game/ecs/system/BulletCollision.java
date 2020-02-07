@@ -9,7 +9,6 @@ import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.game.ecs.component.BulletComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
-import uk.ac.lancaster.scc210.game.prototypes.ItemPrototype;
 
 import java.util.Set;
 

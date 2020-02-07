@@ -2,7 +2,6 @@ package uk.ac.lancaster.scc210.game.prototypes;
 
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
-import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.prototypes.Prototype;

@@ -60,6 +60,8 @@ public class Playing implements State {
 
         world.addSystem(new BulletCollision(world));
 
+        world.addSystem(new ItemDropSystem(world));
+
         world.addSystem(levelSystem);
 
         SpaceShipPrototypeManager spaceShipManager = (SpaceShipPrototypeManager) game.getServiceProvider().get(SpaceShipPrototypeManager.class);
@@ -72,7 +74,7 @@ public class Playing implements State {
 
         world.addEntity(player);
 
-        world.addEntity(itemPrototypeManager.get("test-item").create());
+        //world.addEntity(itemPrototypeManager.get("test-item").create());
     }
 
     @Override
