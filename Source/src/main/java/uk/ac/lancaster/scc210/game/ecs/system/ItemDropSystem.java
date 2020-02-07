@@ -2,14 +2,12 @@ package uk.ac.lancaster.scc210.game.ecs.system;
 
 import org.jsfml.graphics.RenderTarget;
 import org.jsfml.system.Time;
-import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.game.content.ItemPrototypeManager;
 import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
-import uk.ac.lancaster.scc210.game.prototypes.ItemPrototype;
 
 import java.util.Random;
 
@@ -31,7 +29,7 @@ public class ItemDropSystem extends IterativeSystem {
         Random random = new Random();
 
         int num = random.nextInt(99);
-        System.out.println(num);
+        System.out.println(entity + ": " + num);
 
         if (num < GENERIC_DROP_CHANCE) {
             if (entity.hasComponent(SpaceShipComponent.class)) {
@@ -54,5 +52,4 @@ public class ItemDropSystem extends IterativeSystem {
     public void draw(RenderTarget target) {
 
     }
-    //
 }

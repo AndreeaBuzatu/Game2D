@@ -73,8 +73,6 @@ public class Playing implements State {
         player.addComponent(new PlayerComponent());
 
         world.addEntity(player);
-
-        //world.addEntity(itemPrototypeManager.get("test-item").create());
     }
 
     @Override
