@@ -11,7 +11,10 @@ import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 import uk.ac.lancaster.scc210.game.prototypes.ItemPrototype;
 
+import java.util.Random;
+
 public class ItemDropSystem extends IterativeSystem {
+    private static final int GENERIC_DROP_CHANCE = 20;
     /**
      * Instantiates a new Iterative system.
      *
@@ -25,13 +28,20 @@ public class ItemDropSystem extends IterativeSystem {
     public void entityRemoved(Entity entity) {
         super.entityRemoved(entity);
 
-        if (entity.hasComponent(SpaceShipComponent.class)) {
-            ItemPrototypeManager itemPrototypeManager = (ItemPrototypeManager) world.getServiceProvider().get(ItemPrototypeManager.class);
-            Entity item = itemPrototypeManager.get("test-item").create();
-            SpriteComponent itemSpriteComponent = (SpriteComponent) item.findComponent(SpriteComponent.class);
-            SpriteComponent entitySpriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
-            itemSpriteComponent.getSprite().setPosition(entitySpriteComponent.getSprite().getPosition());
-            world.addEntity(item);
+        Random random = new Random();
+
+        int num = random.nextInt(99);
+        System.out.println(num);
+
+        if (num < GENERIC_DROP_CHANCE) {
+            if (entity.hasComponent(SpaceShipComponent.class)) {
+                ItemPrototypeManager itemPrototypeManager = (ItemPrototypeManager) world.getServiceProvider().get(ItemPrototypeManager.class);
+                Entity item = itemPrototypeManager.get("test-item").create();
+                SpriteComponent itemSpriteComponent = (SpriteComponent) item.findComponent(SpriteComponent.class);
+                SpriteComponent entitySpriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
+                itemSpriteComponent.getSprite().setPosition(entitySpriteComponent.getSprite().getPosition());
+                world.addEntity(item);
+            }
         }
     }
 
