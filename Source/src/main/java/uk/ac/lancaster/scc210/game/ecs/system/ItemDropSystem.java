@@ -12,7 +12,11 @@ import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 import java.util.Random;
 
 public class ItemDropSystem extends IterativeSystem {
-    private static final int GENERIC_DROP_CHANCE = 20;
+    // nextInt is 0-indexed
+    private final int HUNDRED_PERCENT = 99;
+
+    private final int DROP_CHANCE = 20;
+
     /**
      * Instantiates a new Iterative system.
      *
@@ -28,16 +32,22 @@ public class ItemDropSystem extends IterativeSystem {
 
         Random random = new Random();
 
-        int num = random.nextInt(99);
-        System.out.println(entity + ": " + num);
+        int num = random.nextInt(HUNDRED_PERCENT);
 
-        if (num < GENERIC_DROP_CHANCE) {
+        //System.out.println(entity + ": " + num);
+
+        if (num < DROP_CHANCE) {
             if (entity.hasComponent(SpaceShipComponent.class)) {
                 ItemPrototypeManager itemPrototypeManager = (ItemPrototypeManager) world.getServiceProvider().get(ItemPrototypeManager.class);
+
                 Entity item = itemPrototypeManager.get("test-item").create();
+
                 SpriteComponent itemSpriteComponent = (SpriteComponent) item.findComponent(SpriteComponent.class);
+
                 SpriteComponent entitySpriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
+
                 itemSpriteComponent.getSprite().setPosition(entitySpriteComponent.getSprite().getPosition());
+
                 world.addEntity(item);
             }
         }
