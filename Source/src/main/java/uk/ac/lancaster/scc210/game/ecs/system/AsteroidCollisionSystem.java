@@ -1,18 +1,19 @@
 package uk.ac.lancaster.scc210.game.ecs.system;
 
+import org.jsfml.graphics.CircleShape;
+import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.RenderTarget;
 import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
-import uk.ac.lancaster.scc210.engine.ecs.component.PooledComponent;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
-import uk.ac.lancaster.scc210.game.ecs.component.BulletComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.AsteroidComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
 import java.util.Set;
 
-public class BulletCollision extends IterativeSystem {
+public class AsteroidCollisionSystem extends IterativeSystem {
     private Set<Entity> spaceShips;
 
     /**
@@ -20,8 +21,8 @@ public class BulletCollision extends IterativeSystem {
      *
      * @param world the world containing entities to use
      */
-    public BulletCollision(World world) {
-        super(world, BulletComponent.class);
+    public AsteroidCollisionSystem(World world) {
+        super(world, AsteroidComponent.class);
 
         spaceShips = world.getEntitiesFor(SpaceShipComponent.class);
     }
@@ -36,22 +37,19 @@ public class BulletCollision extends IterativeSystem {
     @Override
     public void update(Time deltaTime) {
         for (Entity entity : entities) {
-            SpriteComponent bulletSpriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
+            AsteroidComponent asteroidComponent = (AsteroidComponent) entity.findComponent(AsteroidComponent.class);
+
+            CircleShape asteroid = asteroidComponent.getCircle();
+
+            FloatRect asteroidBounds = asteroid.getGlobalBounds();
 
             for (Entity spaceShip : spaceShips) {
-                SpriteComponent spaceShipSprite = (SpriteComponent) spaceShip.findComponent(SpriteComponent.class);
+                SpriteComponent spriteComponent = (SpriteComponent) spaceShip.findComponent(SpriteComponent.class);
 
-                boolean collision = spaceShipSprite.getSprite().getGlobalBounds().contains(bulletSpriteComponent.getSprite().getPosition());
+                boolean collision = asteroidBounds.contains(spriteComponent.getSprite().getPosition());
 
                 if (collision) {
-                    PooledComponent pooledComponent = (PooledComponent) entity.findComponent(PooledComponent.class);
-
                     world.removeEntity(spaceShip);
-
-                    // Return the bullet back to the pool and remove it from the world
-                    world.getPool(pooledComponent.getPoolClass()).returnEntity(entity);
-
-                    world.removeEntity(entity);
                 }
             }
         }

@@ -57,7 +57,11 @@ public class Playing implements State {
 
         world.addSystem(new ViewBoundsSystem(world));
 
-        world.addSystem(new BulletCollision(world));
+        world.addSystem(new BulletCollisionSystem(world));
+
+        world.addSystem(new AsteroidSystem(world));
+
+        world.addSystem(new AsteroidCollisionSystem(world));
 
         world.addSystem(levelSystem);
 

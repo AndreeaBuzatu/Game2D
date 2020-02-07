@@ -9,5 +9,6 @@
     </atlas>
     <atlas src="enemy-spritesheet.png" texture_width="128" texture_height="128">
         <texture name="example_bullet" row="0" column="0"/>
+        <texture name="asteroid" row="1" column="0"/>
     </atlas>
 </atlases>

@@ -5,16 +5,20 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
+import uk.ac.lancaster.scc210.engine.prototypes.Prototype;
 import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
 import uk.ac.lancaster.scc210.engine.resources.deserialise.Deserialiser;
 import uk.ac.lancaster.scc210.game.content.SpaceShipPrototypeManager;
+import uk.ac.lancaster.scc210.game.ecs.component.AsteroidComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.StationaryComponent;
 import uk.ac.lancaster.scc210.game.level.Level;
 import uk.ac.lancaster.scc210.game.level.LevelStage;
 import uk.ac.lancaster.scc210.game.level.LevelWave;
-import uk.ac.lancaster.scc210.game.prototypes.SpaceShipPrototype;
+import uk.ac.lancaster.scc210.game.prototypes.AsteroidPrototype;
 import uk.ac.lancaster.scc210.game.waves.SineWave;
 import uk.ac.lancaster.scc210.game.waves.StraightLineWave;
 import uk.ac.lancaster.scc210.game.waves.Wave;
@@ -29,7 +33,13 @@ public class LevelDeserialiser extends Deserialiser<Level> {
 
     private final String STATIONARY_TAG = "stationary";
 
+    private final String SPACE_SHIP = "spaceship";
+
+    private final String ASTEROID = "asteroid";
+
     private final SpaceShipPrototypeManager spaceShipManager;
+
+    private final AsteroidPrototype asteroidPrototype;
 
     /**
      * Instantiates a new Deserialiser.
@@ -37,10 +47,12 @@ public class LevelDeserialiser extends Deserialiser<Level> {
      * @param document the xml document
      * @throws ResourceNotFoundException if the resource cannot be created or found
      */
-    public LevelDeserialiser(SpaceShipPrototypeManager spaceShipManager, Document document) throws ResourceNotFoundException {
+    public LevelDeserialiser(SpaceShipPrototypeManager spaceShipManager, TextureManager textureManager, Document document) throws ResourceNotFoundException {
         super(document, "level");
 
         this.spaceShipManager = spaceShipManager;
+
+        asteroidPrototype = new AsteroidPrototype(textureManager);
 
         deserialise();
     }
@@ -95,7 +107,16 @@ public class LevelDeserialiser extends Deserialiser<Level> {
 
                 int numShips = Integer.parseInt(elem.getAttribute("num_ships"));
 
-                String shipName = elem.getAttribute("ship_name");
+                String entityType = elem.getAttribute("entity_type");
+
+                Prototype prototype = null;
+
+                if (entityType.equals(SPACE_SHIP)) {
+                    prototype = spaceShipManager.get(elem.getAttribute("ship_name"));
+
+                } else if (entityType.equals(ASTEROID)) {
+                    prototype = asteroidPrototype;
+                }
 
                 Vector2f origin = new Vector2f(originX, originY);
 
@@ -103,9 +124,9 @@ public class LevelDeserialiser extends Deserialiser<Level> {
 
                 Wave wave = deserialiseWaveName(elem.getAttribute("type"), origin, destination);
 
-                SpaceShipPrototype spaceShip = spaceShipManager.get(shipName);
-
-                waves.add(new LevelWave(wave, origin, destination, numShips, spaceShip));
+                if (prototype != null) {
+                    waves.add(new LevelWave(wave, origin, destination, numShips, prototype));
+                }
             }
         }
 
@@ -125,29 +146,56 @@ public class LevelDeserialiser extends Deserialiser<Level> {
 
                 float posY = Float.parseFloat(elem.getAttribute("pos_y"));
 
-                String entityType = elem.getAttribute("entity_type");
-
-                String shipName = elem.getAttribute("ship_name");
-
-                // TODO: Handle asteroids
-
                 Vector2f pos = new Vector2f(posX, posY);
 
-                Entity spaceShip = spaceShipManager.get(shipName).create();
+                String entityType = elem.getAttribute("entity_type");
 
-                spaceShip.addComponent(new StationaryComponent());
+                Entity entity = null;
 
-                if (spaceShip.hasComponent(SpriteComponent.class)) {
-                    SpriteComponent spriteComponent = (SpriteComponent) spaceShip.findComponent(SpriteComponent.class);
+                if (entityType.equals(SPACE_SHIP)) {
+                    entity = deserialiseStationarySpaceShip(elem, pos);
 
-                    spriteComponent.getSprite().setPosition(pos);
+                } else if (entityType.equals(ASTEROID)) {
+                    entity = deserialiseStationaryAsteroid(pos);
                 }
 
-                entities.add(spaceShip);
+                if (entity != null) {
+                    if (entity.hasComponent(SpeedComponent.class)) {
+                        entity.removeComponent(SpeedComponent.class);
+                    }
+                }
+
+                entities.add(entity);
             }
         }
 
         return entities;
+    }
+
+    private Entity deserialiseStationarySpaceShip(Element elem, Vector2f position) {
+        String shipName = elem.getAttribute("ship_name");
+
+        Entity spaceShip = spaceShipManager.get(shipName).create();
+
+        spaceShip.addComponent(new StationaryComponent());
+
+        if (spaceShip.hasComponent(SpriteComponent.class)) {
+            SpriteComponent spriteComponent = (SpriteComponent) spaceShip.findComponent(SpriteComponent.class);
+
+            spriteComponent.getSprite().setPosition(position);
+        }
+
+        return spaceShip;
+    }
+
+    private Entity deserialiseStationaryAsteroid(Vector2f pos) {
+        Entity asteroid = asteroidPrototype.create();
+
+        AsteroidComponent asteroidComponent = (AsteroidComponent) asteroid.findComponent(AsteroidComponent.class);
+
+        asteroidComponent.getCircle().setPosition(pos);
+
+        return asteroid;
     }
 
     private Wave deserialiseWaveName(String wave, Vector2f origin, Vector2f destination) throws ResourceNotFoundException {
