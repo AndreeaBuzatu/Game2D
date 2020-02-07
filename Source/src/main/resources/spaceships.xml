@@ -1,0 +1,5 @@
+<spaceships>
+    <spaceship name="player" animation="player-ship" speed="5"/>
+
+    <spaceship name="other" animation="alien-ship" speed="0"/>
+</spaceships>
