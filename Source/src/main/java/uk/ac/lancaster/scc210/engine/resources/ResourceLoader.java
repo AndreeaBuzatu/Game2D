@@ -1,6 +1,6 @@
 package uk.ac.lancaster.scc210.engine.resources;
 
-import uk.ac.lancaster.scc210.game.Game;
+import uk.ac.lancaster.scc210.engine.StateBasedGame;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -28,7 +28,7 @@ public class ResourceLoader {
         try {
             resource.loadFromFile(path);
 
-            Game.LOGGER.log(Level.INFO, String.format("[%s] Loading %s", resource.getClass().getName(), path));
+            StateBasedGame.LOGGER.log(Level.INFO, String.format("[%s] Loading %s", resource.getClass().getName(), path));
 
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, String.format("Unable to load %s", path), ERROR_TITLE, JOptionPane.ERROR_MESSAGE);

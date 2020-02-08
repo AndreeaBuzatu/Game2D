@@ -10,24 +10,30 @@ import org.jsfml.window.Keyboard;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
 import org.w3c.dom.Document;
-import uk.ac.lancaster.scc210.engine.content.TextureAnimationManager;
-import uk.ac.lancaster.scc210.engine.content.TextureAtlasManager;
-import uk.ac.lancaster.scc210.engine.content.TextureManager;
+import uk.ac.lancaster.scc210.engine.content.*;
 import uk.ac.lancaster.scc210.engine.resources.ResourceLoader;
 import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
 import uk.ac.lancaster.scc210.engine.resources.XMLAdapter;
 import uk.ac.lancaster.scc210.engine.resources.deserialise.AnimationDeserialiser;
+import uk.ac.lancaster.scc210.engine.resources.deserialise.MusicDeserialiser;
+import uk.ac.lancaster.scc210.engine.resources.deserialise.SoundDeserialiser;
 import uk.ac.lancaster.scc210.engine.resources.deserialise.TextureAtlasDeserialiser;
 import uk.ac.lancaster.scc210.engine.service.ServiceProvider;
 import uk.ac.lancaster.scc210.engine.states.State;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.logging.Logger;
 
 /**
  * Contains the basic functionality for a state based game.
  */
 public class StateBasedGame {
+    /**
+     * The constant LOGGER.
+     */
+    public static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
     private final int FPS = 60;
 
     private final float ZOOM_AMOUNT = 2.0f;
@@ -103,6 +109,18 @@ public class StateBasedGame {
             TextureManager textureManager = new TextureManager(textureAtlasDeserialiser.getSerialised());
 
             serviceProvider.put(TextureManager.class, textureManager);
+
+            MusicDeserialiser musicDeserialiser = new MusicDeserialiser(deserialiseXML("music.xml"));
+
+            MusicManager musicManager = new MusicManager(musicDeserialiser.getSerialised());
+
+            serviceProvider.put(MusicManager.class, musicManager);
+
+            SoundDeserialiser soundDeserialiser = new SoundDeserialiser(deserialiseXML("sounds.xml"));
+
+            SoundBufferManager soundBufferManager = new SoundBufferManager(soundDeserialiser.getSerialised());
+
+            serviceProvider.put(SoundBufferManager.class, soundBufferManager);
 
         } catch (ResourceNotFoundException e) {
             window.close();
