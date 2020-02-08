@@ -12,10 +12,6 @@ public class MusicManager extends ContentManager<Music> {
     public MusicManager(List<SerialisedMusic> serialisedMusic) {
         super(null);
 
-        serialisedMusic.parallelStream().forEach(piece -> {
-            System.out.println("Name: " + piece.getName());
-
-            put(piece.getName(), piece.getMusic());
-        });
+        serialisedMusic.parallelStream().forEach(piece -> put(piece.getName(), piece.getMusic()));
     }
 }
