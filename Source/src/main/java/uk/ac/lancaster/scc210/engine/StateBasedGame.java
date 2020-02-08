@@ -10,15 +10,13 @@ import org.jsfml.window.Keyboard;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
 import org.w3c.dom.Document;
-import uk.ac.lancaster.scc210.engine.content.MusicManager;
-import uk.ac.lancaster.scc210.engine.content.TextureAnimationManager;
-import uk.ac.lancaster.scc210.engine.content.TextureAtlasManager;
-import uk.ac.lancaster.scc210.engine.content.TextureManager;
+import uk.ac.lancaster.scc210.engine.content.*;
 import uk.ac.lancaster.scc210.engine.resources.ResourceLoader;
 import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
 import uk.ac.lancaster.scc210.engine.resources.XMLAdapter;
 import uk.ac.lancaster.scc210.engine.resources.deserialise.AnimationDeserialiser;
 import uk.ac.lancaster.scc210.engine.resources.deserialise.MusicDeserialiser;
+import uk.ac.lancaster.scc210.engine.resources.deserialise.SoundDeserialiser;
 import uk.ac.lancaster.scc210.engine.resources.deserialise.TextureAtlasDeserialiser;
 import uk.ac.lancaster.scc210.engine.service.ServiceProvider;
 import uk.ac.lancaster.scc210.engine.states.State;
@@ -117,6 +115,12 @@ public class StateBasedGame {
             MusicManager musicManager = new MusicManager(musicDeserialiser.getSerialised());
 
             serviceProvider.put(MusicManager.class, musicManager);
+
+            SoundDeserialiser soundDeserialiser = new SoundDeserialiser(deserialiseXML("sounds.xml"));
+
+            SoundBufferManager soundBufferManager = new SoundBufferManager(soundDeserialiser.getSerialised());
+
+            serviceProvider.put(SoundBufferManager.class, soundBufferManager);
 
         } catch (ResourceNotFoundException e) {
             window.close();
