@@ -1,8 +1,10 @@
 package uk.ac.lancaster.scc210.game.states;
 
+import org.jsfml.audio.Music;
 import org.jsfml.graphics.RenderTarget;
 import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
+import uk.ac.lancaster.scc210.engine.content.MusicManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.states.State;
@@ -28,6 +30,8 @@ public class Playing implements State {
     private LevelSystem levelSystem;
 
     private boolean completed;
+
+    private Music example;
 
     @Override
     public void setup(StateBasedGame game) {
@@ -72,6 +76,16 @@ public class Playing implements State {
         player.addComponent(new PlayerComponent());
 
         world.addEntity(player);
+
+        MusicManager musicManager = (MusicManager) world.getServiceProvider().get(MusicManager.class);
+
+        example = musicManager.get("example");
+
+        example.setVolume(100);
+
+        example.setLoop(true);
+
+        example.play();
     }
 
     @Override
