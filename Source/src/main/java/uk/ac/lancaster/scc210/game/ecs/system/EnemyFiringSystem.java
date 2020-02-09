@@ -11,6 +11,10 @@ import uk.ac.lancaster.scc210.game.ecs.component.FiringPatternComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
 public class EnemyFiringSystem extends IterativeSystem {
+
+    private final Time FIRING_GAP = Time.getSeconds(1);
+
+    private Time elapsedTime;
     /**
      * Instantiates a new Iterative system.
      *
@@ -18,14 +22,25 @@ public class EnemyFiringSystem extends IterativeSystem {
      */
     public EnemyFiringSystem(World world) {
         super(world, SpriteComponent.class, AnimationComponent.class, EnemyComponent.class);
+
+        elapsedTime = Time.ZERO;
     }
 
     @Override
     public void update(Time deltaTime) {
         for (Entity entity : entities) {
+
+            elapsedTime = Time.add(elapsedTime, deltaTime);
+
             FiringPatternComponent firingPatternComponent = (FiringPatternComponent) entity.findComponent(FiringPatternComponent.class);
 
-            world.addEntities(firingPatternComponent.getPattern().create());
+           if (elapsedTime.asSeconds() > FIRING_GAP.asSeconds()) {
+
+
+               world.addEntities(firingPatternComponent.getPattern().create());
+
+               elapsedTime = Time.ZERO;
+           }
         }
     }
 
