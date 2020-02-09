@@ -16,6 +16,11 @@ import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
  * The system places Bullets (Entities) into the front-middle of the entity.
  */
 public class PlayerFiringSystem extends IterativeSystem {
+
+    private final Time FIRING_GAP = Time.getSeconds(0.2f);
+
+    private Time elapsedTime;
+
     /**
      * Instantiates a new Iterative system.
      *
@@ -23,15 +28,24 @@ public class PlayerFiringSystem extends IterativeSystem {
      */
     public PlayerFiringSystem(World world) {
         super(world, SpriteComponent.class, AnimationComponent.class);
+
+        elapsedTime = Time.ZERO;
     }
 
     @Override
     public void update(Time deltaTime) {
         for (Entity entity : entities) {
+
+            elapsedTime = Time.add(elapsedTime,deltaTime);
+
             FiringPatternComponent firingPatternComponent = (FiringPatternComponent) entity.findComponent(FiringPatternComponent.class);
 
-            if (Keyboard.isKeyPressed(Keyboard.Key.SPACE) || ControllerButton.A_BUTTON.isPressed()) {
+            if ((Keyboard.isKeyPressed(Keyboard.Key.SPACE) || ControllerButton.A_BUTTON.isPressed()) && elapsedTime.asSeconds() > FIRING_GAP.asSeconds()){
+
                 world.addEntities(firingPatternComponent.getPattern().create());
+
+                elapsedTime = Time.ZERO;
+
             }
         }
     }
