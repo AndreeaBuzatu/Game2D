@@ -1,5 +1,6 @@
 package uk.ac.lancaster.scc210.game.ecs.system;
 
+import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.RenderTarget;
 import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
@@ -47,9 +48,10 @@ public class ItemCollisionSystem extends IterativeSystem {
 
             SpriteComponent playerSpriteComponent = (SpriteComponent) playerEntity.findComponent(SpriteComponent.class);
 
-            boolean collision = itemSpriteComponent.getSprite().getGlobalBounds().contains(playerSpriteComponent.getSprite().getPosition());
+            FloatRect intersection = playerSpriteComponent.getSprite().getGlobalBounds().intersection(itemSpriteComponent.getSprite().getGlobalBounds());
 
-            if (collision) {
+            // Intersection returns null if the two rectangles don't intersect.
+            if (intersection != null) {
                 ItemEffectsComponent itemEffectsComponent = (ItemEffectsComponent) entity.findComponent(ItemEffectsComponent.class);
 
                 itemEffectsComponent.getItemEffects().parallelStream().forEach(itemEffect -> itemEffect.react(playerEntity));
