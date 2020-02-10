@@ -1,7 +1,6 @@
 package uk.ac.lancaster.scc210.game.prototypes;
 
 import org.jsfml.graphics.Sprite;
-import org.jsfml.graphics.Texture;
 import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
@@ -30,8 +29,8 @@ public class BulletPrototype implements Prototype {
         return World.createEntity(spriteComponent, speedComponent);
     }
 
-    public Texture getTexture() {
-        return textureManager.get(texture);
+    public String getTexture() {
+        return texture;
     }
 
     public int getSpeed() {
