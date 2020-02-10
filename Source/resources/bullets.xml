@@ -1,0 +1,3 @@
+<bullets>
+    <bullet name="player-shoot" texture="bullets.png:example_bullet" speed="5"/>
+</bullets>
