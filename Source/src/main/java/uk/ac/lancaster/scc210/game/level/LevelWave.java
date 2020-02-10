@@ -5,7 +5,6 @@ import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
-import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.WaveComponent;
 import uk.ac.lancaster.scc210.game.prototypes.SpaceShipPrototype;
@@ -54,10 +53,6 @@ public class LevelWave {
         // Create the initial ship - ignore the timer for the first one.
         if (numLeftToSpawn == numShips) {
             Entity entity = createShip();
-
-            SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
-
-            SpeedComponent speedComponent = (SpeedComponent) entity.findComponent(SpeedComponent.class);
 
             entities.add(entity);
 

@@ -11,8 +11,6 @@ public class LevelStage {
 
     public boolean complete() {
         // All are complete
-        //System.out.println(waves.parallelStream().map(LevelWave::complete).collect(Collectors.toList()));
-
         return waves.parallelStream().allMatch(LevelWave::complete);
     }
 
