@@ -9,11 +9,11 @@ import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 public class StarPattern extends Pattern {
     private static final int NUM_BULLETS = 8;
 
-    public StarPattern(Pool pool, Entity spaceShip) {
-        super(pool, spaceShip, new Entity[NUM_BULLETS]);
+    public StarPattern(Pool pool, Entity spaceShip, String bulletName) {
+        super(pool, spaceShip, new Entity[NUM_BULLETS], bulletName);
 
         // It doesn't matter if we waste one allocation that's okay...
-        bullets[0] = pool.borrowEntity();
+        bullets[0] = pool.borrowEntity(bulletName);
 
         Sprite bulletSprite = ((SpriteComponent) bullets[0].findComponent(SpriteComponent.class)).getSprite();
 
@@ -27,7 +27,7 @@ public class StarPattern extends Pattern {
     @Override
     public Entity[] create() {
         for (int i = 0; i < NUM_BULLETS; i++) {
-            bullets[i] = pool.borrowEntity();
+            bullets[i] = pool.borrowEntity(bulletName);
 
             Sprite bulletSprite = ((SpriteComponent) bullets[i].findComponent(SpriteComponent.class)).getSprite();
 

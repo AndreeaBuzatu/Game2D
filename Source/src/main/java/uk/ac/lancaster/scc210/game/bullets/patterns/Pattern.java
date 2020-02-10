@@ -15,9 +15,12 @@ public abstract class Pattern {
 
     final Sprite spaceShipSprite;
 
-    Pattern(Pool pool, Entity spaceShip, Entity[] bullets) {
+    String bulletName;
+
+    Pattern(Pool pool, Entity spaceShip, Entity[] bullets, String bulletName) {
         this.pool = pool;
         this.bullets = bullets;
+        this.bulletName = bulletName;
 
         coords = new Vector2f[bullets.length];
 

@@ -11,13 +11,13 @@ public class StraightLinePattern extends Pattern {
 
     private final int BULLET_Y_PADDING = -20;
 
-    public StraightLinePattern(Pool pool, Entity spaceShip) {
-        super(pool, spaceShip, new Entity[NUM_BULLETS]);
+    public StraightLinePattern(Pool pool, Entity spaceShip, String bulletName) {
+        super(pool, spaceShip, new Entity[NUM_BULLETS], bulletName);
     }
 
     @Override
     public Entity[] create() {
-        bullets[NUM_BULLETS - 1] = pool.borrowEntity();
+        bullets[NUM_BULLETS - 1] = pool.borrowEntity(bulletName);
 
         Sprite bulletSprite = ((SpriteComponent) bullets[NUM_BULLETS - 1].findComponent(SpriteComponent.class)).getSprite();
 
