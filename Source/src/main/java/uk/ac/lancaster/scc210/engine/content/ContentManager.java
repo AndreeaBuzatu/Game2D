@@ -3,7 +3,7 @@ package uk.ac.lancaster.scc210.engine.content;
 import uk.ac.lancaster.scc210.engine.service.Service;
 
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * A generic container which wraps a HashMap. The purpose of this is to hide some of the functionality of HashMap.
@@ -12,7 +12,7 @@ import java.util.HashMap;
  * @param <T> the type parameter
  */
 public class ContentManager<T> implements Service {
-    private final HashMap<String, T> content;
+    private final ConcurrentHashMap<String, T> content;
 
     private final T alternative;
 
@@ -24,7 +24,7 @@ public class ContentManager<T> implements Service {
     protected ContentManager(T alternative) {
         this.alternative = alternative;
 
-        content = new HashMap<>();
+        content = new ConcurrentHashMap<>();
     }
 
     /**
