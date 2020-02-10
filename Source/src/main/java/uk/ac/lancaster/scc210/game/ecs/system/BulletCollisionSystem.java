@@ -13,7 +13,7 @@ import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
 
 import java.util.Set;
 
-public class BulletCollision extends IterativeSystem {
+public class BulletCollisionSystem extends IterativeSystem {
     private Set<Entity> spaceShips;
 
     /**
@@ -21,7 +21,7 @@ public class BulletCollision extends IterativeSystem {
      *
      * @param world the world containing entities to use
      */
-    public BulletCollision(World world) {
+    public BulletCollisionSystem(World world) {
         super(world, BulletComponent.class);
 
         spaceShips = world.getEntitiesFor(SpaceShipComponent.class);
