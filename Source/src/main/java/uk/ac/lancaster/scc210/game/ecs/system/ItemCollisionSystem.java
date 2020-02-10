@@ -1,14 +1,14 @@
 package uk.ac.lancaster.scc210.game.ecs.system;
 
-import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.RenderTarget;
 import org.jsfml.system.Time;
+import uk.ac.lancaster.scc210.engine.collision.OrientatedBox;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.game.ecs.component.ItemEffectsComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.OrientatedBoxComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
 import java.util.Optional;
 
@@ -43,15 +43,14 @@ public class ItemCollisionSystem extends IterativeSystem {
 
         Entity playerEntity = player.get();
 
+        OrientatedBoxComponent playerOrientedBox = (OrientatedBoxComponent) playerEntity.findComponent(OrientatedBoxComponent.class);
+
         for (Entity entity : entities) {
-            SpriteComponent itemSpriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
+            OrientatedBoxComponent itemOrientedBox = (OrientatedBoxComponent) entity.findComponent(OrientatedBoxComponent.class);
 
-            SpriteComponent playerSpriteComponent = (SpriteComponent) playerEntity.findComponent(SpriteComponent.class);
+            boolean colliding = OrientatedBox.areColliding(itemOrientedBox.getOrientatedBox(), playerOrientedBox.getOrientatedBox());
 
-            FloatRect intersection = playerSpriteComponent.getSprite().getGlobalBounds().intersection(itemSpriteComponent.getSprite().getGlobalBounds());
-
-            // Intersection returns null if the two rectangles don't intersect.
-            if (intersection != null) {
+            if (colliding) {
                 ItemEffectsComponent itemEffectsComponent = (ItemEffectsComponent) entity.findComponent(ItemEffectsComponent.class);
 
                 itemEffectsComponent.getItemEffects().parallelStream().forEach(itemEffect -> itemEffect.react(playerEntity));

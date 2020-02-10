@@ -2,13 +2,14 @@ package uk.ac.lancaster.scc210.game.ecs.system;
 
 import org.jsfml.graphics.RenderTarget;
 import org.jsfml.system.Time;
+import uk.ac.lancaster.scc210.engine.collision.OrientatedBox;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.component.PooledComponent;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.game.ecs.component.BulletComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.OrientatedBoxComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
 import java.util.Set;
 
@@ -36,14 +37,14 @@ public class BulletCollision extends IterativeSystem {
     @Override
     public void update(Time deltaTime) {
         for (Entity entity : entities) {
-            SpriteComponent bulletSpriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
+            OrientatedBoxComponent entityOrientedBox = (OrientatedBoxComponent) entity.findComponent(OrientatedBoxComponent.class);
 
             for (Entity spaceShip : spaceShips) {
-                SpriteComponent spaceShipSprite = (SpriteComponent) spaceShip.findComponent(SpriteComponent.class);
+                OrientatedBoxComponent spaceShipOrientedBox = (OrientatedBoxComponent) spaceShip.findComponent(OrientatedBoxComponent.class);
 
-                boolean collision = spaceShipSprite.getSprite().getGlobalBounds().contains(bulletSpriteComponent.getSprite().getPosition());
+                boolean colliding = OrientatedBox.areColliding(entityOrientedBox.getOrientatedBox(), spaceShipOrientedBox.getOrientatedBox());
 
-                if (collision) {
+                if (colliding) {
                     PooledComponent pooledComponent = (PooledComponent) entity.findComponent(PooledComponent.class);
 
                     world.removeEntity(spaceShip);
