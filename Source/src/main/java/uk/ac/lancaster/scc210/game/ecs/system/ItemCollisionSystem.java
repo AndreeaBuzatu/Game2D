@@ -53,7 +53,11 @@ public class ItemCollisionSystem extends IterativeSystem {
             if (colliding) {
                 ItemEffectsComponent itemEffectsComponent = (ItemEffectsComponent) entity.findComponent(ItemEffectsComponent.class);
 
+                PlayerComponent playerComponent = (PlayerComponent) playerEntity.findComponent(PlayerComponent.class);
+
                 itemEffectsComponent.getItemEffects().parallelStream().forEach(itemEffect -> itemEffect.react(playerEntity));
+
+                playerComponent.setCurrentEffects(itemEffectsComponent.getItemEffects());
 
                 world.removeEntity(entity);
             }

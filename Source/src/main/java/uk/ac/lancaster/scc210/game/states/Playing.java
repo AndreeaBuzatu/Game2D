@@ -6,7 +6,6 @@ import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.states.State;
-import uk.ac.lancaster.scc210.game.content.ItemPrototypeManager;
 import uk.ac.lancaster.scc210.game.content.LevelManager;
 import uk.ac.lancaster.scc210.game.content.SpaceShipPrototypeManager;
 import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
@@ -27,6 +26,8 @@ public class Playing implements State {
     private Level level;
 
     private LevelSystem levelSystem;
+
+    private Entity player;
 
     private boolean completed;
 
@@ -68,9 +69,7 @@ public class Playing implements State {
 
         SpaceShipPrototypeManager spaceShipManager = (SpaceShipPrototypeManager) game.getServiceProvider().get(SpaceShipPrototypeManager.class);
 
-        ItemPrototypeManager itemPrototypeManager = (ItemPrototypeManager) game.getServiceProvider().get(ItemPrototypeManager.class);
-
-        Entity player = spaceShipManager.get("player").create();
+        player = spaceShipManager.get("player").create();
 
         player.addComponent(new PlayerComponent());
 
@@ -93,6 +92,11 @@ public class Playing implements State {
 
         if (level.complete()) {
             System.out.println("Complete level");
+
+            // Reset the player's current item effects back to the game default
+            PlayerComponent playerComponent = (PlayerComponent) player.findComponent(PlayerComponent.class);
+
+            playerComponent.getCurrentEffects().parallelStream().forEach(itemEffect -> itemEffect.reset(player));
 
             if (levelIterator.hasNext()) {
                 level = levelIterator.next();
