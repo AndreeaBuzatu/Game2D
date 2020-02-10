@@ -15,7 +15,7 @@ public abstract class Pattern {
 
     final Sprite spaceShipSprite;
 
-    String bulletName;
+    final String bulletName;
 
     Pattern(Pool pool, Entity spaceShip, Entity[] bullets, String bulletName) {
         this.pool = pool;

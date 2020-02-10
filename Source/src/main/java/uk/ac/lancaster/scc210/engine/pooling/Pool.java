@@ -74,5 +74,5 @@ public abstract class Pool implements Service {
      * @param entityName the entity to create
      * @return the created entity
      */
-    public abstract Entity create(String entityName);
+    protected abstract Entity create(String entityName);
 }

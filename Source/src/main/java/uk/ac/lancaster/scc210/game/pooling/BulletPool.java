@@ -16,9 +16,9 @@ public class BulletPool extends Pool {
     // Who cares if it's static? I don't
     private static final int INITIAL_BULLETS = 100;
 
-    private TextureManager textureManager;
+    private final TextureManager textureManager;
 
-    private BulletPrototypeManager bulletPrototypeManager;
+    private final BulletPrototypeManager bulletPrototypeManager;
 
     /**
      * Instantiate a BulletPool
