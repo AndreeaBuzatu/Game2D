@@ -6,6 +6,8 @@ import uk.ac.lancaster.scc210.engine.resources.deserialise.Serialised;
  * Represents a Serialised Space Ship. Created from an XML document
  */
 public class SerialisedSpaceShip implements Serialised {
+    private final String[] items;
+
     private final String name;
     private final String animation;
 
@@ -17,11 +19,13 @@ public class SerialisedSpaceShip implements Serialised {
      * @param name      the name of the spaceship
      * @param animation the animation of the spaceship
      * @param speed     the speed of the spaceship
+     * @param items     the items the spaceship can drop when destroyed
      */
-    SerialisedSpaceShip(String name, String animation, int speed) {
+    SerialisedSpaceShip(String name, String animation, int speed, String[] items) {
         this.name = name;
         this.animation = animation;
         this.speed = speed;
+        this.items = items;
     }
 
     /**
@@ -51,4 +55,12 @@ public class SerialisedSpaceShip implements Serialised {
         return speed;
     }
 
+    /**
+     * Get items
+     *
+     * @return the items
+     */
+    public String[] getItems() {
+        return items;
+    }
 }
