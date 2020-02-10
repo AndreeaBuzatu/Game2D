@@ -31,8 +31,6 @@ public class Game extends StateBasedGame {
         super("Shooter", 1280, 720, new Playing());
 
         try {
-            TextureManager textureManager = (TextureManager) serviceProvider.get(TextureManager.class);
-
             TextureAnimationManager animationManager = (TextureAnimationManager) serviceProvider.get(TextureAnimationManager.class);
 
             SpaceShipDeserialiser spaceShipDeserialiser = new SpaceShipDeserialiser(deserialiseXML("spaceships.xml"));
@@ -40,6 +38,8 @@ public class Game extends StateBasedGame {
             SpaceShipPrototypeManager spaceShipManager = new SpaceShipPrototypeManager(animationManager, spaceShipDeserialiser.getSerialised());
 
             serviceProvider.put(SpaceShipPrototypeManager.class, spaceShipManager);
+
+            TextureManager textureManager = (TextureManager) serviceProvider.get(TextureManager.class);
 
             ItemPrototypeManager itemManager = new ItemPrototypeManager(textureManager);
 

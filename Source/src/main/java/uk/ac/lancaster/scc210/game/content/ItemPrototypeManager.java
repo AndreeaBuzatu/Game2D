@@ -10,5 +10,7 @@ public class ItemPrototypeManager extends ContentManager<ItemPrototype> {
         super(null);
 
         put("test-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new SpeedIncreaseEffect()));
+
+        put("other-item", new ItemPrototype(textureManager.get("spritesheet.png:other")));
     }
 }

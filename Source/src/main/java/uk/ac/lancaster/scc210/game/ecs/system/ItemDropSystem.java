@@ -15,7 +15,10 @@ public class ItemDropSystem extends IterativeSystem {
     // nextInt is 0-indexed
     private final int HUNDRED_PERCENT = 99;
 
+    // Items have a 20% chance of dropping
     private final int DROP_CHANCE = 20;
+
+    private final Random random;
 
     /**
      * Instantiates a new Iterative system.
@@ -23,32 +26,26 @@ public class ItemDropSystem extends IterativeSystem {
      * @param world      the world containing entities to use
      */
     public ItemDropSystem(World world) {
-        super(world, SpaceShipComponent.class);
+        super(world);
+
+        random = new Random();
     }
 
     @Override
     public void entityRemoved(Entity entity) {
         super.entityRemoved(entity);
 
-        Random random = new Random();
-
-        int num = random.nextInt(HUNDRED_PERCENT);
-
-        //System.out.println(entity + ": " + num);
-
-        if (num < DROP_CHANCE) {
+        if (random.nextInt(HUNDRED_PERCENT) < DROP_CHANCE) {
             if (entity.hasComponent(SpaceShipComponent.class)) {
                 ItemPrototypeManager itemPrototypeManager = (ItemPrototypeManager) world.getServiceProvider().get(ItemPrototypeManager.class);
 
-                Entity item = itemPrototypeManager.get("test-item").create();
+                SpaceShipComponent spaceShipComponent = (SpaceShipComponent) entity.findComponent(SpaceShipComponent.class);
 
-                SpriteComponent itemSpriteComponent = (SpriteComponent) item.findComponent(SpriteComponent.class);
+                String[] items = spaceShipComponent.getItems();
 
-                SpriteComponent entitySpriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
+                String item = items[randomItem(items.length)];
 
-                itemSpriteComponent.getSprite().setPosition(entitySpriteComponent.getSprite().getPosition());
-
-                world.addEntity(item);
+                createItem(itemPrototypeManager, item, entity);
             }
         }
     }
@@ -61,5 +58,21 @@ public class ItemDropSystem extends IterativeSystem {
     @Override
     public void draw(RenderTarget target) {
 
+    }
+
+    private void createItem(ItemPrototypeManager itemPrototypeManager, String itemName, Entity spaceShip) {
+        Entity item = itemPrototypeManager.get(itemName).create();
+
+        SpriteComponent itemSpriteComponent = (SpriteComponent) item.findComponent(SpriteComponent.class);
+
+        SpriteComponent entitySpriteComponent = (SpriteComponent) spaceShip.findComponent(SpriteComponent.class);
+
+        itemSpriteComponent.getSprite().setPosition(entitySpriteComponent.getSprite().getPosition());
+
+        world.addEntity(item);
+    }
+
+    private int randomItem(int numItems) {
+        return random.nextInt(numItems);
     }
 }
