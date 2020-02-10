@@ -8,9 +8,9 @@ import org.jsfml.system.Vector2f;
 public class OrientatedBox {
     private static final int POINTS = 4;
 
-    private Vector2f[] points;
+    private final Vector2f[] points;
 
-    private Sprite sprite;
+    private final Sprite sprite;
 
     /**
      * Describes a box which accounts for the transformation of the sprite. By default, SFML rectangles do not store the
