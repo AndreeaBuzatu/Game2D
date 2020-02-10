@@ -46,7 +46,7 @@ public class Playing implements State {
 
         world.addPool((BulletPool) game.getServiceProvider().get(BulletPool.class));
 
-        world.addSystem(new AnimatedRenderSystem(world));
+        world.addSystem(new AnimationUpdateSystem(world));
 
         world.addSystem(new PlayerMovementSystem(world));
 
