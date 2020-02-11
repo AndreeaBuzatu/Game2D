@@ -35,8 +35,6 @@ public class BulletCollisionSystem extends IterativeSystem {
     @Override
     public void update(Time deltaTime) {
         for (Entity entity : entities) {
-            SpriteComponent bulletSpriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
-
             OrientatedBoxComponent entityOrientedBox = (OrientatedBoxComponent) entity.findComponent(OrientatedBoxComponent.class);
 
             BulletComponent bulletComponent = (BulletComponent) entity.findComponent(BulletComponent.class);
@@ -44,9 +42,9 @@ public class BulletCollisionSystem extends IterativeSystem {
             Entity bulletCreator = bulletComponent.getCreator();
 
             for (Entity transformable : transformables) {
-                OrientatedBoxComponent spaceShipOrientedBox = (OrientatedBoxComponent) transformable.findComponent(OrientatedBoxComponent.class);
+                OrientatedBoxComponent transformableOrientatedBox = (OrientatedBoxComponent) transformable.findComponent(OrientatedBoxComponent.class);
 
-                boolean colliding = OrientatedBox.areColliding(entityOrientedBox.getOrientatedBox(), spaceShipOrientedBox.getOrientatedBox());
+                boolean colliding = OrientatedBox.areColliding(entityOrientedBox.getOrientatedBox(), transformableOrientatedBox.getOrientatedBox());
 
                 boolean sameWave = false;
 
@@ -64,7 +62,11 @@ public class BulletCollisionSystem extends IterativeSystem {
                     sameWave = bulletWaveComponent.getWave() == spaceShipWaveComponent.getWave();
                 }
 
-                if (colliding && bulletCreator != transformable && !sameWave) {
+                boolean notItem = !transformable.hasComponent(ItemEffectsComponent.class);
+
+                if (colliding && bulletCreator != transformable && !sameWave && notItem) {
+                    System.out.println("Colliding: " + System.currentTimeMillis());
+
                     PooledComponent pooledComponent = (PooledComponent) entity.findComponent(PooledComponent.class);
 
                     world.removeEntity(transformable);
