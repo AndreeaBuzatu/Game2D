@@ -43,7 +43,7 @@ public class FiringSystem extends IterativeSystem {
             if (Keyboard.isKeyPressed(Keyboard.Key.SPACE) || ControllerButton.A_BUTTON.isPressed()) {
                 Entity bullet = bulletPool.borrowEntity();
 
-                bullet.addComponent(new BulletComponent());
+                bullet.addComponent(new BulletComponent(entity));
 
                 SpriteComponent bulletSprite = (SpriteComponent) bullet.findComponent(SpriteComponent.class);
 

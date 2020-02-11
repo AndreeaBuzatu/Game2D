@@ -3,6 +3,8 @@
         <texture name="example" row="0" column="0"/>
 
         <texture name="other" row="0" column="1"/>
+
+        <texture name="item" row="1" column="0"/>
     </atlas>
     <atlas src="bullets.png" texture_width="16" texture_height="16">
         <texture name="example_bullet" row="0" column="0"/>

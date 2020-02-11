@@ -4,6 +4,7 @@ import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import uk.ac.lancaster.scc210.engine.content.TextureAnimationManager;
 import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
+import uk.ac.lancaster.scc210.game.content.ItemPrototypeManager;
 import uk.ac.lancaster.scc210.game.content.LevelManager;
 import uk.ac.lancaster.scc210.game.content.SpaceShipPrototypeManager;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
@@ -12,10 +13,16 @@ import uk.ac.lancaster.scc210.game.resources.SpaceShipDeserialiser;
 import uk.ac.lancaster.scc210.game.states.Completion;
 import uk.ac.lancaster.scc210.game.states.Playing;
 
+import java.util.logging.Logger;
+
 /**
  * The type Game.
  */
 public class Game extends StateBasedGame {
+    /**
+     * The constant LOGGER.
+     */
+    public static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     /**
      * Instantiates a new Game.
@@ -33,6 +40,10 @@ public class Game extends StateBasedGame {
             SpaceShipPrototypeManager spaceShipManager = new SpaceShipPrototypeManager(animationManager, spaceShipDeserialiser.getSerialised());
 
             serviceProvider.put(SpaceShipPrototypeManager.class, spaceShipManager);
+
+            ItemPrototypeManager itemManager = new ItemPrototypeManager(textureManager);
+
+            serviceProvider.put(ItemPrototypeManager.class, itemManager);
 
             LevelDeserialiser levelDeserialiser = new LevelDeserialiser(spaceShipManager, textureManager, deserialiseXML("levels.xml"));
 

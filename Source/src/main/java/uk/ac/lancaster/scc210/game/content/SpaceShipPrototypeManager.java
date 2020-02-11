@@ -22,7 +22,7 @@ public class SpaceShipPrototypeManager extends ContentManager<SpaceShipPrototype
         super(null);
 
         for (SerialisedSpaceShip serialisedSpaceShip : serialisedSpaceShips) {
-            SpaceShipPrototype spaceShip = new SpaceShipPrototype(animationManager, serialisedSpaceShip.getAnimation(), serialisedSpaceShip.getSpeed());
+            SpaceShipPrototype spaceShip = new SpaceShipPrototype(animationManager, serialisedSpaceShip.getAnimation(), serialisedSpaceShip.getSpeed(), serialisedSpaceShip.getItems());
 
             put(serialisedSpaceShip.getName(), spaceShip);
         }

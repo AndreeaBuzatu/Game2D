@@ -5,6 +5,7 @@ import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.prototypes.Prototype;
 import uk.ac.lancaster.scc210.game.ecs.component.AsteroidComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.OrientatedBoxComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.TransformableComponent;
 
@@ -23,6 +24,8 @@ public class AsteroidPrototype implements Prototype {
 
         final TransformableComponent transformableComponent = new TransformableComponent(asteroidComponent.getCircle());
 
-        return World.createEntity(asteroidComponent, speedComponent, transformableComponent);
+        final OrientatedBoxComponent orientatedBoxComponent = new OrientatedBoxComponent(asteroidComponent.getCircle());
+
+        return World.createEntity(asteroidComponent, speedComponent, transformableComponent, orientatedBoxComponent);
     }
 }
