@@ -4,6 +4,7 @@ import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import uk.ac.lancaster.scc210.engine.content.TextureAnimationManager;
 import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
+import uk.ac.lancaster.scc210.game.content.ItemPrototypeManager;
 import uk.ac.lancaster.scc210.game.content.LevelManager;
 import uk.ac.lancaster.scc210.game.content.SpaceShipPrototypeManager;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
@@ -44,7 +45,7 @@ public class Game extends StateBasedGame {
 
             serviceProvider.put(ItemPrototypeManager.class, itemManager);
 
-            LevelDeserialiser levelDeserialiser = new LevelDeserialiser(spaceShipManager, deserialiseXML("levels.xml"));
+            LevelDeserialiser levelDeserialiser = new LevelDeserialiser(spaceShipManager, textureManager, deserialiseXML("levels.xml"));
 
             LevelManager levelManager = new LevelManager(levelDeserialiser.getSerialised());
 
