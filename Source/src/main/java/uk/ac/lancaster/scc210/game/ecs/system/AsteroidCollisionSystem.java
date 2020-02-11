@@ -1,15 +1,14 @@
 package uk.ac.lancaster.scc210.game.ecs.system;
 
-import org.jsfml.graphics.CircleShape;
-import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.RenderTarget;
 import org.jsfml.system.Time;
+import uk.ac.lancaster.scc210.engine.collision.OrientatedBox;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.game.ecs.component.AsteroidComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.OrientatedBoxComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
 import java.util.Set;
 
@@ -37,18 +36,12 @@ public class AsteroidCollisionSystem extends IterativeSystem {
     @Override
     public void update(Time deltaTime) {
         for (Entity entity : entities) {
-            AsteroidComponent asteroidComponent = (AsteroidComponent) entity.findComponent(AsteroidComponent.class);
-
-            CircleShape asteroid = asteroidComponent.getCircle();
-
-            FloatRect asteroidBounds = asteroid.getGlobalBounds();
+            OrientatedBoxComponent asteroidBox = (OrientatedBoxComponent) entity.findComponent(OrientatedBoxComponent.class);
 
             for (Entity spaceShip : spaceShips) {
-                SpriteComponent spriteComponent = (SpriteComponent) spaceShip.findComponent(SpriteComponent.class);
+                OrientatedBoxComponent transformableBox = (OrientatedBoxComponent) spaceShip.findComponent(OrientatedBoxComponent.class);
 
-                boolean collision = asteroidBounds.contains(spriteComponent.getSprite().getPosition());
-
-                if (collision) {
+                if (OrientatedBox.areColliding(asteroidBox.getOrientatedBox(), transformableBox.getOrientatedBox())) {
                     world.removeEntity(spaceShip);
                 }
             }
