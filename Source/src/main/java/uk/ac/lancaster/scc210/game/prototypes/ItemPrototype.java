@@ -8,6 +8,7 @@ import uk.ac.lancaster.scc210.engine.prototypes.Prototype;
 import uk.ac.lancaster.scc210.game.ecs.component.ItemEffectsComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.OrientatedBoxComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.TransformableComponent;
 import uk.ac.lancaster.scc210.game.items.ItemEffect;
 
 import java.util.Arrays;
@@ -25,12 +26,16 @@ public class ItemPrototype implements Prototype {
     }
 
     public Entity create() {
-        final SpriteComponent spriteComponent = new SpriteComponent(new Sprite(texture));
+        final Sprite sprite = new Sprite(texture);
+
+        final SpriteComponent spriteComponent = new SpriteComponent(sprite);
 
         final ItemEffectsComponent itemEffectsComponent = new ItemEffectsComponent(itemEffects);
 
-        final OrientatedBoxComponent orientatedBoxComponent = new OrientatedBoxComponent(spriteComponent.getSprite());
+        final TransformableComponent transformableComponent = new TransformableComponent(sprite);
 
-        return World.createEntity(spriteComponent, itemEffectsComponent, orientatedBoxComponent);
+        final OrientatedBoxComponent orientatedBoxComponent = new OrientatedBoxComponent(sprite);
+
+        return World.createEntity(spriteComponent, itemEffectsComponent, orientatedBoxComponent, transformableComponent);
     }
 }

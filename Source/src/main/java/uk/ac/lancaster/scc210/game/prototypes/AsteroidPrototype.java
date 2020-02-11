@@ -1,7 +1,5 @@
 package uk.ac.lancaster.scc210.game.prototypes;
 
-import org.jsfml.graphics.Sprite;
-import org.jsfml.graphics.Texture;
 import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
@@ -20,15 +18,13 @@ public class AsteroidPrototype implements Prototype {
 
     @Override
     public Entity create() {
-        final Texture texture = textureManager.get("enemy-spritesheet.png:asteroid");
-
-        final AsteroidComponent asteroidComponent = new AsteroidComponent(texture);
+        final AsteroidComponent asteroidComponent = new AsteroidComponent(textureManager.get("enemy-spritesheet.png:asteroid"));
 
         final SpeedComponent speedComponent = new SpeedComponent(5);
 
         final TransformableComponent transformableComponent = new TransformableComponent(asteroidComponent.getCircle());
 
-        final OrientatedBoxComponent orientatedBoxComponent = new OrientatedBoxComponent(new Sprite(texture));
+        final OrientatedBoxComponent orientatedBoxComponent = new OrientatedBoxComponent(asteroidComponent.getCircle());
 
         return World.createEntity(asteroidComponent, speedComponent, transformableComponent, orientatedBoxComponent);
     }

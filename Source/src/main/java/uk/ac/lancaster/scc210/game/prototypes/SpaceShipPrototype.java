@@ -26,7 +26,9 @@ public class SpaceShipPrototype implements Prototype {
     public Entity create() {
         final AnimationComponent animationComponent = new AnimationComponent(animationManager.get(animation));
 
-        final SpriteComponent spriteComponent = new SpriteComponent(new Sprite(animationComponent.getTextureAnimation().getTexture()));
+        final Sprite sprite = new Sprite(animationComponent.getTextureAnimation().getTexture());
+
+        final SpriteComponent spriteComponent = new SpriteComponent(sprite);
 
         final SpeedComponent speedComponent = new SpeedComponent(speed);
 
@@ -34,9 +36,9 @@ public class SpaceShipPrototype implements Prototype {
 
         final SpaceShipComponent spaceShipComponent = new SpaceShipComponent(items);
 
-        final OrientatedBoxComponent orientatedBoxComponent = new OrientatedBoxComponent(spriteComponent.getSprite());
-
         final TransformableComponent transformableComponent = new TransformableComponent(spriteComponent.getSprite());
+
+        final OrientatedBoxComponent orientatedBoxComponent = new OrientatedBoxComponent(sprite);
 
         return World.createEntity(animationComponent, spriteComponent, speedComponent, rotationComponent, spaceShipComponent, orientatedBoxComponent, transformableComponent);
     }

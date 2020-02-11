@@ -1,6 +1,7 @@
 package uk.ac.lancaster.scc210.engine.collision;
 
 import org.jsfml.graphics.FloatRect;
+import org.jsfml.graphics.Shape;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Transform;
 import org.jsfml.system.Vector2f;
@@ -10,14 +11,16 @@ public class OrientatedBox {
 
     private final Vector2f[] points;
 
-    private final Sprite sprite;
+    private Sprite sprite;
+
+    private Shape shape;
 
     /**
      * Describes a box which accounts for the transformation of the sprite. By default, SFML rectangles do not store the
      * transformation of the rotation. This makes collision checking difficult to implement on transformed rectangles.
      * This fixes that.
      *
-     * @param sprite The transformed box of the sprite.
+     * @param sprite the sprite to perform collisions up
      */
     public OrientatedBox(Sprite sprite) {
         this.sprite = sprite;
@@ -25,18 +28,49 @@ public class OrientatedBox {
         points = new Vector2f[POINTS];
     }
 
+    /**
+     * Describes a box which accounts for the transformation of the sprite. By default, SFML rectangles do not store the
+     * transformation of the rotation. This makes collision checking difficult to implement on transformed rectangles.
+     * This fixes that.
+     *
+     * @param shape the shape to perform collisions up
+     */
+    public OrientatedBox(Shape shape) {
+        this.shape = shape;
+
+        points = new Vector2f[POINTS];
+    }
+
     private void calculatePoints() {
-        Transform trans = sprite.getTransform();
+        /*
+         * Unfortunately JSFML does not provide an abstraction where Sprite can be considered a Shape (despite storing a RectangleShape).
+         * As such, we have to handle to handle two separate cases of Sprite and Shape. This is unfortunate...
+         */
+        Transform trans = null;
 
-        FloatRect local = sprite.getGlobalBounds();
+        FloatRect globalBounds = null;
 
-        points[0] = trans.transformPoint(0.f, 0.f);
+        if (sprite != null) {
+            globalBounds = sprite.getGlobalBounds();
 
-        points[1] = trans.transformPoint(local.width, 0.f);
+            trans = sprite.getTransform();
+        }
 
-        points[2] = trans.transformPoint(local.width, local.height);
+        if (shape != null) {
+            globalBounds = shape.getGlobalBounds();
 
-        points[3] = trans.transformPoint(0.f, local.height);
+            trans = shape.getTransform();
+        }
+
+        if (globalBounds != null && trans != null) {
+            points[0] = trans.transformPoint(0.f, 0.f);
+
+            points[1] = trans.transformPoint(globalBounds.width, 0.f);
+
+            points[2] = trans.transformPoint(globalBounds.width, globalBounds.height);
+
+            points[3] = trans.transformPoint(0.f, globalBounds.height);
+        }
     }
 
     private Vector2f projectOntoAxis(Vector2f axis) {
@@ -63,7 +97,7 @@ public class OrientatedBox {
     /**
      * Performs a Separate Axis Theorem collision check between two boxes (including rotation and scaling).
      * This method should be used to account for rotation when performing collision checks between two entities
-     * <p>
+     *
      * See: https://github.com/SFML/SFML/wiki/Source%3A-Simple-Collision-Detection-for-SFML-2 for the exact implementation
      * of the theorem, this code adapts it for Java and changes the abstraction in an attempt to improve performance.
      *

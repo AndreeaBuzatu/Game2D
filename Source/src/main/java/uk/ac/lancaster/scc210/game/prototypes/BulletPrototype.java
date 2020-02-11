@@ -17,11 +17,13 @@ public class BulletPrototype implements Prototype {
     }
 
     public Entity create() {
-        final SpriteComponent spriteComponent = new SpriteComponent(new Sprite(textureManager.get("bullets.png:example_bullet")));
+        final Sprite sprite = new Sprite(textureManager.get("bullets.png:example_bullet"));
+
+        final SpriteComponent spriteComponent = new SpriteComponent(sprite);
 
         final SpeedComponent speedComponent = new SpeedComponent(5);
 
-        final OrientatedBoxComponent orientatedBoxComponent = new OrientatedBoxComponent(spriteComponent.getSprite());
+        final OrientatedBoxComponent orientatedBoxComponent = new OrientatedBoxComponent(sprite);
 
         return World.createEntity(spriteComponent, speedComponent, orientatedBoxComponent);
     }
