@@ -65,8 +65,6 @@ public class BulletCollisionSystem extends IterativeSystem {
                 boolean notItem = !transformable.hasComponent(ItemEffectsComponent.class);
 
                 if (colliding && bulletCreator != transformable && !sameWave && notItem) {
-                    System.out.println("Colliding: " + System.currentTimeMillis());
-
                     PooledComponent pooledComponent = (PooledComponent) entity.findComponent(PooledComponent.class);
 
                     world.removeEntity(transformable);
