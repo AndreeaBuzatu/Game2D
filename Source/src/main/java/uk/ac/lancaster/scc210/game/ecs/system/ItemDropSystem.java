@@ -6,6 +6,7 @@ import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.game.content.ItemPrototypeManager;
+import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
@@ -35,6 +36,10 @@ public class ItemDropSystem extends IterativeSystem {
     public void entityRemoved(Entity entity) {
         super.entityRemoved(entity);
 
+        if (entity.hasComponent(PlayerComponent.class)) {
+            return;
+        }
+
         if (random.nextInt(HUNDRED_PERCENT) < DROP_CHANCE) {
             if (entity.hasComponent(SpaceShipComponent.class)) {
                 ItemPrototypeManager itemPrototypeManager = (ItemPrototypeManager) world.getServiceProvider().get(ItemPrototypeManager.class);
@@ -43,9 +48,11 @@ public class ItemDropSystem extends IterativeSystem {
 
                 String[] items = spaceShipComponent.getItems();
 
-                String item = items[randomItem(items.length)];
+                if (items.length > 0) {
+                    String item = items[randomItem(items.length)];
 
-                createItem(itemPrototypeManager, item, entity);
+                    createItem(itemPrototypeManager, item, entity);
+                }
             }
         }
     }
@@ -61,6 +68,10 @@ public class ItemDropSystem extends IterativeSystem {
     }
 
     private void createItem(ItemPrototypeManager itemPrototypeManager, String itemName, Entity spaceShip) {
+        if (itemName.isEmpty()) {
+            return;
+        }
+
         Entity item = itemPrototypeManager.get(itemName).create();
 
         SpriteComponent itemSpriteComponent = (SpriteComponent) item.findComponent(SpriteComponent.class);
