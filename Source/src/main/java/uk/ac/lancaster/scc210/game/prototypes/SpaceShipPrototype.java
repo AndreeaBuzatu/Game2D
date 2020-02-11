@@ -38,6 +38,6 @@ public class SpaceShipPrototype implements Prototype {
 
         final TransformableComponent transformableComponent = new TransformableComponent(spriteComponent.getSprite());
 
-        return World.createEntity(animationComponent, spriteComponent, speedComponent, rotationComponent, spaceShipComponent, orientatedBoxComponent transformableComponent);
+        return World.createEntity(animationComponent, spriteComponent, speedComponent, rotationComponent, spaceShipComponent, orientatedBoxComponent, transformableComponent);
     }
 }
