@@ -12,10 +12,16 @@ import uk.ac.lancaster.scc210.game.resources.SpaceShipDeserialiser;
 import uk.ac.lancaster.scc210.game.states.Completion;
 import uk.ac.lancaster.scc210.game.states.Playing;
 
+import java.util.logging.Logger;
+
 /**
  * The type Game.
  */
 public class Game extends StateBasedGame {
+    /**
+     * The constant LOGGER.
+     */
+    public static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     /**
      * Instantiates a new Game.
@@ -34,7 +40,11 @@ public class Game extends StateBasedGame {
 
             serviceProvider.put(SpaceShipPrototypeManager.class, spaceShipManager);
 
-            LevelDeserialiser levelDeserialiser = new LevelDeserialiser(spaceShipManager, textureManager, deserialiseXML("levels.xml"));
+            ItemPrototypeManager itemManager = new ItemPrototypeManager(textureManager);
+
+            serviceProvider.put(ItemPrototypeManager.class, itemManager);
+
+            LevelDeserialiser levelDeserialiser = new LevelDeserialiser(spaceShipManager, deserialiseXML("levels.xml"));
 
             LevelManager levelManager = new LevelManager(levelDeserialiser.getSerialised());
 

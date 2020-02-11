@@ -29,6 +29,8 @@ public class Playing implements State {
 
     private LevelSystem levelSystem;
 
+    private Entity player;
+
     private boolean completed;
 
     private Music example;
@@ -49,7 +51,7 @@ public class Playing implements State {
 
         world.addPool((BulletPool) game.getServiceProvider().get(BulletPool.class));
 
-        world.addSystem(new AnimatedRenderSystem(world));
+        world.addSystem(new AnimationUpdateSystem(world));
 
         world.addSystem(new PlayerMovementSystem(world));
 
@@ -67,11 +69,17 @@ public class Playing implements State {
 
         world.addSystem(new AsteroidCollisionSystem(world));
 
+        world.addSystem(new BulletCollisionSystem(world));
+
+        world.addSystem(new ItemDropSystem(world));
+
+        world.addSystem(new ItemCollisionSystem(world));
+
         world.addSystem(levelSystem);
 
         SpaceShipPrototypeManager spaceShipManager = (SpaceShipPrototypeManager) game.getServiceProvider().get(SpaceShipPrototypeManager.class);
 
-        Entity player = spaceShipManager.get("player").create();
+        player = spaceShipManager.get("player").create();
 
         player.addComponent(new PlayerComponent());
 
@@ -104,6 +112,11 @@ public class Playing implements State {
 
         if (level.complete()) {
             System.out.println("Complete level");
+
+            // Reset the player's current item effects back to the game default
+            PlayerComponent playerComponent = (PlayerComponent) player.findComponent(PlayerComponent.class);
+
+            playerComponent.getCurrentEffects().parallelStream().forEach(itemEffect -> itemEffect.reset(player));
 
             if (levelIterator.hasNext()) {
                 level = levelIterator.next();

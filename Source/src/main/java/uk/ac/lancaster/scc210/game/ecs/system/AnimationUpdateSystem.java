@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 /**
  * System used to render TextureAnimations to the RenderTarget (usually the RenderWindow)
  */
-public class AnimatedRenderSystem extends IterativeSystem {
+public class AnimationUpdateSystem extends IterativeSystem {
     private Set<TextureAnimation> animations;
 
     /**
@@ -23,7 +23,7 @@ public class AnimatedRenderSystem extends IterativeSystem {
      *
      * @param world the world to take from entities
      */
-    public AnimatedRenderSystem(World world) {
+    public AnimationUpdateSystem(World world) {
         super(world, SpriteComponent.class, AnimationComponent.class);
     }
 
@@ -43,11 +43,6 @@ public class AnimatedRenderSystem extends IterativeSystem {
 
     @Override
     public void draw(RenderTarget target) {
-        for (Entity entity : entities) {
-            SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
-
-            target.draw(spriteComponent.getSprite());
-        }
     }
 
     @Override
