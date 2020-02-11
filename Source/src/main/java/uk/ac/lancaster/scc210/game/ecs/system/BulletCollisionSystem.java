@@ -1,8 +1,5 @@
 package uk.ac.lancaster.scc210.game.ecs.system;
 
-import org.jsfml.graphics.FloatRect;
-import org.jsfml.graphics.RenderTarget;
-import org.jsfml.system.Time;
 import org.jsfml.graphics.RenderTarget;
 import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.collision.OrientatedBox;
@@ -10,14 +7,7 @@ import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.component.PooledComponent;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
-import uk.ac.lancaster.scc210.game.ecs.component.AsteroidComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.BulletComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.TransformableComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.BulletComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.OrientatedBoxComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.WaveComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.*;
 
 import java.util.Set;
 
@@ -54,7 +44,7 @@ public class BulletCollisionSystem extends IterativeSystem {
             Entity bulletCreator = bulletComponent.getCreator();
 
             for (Entity transformable : transformables) {
-                OrientatedBoxComponent spaceShipOrientedBox = (OrientatedBoxComponent) spaceShip.findComponent(OrientatedBoxComponent.class);
+                OrientatedBoxComponent spaceShipOrientedBox = (OrientatedBoxComponent) transformable.findComponent(OrientatedBoxComponent.class);
 
                 boolean colliding = OrientatedBox.areColliding(entityOrientedBox.getOrientatedBox(), spaceShipOrientedBox.getOrientatedBox());
 
@@ -66,50 +56,23 @@ public class BulletCollisionSystem extends IterativeSystem {
                 of the bullet and the current spaceship belong to the same wave. If so, prevent colliding with spaceships
                 of the same wave.
                  */
-                if (bulletComponent.getCreator().hasComponent(WaveComponent.class) && spaceShip.hasComponent(WaveComponent.class)) {
+                if (bulletComponent.getCreator().hasComponent(WaveComponent.class) && transformable.hasComponent(WaveComponent.class)) {
                     WaveComponent bulletWaveComponent = (WaveComponent) entity.findComponent(WaveComponent.class);
 
-                    WaveComponent spaceShipWaveComponent = (WaveComponent) spaceShip.findComponent(WaveComponent.class);
+                    WaveComponent spaceShipWaveComponent = (WaveComponent) transformable.findComponent(WaveComponent.class);
 
                     sameWave = bulletWaveComponent.getWave() == spaceShipWaveComponent.getWave();
                 }
 
-                if (colliding && bulletCreator != spaceShip && !sameWave) {
+                if (colliding && bulletCreator != transformable && !sameWave) {
                     PooledComponent pooledComponent = (PooledComponent) entity.findComponent(PooledComponent.class);
 
-                    world.removeEntity(spaceShip);
+                    world.removeEntity(transformable);
 
                     // Return the bullet back to the pool and remove it from the world
                     world.getPool(pooledComponent.getPoolClass()).returnEntity(entity);
 
                     world.removeEntity(entity);
-                }
-
-                //SpriteComponent spaceShipSprite = (SpriteComponent) spaceShip.findComponent(SpriteComponent.class);
-                FloatRect globalBounds = null;
-
-                // Unfortunately Transformable does not contain getGlobalBounds() nor are there any higher abstractions to find the bounds...
-                if (transformable.hasComponent(SpriteComponent.class)) {
-                    globalBounds = ((SpriteComponent) transformable.findComponent(SpriteComponent.class)).getSprite().getGlobalBounds();
-
-                } else if (transformable.hasComponent(AsteroidComponent.class)) {
-                    globalBounds = ((AsteroidComponent) transformable.findComponent(AsteroidComponent.class)).getCircle().getGlobalBounds();
-                }
-
-                // Only attempt to handle collision if global bounds
-                if (globalBounds != null) {
-                    boolean collision = globalBounds.contains(bulletSpriteComponent.getSprite().getPosition());
-
-                    if (collision) {
-                        PooledComponent pooledComponent = (PooledComponent) entity.findComponent(PooledComponent.class);
-
-                        world.removeEntity(transformable);
-
-                        // Return the bullet back to the pool and remove it from the world
-                        world.getPool(pooledComponent.getPoolClass()).returnEntity(entity);
-
-                        world.removeEntity(entity);
-                    }
                 }
             }
         }
