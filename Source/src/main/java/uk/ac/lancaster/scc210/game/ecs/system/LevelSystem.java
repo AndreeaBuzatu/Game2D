@@ -28,10 +28,7 @@ public class LevelSystem extends IterativeSystem {
 
         currentStage = level.getCurrentStage();
 
-        // TODO: Use world.addAll here
-        for (Entity entity : currentStage.getStationaryEntities()) {
-            world.addEntity(entity);
-        }
+        world.addEntities(currentStage.getStationaryEntities().toArray(new Entity[0]));
     }
 
     @Override
