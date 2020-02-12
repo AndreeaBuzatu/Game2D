@@ -4,6 +4,7 @@ import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.pooling.Pool;
+import uk.ac.lancaster.scc210.game.ecs.component.BulletComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
 public class StarPattern extends Pattern {
@@ -28,6 +29,8 @@ public class StarPattern extends Pattern {
     public Entity[] create() {
         for (int i = 0; i < NUM_BULLETS; i++) {
             bullets[i] = pool.borrowEntity(bulletName);
+
+            bullets[i].addComponent(new BulletComponent(entity));
 
             Sprite bulletSprite = ((SpriteComponent) bullets[i].findComponent(SpriteComponent.class)).getSprite();
 

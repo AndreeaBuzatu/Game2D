@@ -4,6 +4,7 @@ import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.pooling.Pool;
+import uk.ac.lancaster.scc210.game.ecs.component.BulletComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
 public class StraightLinePattern extends Pattern {
@@ -18,6 +19,8 @@ public class StraightLinePattern extends Pattern {
     @Override
     public Entity[] create() {
         bullets[NUM_BULLETS - 1] = pool.borrowEntity(bulletName);
+
+        bullets[NUM_BULLETS - 1].addComponent(new BulletComponent(entity));
 
         Sprite bulletSprite = ((SpriteComponent) bullets[NUM_BULLETS - 1].findComponent(SpriteComponent.class)).getSprite();
 

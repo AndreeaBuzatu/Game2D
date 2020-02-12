@@ -17,14 +17,17 @@ public abstract class Pattern {
 
     final String bulletName;
 
-    Pattern(Pool pool, Entity spaceShip, Entity[] bullets, String bulletName) {
+    final Entity entity;
+
+    Pattern(Pool pool, Entity entity, Entity[] bullets, String bulletName) {
         this.pool = pool;
+        this.entity = entity;
         this.bullets = bullets;
         this.bulletName = bulletName;
 
         coords = new Vector2f[bullets.length];
 
-        spaceShipSprite = ((SpriteComponent) spaceShip.findComponent(SpriteComponent.class)).getSprite();
+        spaceShipSprite = ((SpriteComponent) entity.findComponent(SpriteComponent.class)).getSprite();
     }
 
     public abstract Entity[] create();
