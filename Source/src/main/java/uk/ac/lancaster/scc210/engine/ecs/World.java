@@ -49,6 +49,12 @@ public class World {
         }
     }
 
+    public void addEntities(Entity... entities) {
+        for (Entity entity : entities) {
+            addEntity(entity);
+        }
+    }
+
     public void removeEntity(Entity entity) {
         entities.remove(entity);
 

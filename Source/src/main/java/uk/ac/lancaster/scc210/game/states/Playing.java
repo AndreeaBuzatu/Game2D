@@ -57,7 +57,7 @@ public class Playing implements State {
 
         world.addSystem(new RenderSystem(world));
 
-        world.addSystem(new FiringSystem(world));
+        world.addSystem(new PlayerFiringSystem(world));
 
         world.addSystem(new MovementSystem(world));
 
@@ -76,6 +76,8 @@ public class Playing implements State {
         world.addSystem(new ItemCollisionSystem(world));
 
         world.addSystem(new SpaceShipCollisionSystem(world));
+
+        world.addSystem(new EnemyFiringSystem(world));
 
         world.addSystem(levelSystem);
 

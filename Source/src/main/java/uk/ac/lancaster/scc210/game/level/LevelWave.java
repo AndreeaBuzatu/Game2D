@@ -7,6 +7,8 @@ import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.prototypes.Prototype;
 import uk.ac.lancaster.scc210.game.ecs.component.AsteroidComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.EnemyComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.WaveComponent;
 import uk.ac.lancaster.scc210.game.prototypes.SpaceShipPrototype;
@@ -86,7 +88,7 @@ public class LevelWave {
     }
 
     private boolean allSpawned() {
-        return numLeftToSpawn == 0;
+        return numLeftToSpawn <= 0;
     }
 
     boolean complete() {
@@ -98,6 +100,8 @@ public class LevelWave {
         Entity entity = prototype.create();
 
         entity.addComponent(new WaveComponent(this));
+
+        entity.addComponent(new EnemyComponent());
 
         if (entity.hasComponent(SpriteComponent.class)) {
             SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
