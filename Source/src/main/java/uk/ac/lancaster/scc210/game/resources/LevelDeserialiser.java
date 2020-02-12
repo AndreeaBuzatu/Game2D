@@ -11,10 +11,7 @@ import uk.ac.lancaster.scc210.engine.prototypes.Prototype;
 import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
 import uk.ac.lancaster.scc210.engine.resources.deserialise.Deserialiser;
 import uk.ac.lancaster.scc210.game.content.SpaceShipPrototypeManager;
-import uk.ac.lancaster.scc210.game.ecs.component.AsteroidComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.StationaryComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.*;
 import uk.ac.lancaster.scc210.game.level.Level;
 import uk.ac.lancaster.scc210.game.level.LevelStage;
 import uk.ac.lancaster.scc210.game.level.LevelWave;
@@ -179,6 +176,8 @@ public class LevelDeserialiser extends Deserialiser<Level> {
 
         spaceShip.addComponent(new StationaryComponent());
 
+        spaceShip.addComponent(new EnemyComponent());
+
         SpriteComponent spriteComponent = (SpriteComponent) spaceShip.findComponent(SpriteComponent.class);
 
         spriteComponent.getSprite().setPosition(position);
@@ -192,6 +191,8 @@ public class LevelDeserialiser extends Deserialiser<Level> {
         AsteroidComponent asteroidComponent = (AsteroidComponent) asteroid.findComponent(AsteroidComponent.class);
 
         asteroid.addComponent(new StationaryComponent());
+
+        asteroid.addComponent(new EnemyComponent());
 
         asteroidComponent.getCircle().setPosition(pos);
 
