@@ -42,7 +42,7 @@ public class SpaceShipPrototype implements Prototype {
 
         final SpaceShipComponent spaceShipComponent = new SpaceShipComponent(items);
 
-        final TransformableComponent transformableComponent = new TransformableComponent(spriteComponent.getSprite());
+        final TransformableComponent transformableComponent = new TransformableComponent(sprite);
 
         final OrientatedBoxComponent orientatedBoxComponent = new OrientatedBoxComponent(sprite);
 
