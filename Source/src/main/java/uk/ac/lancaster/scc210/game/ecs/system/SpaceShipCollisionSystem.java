@@ -6,9 +6,9 @@ import uk.ac.lancaster.scc210.engine.collision.OrientatedBox;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
+import uk.ac.lancaster.scc210.game.ecs.component.EnemyComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.OrientatedBoxComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
 
 import java.util.Optional;
 
@@ -21,8 +21,7 @@ public class SpaceShipCollisionSystem extends IterativeSystem {
      * @param world the world containing entities to use
      */
     public SpaceShipCollisionSystem(World world) {
-        // TODO: Use EnemyComponent here
-        super(world, SpaceShipComponent.class);
+        super(world, EnemyComponent.class);
 
         player = world.getEntitiesFor(PlayerComponent.class).stream().findFirst();
     }
