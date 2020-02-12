@@ -9,6 +9,7 @@ import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.game.ecs.component.AnimationComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.FiringPatternComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
 /**
@@ -16,7 +17,6 @@ import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
  * The system places Bullets (Entities) into the front-middle of the entity.
  */
 public class PlayerFiringSystem extends IterativeSystem {
-
     private final Time FIRING_GAP = Time.getSeconds(0.2f);
 
     private Time elapsedTime;
@@ -27,7 +27,7 @@ public class PlayerFiringSystem extends IterativeSystem {
      * @param world the world to draw entities from
      */
     public PlayerFiringSystem(World world) {
-        super(world, SpriteComponent.class, AnimationComponent.class);
+        super(world, SpriteComponent.class, AnimationComponent.class, PlayerComponent.class);
 
         elapsedTime = Time.ZERO;
     }
