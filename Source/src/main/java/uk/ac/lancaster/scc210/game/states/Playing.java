@@ -1,9 +1,13 @@
 package uk.ac.lancaster.scc210.game.states;
 
 import org.jsfml.audio.Music;
+import org.jsfml.graphics.Color;
+import org.jsfml.graphics.Font;
 import org.jsfml.graphics.RenderTarget;
+import org.jsfml.graphics.Text;
 import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
+import uk.ac.lancaster.scc210.engine.content.FontManager;
 import uk.ac.lancaster.scc210.engine.content.MusicManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
@@ -34,6 +38,10 @@ public class Playing implements State {
     private boolean completed;
 
     private Music example;
+
+    private Font font;
+
+    private Text scoreText;
 
     @Override
     public void setup(StateBasedGame game) {
@@ -98,11 +106,29 @@ public class Playing implements State {
         example.setLoop(true);
 
         example.play();
+
+        font = ((FontManager) world.getServiceProvider().get(FontManager.class)).get("font");
+
+        scoreText = new Text();
+
+        scoreText.setFont(font);
+
+        scoreText.setColor(Color.WHITE);
+
+        scoreText.setCharacterSize(70);
     }
 
     @Override
     public void draw(RenderTarget target) {
         world.draw(target);
+
+        if (player.hasComponent(PlayerComponent.class)) {
+            PlayerComponent playerComponent = (PlayerComponent) player.findComponent(PlayerComponent.class);
+
+            scoreText.setString(String.format("Score: %d", playerComponent.getScore()));
+        }
+
+        target.draw(scoreText);
     }
 
     @Override

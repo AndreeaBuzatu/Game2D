@@ -122,6 +122,10 @@ public class StateBasedGame {
 
             serviceProvider.put(SoundBufferManager.class, soundBufferManager);
 
+            FontManager fontManager = new FontManager();
+
+            serviceProvider.put(FontManager.class, fontManager);
+
         } catch (ResourceNotFoundException e) {
             window.close();
         }
