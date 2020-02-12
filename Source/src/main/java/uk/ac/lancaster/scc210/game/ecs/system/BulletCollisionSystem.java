@@ -46,25 +46,12 @@ public class BulletCollisionSystem extends IterativeSystem {
 
                 boolean colliding = OrientatedBox.areColliding(entityOrientedBox.getOrientatedBox(), transformableOrientatedBox.getOrientatedBox());
 
-                boolean sameWave = false;
+                // Enemies are impervious to each others bullets
+                boolean bothEnemies = bulletCreator.hasComponent(EnemyComponent.class) && transformable.hasComponent(EnemyComponent.class);
 
-                /*
-                TODO: Change this to use EnemyComponent instead
-                If the creator of the bullet has a wave and the spaceShip belongs to a wave, find if the creator
-                of the bullet and the current spaceship belong to the same wave. If so, prevent colliding with spaceships
-                of the same wave.
-                 */
-                if (bulletComponent.getCreator().hasComponent(WaveComponent.class) && transformable.hasComponent(WaveComponent.class)) {
-                    WaveComponent bulletWaveComponent = (WaveComponent) entity.findComponent(WaveComponent.class);
+                boolean isItem = transformable.hasComponent(ItemEffectsComponent.class);
 
-                    WaveComponent spaceShipWaveComponent = (WaveComponent) transformable.findComponent(WaveComponent.class);
-
-                    sameWave = bulletWaveComponent.getWave() == spaceShipWaveComponent.getWave();
-                }
-
-                boolean notItem = !transformable.hasComponent(ItemEffectsComponent.class);
-
-                if (colliding && bulletCreator != transformable && !sameWave && notItem) {
+                if (colliding && !bothEnemies && !isItem) {
                     PooledComponent pooledComponent = (PooledComponent) entity.findComponent(PooledComponent.class);
 
                     world.removeEntity(transformable);
