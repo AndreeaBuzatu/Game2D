@@ -4,10 +4,12 @@ import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import uk.ac.lancaster.scc210.engine.content.TextureAnimationManager;
 import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
+import uk.ac.lancaster.scc210.game.content.BulletPrototypeManager;
 import uk.ac.lancaster.scc210.game.content.ItemPrototypeManager;
 import uk.ac.lancaster.scc210.game.content.LevelManager;
 import uk.ac.lancaster.scc210.game.content.SpaceShipPrototypeManager;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
+import uk.ac.lancaster.scc210.game.resources.BulletDeserialiser;
 import uk.ac.lancaster.scc210.game.resources.LevelDeserialiser;
 import uk.ac.lancaster.scc210.game.resources.SpaceShipDeserialiser;
 import uk.ac.lancaster.scc210.game.states.Completion;
@@ -31,13 +33,23 @@ public class Game extends StateBasedGame {
         super("Shooter", 1280, 720, new Playing());
 
         try {
+            TextureAnimationManager animationManager = (TextureAnimationManager) serviceProvider.get(TextureAnimationManager.class);
+
             TextureManager textureManager = (TextureManager) serviceProvider.get(TextureManager.class);
 
-            TextureAnimationManager animationManager = (TextureAnimationManager) serviceProvider.get(TextureAnimationManager.class);
+            BulletDeserialiser bulletDeserialiser = new BulletDeserialiser(deserialiseXML("bullets.xml"));
+
+            BulletPrototypeManager bulletPrototypeManager = new BulletPrototypeManager(textureManager, bulletDeserialiser.getSerialised());
+
+            serviceProvider.put(BulletPrototypeManager.class, bulletPrototypeManager);
+
+            BulletPool bulletPool = new BulletPool(serviceProvider);
 
             SpaceShipDeserialiser spaceShipDeserialiser = new SpaceShipDeserialiser(deserialiseXML("spaceships.xml"));
 
-            SpaceShipPrototypeManager spaceShipManager = new SpaceShipPrototypeManager(animationManager, spaceShipDeserialiser.getSerialised());
+            SpaceShipPrototypeManager spaceShipManager = new SpaceShipPrototypeManager(animationManager, bulletPool, spaceShipDeserialiser.getSerialised());
+
+            serviceProvider.put(BulletPool.class, new BulletPool(serviceProvider));
 
             serviceProvider.put(SpaceShipPrototypeManager.class, spaceShipManager);
 

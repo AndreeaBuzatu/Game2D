@@ -28,10 +28,7 @@ public class LevelSystem extends IterativeSystem {
 
         currentStage = level.getCurrentStage();
 
-        // TODO: Use world.addAll here
-        for (Entity entity : currentStage.getStationaryEntities()) {
-            world.addEntity(entity);
-        }
+        world.addEntities(currentStage.getStationaryEntities());
     }
 
     @Override
@@ -53,12 +50,14 @@ public class LevelSystem extends IterativeSystem {
     @Override
     public void update(Time deltaTime) {
         if (currentStage != null && currentStage.complete()) {
-            System.out.println("Completed wave");
+            System.out.println("Completed stage");
 
             currentStage = level.changeStage();
 
         } else {
             if (currentStage != null) {
+                world.addEntities(currentStage.getStationaryEntities());
+
                 for (LevelWave wave : currentStage.getWaves()) {
                     Entity newShip = wave.spawnNew(deltaTime);
 

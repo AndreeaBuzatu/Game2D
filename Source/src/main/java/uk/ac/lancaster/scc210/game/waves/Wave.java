@@ -7,8 +7,6 @@ import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import java.util.Set;
 
 public abstract class Wave {
-    private final int MAX_DEGREES = 360;
-
     private final Vector2f destination;
 
     private double vectorDistance;
@@ -49,6 +47,6 @@ public abstract class Wave {
     }
 
     float rotateSprite() {
-        return (float) Math.toDegrees(Math.atan2(-destination.y - -origin.y, destination.x - origin.x)) + 180;
+        return (float) Math.toDegrees(Math.atan2(direction.y - origin.y, direction.x - origin.x)) + 180;
     }
 }

@@ -222,7 +222,7 @@ public class StateBasedGame {
         XMLAdapter xmlAdapter = new XMLAdapter();
 
         try {
-            ResourceLoader.loadFromFile(xmlAdapter, fileName);
+            ResourceLoader.loadFromStream(xmlAdapter, fileName);
 
             return xmlAdapter.getResource();
 

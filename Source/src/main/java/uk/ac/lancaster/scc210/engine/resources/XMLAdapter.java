@@ -6,9 +6,8 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
+import java.io.InputStream;
 
 /**
  * Adapts the loading of an XML document into a generic Resource.
@@ -22,13 +21,13 @@ public class XMLAdapter extends Resource<Document> {
     }
 
     @Override
-    public void loadFromFile(Path path) throws IOException {
+    public void loadFromFile(InputStream stream) throws IOException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
 
-            resource = builder.parse(new File(path.toString()));
+            resource = builder.parse(stream);
 
             resource.getDocumentElement().normalize();
 

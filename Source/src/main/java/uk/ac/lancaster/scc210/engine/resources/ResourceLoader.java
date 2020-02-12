@@ -4,8 +4,7 @@ import uk.ac.lancaster.scc210.engine.StateBasedGame;
 
 import javax.swing.*;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.InputStream;
 import java.util.logging.Level;
 
 /**
@@ -22,22 +21,28 @@ public class ResourceLoader {
      * @param fileName the file name
      * @throws ResourceNotFoundException the resource not found exception
      */
-    public static<T extends Resource> void loadFromFile(T resource, String fileName) throws ResourceNotFoundException {
-        Path path = loadFromRes(fileName);
+    public static <T extends Resource> void loadFromStream(T resource, String fileName) throws ResourceNotFoundException {
+        InputStream stream = loadFromRes(fileName);
 
         try {
-            resource.loadFromFile(path);
+            resource.loadFromFile(stream);
 
-            StateBasedGame.LOGGER.log(Level.INFO, String.format("[%s] Loading %s", resource.getClass().getName(), path));
+            StateBasedGame.LOGGER.log(Level.INFO, String.format("[%s] Loading %s", resource.getClass().getName(), stream));
 
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, String.format("Unable to load %s", path), ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, String.format("Unable to load %s", stream), ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
 
             throw new ResourceNotFoundException(fileName);
         }
     }
 
-    private static Path loadFromRes(String fileName) {
-        return Paths.get("src", "main", "resources", fileName);
+    private static InputStream loadFromRes(String fileName) throws ResourceNotFoundException {
+        InputStream stream = ResourceLoader.class.getClassLoader().getResourceAsStream(fileName);
+
+        if (stream == null) {
+            throw new ResourceNotFoundException(fileName);
+        }
+
+        return stream;
     }
 }

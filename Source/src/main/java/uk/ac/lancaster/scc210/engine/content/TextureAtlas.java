@@ -35,7 +35,7 @@ public class TextureAtlas {
 
         textureAtlas = new Image();
 
-        ResourceLoader.loadFromFile(new ImageAdapter(textureAtlas), fileName);
+        ResourceLoader.loadFromStream(new ImageAdapter(textureAtlas), fileName);
     }
 
     /**
