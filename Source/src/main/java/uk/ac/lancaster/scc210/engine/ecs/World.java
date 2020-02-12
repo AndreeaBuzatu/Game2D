@@ -8,6 +8,7 @@ import uk.ac.lancaster.scc210.engine.service.ServiceProvider;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -53,6 +54,10 @@ public class World {
         for (Entity entity : entities) {
             addEntity(entity);
         }
+    }
+
+    public void addEntities(Collection<? extends Entity> entities) {
+        this.entities.addAll(entities);
     }
 
     public void removeEntity(Entity entity) {
