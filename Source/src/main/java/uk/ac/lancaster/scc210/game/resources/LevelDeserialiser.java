@@ -179,11 +179,9 @@ public class LevelDeserialiser extends Deserialiser<Level> {
 
         spaceShip.addComponent(new StationaryComponent());
 
-        if (spaceShip.hasComponent(SpriteComponent.class)) {
-            SpriteComponent spriteComponent = (SpriteComponent) spaceShip.findComponent(SpriteComponent.class);
+        SpriteComponent spriteComponent = (SpriteComponent) spaceShip.findComponent(SpriteComponent.class);
 
-            spriteComponent.getSprite().setPosition(position);
-        }
+        spriteComponent.getSprite().setPosition(position);
 
         return spaceShip;
     }
