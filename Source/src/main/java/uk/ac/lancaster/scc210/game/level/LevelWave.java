@@ -8,10 +8,8 @@ import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.prototypes.Prototype;
 import uk.ac.lancaster.scc210.game.ecs.component.AsteroidComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.EnemyComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.WaveComponent;
-import uk.ac.lancaster.scc210.game.prototypes.SpaceShipPrototype;
 import uk.ac.lancaster.scc210.game.waves.Wave;
 
 import java.util.HashSet;
