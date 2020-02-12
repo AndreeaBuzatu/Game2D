@@ -9,8 +9,12 @@ import java.util.Set;
 public class PlayerComponent implements Component {
     private Set<ItemEffect> currentEffects;
 
+    private int currentScore;
+
     public PlayerComponent() {
         currentEffects = new HashSet<>();
+
+        currentScore = 0;
     }
 
     public Set<ItemEffect> getCurrentEffects() {
@@ -19,5 +23,13 @@ public class PlayerComponent implements Component {
 
     public void setCurrentEffects(Set<ItemEffect> currentEffects) {
         this.currentEffects = currentEffects;
+    }
+
+    public void changeScore(int score) {
+        this.currentScore += score;
+    }
+
+    public int getScore() {
+        return currentScore;
     }
 }
