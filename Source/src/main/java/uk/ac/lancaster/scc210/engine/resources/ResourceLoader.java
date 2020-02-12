@@ -27,7 +27,7 @@ public class ResourceLoader {
         try {
             resource.loadFromFile(stream);
 
-            StateBasedGame.LOGGER.log(Level.INFO, String.format("[%s] Loading %s", resource.getClass().getName(), path));
+            StateBasedGame.LOGGER.log(Level.INFO, String.format("[%s] Loading %s", resource.getClass().getName(), stream));
 
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, String.format("Unable to load %s", stream), ERROR_TITLE, JOptionPane.ERROR_MESSAGE);

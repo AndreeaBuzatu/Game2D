@@ -15,7 +15,7 @@ public class SerialisedSound implements Serialised {
 
         SoundBufferAdapter soundAdapter = new SoundBufferAdapter(new SoundBuffer());
 
-        ResourceLoader.loadFromFile(soundAdapter, fileName);
+        ResourceLoader.loadFromStream(soundAdapter, fileName);
 
         soundBuffer = soundAdapter.getResource();
     }

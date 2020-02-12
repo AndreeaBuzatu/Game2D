@@ -17,11 +17,11 @@ public class SerialisedSpaceShip implements Serialised {
      *
      * @param name      the name of the spaceship
      * @param animation the animation of the spaceship
-     * @param speed     the speed of the spaceship
      * @param items     the items the spaceship can drop when destroyed
      * @param bullet    the bullet fired by the spaceship
+     * @param speed     the speed of the spaceship
      */
-    SerialisedSpaceShip(String name, String animation, int speed, String[] items, String bullet) {
+    SerialisedSpaceShip(String name, String animation, String[] items, String bullet, int speed) {
         this.name = name;
         this.animation = animation;
         this.speed = speed;

@@ -3,7 +3,7 @@ package uk.ac.lancaster.scc210.engine.resources;
 import org.jsfml.audio.Music;
 
 import java.io.IOException;
-import java.nio.file.Path;
+import java.io.InputStream;
 
 public class MusicAdapter extends Resource<Music> {
     /**
@@ -16,7 +16,7 @@ public class MusicAdapter extends Resource<Music> {
     }
 
     @Override
-    public void loadFromFile(Path path) throws IOException {
-        resource.openFromFile(path);
+    public void loadFromFile(InputStream stream) throws IOException {
+        resource.openFromStream(stream);
     }
 }

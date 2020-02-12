@@ -15,7 +15,7 @@ public class SerialisedMusic implements Serialised {
 
         MusicAdapter musicAdapter = new MusicAdapter(new Music());
 
-        ResourceLoader.loadFromFile(musicAdapter, fileName);
+        ResourceLoader.loadFromStream(musicAdapter, fileName);
 
         music = musicAdapter.getResource();
     }

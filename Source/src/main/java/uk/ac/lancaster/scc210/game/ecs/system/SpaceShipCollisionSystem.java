@@ -53,8 +53,6 @@ public class SpaceShipCollisionSystem extends IterativeSystem {
             OrientatedBoxComponent entityOrientedBox = (OrientatedBoxComponent) entity.findComponent(OrientatedBoxComponent.class);
 
             if (OrientatedBox.areColliding(playerOrientedBox.getOrientatedBox(), entityOrientedBox.getOrientatedBox())) {
-                System.out.println("Called");
-
                 world.removeEntity(playerEntity);
             }
         }
