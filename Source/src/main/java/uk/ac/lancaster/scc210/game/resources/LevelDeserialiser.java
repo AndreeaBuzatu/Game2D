@@ -193,6 +193,8 @@ public class LevelDeserialiser extends Deserialiser<Level> {
 
         AsteroidComponent asteroidComponent = (AsteroidComponent) asteroid.findComponent(AsteroidComponent.class);
 
+        asteroid.addComponent(new StationaryComponent());
+
         asteroidComponent.getCircle().setPosition(pos);
 
         return asteroid;
