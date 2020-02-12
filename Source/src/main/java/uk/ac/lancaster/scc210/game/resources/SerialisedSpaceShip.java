@@ -11,21 +11,23 @@ public class SerialisedSpaceShip implements Serialised {
     private final String name;
     private final String animation;
 
-    private final int speed;
+    private final int speed, score;
 
     /**
      * Instantiates a new Serialised space ship.
      *
      * @param name      the name of the spaceship
      * @param animation the animation of the spaceship
-     * @param speed     the speed of the spaceship
      * @param items     the items the spaceship can drop when destroyed
+     * @param speed     the speed of the spaceship
+     * @param score     the score awarded to the plaer when killing this spaceship
      */
-    SerialisedSpaceShip(String name, String animation, int speed, String[] items) {
+    SerialisedSpaceShip(String name, String animation, String[] items, int speed, int score) {
         this.name = name;
         this.animation = animation;
-        this.speed = speed;
         this.items = items;
+        this.speed = speed;
+        this.score = score;
     }
 
     /**
@@ -62,5 +64,14 @@ public class SerialisedSpaceShip implements Serialised {
      */
     public String[] getItems() {
         return items;
+    }
+
+    /**
+     * Get the score awarded the player when killing this shop
+     *
+     * @return the score
+     */
+    public int getScore() {
+        return score;
     }
 }

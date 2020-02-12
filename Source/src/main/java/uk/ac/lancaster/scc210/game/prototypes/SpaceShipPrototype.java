@@ -14,13 +14,14 @@ public class SpaceShipPrototype implements Prototype {
 
     private final String animation;
 
-    private final int speed;
+    private final int speed, score;
 
-    public SpaceShipPrototype(TextureAnimationManager animationManager, String animation, int speed, String[] items) {
+    public SpaceShipPrototype(TextureAnimationManager animationManager, String animation, String[] items, int speed, int score) {
         this.animationManager = animationManager;
         this.animation = animation;
-        this.speed = speed;
         this.items = items;
+        this.speed = speed;
+        this.score = score;
     }
 
     public Entity create() {
@@ -40,6 +41,8 @@ public class SpaceShipPrototype implements Prototype {
 
         final OrientatedBoxComponent orientatedBoxComponent = new OrientatedBoxComponent(sprite);
 
-        return World.createEntity(animationComponent, spriteComponent, speedComponent, rotationComponent, spaceShipComponent, orientatedBoxComponent, transformableComponent);
+        final ScoreComponent scoreComponent = new ScoreComponent(score);
+
+        return World.createEntity(animationComponent, spriteComponent, speedComponent, rotationComponent, spaceShipComponent, orientatedBoxComponent, transformableComponent, scoreComponent);
     }
 }
