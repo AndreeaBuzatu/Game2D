@@ -1,8 +1,11 @@
 package uk.ac.lancaster.scc210.game.ecs.system;
 
+import org.jsfml.audio.Sound;
+import org.jsfml.audio.SoundBuffer;
 import org.jsfml.graphics.RenderTarget;
 import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.collision.OrientatedBox;
+import uk.ac.lancaster.scc210.engine.content.SoundBufferManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
@@ -16,6 +19,10 @@ public class ItemCollisionSystem extends IterativeSystem {
     // We only have one player but the abstraction works like so - oh well
     private Optional<Entity> player;
 
+    private SoundBufferManager soundBufferManager;
+    private SoundBuffer soundBuffer;
+    private Sound sound;
+
     /**
      * Instantiates a new Iterative system.
      *
@@ -25,6 +32,10 @@ public class ItemCollisionSystem extends IterativeSystem {
         super(world, ItemEffectsComponent.class);
 
         player = world.getEntitiesFor(PlayerComponent.class).stream().findFirst();
+
+        soundBufferManager = (SoundBufferManager) world.getServiceProvider().get(SoundBufferManager.class);
+        soundBuffer = soundBufferManager.get("pickup");
+        sound = new Sound(soundBuffer);
     }
 
     @Override
@@ -58,6 +69,8 @@ public class ItemCollisionSystem extends IterativeSystem {
                 itemEffectsComponent.getItemEffects().parallelStream().forEach(itemEffect -> itemEffect.react(playerEntity));
 
                 playerComponent.setCurrentEffects(itemEffectsComponent.getItemEffects());
+
+                sound.play();
 
                 world.removeEntity(entity);
             }
