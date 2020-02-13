@@ -8,8 +8,9 @@ import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.component.PooledComponent;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.engine.pooling.Pool;
+import uk.ac.lancaster.scc210.game.ecs.component.BulletComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.WaveComponent;
 
 /**
  * System used to prevent an entity from going off screen
@@ -33,12 +34,15 @@ public class ViewBoundsSystem extends IterativeSystem {
         for (Entity entity : entities) {
             SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
 
-            if (viewSize.outOfBounds(spriteComponent.getSprite()) && !entity.hasComponent(WaveComponent.class)) {
+            // Player sticks within the window, bullets are removed, wave components can go in and out bounds
+            if (viewSize.outOfBounds(spriteComponent.getSprite())) {
                 // Keep the player within the bounds of the window
-                if (entity.hasComponent(SpriteComponent.class)) {
+                if (entity.hasComponent(PlayerComponent.class)) {
                     viewSize.resetSprite(spriteComponent.getSprite());
+                }
 
-                } else {
+                // Remove any bullets from screen
+                if (entity.hasComponent(BulletComponent.class)) {
                     world.removeEntity(entity);
 
                     if (entity.hasComponent(PooledComponent.class)) {
