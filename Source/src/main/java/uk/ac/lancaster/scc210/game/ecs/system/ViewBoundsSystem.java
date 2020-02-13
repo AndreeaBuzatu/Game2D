@@ -34,14 +34,20 @@ public class ViewBoundsSystem extends IterativeSystem {
             SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
 
             if (viewSize.outOfBounds(spriteComponent.getSprite()) && !entity.hasComponent(WaveComponent.class)) {
-                world.removeEntity(entity);
+                // Keep the player within the bounds of the window
+                if (entity.hasComponent(SpriteComponent.class)) {
+                    viewSize.resetSprite(spriteComponent.getSprite());
 
-                if (entity.hasComponent(PooledComponent.class)) {
-                    PooledComponent pooledComponent = (PooledComponent) entity.findComponent(PooledComponent.class);
+                } else {
+                    world.removeEntity(entity);
 
-                    Pool entityPool = world.getPool(pooledComponent.getPoolClass());
+                    if (entity.hasComponent(PooledComponent.class)) {
+                        PooledComponent pooledComponent = (PooledComponent) entity.findComponent(PooledComponent.class);
 
-                    entityPool.returnEntity(entity);
+                        Pool entityPool = world.getPool(pooledComponent.getPoolClass());
+
+                        entityPool.returnEntity(entity);
+                    }
                 }
             }
         }

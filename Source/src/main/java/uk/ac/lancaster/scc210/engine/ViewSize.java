@@ -2,6 +2,7 @@ package uk.ac.lancaster.scc210.engine;
 
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Sprite;
+import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.service.Service;
 import uk.ac.lancaster.scc210.game.states.Playing;
 
@@ -34,11 +35,61 @@ public class ViewSize implements Service {
     public boolean outOfBounds(Sprite sprite) {
         FloatRect globalBounds = sprite.getGlobalBounds();
 
-        float maxRight = viewBounds.width - globalBounds.width;
+        float maxRight = getMaxRight(globalBounds);
 
-        float maxDown = viewBounds.height - globalBounds.height;
+        float maxDown = getMaxDown(globalBounds);
 
-        return globalBounds.left < X_MIN || globalBounds.top < Y_MIN
-                || globalBounds.left > maxRight || globalBounds.top > maxDown;
+        return tooFarLeft(globalBounds) || tooFarUp(globalBounds)
+                || tooFarRight(globalBounds, maxRight) || tooFarDown(globalBounds, maxDown);
+    }
+
+    public void resetSprite(Sprite sprite) {
+        FloatRect globalBounds = sprite.getGlobalBounds();
+
+        Vector2f spritePos = sprite.getPosition();
+
+        if (tooFarLeft(globalBounds)) {
+            sprite.setPosition(0, spritePos.y);
+        }
+
+        if (tooFarUp(globalBounds)) {
+            sprite.setPosition(spritePos.x, Y_MIN);
+        }
+
+        float maxRight = getMaxRight(globalBounds);
+
+        if (tooFarRight(globalBounds, maxRight)) {
+            sprite.setPosition(maxRight, spritePos.y);
+        }
+
+        float maxDown = getMaxDown(globalBounds);
+
+        if (tooFarDown(globalBounds, maxDown)) {
+            sprite.setPosition(spritePos.x, maxDown);
+        }
+    }
+
+    private boolean tooFarLeft(FloatRect globalBounds) {
+        return globalBounds.left < X_MIN;
+    }
+
+    private boolean tooFarUp(FloatRect globalBounds) {
+        return globalBounds.top < Y_MIN;
+    }
+
+    private boolean tooFarRight(FloatRect globalBounds, float maxRight) {
+        return globalBounds.left > maxRight;
+    }
+
+    private boolean tooFarDown(FloatRect globalBounds, float maxDown) {
+        return globalBounds.top > maxDown;
+    }
+
+    private float getMaxRight(FloatRect globalBounds) {
+        return viewBounds.width - globalBounds.width;
+    }
+
+    private float getMaxDown(FloatRect globalBounds) {
+        return viewBounds.height - globalBounds.height;
     }
 }
