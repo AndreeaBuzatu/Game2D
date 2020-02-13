@@ -3,6 +3,7 @@ package uk.ac.lancaster.scc210.engine;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Sprite;
 import uk.ac.lancaster.scc210.engine.service.Service;
+import uk.ac.lancaster.scc210.game.states.Playing;
 
 /**
  * Service for accessing the current size of the window
@@ -10,7 +11,8 @@ import uk.ac.lancaster.scc210.engine.service.Service;
 public class ViewSize implements Service {
     private final int X_MIN = 0;
 
-    private final int Y_MIN = 0;
+    // Prevent the player from going above the playing area
+    private final int Y_MIN = Playing.INFO_BOX_HEIGHT;
 
     private final FloatRect viewBounds;
 
