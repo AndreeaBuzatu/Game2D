@@ -18,15 +18,16 @@ public class SpaceShipPrototype implements Prototype {
 
     private final String animation, bulletName;
 
-    private final int speed;
+    private final int speed, lives;
 
-    public SpaceShipPrototype(TextureAnimationManager animationManager, Pool pool, String animation, String[] items, String bulletName, int speed) {
+    public SpaceShipPrototype(TextureAnimationManager animationManager, Pool pool, String animation, String[] items, String bulletName, int speed, int lives) {
         this.animationManager = animationManager;
         this.pool = pool;
         this.animation = animation;
         this.items = items;
         this.bulletName = bulletName;
         this.speed = speed;
+        this.lives = lives;
     }
 
     public Entity create() {
@@ -46,7 +47,7 @@ public class SpaceShipPrototype implements Prototype {
 
         final OrientatedBoxComponent orientatedBoxComponent = new OrientatedBoxComponent(sprite);
 
-        final LivesComponent healthComponent = new LivesComponent(2);
+        final LivesComponent healthComponent = new LivesComponent(lives);
 
         Entity spaceShip = World.createEntity(animationComponent, spriteComponent, speedComponent, rotationComponent, spaceShipComponent, orientatedBoxComponent, transformableComponent, healthComponent);
 
