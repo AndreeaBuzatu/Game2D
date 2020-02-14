@@ -4,12 +4,11 @@ import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.prototypes.Prototype;
-import uk.ac.lancaster.scc210.game.ecs.component.AsteroidComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.OrientatedBoxComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.TransformableComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.*;
 
 public class AsteroidPrototype implements Prototype {
+    private final int ASTEROID_SCORE = 10;
+
     private final TextureManager textureManager;
 
     public AsteroidPrototype(TextureManager textureManager) {
@@ -26,6 +25,8 @@ public class AsteroidPrototype implements Prototype {
 
         final OrientatedBoxComponent orientatedBoxComponent = new OrientatedBoxComponent(asteroidComponent.getCircle());
 
-        return World.createEntity(asteroidComponent, speedComponent, transformableComponent, orientatedBoxComponent);
+        final ScoreComponent scoreComponent = new ScoreComponent(ASTEROID_SCORE);
+
+        return World.createEntity(asteroidComponent, speedComponent, transformableComponent, orientatedBoxComponent, scoreComponent);
     }
 }

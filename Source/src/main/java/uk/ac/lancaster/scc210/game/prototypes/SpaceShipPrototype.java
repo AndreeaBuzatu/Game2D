@@ -18,15 +18,16 @@ public class SpaceShipPrototype implements Prototype {
 
     private final String animation, bulletName;
 
-    private final int speed;
+    private final int speed, score;
 
-    public SpaceShipPrototype(TextureAnimationManager animationManager, Pool pool, String animation, String[] items, String bulletName, int speed) {
+    public SpaceShipPrototype(TextureAnimationManager animationManager, Pool pool, String animation, String[] items, String bulletName, int speed, int score) {
         this.animationManager = animationManager;
         this.pool = pool;
         this.animation = animation;
         this.items = items;
         this.bulletName = bulletName;
         this.speed = speed;
+        this.score = score;
     }
 
     public Entity create() {
@@ -46,7 +47,9 @@ public class SpaceShipPrototype implements Prototype {
 
         final OrientatedBoxComponent orientatedBoxComponent = new OrientatedBoxComponent(sprite);
 
-        Entity spaceShip = World.createEntity(animationComponent, spriteComponent, speedComponent, rotationComponent, spaceShipComponent, orientatedBoxComponent, transformableComponent);
+        final ScoreComponent scoreComponent = new ScoreComponent(score);
+
+        Entity spaceShip = World.createEntity(animationComponent, spriteComponent, speedComponent, rotationComponent, spaceShipComponent, orientatedBoxComponent, transformableComponent, scoreComponent);
 
         // Let's assume ships will use the straight line pattern for now
         final FiringPatternComponent firingPatternComponent = new FiringPatternComponent(new StraightLinePattern(pool, spaceShip, bulletName));

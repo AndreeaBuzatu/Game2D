@@ -1,9 +1,13 @@
 package uk.ac.lancaster.scc210.game.states;
 
 import org.jsfml.audio.Music;
+import org.jsfml.graphics.Color;
+import org.jsfml.graphics.Font;
 import org.jsfml.graphics.RenderTarget;
+import org.jsfml.graphics.Text;
 import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
+import uk.ac.lancaster.scc210.engine.content.FontManager;
 import uk.ac.lancaster.scc210.engine.content.MusicManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
@@ -11,6 +15,7 @@ import uk.ac.lancaster.scc210.engine.states.State;
 import uk.ac.lancaster.scc210.game.content.LevelManager;
 import uk.ac.lancaster.scc210.game.content.SpaceShipPrototypeManager;
 import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 import uk.ac.lancaster.scc210.game.ecs.system.*;
 import uk.ac.lancaster.scc210.game.level.Level;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
@@ -21,6 +26,10 @@ import java.util.Iterator;
  * Represents the actual game-play state.
  */
 public class Playing implements State {
+    private static final int TEXT_SIZE = 70;
+
+    public static final int INFO_BOX_HEIGHT = TEXT_SIZE + 5;
+
     private Iterator<Level> levelIterator;
 
     private World world;
@@ -34,6 +43,10 @@ public class Playing implements State {
     private boolean completed;
 
     private Music example;
+
+    private Font font;
+
+    private Text scoreText;
 
     @Override
     public void setup(StateBasedGame game) {
@@ -77,6 +90,8 @@ public class Playing implements State {
 
         world.addSystem(new EnemyFiringSystem(world));
 
+        world.addSystem(new ScoreSystem(world));
+
         world.addSystem(levelSystem);
 
         SpaceShipPrototypeManager spaceShipManager = (SpaceShipPrototypeManager) game.getServiceProvider().get(SpaceShipPrototypeManager.class);
@@ -84,6 +99,8 @@ public class Playing implements State {
         player = spaceShipManager.get("player").create();
 
         player.addComponent(new PlayerComponent());
+
+        ((SpriteComponent) player.findComponent(SpriteComponent.class)).getSprite().setPosition(400, 200);
 
         world.addEntity(player);
 
@@ -96,11 +113,29 @@ public class Playing implements State {
         example.setLoop(true);
 
         example.play();
+
+        font = ((FontManager) world.getServiceProvider().get(FontManager.class)).get("font");
+
+        scoreText = new Text();
+
+        scoreText.setFont(font);
+
+        scoreText.setColor(Color.WHITE);
+
+        scoreText.setCharacterSize(TEXT_SIZE);
     }
 
     @Override
     public void draw(RenderTarget target) {
         world.draw(target);
+
+        if (player.hasComponent(PlayerComponent.class)) {
+            PlayerComponent playerComponent = (PlayerComponent) player.findComponent(PlayerComponent.class);
+
+            scoreText.setString(String.format("Score: %d", playerComponent.getScore()));
+        }
+
+        target.draw(scoreText);
     }
 
     @Override

@@ -8,8 +8,9 @@ import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.component.PooledComponent;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.engine.pooling.Pool;
+import uk.ac.lancaster.scc210.game.ecs.component.BulletComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.WaveComponent;
 
 /**
  * System used to prevent an entity from going off screen
@@ -33,15 +34,24 @@ public class ViewBoundsSystem extends IterativeSystem {
         for (Entity entity : entities) {
             SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
 
-            if (viewSize.outOfBounds(spriteComponent.getSprite()) && !entity.hasComponent(WaveComponent.class)) {
-                world.removeEntity(entity);
+            // Player sticks within the window, bullets are removed, wave components can go in and out bounds
+            if (viewSize.outOfBounds(spriteComponent.getSprite())) {
+                // Keep the player within the bounds of the window
+                if (entity.hasComponent(PlayerComponent.class)) {
+                    viewSize.resetSprite(spriteComponent.getSprite());
+                }
 
-                if (entity.hasComponent(PooledComponent.class)) {
-                    PooledComponent pooledComponent = (PooledComponent) entity.findComponent(PooledComponent.class);
+                // Remove any bullets from screen
+                if (entity.hasComponent(BulletComponent.class)) {
+                    world.removeEntity(entity);
 
-                    Pool entityPool = world.getPool(pooledComponent.getPoolClass());
+                    if (entity.hasComponent(PooledComponent.class)) {
+                        PooledComponent pooledComponent = (PooledComponent) entity.findComponent(PooledComponent.class);
 
-                    entityPool.returnEntity(entity);
+                        Pool entityPool = world.getPool(pooledComponent.getPoolClass());
+
+                        entityPool.returnEntity(entity);
+                    }
                 }
             }
         }
