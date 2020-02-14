@@ -46,7 +46,9 @@ public class SpaceShipPrototype implements Prototype {
 
         final OrientatedBoxComponent orientatedBoxComponent = new OrientatedBoxComponent(sprite);
 
-        Entity spaceShip = World.createEntity(animationComponent, spriteComponent, speedComponent, rotationComponent, spaceShipComponent, orientatedBoxComponent, transformableComponent);
+        final HealthComponent healthComponent = new HealthComponent(2);
+
+        Entity spaceShip = World.createEntity(animationComponent, spriteComponent, speedComponent, rotationComponent, spaceShipComponent, orientatedBoxComponent, transformableComponent, healthComponent);
 
         // Let's assume ships will use the straight line pattern for now
         final FiringPatternComponent firingPatternComponent = new FiringPatternComponent(new StraightLinePattern(pool, spaceShip, bulletName));

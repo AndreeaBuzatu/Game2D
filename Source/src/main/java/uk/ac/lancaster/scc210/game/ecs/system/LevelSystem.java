@@ -43,6 +43,7 @@ public class LevelSystem extends IterativeSystem {
 
         // Remove a stationary entity from the List<Entity> stationaryEntities
         if (entity.hasComponent(StationaryComponent.class)) {
+            System.out.println("Removing stationary");
             level.getCurrentStage().removeStationaryEntity(entity);
         }
     }
@@ -56,7 +57,7 @@ public class LevelSystem extends IterativeSystem {
 
         } else {
             if (currentStage != null) {
-                world.addEntities(currentStage.getStationaryEntities());
+                //world.addEntities(currentStage.getStationaryEntities());
 
                 for (LevelWave wave : currentStage.getWaves()) {
                     Entity newShip = wave.spawnNew(deltaTime);

@@ -52,9 +52,16 @@ public class BulletCollisionSystem extends IterativeSystem {
                 boolean isItem = transformable.hasComponent(ItemEffectsComponent.class);
 
                 if (colliding && !bothEnemies && !isItem) {
+                    HealthComponent healthComponent = (HealthComponent) transformable.findComponent(HealthComponent.class);
+
                     PooledComponent pooledComponent = (PooledComponent) entity.findComponent(PooledComponent.class);
 
-                    world.removeEntity(transformable);
+                    //world.removeEntity(transformable);
+
+                    healthComponent.setLives(healthComponent.getLives() - 1);
+
+                    System.out.println(healthComponent.getLives());
+
 
                     // Return the bullet back to the pool and remove it from the world
                     world.getPool(pooledComponent.getPoolClass()).returnEntity(entity);
