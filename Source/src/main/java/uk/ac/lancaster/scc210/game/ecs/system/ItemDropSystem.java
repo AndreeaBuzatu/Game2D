@@ -7,12 +7,22 @@ import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.game.content.ItemPrototypeManager;
 import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.ScoreComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
 import java.util.Random;
 
 public class ItemDropSystem extends IterativeSystem {
+    // Lower bounds for item score
+    private final int MIN_SCORE = 1;
+
+    // Upper bounds for item score
+    private final int MAX_SCORE = 8;
+
+    // Items have a 5% chance of giving the player some score
+    private final int GIVE_SCORE_CHANCE = 5;
+
     // nextInt is 0-indexed
     private final int HUNDRED_PERCENT = 99;
 
@@ -40,7 +50,7 @@ public class ItemDropSystem extends IterativeSystem {
             return;
         }
 
-        if (random.nextInt(HUNDRED_PERCENT) < DROP_CHANCE) {
+        if (percentChance(DROP_CHANCE)) {
             if (entity.hasComponent(SpaceShipComponent.class)) {
                 ItemPrototypeManager itemPrototypeManager = (ItemPrototypeManager) world.getServiceProvider().get(ItemPrototypeManager.class);
 
@@ -80,10 +90,25 @@ public class ItemDropSystem extends IterativeSystem {
 
         itemSpriteComponent.getSprite().setPosition(entitySpriteComponent.getSprite().getPosition());
 
+        // Theres a 5% chance an item will have a score (between 0-8) associated with it
+        if (percentChance(GIVE_SCORE_CHANCE)) {
+            ScoreComponent scoreComponent = new ScoreComponent(randScore());
+
+            item.addComponent(scoreComponent);
+        }
+
         world.addEntity(item);
+    }
+
+    private boolean percentChance(int chance) {
+        return random.nextInt(HUNDRED_PERCENT) < chance;
     }
 
     private int randomItem(int numItems) {
         return random.nextInt(numItems);
+    }
+
+    private int randScore() {
+        return random.nextInt((MAX_SCORE - MIN_SCORE) + 1) + MIN_SCORE;
     }
 }
