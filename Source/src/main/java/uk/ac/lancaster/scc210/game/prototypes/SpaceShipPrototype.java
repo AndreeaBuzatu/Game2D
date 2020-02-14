@@ -8,6 +8,7 @@ import uk.ac.lancaster.scc210.engine.pooling.Pool;
 import uk.ac.lancaster.scc210.engine.prototypes.Prototype;
 import uk.ac.lancaster.scc210.game.bullets.patterns.StraightLinePattern;
 import uk.ac.lancaster.scc210.game.ecs.component.*;
+import uk.ac.lancaster.scc210.game.resources.SerialisedSpaceShip;
 
 public class SpaceShipPrototype implements Prototype {
     private final String[] items;
@@ -20,14 +21,14 @@ public class SpaceShipPrototype implements Prototype {
 
     private final int speed, score;
 
-    public SpaceShipPrototype(TextureAnimationManager animationManager, Pool pool, String animation, String[] items, String bulletName, int speed, int score) {
+    public SpaceShipPrototype(TextureAnimationManager animationManager, Pool pool, SerialisedSpaceShip spaceShip) {
         this.animationManager = animationManager;
         this.pool = pool;
-        this.animation = animation;
-        this.items = items;
-        this.bulletName = bulletName;
-        this.speed = speed;
-        this.score = score;
+        this.animation = spaceShip.getAnimation();
+        this.items = spaceShip.getItems();
+        this.bulletName = spaceShip.getBullet();
+        this.speed = spaceShip.getSpeed();
+        this.score = spaceShip.getScore();
     }
 
     public Entity create() {
