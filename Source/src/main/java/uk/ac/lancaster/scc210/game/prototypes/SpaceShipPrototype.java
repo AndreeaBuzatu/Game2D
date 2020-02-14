@@ -46,7 +46,7 @@ public class SpaceShipPrototype implements Prototype {
 
         final OrientatedBoxComponent orientatedBoxComponent = new OrientatedBoxComponent(sprite);
 
-        final HealthComponent healthComponent = new HealthComponent(2);
+        final LivesComponent healthComponent = new LivesComponent(2);
 
         Entity spaceShip = World.createEntity(animationComponent, spriteComponent, speedComponent, rotationComponent, spaceShipComponent, orientatedBoxComponent, transformableComponent, healthComponent);
 

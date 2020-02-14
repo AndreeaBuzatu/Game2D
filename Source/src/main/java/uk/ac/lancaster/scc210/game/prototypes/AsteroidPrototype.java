@@ -17,7 +17,7 @@ public class AsteroidPrototype implements Prototype {
     public Entity create() {
         final AsteroidComponent asteroidComponent = new AsteroidComponent(textureManager.get("enemy-spritesheet.png:asteroid"));
 
-        final HealthComponent healthComponent = new HealthComponent(3);
+        final LivesComponent healthComponent = new LivesComponent(3);
 
         final SpeedComponent speedComponent = new SpeedComponent(5);
 

@@ -5,23 +5,23 @@ import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
-import uk.ac.lancaster.scc210.game.ecs.component.HealthComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.LivesComponent;
 
-public class HealthSystem extends IterativeSystem {
+public class LivesSystem extends IterativeSystem {
     /**
      * Instantiate the Health System. Each entity *can* have health
      *
      * @param world      the world containing entities to use
      *
      */
-    public HealthSystem(World world) {
-        super(world, HealthComponent.class);
+    public LivesSystem(World world) {
+        super(world, LivesComponent.class);
     }
 
     @Override
     public void update(Time deltaTime) {
         for (Entity entity : entities) {
-            HealthComponent healthComponent = (HealthComponent) entity.findComponent(HealthComponent.class);
+            LivesComponent healthComponent = (LivesComponent) entity.findComponent(LivesComponent.class);
 
             if (healthComponent.isDead()) {
                 world.removeEntity(entity);

@@ -52,7 +52,7 @@ public class BulletCollisionSystem extends IterativeSystem {
                 boolean isItem = transformable.hasComponent(ItemEffectsComponent.class);
 
                 if (colliding && !bothEnemies && !isItem) {
-                    HealthComponent healthComponent = (HealthComponent) transformable.findComponent(HealthComponent.class);
+                    LivesComponent healthComponent = (LivesComponent) transformable.findComponent(LivesComponent.class);
 
                     PooledComponent pooledComponent = (PooledComponent) entity.findComponent(PooledComponent.class);
 
