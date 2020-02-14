@@ -21,7 +21,7 @@ public class ItemDropSystem extends IterativeSystem {
     private final int MAX_SCORE = 8;
 
     // Items have a 5% chance of giving the player some score
-    private final int GIVE_SCORE_CHANCE = 5;
+    private final int GIVE_SCORE_CHANCE = 25;
 
     // nextInt is 0-indexed
     private final int HUNDRED_PERCENT = 99;
@@ -90,7 +90,7 @@ public class ItemDropSystem extends IterativeSystem {
 
         itemSpriteComponent.getSprite().setPosition(entitySpriteComponent.getSprite().getPosition());
 
-        // Theres a 5% chance an item will have a score (between 0-8) associated with it
+        // There's a 5% chance an item will have a score (between 0-8) associated with it
         if (percentChance(GIVE_SCORE_CHANCE)) {
             ScoreComponent scoreComponent = new ScoreComponent(randScore());
 
