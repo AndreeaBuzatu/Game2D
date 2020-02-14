@@ -14,7 +14,7 @@ public class FontManager extends ContentManager<Font> {
 
         FontAdapter fontAdapter = new FontAdapter(new Font());
 
-        ResourceLoader.loadFromFile(fontAdapter, "font.ttf");
+        ResourceLoader.loadFromStream(fontAdapter, "font.ttf");
 
         put("font", fontAdapter.getResource());
     }

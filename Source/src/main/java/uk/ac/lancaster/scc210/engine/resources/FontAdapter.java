@@ -3,7 +3,7 @@ package uk.ac.lancaster.scc210.engine.resources;
 import org.jsfml.graphics.Font;
 
 import java.io.IOException;
-import java.nio.file.Path;
+import java.io.InputStream;
 
 public class FontAdapter extends Resource<Font> {
     /**
@@ -16,7 +16,7 @@ public class FontAdapter extends Resource<Font> {
     }
 
     @Override
-    public void loadFromFile(Path path) throws IOException {
-        resource.loadFromFile(path);
+    public void loadFromFile(InputStream stream) throws IOException {
+        resource.loadFromStream(stream);
     }
 }
