@@ -25,7 +25,6 @@ public class SerialisedSpaceShip implements Serialised {
     SerialisedSpaceShip(String name, String animation, String[] items, String bullet, int speed, int score) {
         this.name = name;
         this.animation = animation;
-        this.speed = speed;
         this.items = items;
         this.bullet = bullet;
         this.speed = speed;
