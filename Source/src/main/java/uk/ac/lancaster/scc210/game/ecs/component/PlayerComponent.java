@@ -1,5 +1,6 @@
 package uk.ac.lancaster.scc210.game.ecs.component;
 
+import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.ecs.Component;
 import uk.ac.lancaster.scc210.game.items.ItemEffect;
 
@@ -8,6 +9,8 @@ import java.util.Set;
 
 public class PlayerComponent implements Component {
     private Set<ItemEffect> currentEffects;
+
+    private Vector2f spawnPoint;
 
     private int currentScore;
 
@@ -31,5 +34,17 @@ public class PlayerComponent implements Component {
 
     public int getScore() {
         return currentScore;
+    }
+
+    public void setScore(int score) {
+        this.currentScore = score;
+    }
+
+    public void setSpawnPoint(Vector2f spawnPoint) {
+        this.spawnPoint = spawnPoint;
+    }
+
+    public Vector2f getSpawnPoint() {
+        return spawnPoint;
     }
 }
