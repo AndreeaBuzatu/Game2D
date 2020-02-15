@@ -1,5 +1,6 @@
 package uk.ac.lancaster.scc210.game.prototypes;
 
+import uk.ac.lancaster.scc210.engine.content.ShaderManager;
 import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
@@ -9,8 +10,11 @@ import uk.ac.lancaster.scc210.game.ecs.component.*;
 public class AsteroidPrototype implements Prototype {
     private final TextureManager textureManager;
 
-    public AsteroidPrototype(TextureManager textureManager) {
+    private final ShaderManager shaderManager;
+
+    public AsteroidPrototype(TextureManager textureManager, ShaderManager shaderManager) {
         this.textureManager = textureManager;
+        this.shaderManager = shaderManager;
     }
 
     @Override
@@ -25,6 +29,8 @@ public class AsteroidPrototype implements Prototype {
 
         final OrientatedBoxComponent orientatedBoxComponent = new OrientatedBoxComponent(asteroidComponent.getCircle());
 
-        return World.createEntity(asteroidComponent, speedComponent, transformableComponent, orientatedBoxComponent, healthComponent);
+        final FlashComponent flashComponent = new FlashComponent(asteroidComponent.getCircle(), shaderManager.get("flash"));
+
+        return World.createEntity(asteroidComponent, speedComponent, transformableComponent, orientatedBoxComponent, healthComponent, flashComponent);
     }
 }
