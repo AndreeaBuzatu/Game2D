@@ -46,8 +46,6 @@ public class ScoreSystem extends IterativeSystem {
             ScoreComponent scoreComponent = (ScoreComponent) entity.findComponent(ScoreComponent.class);
 
             playerComponent.changeScore(scoreComponent.getScore());
-
-            System.out.println("Current Score: " + playerComponent.getScore());
         }
     }
 
