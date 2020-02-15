@@ -7,9 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class ShaderAdapter extends Resource<Shader> {
-    private Shader shader;
-
-    private Shader.Type shaderType;
+    private final Shader.Type shaderType;
 
     /**
      * Instantiates a new ShaderAdapter.

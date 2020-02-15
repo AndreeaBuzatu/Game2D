@@ -12,7 +12,9 @@ public class FlashComponent implements Component {
 
     private Time elapsedTime;
 
-    private RenderStates currentState, textureState, flashState;
+    private RenderStates currentState;
+    private final RenderStates textureState;
+    private final RenderStates flashState;
 
     private boolean flashing;
 
