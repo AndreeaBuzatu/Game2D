@@ -21,9 +21,9 @@ public class LivesSystem extends IterativeSystem {
     @Override
     public void update(Time deltaTime) {
         for (Entity entity : entities) {
-            LivesComponent healthComponent = (LivesComponent) entity.findComponent(LivesComponent.class);
+            LivesComponent livesComponent = (LivesComponent) entity.findComponent(LivesComponent.class);
 
-            if (healthComponent.isDead()) {
+            if (livesComponent.isDead()) {
                 world.removeEntity(entity);
             }
         }
