@@ -9,7 +9,6 @@ import uk.ac.lancaster.scc210.game.ecs.component.StationaryComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.WaveComponent;
 import uk.ac.lancaster.scc210.game.level.Level;
 import uk.ac.lancaster.scc210.game.level.LevelStage;
-import uk.ac.lancaster.scc210.game.level.LevelWave;
 
 public class LevelSystem extends IterativeSystem {
     private Level level;
@@ -56,17 +55,7 @@ public class LevelSystem extends IterativeSystem {
 
         } else {
             if (currentStage != null) {
-                world.addEntities(currentStage.getStationaryEntities());
-
-                for (LevelWave wave : currentStage.getWaves()) {
-                    Entity newShip = wave.spawnNew(deltaTime);
-
-                    if (newShip != null) {
-                        world.addEntity(newShip);
-                    }
-
-                    wave.getWave().update(wave.getEntities(), deltaTime);
-                }
+                currentStage.spawn(world, deltaTime);
             }
         }
     }

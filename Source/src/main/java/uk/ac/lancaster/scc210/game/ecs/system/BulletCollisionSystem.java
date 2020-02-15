@@ -22,7 +22,7 @@ public class BulletCollisionSystem extends IterativeSystem {
     public BulletCollisionSystem(World world) {
         super(world, BulletComponent.class);
 
-        transformables = world.getEntitiesFor(TransformableComponent.class);
+        transformables = world.getEntitiesFor(TransformableComponent.class, FlashComponent.class);
     }
 
     @Override
@@ -54,7 +54,13 @@ public class BulletCollisionSystem extends IterativeSystem {
                 if (colliding && !bothEnemies && !isItem) {
                     PooledComponent pooledComponent = (PooledComponent) entity.findComponent(PooledComponent.class);
 
-                    world.removeEntity(transformable);
+                    LivesComponent livesComponent = (LivesComponent) transformable.findComponent(LivesComponent.class);
+
+                    FlashComponent flashComponent = (FlashComponent) transformable.findComponent(FlashComponent.class);
+
+                    flashComponent.flash(deltaTime);
+
+                    livesComponent.setLives(livesComponent.getLives() - 1);
 
                     // Return the bullet back to the pool and remove it from the world
                     world.getPool(pooledComponent.getPoolClass()).returnEntity(entity);

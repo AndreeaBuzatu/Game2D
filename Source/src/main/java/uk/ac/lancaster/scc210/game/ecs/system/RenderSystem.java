@@ -5,6 +5,7 @@ import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
+import uk.ac.lancaster.scc210.game.ecs.component.FlashComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
 /**
@@ -22,6 +23,13 @@ public class RenderSystem extends IterativeSystem {
 
     @Override
     public void update(Time deltaTime) {
+        for (Entity entity : entities) {
+            if (entity.hasComponent(FlashComponent.class)) {
+                FlashComponent flashComponent = (FlashComponent) entity.findComponent(FlashComponent.class);
+
+                flashComponent.updateRenderState(deltaTime);
+            }
+        }
     }
 
     @Override
@@ -29,7 +37,16 @@ public class RenderSystem extends IterativeSystem {
         for (Entity entity : entities) {
             SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
 
-            target.draw(spriteComponent.getSprite());
+            if (entity.hasComponent(FlashComponent.class)) {
+                FlashComponent flashComponent = (FlashComponent) entity.findComponent(FlashComponent.class);
+
+                System.out.println(flashComponent.getCurrentState());
+
+                target.draw(spriteComponent.getSprite(), flashComponent.getCurrentState());
+
+            } else {
+                target.draw(spriteComponent.getSprite());
+            }
         }
     }
 }

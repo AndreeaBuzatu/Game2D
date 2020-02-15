@@ -1,5 +1,5 @@
 <spaceships>
-    <spaceship name="player" animation="player-ship" speed="5" bullet="player-shoot" items="test-item" score="25"/>
+    <spaceship name="player" animation="player-ship" speed="5" bullet="player-shoot" items="test-item" score="25" lives="3"/>
 
-    <spaceship name="other" animation="alien-ship" speed="5" bullet="sample" score="25"/>
+    <spaceship name="other" animation="alien-ship" speed="5" bullet="sample" score="25" lives="1"/>
 </spaceships>

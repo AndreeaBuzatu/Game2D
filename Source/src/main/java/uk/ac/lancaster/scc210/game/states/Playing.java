@@ -94,6 +94,8 @@ public class Playing implements State {
 
         world.addSystem(levelSystem);
 
+        world.addSystem(new LivesSystem(world));
+
         SpaceShipPrototypeManager spaceShipManager = (SpaceShipPrototypeManager) game.getServiceProvider().get(SpaceShipPrototypeManager.class);
 
         player = spaceShipManager.get("player").create();

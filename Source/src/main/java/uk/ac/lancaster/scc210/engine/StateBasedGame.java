@@ -2,6 +2,7 @@ package uk.ac.lancaster.scc210.engine;
 
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.RenderWindow;
+import org.jsfml.graphics.Shader;
 import org.jsfml.graphics.View;
 import org.jsfml.system.Clock;
 import org.jsfml.system.Time;
@@ -23,6 +24,7 @@ import uk.ac.lancaster.scc210.engine.states.State;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -121,6 +123,15 @@ public class StateBasedGame {
             SoundBufferManager soundBufferManager = new SoundBufferManager(soundDeserialiser.getSerialised());
 
             serviceProvider.put(SoundBufferManager.class, soundBufferManager);
+
+            if (Shader.isAvailable()) {
+                ShaderManager shaderManager = new ShaderManager();
+
+                serviceProvider.put(ShaderManager.class, shaderManager);
+
+            } else {
+                LOGGER.log(Level.INFO, "This PC does not support shaders. None will appear");
+            }
 
             FontManager fontManager = new FontManager();
 
