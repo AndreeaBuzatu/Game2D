@@ -33,7 +33,7 @@ public class SpaceShipPrototype implements Prototype {
         this.bulletName = spaceShip.getBullet();
         this.speed = spaceShip.getSpeed();
         this.score = spaceShip.getScore();
-        this.lives = spaceship.getLives();
+        this.lives = spaceShip.getLives();
     }
 
     public Entity create() {

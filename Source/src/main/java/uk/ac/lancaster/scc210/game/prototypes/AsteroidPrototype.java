@@ -31,7 +31,7 @@ public class AsteroidPrototype implements Prototype {
 
         final ScoreComponent scoreComponent = new ScoreComponent(ASTEROID_SCORE);
 
-        final LivesComponent liveshComponent = new LivesComponent(3);
+        final LivesComponent livesComponent = new LivesComponent(3);
 
         final FlashComponent flashComponent = new FlashComponent(asteroidComponent.getCircle(), shaderManager.get("flash"));
 

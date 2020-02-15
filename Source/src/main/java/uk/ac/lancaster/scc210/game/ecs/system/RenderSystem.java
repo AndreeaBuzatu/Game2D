@@ -40,8 +40,6 @@ public class RenderSystem extends IterativeSystem {
             if (entity.hasComponent(FlashComponent.class)) {
                 FlashComponent flashComponent = (FlashComponent) entity.findComponent(FlashComponent.class);
 
-                System.out.println(flashComponent.getCurrentState());
-
                 target.draw(spriteComponent.getSprite(), flashComponent.getCurrentState());
 
             } else {
