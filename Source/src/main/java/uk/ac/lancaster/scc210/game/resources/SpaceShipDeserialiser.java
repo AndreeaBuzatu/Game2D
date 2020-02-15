@@ -44,8 +44,10 @@ public class SpaceShipDeserialiser extends Deserialiser<SerialisedSpaceShip> {
 
                 int score = Integer.parseInt(elem.getAttribute("score"));
 
+                int lives = Integer.parseInt(elem.getAttribute("lives"));
+
                 if (animation != null) {
-                    serialised.add(new SerialisedSpaceShip(name, animation, items, bullet, speed, score));
+                    serialised.add(new SerialisedSpaceShip(name, animation, items, bullet, speed, score, lives));
                 }
             }
         }

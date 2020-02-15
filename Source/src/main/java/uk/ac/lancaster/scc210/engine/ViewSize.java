@@ -92,4 +92,8 @@ public class ViewSize implements Service {
     private float getMaxDown(FloatRect globalBounds) {
         return viewBounds.height - globalBounds.height;
     }
+
+    public FloatRect getViewBounds() {
+        return viewBounds;
+    }
 }

@@ -1,6 +1,7 @@
 package uk.ac.lancaster.scc210.game.prototypes;
 
 import org.jsfml.graphics.Sprite;
+import uk.ac.lancaster.scc210.engine.content.ShaderManager;
 import uk.ac.lancaster.scc210.engine.content.TextureAnimationManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
@@ -15,20 +16,24 @@ public class SpaceShipPrototype implements Prototype {
 
     private final TextureAnimationManager animationManager;
 
+    private final ShaderManager shaderManager;
+
     private final Pool pool;
 
     private final String animation, bulletName;
 
-    private final int speed, score;
+    private final int speed, score, lives;
 
-    public SpaceShipPrototype(TextureAnimationManager animationManager, Pool pool, SerialisedSpaceShip spaceShip) {
+    public SpaceShipPrototype(TextureAnimationManager animationManager, ShaderManager shaderManager, Pool pool, SerialisedSpaceShip spaceShip) {
         this.animationManager = animationManager;
+        this.shaderManager = shaderManager;
         this.pool = pool;
         this.animation = spaceShip.getAnimation();
         this.items = spaceShip.getItems();
         this.bulletName = spaceShip.getBullet();
         this.speed = spaceShip.getSpeed();
         this.score = spaceShip.getScore();
+        this.lives = spaceShip.getLives();
     }
 
     public Entity create() {
@@ -50,7 +55,11 @@ public class SpaceShipPrototype implements Prototype {
 
         final ScoreComponent scoreComponent = new ScoreComponent(score);
 
-        Entity spaceShip = World.createEntity(animationComponent, spriteComponent, speedComponent, rotationComponent, spaceShipComponent, orientatedBoxComponent, transformableComponent, scoreComponent);
+        final LivesComponent livesComponent = new LivesComponent(lives);
+
+        final FlashComponent flashComponent = new FlashComponent(sprite, shaderManager.get("flash"));
+
+        Entity spaceShip = World.createEntity(animationComponent, spriteComponent, speedComponent, rotationComponent, spaceShipComponent, orientatedBoxComponent, transformableComponent, scoreComponent, livesComponent, flashComponent);
 
         // Let's assume ships will use the straight line pattern for now
         final FiringPatternComponent firingPatternComponent = new FiringPatternComponent(new StraightLinePattern(pool, spaceShip, bulletName));

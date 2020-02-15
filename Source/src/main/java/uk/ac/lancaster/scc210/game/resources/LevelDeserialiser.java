@@ -5,6 +5,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import uk.ac.lancaster.scc210.engine.content.ShaderManager;
 import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.prototypes.Prototype;
@@ -44,12 +45,12 @@ public class LevelDeserialiser extends Deserialiser<Level> {
      * @param document the xml document
      * @throws ResourceNotFoundException if the resource cannot be created or found
      */
-    public LevelDeserialiser(SpaceShipPrototypeManager spaceShipManager, TextureManager textureManager, Document document) throws ResourceNotFoundException {
+    public LevelDeserialiser(SpaceShipPrototypeManager spaceShipManager, TextureManager textureManager, ShaderManager shaderManager, Document document) throws ResourceNotFoundException {
         super(document, "level");
 
         this.spaceShipManager = spaceShipManager;
 
-        asteroidPrototype = new AsteroidPrototype(textureManager);
+        asteroidPrototype = new AsteroidPrototype(textureManager, shaderManager);
 
         deserialise();
     }
