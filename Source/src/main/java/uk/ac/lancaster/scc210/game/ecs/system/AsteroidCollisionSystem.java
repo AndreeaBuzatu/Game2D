@@ -7,6 +7,7 @@ import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.game.ecs.component.AsteroidComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.LivesComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.OrientatedBoxComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
 
@@ -42,7 +43,9 @@ public class AsteroidCollisionSystem extends IterativeSystem {
                 OrientatedBoxComponent transformableBox = (OrientatedBoxComponent) spaceShip.findComponent(OrientatedBoxComponent.class);
 
                 if (OrientatedBox.areColliding(asteroidBox.getOrientatedBox(), transformableBox.getOrientatedBox())) {
-                    world.removeEntity(spaceShip);
+                    LivesComponent livesComponent = (LivesComponent) spaceShip.findComponent(LivesComponent.class);
+
+                    livesComponent.kill();
                 }
             }
         }
