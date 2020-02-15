@@ -27,10 +27,10 @@ public class ResourceLoader {
         try {
             resource.loadFromFile(stream);
 
-            StateBasedGame.LOGGER.log(Level.INFO, String.format("[%s] Loading %s", resource.getClass().getName(), stream));
+            StateBasedGame.LOGGER.log(Level.INFO, String.format("[%s] Loading %s", resource.getClass().getName(), fileName));
 
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, String.format("Unable to load %s", stream), ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, String.format("Unable to load %s", fileName), ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
 
             throw new ResourceNotFoundException(fileName);
         }

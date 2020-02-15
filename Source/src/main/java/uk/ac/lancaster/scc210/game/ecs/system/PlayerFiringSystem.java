@@ -35,7 +35,7 @@ public class PlayerFiringSystem extends IterativeSystem {
     @Override
     public void update(Time deltaTime) {
         for (Entity entity : entities) {
-            elapsedTime = Time.add(elapsedTime,deltaTime);
+            elapsedTime = Time.add(elapsedTime, deltaTime);
 
             FiringPatternComponent firingPatternComponent = (FiringPatternComponent) entity.findComponent(FiringPatternComponent.class);
 
