@@ -7,6 +7,7 @@ import org.jsfml.graphics.RenderTarget;
 import org.jsfml.graphics.Text;
 import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
+import uk.ac.lancaster.scc210.engine.ViewSize;
 import uk.ac.lancaster.scc210.engine.content.FontManager;
 import uk.ac.lancaster.scc210.engine.content.MusicManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
@@ -14,6 +15,7 @@ import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.states.State;
 import uk.ac.lancaster.scc210.game.content.LevelManager;
 import uk.ac.lancaster.scc210.game.content.SpaceShipPrototypeManager;
+import uk.ac.lancaster.scc210.game.ecs.component.LivesComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 import uk.ac.lancaster.scc210.game.ecs.system.*;
@@ -46,7 +48,9 @@ public class Playing implements State {
 
     private Font font;
 
-    private Text scoreText;
+    private Text scoreText, livesText;
+
+    private ViewSize viewSize;
 
     @Override
     public void setup(StateBasedGame game) {
@@ -118,6 +122,8 @@ public class Playing implements State {
 
         font = ((FontManager) world.getServiceProvider().get(FontManager.class)).get("font");
 
+        viewSize = (ViewSize) world.getServiceProvider().get(ViewSize.class);
+
         scoreText = new Text();
 
         scoreText.setFont(font);
@@ -125,6 +131,14 @@ public class Playing implements State {
         scoreText.setColor(Color.WHITE);
 
         scoreText.setCharacterSize(TEXT_SIZE);
+
+        livesText = new Text();
+
+        livesText.setFont(font);
+
+        livesText.setColor(Color.WHITE);
+
+        livesText.setCharacterSize(TEXT_SIZE);
     }
 
     @Override
@@ -137,7 +151,18 @@ public class Playing implements State {
             scoreText.setString(String.format("Score: %d", playerComponent.getScore()));
         }
 
+        if (player.hasComponent(LivesComponent.class)) {
+            LivesComponent livesComponent = (LivesComponent) player.findComponent(LivesComponent.class);
+
+            livesText.setString(String.format("Lives: %d\n", livesComponent.getLives()));
+
+            // Position the text at the left-most edge of the view
+            livesText.setPosition(viewSize.getViewBounds().width - livesText.getGlobalBounds().width, 0);
+        }
+
         target.draw(scoreText);
+
+        target.draw(livesText);
     }
 
     @Override
