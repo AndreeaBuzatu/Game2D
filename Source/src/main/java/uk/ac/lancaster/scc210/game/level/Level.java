@@ -10,27 +10,35 @@ public class Level implements Serialised {
 
     private final Iterator<LevelStage> stageIterator;
 
-    private final LevelStage currentStage;
+    private LevelStage currentStage;
 
     public Level(List<LevelStage> stages) {
         this.stages = stages;
 
-        currentStage = stages.get(0);
-
         stageIterator = stages.iterator();
+
+        currentStage = stageIterator.next();
     }
 
     public LevelStage changeStage() {
         if (stageIterator.hasNext()) {
-            return stageIterator.next();
+            currentStage = stageIterator.next();
+
+            return currentStage;
 
         } else {
             return null;
         }
     }
 
+    public void reset() {
+        //stages.forEach(LevelStage::reset);
+        currentStage.reset();
+    }
+
     public boolean complete() {
-        return stages.parallelStream().allMatch(LevelStage::complete);
+
+        return stages.stream().allMatch(LevelStage::complete);
     }
 
     public LevelStage getCurrentStage() {
