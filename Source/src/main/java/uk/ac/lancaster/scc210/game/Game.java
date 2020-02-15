@@ -1,6 +1,7 @@
 package uk.ac.lancaster.scc210.game;
 
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
+import uk.ac.lancaster.scc210.engine.content.ShaderManager;
 import uk.ac.lancaster.scc210.engine.content.TextureAnimationManager;
 import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
@@ -37,6 +38,8 @@ public class Game extends StateBasedGame {
 
             TextureManager textureManager = (TextureManager) serviceProvider.get(TextureManager.class);
 
+            ShaderManager shaderManager = (ShaderManager) serviceProvider.get(ShaderManager.class);
+
             BulletDeserialiser bulletDeserialiser = new BulletDeserialiser(deserialiseXML("bullets.xml"));
 
             BulletPrototypeManager bulletPrototypeManager = new BulletPrototypeManager(textureManager, bulletDeserialiser.getSerialised());
@@ -47,7 +50,7 @@ public class Game extends StateBasedGame {
 
             SpaceShipDeserialiser spaceShipDeserialiser = new SpaceShipDeserialiser(deserialiseXML("spaceships.xml"));
 
-            SpaceShipPrototypeManager spaceShipManager = new SpaceShipPrototypeManager(animationManager, bulletPool, spaceShipDeserialiser.getSerialised());
+            SpaceShipPrototypeManager spaceShipManager = new SpaceShipPrototypeManager(animationManager, shaderManager, bulletPool, spaceShipDeserialiser.getSerialised());
 
             serviceProvider.put(BulletPool.class, new BulletPool(serviceProvider));
 
@@ -57,7 +60,7 @@ public class Game extends StateBasedGame {
 
             serviceProvider.put(ItemPrototypeManager.class, itemManager);
 
-            LevelDeserialiser levelDeserialiser = new LevelDeserialiser(spaceShipManager, textureManager, deserialiseXML("levels.xml"));
+            LevelDeserialiser levelDeserialiser = new LevelDeserialiser(spaceShipManager, textureManager, shaderManager, deserialiseXML("levels.xml"));
 
             LevelManager levelManager = new LevelManager(levelDeserialiser.getSerialised());
 
