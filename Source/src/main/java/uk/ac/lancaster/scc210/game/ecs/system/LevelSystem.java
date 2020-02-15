@@ -5,12 +5,15 @@ import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
-import uk.ac.lancaster.scc210.game.ecs.component.StationaryComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.WaveComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.*;
 import uk.ac.lancaster.scc210.game.level.Level;
 import uk.ac.lancaster.scc210.game.level.LevelStage;
 
+import java.util.Optional;
+
 public class LevelSystem extends IterativeSystem {
+    private Optional<Entity> player;
+
     private Level level;
 
     private LevelStage currentStage;
@@ -28,11 +31,19 @@ public class LevelSystem extends IterativeSystem {
         currentStage = level.getCurrentStage();
 
         world.addEntities(currentStage.getStationaryEntities());
+
+        player = world.getEntitiesFor(PlayerComponent.class).stream().findFirst();
     }
 
     @Override
     public void entityRemoved(Entity entity) {
-        super.entityRemoved(entity);
+        if (entity.hasComponent(PlayerComponent.class)) {
+            LivesComponent livesComponent = (LivesComponent) entity.findComponent(LivesComponent.class);
+
+            if (livesComponent.isDead()) {
+                handlePlayerDeath(entity);
+            }
+        }
 
         if (entity.hasComponent(WaveComponent.class)) {
             WaveComponent waveComponent = (WaveComponent) entity.findComponent(WaveComponent.class);
@@ -42,15 +53,20 @@ public class LevelSystem extends IterativeSystem {
 
         // Remove a stationary entity from the List<Entity> stationaryEntities
         if (entity.hasComponent(StationaryComponent.class)) {
-            level.getCurrentStage().removeStationaryEntity(entity);
+            currentStage.removeStationaryEntity(entity);
         }
+    }
+
+    @Override
+    public void entityAdded(Entity entity) {
+        super.entityAdded(entity);
+
+        player = world.getEntitiesFor(PlayerComponent.class).stream().findFirst();
     }
 
     @Override
     public void update(Time deltaTime) {
         if (currentStage != null && currentStage.complete()) {
-            System.out.println("Completed stage");
-
             currentStage = level.changeStage();
 
         } else {
@@ -65,7 +81,44 @@ public class LevelSystem extends IterativeSystem {
 
     }
 
+    private void handlePlayerDeath(Entity player) {
+        LivesComponent livesComponent = (LivesComponent) player.findComponent(LivesComponent.class);
+
+        PlayerComponent playerComponent = (PlayerComponent) player.findComponent(PlayerComponent.class);
+
+        SpriteComponent spriteComponent = (SpriteComponent) player.findComponent(SpriteComponent.class);
+
+        FlashComponent flashComponent = (FlashComponent) player.findComponent(FlashComponent.class);
+
+        world.removeEntities(world.getEntitiesFor(WaveComponent.class));
+
+        world.removeEntities(world.getEntitiesFor(BulletComponent.class));
+
+        // When we remove spaceships there's a % chance they drop items, so clear them again
+        world.removeEntities(world.getEntitiesFor(ItemEffectsComponent.class));
+
+        livesComponent.resurrect();
+
+        playerComponent.setScore(0);
+
+        // Stop the player from flashing
+        flashComponent.resetToTexture();
+
+        spriteComponent.getSprite().setPosition(playerComponent.getSpawnPoint());
+
+        spriteComponent.getSprite().setRotation(0);
+
+        // Reset item effects
+        playerComponent.getCurrentEffects().parallelStream().forEach(itemEffect -> itemEffect.reset(player));
+
+        world.addEntity(player);
+
+        level.reset();
+    }
+
     public void setLevel(Level level) {
         this.level = level;
+
+        currentStage = level.getCurrentStage();
     }
 }
