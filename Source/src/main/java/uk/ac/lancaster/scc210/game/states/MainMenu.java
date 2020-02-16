@@ -8,7 +8,6 @@ import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import uk.ac.lancaster.scc210.engine.ViewSize;
 import uk.ac.lancaster.scc210.engine.content.FontManager;
-import uk.ac.lancaster.scc210.engine.gui.InterfaceGrid;
 import uk.ac.lancaster.scc210.engine.gui.InterfaceList;
 import uk.ac.lancaster.scc210.engine.states.State;
 
@@ -20,8 +19,6 @@ public class MainMenu implements State {
     private FontManager fontManager;
 
     private ViewSize viewSize;
-
-    private InterfaceGrid interfaceGrid;
 
     private InterfaceList interfaceList;
 
@@ -41,37 +38,15 @@ public class MainMenu implements State {
 
         Vector2f headerPos = menuHeader.getPosition();
 
-        interfaceList = new InterfaceList(game, fontManager.get("font"), Vector2f.ZERO);
+        interfaceList = new InterfaceList(game, fontManager.get("font"), new Vector2f(headerPos.x, headerPos.y + LIST_PADDING));
 
-        interfaceList.addListOption("Level 1", (() -> System.out.println("Hello, world: " + System.currentTimeMillis())));
+        interfaceList.addListOption("example", (() -> System.out.println("Hello, world")));
 
-        interfaceList.addListOption("Level 2", (() -> System.out.println("Thing")));
+        interfaceList.addListOption("Other", (() -> System.out.println("Thing")));
 
-        interfaceList.addListOption("Level 3", (() -> System.out.println("Item")));
+        interfaceList.addListOption("Item", (() -> System.out.println("Item")));
 
-        InterfaceList otherList = new InterfaceList(game, fontManager.get("font"), Vector2f.ZERO);
-
-        otherList.addListOption("Level 4", (() -> System.out.println("Other list")));
-
-        otherList.addListOption("Level 5", (() -> System.out.println("Other list")));
-
-        otherList.addListOption("Level 6", (() -> System.out.println("Other list")));
-
-        InterfaceList anotherList = new InterfaceList(game, fontManager.get("font"), Vector2f.ZERO);
-
-        anotherList.addListOption("Level 7", (() -> System.out.println("Other list")));
-
-        anotherList.addListOption("Level 8", (() -> System.out.println("Other list")));
-
-        anotherList.addListOption("Level 9", (() -> System.out.println("Other list")));
-
-        interfaceGrid = new InterfaceGrid(game, new Vector2f(headerPos.x, headerPos.y + LIST_PADDING));
-
-        interfaceGrid.addColumn(interfaceList);
-
-        interfaceGrid.addColumn(otherList);
-
-        interfaceGrid.addColumn(anotherList);
+        interfaceList.setEnabled(true);
     }
 
     private void createHeader() {
@@ -92,16 +67,14 @@ public class MainMenu implements State {
 
     @Override
     public void update(Time deltaTime) {
-        interfaceGrid.update();
+        interfaceList.update();
     }
 
     @Override
     public void draw(RenderTarget target) {
         target.draw(menuHeader);
 
-        interfaceGrid.draw(target);
-
-        //interfaceList.draw(target);
+        target.draw(interfaceList);
     }
 
     @Override
