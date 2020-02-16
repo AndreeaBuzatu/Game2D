@@ -13,6 +13,7 @@ import uk.ac.lancaster.scc210.game.pooling.BulletPool;
 import uk.ac.lancaster.scc210.game.resources.BulletDeserialiser;
 import uk.ac.lancaster.scc210.game.resources.LevelDeserialiser;
 import uk.ac.lancaster.scc210.game.resources.SpaceShipDeserialiser;
+import uk.ac.lancaster.scc210.game.states.LevelSelect;
 import uk.ac.lancaster.scc210.game.states.MainMenu;
 
 import java.util.logging.Logger;
@@ -34,7 +35,9 @@ public class Game extends StateBasedGame {
 
         MainMenu mainMenu = new MainMenu();
 
-        addState(mainMenu);
+        //addState(mainMenu);
+
+        addState(new LevelSelect());
 
         try {
             TextureAnimationManager animationManager = (TextureAnimationManager) serviceProvider.get(TextureAnimationManager.class);
