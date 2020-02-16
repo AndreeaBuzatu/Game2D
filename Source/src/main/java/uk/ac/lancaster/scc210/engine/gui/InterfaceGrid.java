@@ -1,5 +1,7 @@
 package uk.ac.lancaster.scc210.engine.gui;
 
+import org.jsfml.graphics.Drawable;
+import org.jsfml.graphics.RenderStates;
 import org.jsfml.graphics.RenderTarget;
 import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
@@ -9,7 +11,7 @@ import uk.ac.lancaster.scc210.engine.StateBasedGame;
 
 import java.util.ArrayList;
 
-public class InterfaceGrid implements InputListener {
+public class InterfaceGrid implements InputListener, Drawable {
     private final int FIRST_LIST_PADDING = 50;
 
     private final int LIST_WIDTH_PADDING = 130;
@@ -119,8 +121,9 @@ public class InterfaceGrid implements InputListener {
         pressedKey = null;
     }
 
-    public void draw(RenderTarget target) {
-        lists.forEach(list -> list.draw(target));
+    @Override
+    public void draw(RenderTarget renderTarget, RenderStates renderStates) {
+        lists.forEach(renderTarget::draw);
     }
 
     @Override
