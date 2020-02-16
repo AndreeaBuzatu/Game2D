@@ -13,9 +13,9 @@ import java.util.List;
 public class InterfaceList implements InputListener, Drawable {
     private final int OPTION_HEIGHT_PADDING = 50;
 
-    private List<ListOption> options;
+    private final List<ListOption> options;
 
-    private Font font;
+    private final Font font;
 
     private Vector2f position;
 

@@ -16,9 +16,9 @@ public class InterfaceGrid implements InputListener, Drawable {
 
     private final int LIST_WIDTH_PADDING = 130;
 
-    private ArrayList<InterfaceList> lists;
+    private final ArrayList<InterfaceList> lists;
 
-    private Vector2f position;
+    private final Vector2f position;
 
     private Keyboard.Key previousKey, pressedKey;
 

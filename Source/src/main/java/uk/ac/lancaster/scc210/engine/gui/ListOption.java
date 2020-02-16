@@ -5,7 +5,7 @@ import org.jsfml.graphics.RenderTarget;
 import org.jsfml.graphics.Text;
 import org.jsfml.system.Vector2f;
 
-public class ListOption {
+class ListOption {
     private final int TEXT_SIZE = 70;
 
     private final char SELECTED_LEFT = '>';
