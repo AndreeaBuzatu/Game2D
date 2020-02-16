@@ -22,6 +22,7 @@ import uk.ac.lancaster.scc210.engine.resources.deserialise.TextureAtlasDeseriali
 import uk.ac.lancaster.scc210.engine.service.ServiceProvider;
 import uk.ac.lancaster.scc210.engine.states.State;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.logging.Level;
@@ -56,6 +57,8 @@ public class StateBasedGame {
 
     private Time deltaTime, elapsedTime;
 
+    private final ArrayList<InputListener> inputListeners;
+
     /**
      * The Window which is presented to the player.
      */
@@ -72,12 +75,10 @@ public class StateBasedGame {
      * @param name         the name of the game. Place onto the window title bar
      * @param windowWidth  the window width
      * @param windowHeight the window height
-     * @param state        the default starting state of the game
      */
-    protected StateBasedGame(final String name, final int windowWidth, final int windowHeight, final State state) {
+    protected StateBasedGame(final String name, final int windowWidth, final int windowHeight) {
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
-        this.currentState = state;
 
         window = new RenderWindow(new VideoMode(windowWidth, windowHeight), name);
 
@@ -93,9 +94,9 @@ public class StateBasedGame {
 
         states = new LinkedList<>();
 
-        states.add(currentState);
-
         serviceProvider = new ServiceProvider();
+
+        inputListeners = new ArrayList<>();
 
         try {
             TextureAtlasDeserialiser textureAtlasDeserialiser = new TextureAtlasDeserialiser(deserialiseXML("atlases.xml"));
@@ -182,6 +183,8 @@ public class StateBasedGame {
                     break;
 
                 case KEY_PRESSED:
+                    inputListeners.forEach(listener -> listener.keyPressed(event.asKeyEvent()));
+
                     if (event.asKeyEvent().key == Keyboard.Key.ESCAPE) {
                         window.close();
                     }
@@ -260,4 +263,9 @@ public class StateBasedGame {
     private Vector2f setViewSize() {
         return new Vector2f((windowWidth >> 1) * ZOOM_AMOUNT, (windowHeight >> 1) * ZOOM_AMOUNT);
     }
+
+    public void addKeyListener(InputListener inputListener) {
+        inputListeners.add(inputListener);
+    }
+
 }
