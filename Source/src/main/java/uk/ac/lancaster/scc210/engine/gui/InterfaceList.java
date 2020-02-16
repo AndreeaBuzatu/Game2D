@@ -1,8 +1,6 @@
 package uk.ac.lancaster.scc210.engine.gui;
 
-import org.jsfml.graphics.FloatRect;
-import org.jsfml.graphics.Font;
-import org.jsfml.graphics.RenderTarget;
+import org.jsfml.graphics.*;
 import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.event.KeyEvent;
@@ -12,7 +10,7 @@ import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InterfaceList implements InputListener {
+public class InterfaceList implements InputListener, Drawable {
     private final int OPTION_HEIGHT_PADDING = 50;
 
     private List<ListOption> options;
@@ -47,9 +45,9 @@ public class InterfaceList implements InputListener {
 
         listOption.addSelectedListener(listener);
 
-        setOptionPositions();
-
         options.add(listOption);
+
+        setOptionPosition(listOption);
     }
 
     public void update() {
@@ -78,10 +76,13 @@ public class InterfaceList implements InputListener {
                 options.get(selectedIndex).select();
             }
         }
+
+        pressedKey = null;
     }
 
-    public void draw(RenderTarget target) {
-        options.forEach(option -> option.draw(target));
+    @Override
+    public void draw(RenderTarget renderTarget, RenderStates renderStates) {
+        options.forEach(option -> option.draw(renderTarget));
     }
 
     private void handleInput() {
@@ -101,8 +102,6 @@ public class InterfaceList implements InputListener {
 
             selectedIndex++;
         }
-
-        pressedKey = null;
     }
 
     @Override
@@ -110,12 +109,6 @@ public class InterfaceList implements InputListener {
         previousKey = pressedKey;
 
         pressedKey = keyevent.key;
-    }
-
-    public void setPosition(Vector2f position) {
-        this.position = position;
-
-        setOptionPositions();
     }
 
     FloatRect getGlobalBounds() {
@@ -151,25 +144,31 @@ public class InterfaceList implements InputListener {
         return bounds;
     }
 
+    public void setPosition(Vector2f position) {
+        this.position = position;
+
+        setOptionPositions();
+    }
+
     private void setOptionPositions() {
-        Vector2f optionPos = position;
-
         for (ListOption option : options) {
-            FloatRect bounds = option.getText().getGlobalBounds();
-
-            Vector2f textSize = new Vector2f(0f, bounds.height + OPTION_HEIGHT_PADDING);
-
-            optionPos = Vector2f.add(optionPos, textSize);
-
-            option.setPosition(optionPos);
+            setOptionPosition(option);
         }
+    }
+
+    private void setOptionPosition(ListOption option) {
+        FloatRect bounds = option.getText().getGlobalBounds();
+
+        Vector2f pos = new Vector2f(position.x, position.y + ((bounds.height + OPTION_HEIGHT_PADDING) * options.indexOf(option)));
+
+        option.setPosition(pos);
     }
 
     boolean isEnabled() {
         return enabled;
     }
 
-    void setEnabled(boolean enabled) {
+    public void setEnabled(boolean enabled) {
         this.enabled = enabled;
 
         if (!enabled) {
