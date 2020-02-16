@@ -8,6 +8,7 @@ import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import uk.ac.lancaster.scc210.engine.ViewSize;
 import uk.ac.lancaster.scc210.engine.content.FontManager;
+import uk.ac.lancaster.scc210.engine.gui.InterfaceGrid;
 import uk.ac.lancaster.scc210.engine.gui.InterfaceList;
 import uk.ac.lancaster.scc210.engine.states.State;
 
@@ -19,6 +20,8 @@ public class MainMenu implements State {
     private FontManager fontManager;
 
     private ViewSize viewSize;
+
+    private InterfaceGrid interfaceGrid;
 
     private InterfaceList interfaceList;
 
@@ -38,13 +41,33 @@ public class MainMenu implements State {
 
         Vector2f headerPos = menuHeader.getPosition();
 
-        interfaceList = new InterfaceList(game, fontManager.get("font"), new Vector2f(headerPos.x, headerPos.y + LIST_PADDING));
+        interfaceList = new InterfaceList(game, fontManager.get("font"), Vector2f.ZERO);
 
         interfaceList.addListOption("example", (() -> System.out.println("Hello, world: " + System.currentTimeMillis())));
 
         interfaceList.addListOption("Other", (() -> System.out.println("Thing")));
 
         interfaceList.addListOption("Item", (() -> System.out.println("Item")));
+
+        InterfaceList otherList = new InterfaceList(game, fontManager.get("font"), Vector2f.ZERO);
+
+        otherList.addListOption("asdf", (() -> System.out.println("Other list")));
+
+        otherList.addListOption("fasd", (() -> System.out.println("Other list")));
+
+        InterfaceList anotherList = new InterfaceList(game, fontManager.get("font"), Vector2f.ZERO);
+
+        anotherList.addListOption("poo", (() -> System.out.println("Other list")));
+
+        anotherList.addListOption("pee", (() -> System.out.println("Other list")));
+
+        interfaceGrid = new InterfaceGrid(game, new Vector2f(headerPos.x, headerPos.y + LIST_PADDING), 1);
+
+        interfaceGrid.addColumn(interfaceList);
+
+        interfaceGrid.addColumn(otherList);
+
+        interfaceGrid.addColumn(anotherList);
     }
 
     private void createHeader() {
@@ -65,14 +88,16 @@ public class MainMenu implements State {
 
     @Override
     public void update(Time deltaTime) {
-        interfaceList.update();
+        interfaceGrid.update();
     }
 
     @Override
     public void draw(RenderTarget target) {
         target.draw(menuHeader);
 
-        interfaceList.draw(target);
+        interfaceGrid.draw(target);
+
+        //interfaceList.draw(target);
     }
 
     @Override

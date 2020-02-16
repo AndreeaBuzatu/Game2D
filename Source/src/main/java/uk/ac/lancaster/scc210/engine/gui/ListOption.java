@@ -14,11 +14,11 @@ public class ListOption {
 
     private final Text text;
 
-    private SelectedListener selectedListener;
-
     private final String label;
 
-    ListOption(Font font, String label, Vector2f position) {
+    private SelectedListener selectedListener;
+
+    ListOption(Font font, String label) {
         this.label = label;
 
         text = new Text();
@@ -26,8 +26,6 @@ public class ListOption {
         text.setString(label);
 
         text.setFont(font);
-
-        text.setPosition(position);
 
         text.setCharacterSize(TEXT_SIZE);
     }
@@ -50,6 +48,10 @@ public class ListOption {
 
     void setNotCurrent() {
         text.setString(label);
+    }
+
+    void setPosition(Vector2f position) {
+        text.setPosition(position);
     }
 
     Text getText() {
