@@ -10,6 +10,8 @@ import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import java.util.ArrayList;
 
 public class InterfaceGrid implements InputListener {
+    private final int FIRST_LIST_PADDING = 50;
+
     private final int LIST_WIDTH_PADDING = 130;
 
     private ArrayList<InterfaceList> lists;
@@ -18,13 +20,12 @@ public class InterfaceGrid implements InputListener {
 
     private Keyboard.Key previousKey, pressedKey;
 
-    private int columns, previousColumn, currentColumn;
+    private int previousColumn, currentColumn;
 
     private float listWidthSum;
 
-    public InterfaceGrid(StateBasedGame game, Vector2f position, int columns) {
+    public InterfaceGrid(StateBasedGame game, Vector2f position) {
         this.position = position;
-        this.columns = columns;
 
         lists = new ArrayList<>();
 
@@ -40,8 +41,14 @@ public class InterfaceGrid implements InputListener {
     public void addColumn(InterfaceList list) {
         lists.add(list);
 
+        // A little padding for the first list... as a treat
+        if (lists.size() == 1) {
+            listWidthSum += FIRST_LIST_PADDING;
+        }
+
+        // (Hopefully) give each list an equal amount of padding between them
         if (lists.size() > 1) {
-            listWidthSum += (list.getGlobalBounds().width * lists.size()) + LIST_WIDTH_PADDING;
+            listWidthSum += (list.getGlobalBounds().width) + LIST_WIDTH_PADDING;
         }
 
         list.setEnabled(false);
@@ -55,13 +62,13 @@ public class InterfaceGrid implements InputListener {
             return;
         }
 
-        if (pressedKey == Keyboard.Key.A) {
+        if (pressedKey == Keyboard.Key.A || pressedKey == Keyboard.Key.LEFT) {
             previousColumn = currentColumn;
 
             currentColumn--;
         }
 
-        if (pressedKey == Keyboard.Key.D) {
+        if (pressedKey == Keyboard.Key.D || pressedKey == Keyboard.Key.RIGHT) {
             previousColumn = currentColumn;
 
             currentColumn++;

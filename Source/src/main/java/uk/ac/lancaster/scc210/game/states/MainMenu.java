@@ -43,25 +43,29 @@ public class MainMenu implements State {
 
         interfaceList = new InterfaceList(game, fontManager.get("font"), Vector2f.ZERO);
 
-        interfaceList.addListOption("example", (() -> System.out.println("Hello, world: " + System.currentTimeMillis())));
+        interfaceList.addListOption("Level 1", (() -> System.out.println("Hello, world: " + System.currentTimeMillis())));
 
-        interfaceList.addListOption("Other", (() -> System.out.println("Thing")));
+        interfaceList.addListOption("Level 2", (() -> System.out.println("Thing")));
 
-        interfaceList.addListOption("Item", (() -> System.out.println("Item")));
+        interfaceList.addListOption("Level 3", (() -> System.out.println("Item")));
 
         InterfaceList otherList = new InterfaceList(game, fontManager.get("font"), Vector2f.ZERO);
 
-        otherList.addListOption("asdf", (() -> System.out.println("Other list")));
+        otherList.addListOption("Level 4", (() -> System.out.println("Other list")));
 
-        otherList.addListOption("fasd", (() -> System.out.println("Other list")));
+        otherList.addListOption("Level 5", (() -> System.out.println("Other list")));
+
+        otherList.addListOption("Level 6", (() -> System.out.println("Other list")));
 
         InterfaceList anotherList = new InterfaceList(game, fontManager.get("font"), Vector2f.ZERO);
 
-        anotherList.addListOption("poo", (() -> System.out.println("Other list")));
+        anotherList.addListOption("Level 7", (() -> System.out.println("Other list")));
 
-        anotherList.addListOption("pee", (() -> System.out.println("Other list")));
+        anotherList.addListOption("Level 8", (() -> System.out.println("Other list")));
 
-        interfaceGrid = new InterfaceGrid(game, new Vector2f(headerPos.x, headerPos.y + LIST_PADDING), 1);
+        anotherList.addListOption("Level 9", (() -> System.out.println("Other list")));
+
+        interfaceGrid = new InterfaceGrid(game, new Vector2f(headerPos.x, headerPos.y + LIST_PADDING));
 
         interfaceGrid.addColumn(interfaceList);
 
