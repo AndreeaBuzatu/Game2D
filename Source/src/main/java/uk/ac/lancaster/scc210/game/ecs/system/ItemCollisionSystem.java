@@ -19,7 +19,7 @@ public class ItemCollisionSystem extends IterativeSystem {
     // We only have one player but the abstraction works like so - oh well
     private Optional<Entity> player;
 
-    private Sound pickupSound;
+    private final Sound pickupSound;
 
     /**
      * Instantiates a new Iterative system.
