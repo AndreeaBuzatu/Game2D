@@ -19,9 +19,7 @@ public class ItemCollisionSystem extends IterativeSystem {
     // We only have one player but the abstraction works like so - oh well
     private Optional<Entity> player;
 
-    private SoundBufferManager soundBufferManager;
-    private SoundBuffer soundBuffer;
-    private Sound sound;
+    private Sound pickupSound;
 
     /**
      * Instantiates a new Iterative system.
@@ -33,9 +31,11 @@ public class ItemCollisionSystem extends IterativeSystem {
 
         player = world.getEntitiesFor(PlayerComponent.class).stream().findFirst();
 
-        soundBufferManager = (SoundBufferManager) world.getServiceProvider().get(SoundBufferManager.class);
-        soundBuffer = soundBufferManager.get("pickup");
-        sound = new Sound(soundBuffer);
+        SoundBufferManager soundBufferManager = (SoundBufferManager) world.getServiceProvider().get(SoundBufferManager.class);
+
+        SoundBuffer soundBuffer = soundBufferManager.get("pickup");
+
+        pickupSound = new Sound(soundBuffer);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class ItemCollisionSystem extends IterativeSystem {
 
                 playerComponent.setCurrentEffects(itemEffectsComponent.getItemEffects());
 
-                sound.play();
+                SoundBufferManager.playSound(pickupSound);
 
                 world.removeEntity(entity);
             }
