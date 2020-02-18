@@ -16,6 +16,7 @@ import uk.ac.lancaster.scc210.engine.states.State;
 import uk.ac.lancaster.scc210.game.content.LevelManager;
 import uk.ac.lancaster.scc210.game.content.SpaceShipPrototypeManager;
 import uk.ac.lancaster.scc210.game.dialogue.DialogueBox;
+import uk.ac.lancaster.scc210.game.ecs.component.LivesComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 import uk.ac.lancaster.scc210.game.ecs.system.*;
@@ -145,47 +146,61 @@ public class Playing implements State {
         livesText.setCharacterSize(TEXT_SIZE);
 
         dialogueBox = new DialogueBox(viewSize, fontManager);
+
+        dialogueBox.setDialogue(level.getLines());
     }
 
     @Override
     public void draw(RenderTarget target) {
-        /*
         world.draw(target);
 
-        if (player.hasComponent(PlayerComponent.class)) {
-            PlayerComponent playerComponent = (PlayerComponent) player.findComponent(PlayerComponent.class);
-
-            scoreText.setString(String.format("Score: %d", playerComponent.getScore()));
-        }
-
-        if (player.hasComponent(LivesComponent.class)) {
-            LivesComponent livesComponent = (LivesComponent) player.findComponent(LivesComponent.class);
-
-            livesText.setString(String.format("Lives: %d\n", livesComponent.getLives()));
-
-            // Position the text at the left-most edge of the view
-            livesText.setPosition(viewSize.getViewBounds().width - livesText.getGlobalBounds().width, 0);
-        }
-
-        target.draw(scoreText);
-
-        target.draw(livesText);
-         */
-
+        // TODO: Fix drawing old level after the level has been complete (look at the player-death branch)
         target.draw(dialogueBox);
+
+        drawInterface(target);
     }
 
-    @Override
+    private void drawInterface(RenderTarget target) {
+        if (!dialogueBox.isOpen()) {
+            if (player.hasComponent(PlayerComponent.class)) {
+                PlayerComponent playerComponent = (PlayerComponent) player.findComponent(PlayerComponent.class);
+
+                scoreText.setString(String.format("Score: %d", playerComponent.getScore()));
+            }
+
+            if (player.hasComponent(LivesComponent.class)) {
+                LivesComponent livesComponent = (LivesComponent) player.findComponent(LivesComponent.class);
+
+                livesText.setString(String.format("Lives: %d\n", livesComponent.getLives()));
+
+                // Position the text at the left-most edge of the view
+                livesText.setPosition(viewSize.getViewBounds().width - livesText.getGlobalBounds().width, 0);
+            }
+
+            target.draw(scoreText);
+
+            target.draw(livesText);
+        }
+    }
+
     public boolean complete() {
         return completed;
     }
 
     @Override
     public void update(Time deltaTime) {
-        dialogueBox.update();
+        if (dialogueBox.isOpen()) {
+            dialogueBox.update(deltaTime);
 
-        /*
-        world.update(deltaTime);
+        } else {
+            updateWorld(deltaTime);
+        }
+    }
+
+    private void updateWorld(Time deltaTime) {
+        if (!level.complete()) {
+            world.update(deltaTime);
+        }
 
         if (level.complete()) {
             System.out.println("Complete level");
@@ -200,10 +215,11 @@ public class Playing implements State {
 
                 levelSystem.setLevel(level);
 
+                dialogueBox.setDialogue(level.getLines());
+
             } else {
                 completed = true;
             }
         }
-         */
     }
 }

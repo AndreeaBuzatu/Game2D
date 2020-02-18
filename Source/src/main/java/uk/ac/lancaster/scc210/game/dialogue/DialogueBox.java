@@ -1,12 +1,17 @@
 package uk.ac.lancaster.scc210.game.dialogue;
 
 import org.jsfml.graphics.*;
+import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
 import uk.ac.lancaster.scc210.engine.ViewSize;
 import uk.ac.lancaster.scc210.engine.content.FontManager;
 
+import java.util.List;
+
 public class DialogueBox implements Drawable {
+    private final Time TIME_GAP = Time.getSeconds(1f);
+
     private final int TEXT_SIZE = 60;
 
     private final int TEXT_PADDING = 10;
@@ -23,7 +28,7 @@ public class DialogueBox implements Drawable {
 
     private RectangleShape box;
 
-    private String character;
+    private Time elapsedTime;
 
     private boolean open;
 
@@ -54,22 +59,6 @@ public class DialogueBox implements Drawable {
 
         font = fontManager.get("font");
 
-        character = "Ishmael";
-
-        stringBuffer.append(String.format("%s: ", character));
-
-        stringBuffer.append("Call me Ishmael. Some years ago—never mind how long precisely—having little " +
-                "or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about " +
-                "a little and see the watery part of the world. It is a way I have of driving off the spleen and " +
-                "regulating the circulation. Whenever I find myself growing grim about the mouth; whenever it is a damp, " +
-                "drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing " +
-                "up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, " +
-                "that it requires a strong moral principle to prevent me from deliberately stepping into the street, " +
-                "and methodically knocking people’s hats off—then, I account it high time to get to sea as soon as I can. " +
-                "This is my substitute for pistol and ball. With a philosophical flourish Cato throws himself upon his sword; " +
-                "I quietly take to the ship. There is nothing surprising in this. If they but knew it, almost all men in their degree, " +
-                "some time or other, cherish very nearly the same feelings towards the ocean with me. ");
-
         text = new Text();
 
         text.setFont(font);
@@ -84,16 +73,22 @@ public class DialogueBox implements Drawable {
         boxHeight = (int) Math.floor(box.getGlobalBounds().height / TEXT_SIZE);
 
         formatText();
+
+        elapsedTime = Time.ZERO;
     }
 
-    public void update() {
+    public void update(Time deltaTime) {
         if (!open) {
             return;
         }
 
+        elapsedTime = Time.add(elapsedTime, deltaTime);
+
         // TODO: Use KeyListener here
-        if (Keyboard.isKeyPressed(Keyboard.Key.A)) {
+        if (Keyboard.isKeyPressed(Keyboard.Key.SPACE) && elapsedTime.asSeconds() >= TIME_GAP.asSeconds()) {
             formatText();
+
+            elapsedTime = Time.ZERO;
         }
     }
 
@@ -145,8 +140,6 @@ public class DialogueBox implements Drawable {
 
         // Remove any preceding newlines of spaces.
         text.setString(output.trim());
-
-        System.out.println(output);
     }
 
     private boolean shouldInsertNewLine(int start) {
@@ -176,5 +169,28 @@ public class DialogueBox implements Drawable {
         }
 
         return i - 1;
+    }
+
+    public void setDialogue(List<Line> lines) {
+        // Clear the buffer
+        stringBuffer.setLength(0);
+
+        offset = 0;
+
+        for (Line line : lines) {
+            stringBuffer.append(String.format("%s: ", line.getCharacter()));
+
+            stringBuffer.append(line.getLine());
+
+            stringBuffer.append("\n");
+        }
+
+        open = true;
+
+        formatText();
+    }
+
+    public boolean isOpen() {
+        return open;
     }
 }

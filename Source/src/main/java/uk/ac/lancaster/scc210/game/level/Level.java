@@ -1,6 +1,7 @@
 package uk.ac.lancaster.scc210.game.level;
 
 import uk.ac.lancaster.scc210.engine.resources.deserialise.Serialised;
+import uk.ac.lancaster.scc210.game.dialogue.Line;
 
 import java.util.Iterator;
 import java.util.List;
@@ -8,12 +9,15 @@ import java.util.List;
 public class Level implements Serialised {
     private final List<LevelStage> stages;
 
+    private final List<Line> lines;
+
     private final Iterator<LevelStage> stageIterator;
 
     private final LevelStage currentStage;
 
-    public Level(List<LevelStage> stages) {
+    public Level(List<LevelStage> stages, List<Line> lines) {
         this.stages = stages;
+        this.lines = lines;
 
         currentStage = stages.get(0);
 
@@ -35,5 +39,9 @@ public class Level implements Serialised {
 
     public LevelStage getCurrentStage() {
         return currentStage;
+    }
+
+    public List<Line> getLines() {
+        return lines;
     }
 }
