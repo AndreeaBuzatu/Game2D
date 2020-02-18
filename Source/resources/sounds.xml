@@ -2,5 +2,6 @@
     <sound name="player-shoot" src="laser1.ogg"/>
     <sound name="player-death" src="player-death.ogg"/>
     <sound name="enemy-one-shoot" src="laser2.ogg"/>
+    <sound name="enemy-death" src="laser5.ogg"/>
     <sound name="pickup" src="pickup.ogg"/>
 </sounds>

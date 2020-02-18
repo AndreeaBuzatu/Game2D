@@ -1,5 +1,7 @@
 <spaceships>
-    <spaceship name="player" animation="player-ship" speed="5" bullet="player-shoot" items="test-item"/>
+    <spaceship name="player" animation="player-ship" speed="5" bullet="player-shoot" items="test-item"
+               firing-sound="player-shoot" hit-sound="player-death"/>
 
-    <spaceship name="other" animation="alien-ship" speed="5" bullet="sample"/>
+    <spaceship name="other" animation="alien-ship" speed="5" bullet="sample" items="test-item"
+               firing-sound="enemy-one-shoot" hit-sound="enemy-death"/>
 </spaceships>
