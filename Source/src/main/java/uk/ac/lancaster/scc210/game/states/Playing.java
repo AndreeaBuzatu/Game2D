@@ -15,7 +15,7 @@ import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.states.State;
 import uk.ac.lancaster.scc210.game.content.LevelManager;
 import uk.ac.lancaster.scc210.game.content.SpaceShipPrototypeManager;
-import uk.ac.lancaster.scc210.game.ecs.component.LivesComponent;
+import uk.ac.lancaster.scc210.game.dialogue.DialogueBox;
 import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 import uk.ac.lancaster.scc210.game.ecs.system.*;
@@ -51,6 +51,8 @@ public class Playing implements State {
     private Text scoreText, livesText;
 
     private ViewSize viewSize;
+
+    private DialogueBox dialogueBox;
 
     @Override
     public void setup(StateBasedGame game) {
@@ -120,7 +122,9 @@ public class Playing implements State {
 
         example.play();
 
-        font = ((FontManager) world.getServiceProvider().get(FontManager.class)).get("font");
+        FontManager fontManager = (FontManager) world.getServiceProvider().get(FontManager.class);
+
+        font = fontManager.get("font");
 
         viewSize = (ViewSize) world.getServiceProvider().get(ViewSize.class);
 
@@ -139,10 +143,13 @@ public class Playing implements State {
         livesText.setColor(Color.WHITE);
 
         livesText.setCharacterSize(TEXT_SIZE);
+
+        dialogueBox = new DialogueBox(viewSize, fontManager);
     }
 
     @Override
     public void draw(RenderTarget target) {
+        /*
         world.draw(target);
 
         if (player.hasComponent(PlayerComponent.class)) {
@@ -163,6 +170,9 @@ public class Playing implements State {
         target.draw(scoreText);
 
         target.draw(livesText);
+         */
+
+        target.draw(dialogueBox);
     }
 
     @Override
@@ -172,6 +182,9 @@ public class Playing implements State {
 
     @Override
     public void update(Time deltaTime) {
+        dialogueBox.update();
+
+        /*
         world.update(deltaTime);
 
         if (level.complete()) {
@@ -191,5 +204,6 @@ public class Playing implements State {
                 completed = true;
             }
         }
+         */
     }
 }
