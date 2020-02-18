@@ -1,11 +1,8 @@
 package uk.ac.lancaster.scc210.game.ecs.system;
 
-import org.jsfml.audio.Sound;
-import org.jsfml.audio.SoundBuffer;
 import org.jsfml.graphics.RenderTarget;
 import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.collision.OrientatedBox;
-import uk.ac.lancaster.scc210.engine.content.SoundBufferManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.component.PooledComponent;
@@ -16,11 +13,6 @@ import java.util.Set;
 
 public class BulletCollisionSystem extends IterativeSystem {
     private Set<Entity> transformables;
-
-    private SoundBufferManager soundBufferManager;
-    private SoundBuffer soundBuffer;
-    private Sound sound;
-
     /**
      * Instantiates a new Iterative system.
      *
@@ -30,10 +22,6 @@ public class BulletCollisionSystem extends IterativeSystem {
         super(world, BulletComponent.class);
 
         transformables = world.getEntitiesFor(TransformableComponent.class);
-
-        soundBufferManager = (SoundBufferManager) world.getServiceProvider().get(SoundBufferManager.class);
-        soundBuffer = soundBufferManager.get("player-death");
-        sound = new Sound(soundBuffer);
     }
 
     @Override
@@ -65,14 +53,18 @@ public class BulletCollisionSystem extends IterativeSystem {
                 if (colliding && !bothEnemies && !isItem) {
                     PooledComponent pooledComponent = (PooledComponent) entity.findComponent(PooledComponent.class);
 
+                    if (transformable.hasComponent(SpaceShipComponent.class)) {
+                        SpaceShipComponent spaceShipComponent = (SpaceShipComponent) transformable.findComponent(SpaceShipComponent.class);
+
+                        spaceShipComponent.playHitSound();
+                    }
+
                     world.removeEntity(transformable);
 
                     // Return the bullet back to the pool and remove it from the world
                     world.getPool(pooledComponent.getPoolClass()).returnEntity(entity);
 
                     world.removeEntity(entity);
-
-                    sound.play();
                 }
             }
         }

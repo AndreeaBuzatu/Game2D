@@ -1,26 +1,20 @@
 package uk.ac.lancaster.scc210.game.ecs.system;
 
-import org.jsfml.audio.Sound;
-import org.jsfml.audio.SoundBuffer;
 import org.jsfml.graphics.RenderTarget;
 import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.collision.OrientatedBox;
-import uk.ac.lancaster.scc210.engine.content.SoundBufferManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.game.ecs.component.EnemyComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.OrientatedBoxComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
 
 import java.util.Optional;
 
 public class SpaceShipCollisionSystem extends IterativeSystem {
     private Optional<Entity> player;
-
-    private SoundBufferManager soundBufferManager;
-    private SoundBuffer soundBuffer;
-    private Sound sound;
 
     /**
      * Instantiates a new Iterative system.
@@ -31,10 +25,6 @@ public class SpaceShipCollisionSystem extends IterativeSystem {
         super(world, EnemyComponent.class);
 
         player = world.getEntitiesFor(PlayerComponent.class).stream().findFirst();
-
-        soundBufferManager = (SoundBufferManager) world.getServiceProvider().get(SoundBufferManager.class);
-        soundBuffer = soundBufferManager.get("player-death");
-        sound = new Sound(soundBuffer);
     }
 
     @Override
@@ -63,7 +53,10 @@ public class SpaceShipCollisionSystem extends IterativeSystem {
             OrientatedBoxComponent entityOrientedBox = (OrientatedBoxComponent) entity.findComponent(OrientatedBoxComponent.class);
 
             if (OrientatedBox.areColliding(playerOrientedBox.getOrientatedBox(), entityOrientedBox.getOrientatedBox())) {
-                sound.play();
+                SpaceShipComponent spaceShipComponent = (SpaceShipComponent) playerEntity.findComponent(SpaceShipComponent.class);
+
+                spaceShipComponent.playHitSound();
+
                 world.removeEntity(playerEntity);
             }
         }
