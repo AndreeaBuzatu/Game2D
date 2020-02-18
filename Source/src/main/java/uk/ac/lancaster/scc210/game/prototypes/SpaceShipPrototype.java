@@ -1,6 +1,8 @@
 package uk.ac.lancaster.scc210.game.prototypes;
 
+import org.jsfml.audio.Sound;
 import org.jsfml.graphics.Sprite;
+import uk.ac.lancaster.scc210.engine.content.SoundBufferManager;
 import uk.ac.lancaster.scc210.engine.content.TextureAnimationManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
@@ -18,15 +20,19 @@ public class SpaceShipPrototype implements Prototype {
 
     private final String animation, bulletName;
 
+    private final Sound firingSound, hitSound;
+
     private final int speed;
 
-    public SpaceShipPrototype(TextureAnimationManager animationManager, Pool pool, String animation, String[] items, String bulletName, int speed) {
+    public SpaceShipPrototype(TextureAnimationManager animationManager, SoundBufferManager soundBufferManager, Pool pool, String animation, String[] items, String bulletName, int speed, String firingSound, String hitSound) {
         this.animationManager = animationManager;
         this.pool = pool;
         this.animation = animation;
         this.items = items;
         this.bulletName = bulletName;
         this.speed = speed;
+        this.firingSound = new Sound(soundBufferManager.get(firingSound));
+        this.hitSound = new Sound(soundBufferManager.get(hitSound));
     }
 
     public Entity create() {
@@ -40,7 +46,7 @@ public class SpaceShipPrototype implements Prototype {
 
         final RotationComponent rotationComponent = new RotationComponent(2f);
 
-        final SpaceShipComponent spaceShipComponent = new SpaceShipComponent(items);
+        final SpaceShipComponent spaceShipComponent = new SpaceShipComponent(items, firingSound, hitSound);
 
         final TransformableComponent transformableComponent = new TransformableComponent(sprite);
 

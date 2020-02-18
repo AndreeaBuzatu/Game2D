@@ -1,6 +1,7 @@
 package uk.ac.lancaster.scc210.game.content;
 
 import uk.ac.lancaster.scc210.engine.content.ContentManager;
+import uk.ac.lancaster.scc210.engine.content.SoundBufferManager;
 import uk.ac.lancaster.scc210.engine.content.TextureAnimationManager;
 import uk.ac.lancaster.scc210.engine.pooling.Pool;
 import uk.ac.lancaster.scc210.game.prototypes.SpaceShipPrototype;
@@ -19,11 +20,11 @@ public class SpaceShipPrototypeManager extends ContentManager<SpaceShipPrototype
      * @param animationManager     the animation manager to find animations from
      * @param serialisedSpaceShips the XML document which contains Space Ships
      */
-    public SpaceShipPrototypeManager(TextureAnimationManager animationManager, Pool pool, List<SerialisedSpaceShip> serialisedSpaceShips) {
+    public SpaceShipPrototypeManager(TextureAnimationManager animationManager, SoundBufferManager soundBufferManager, Pool pool, List<SerialisedSpaceShip> serialisedSpaceShips) {
         super(null);
 
         for (SerialisedSpaceShip serialisedSpaceShip : serialisedSpaceShips) {
-            SpaceShipPrototype spaceShip = new SpaceShipPrototype(animationManager, pool, serialisedSpaceShip.getAnimation(), serialisedSpaceShip.getItems(), serialisedSpaceShip.getBullet(), serialisedSpaceShip.getSpeed());
+            SpaceShipPrototype spaceShip = new SpaceShipPrototype(animationManager, soundBufferManager, pool, serialisedSpaceShip.getAnimation(), serialisedSpaceShip.getItems(), serialisedSpaceShip.getBullet(), serialisedSpaceShip.getSpeed(), serialisedSpaceShip.getFiringSound(), serialisedSpaceShip.getHitSound());
 
             put(serialisedSpaceShip.getName(), spaceShip);
         }
