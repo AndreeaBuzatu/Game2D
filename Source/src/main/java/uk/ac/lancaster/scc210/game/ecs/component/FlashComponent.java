@@ -10,11 +10,13 @@ import uk.ac.lancaster.scc210.engine.ecs.Component;
 public class FlashComponent implements Component {
     private final Time FLASH_LENGTH = Time.getSeconds(0.3f);
 
+    private final RenderStates textureState;
+
+    private final RenderStates flashState;
+
     private Time elapsedTime;
 
     private RenderStates currentState;
-    private final RenderStates textureState;
-    private final RenderStates flashState;
 
     private boolean flashing;
 
