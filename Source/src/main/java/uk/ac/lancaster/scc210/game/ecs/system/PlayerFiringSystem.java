@@ -1,11 +1,8 @@
 package uk.ac.lancaster.scc210.game.ecs.system;
 
-import org.jsfml.audio.Sound;
-import org.jsfml.audio.SoundBuffer;
 import org.jsfml.graphics.RenderTarget;
 import org.jsfml.system.Time;
 import org.jsfml.window.Keyboard;
-import uk.ac.lancaster.scc210.engine.content.SoundBufferManager;
 import uk.ac.lancaster.scc210.engine.controller.ControllerButton;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
@@ -23,10 +20,6 @@ public class PlayerFiringSystem extends IterativeSystem {
 
     private Time elapsedTime;
 
-    private SoundBufferManager soundBufferManager;
-    private SoundBuffer soundBuffer;
-    private Sound sound;
-
     /**
      * Instantiates a new Iterative system.
      *
@@ -36,10 +29,6 @@ public class PlayerFiringSystem extends IterativeSystem {
         super(world, PlayerComponent.class);
 
         elapsedTime = Time.ZERO;
-
-        soundBufferManager = (SoundBufferManager) world.getServiceProvider().get(SoundBufferManager.class);
-        soundBuffer = soundBufferManager.get("player-death");
-        sound = new Sound(soundBuffer);
     }
 
     @Override
@@ -57,8 +46,6 @@ public class PlayerFiringSystem extends IterativeSystem {
 
                     spaceShipComponent.playFiringSound();
                 }
-
-                //sound.play();
 
                 elapsedTime = Time.ZERO;
             }
