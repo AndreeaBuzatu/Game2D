@@ -16,14 +16,13 @@ import uk.ac.lancaster.scc210.engine.states.State;
 import uk.ac.lancaster.scc210.game.content.LevelManager;
 import uk.ac.lancaster.scc210.game.content.SpaceShipPrototypeManager;
 import uk.ac.lancaster.scc210.game.dialogue.DialogueBox;
-import uk.ac.lancaster.scc210.game.ecs.component.LivesComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.*;
 import uk.ac.lancaster.scc210.game.ecs.system.*;
 import uk.ac.lancaster.scc210.game.level.Level;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
 
 import java.util.Iterator;
+import java.util.Set;
 
 /**
  * Represents the actual game-play state.
@@ -32,6 +31,8 @@ public class Playing implements State {
     private static final int TEXT_SIZE = 70;
 
     public static final int INFO_BOX_HEIGHT = TEXT_SIZE + 5;
+
+    private final int MAX_OPACITY = 255;
 
     private Iterator<Level> levelIterator;
 
@@ -54,6 +55,10 @@ public class Playing implements State {
     private ViewSize viewSize;
 
     private DialogueBox dialogueBox;
+
+    private boolean fadedIn, fadedOut, shouldFadeOut;
+
+    private int alpha;
 
     @Override
     public void setup(StateBasedGame game) {
@@ -148,16 +153,37 @@ public class Playing implements State {
         dialogueBox = new DialogueBox(viewSize, fontManager);
 
         dialogueBox.setDialogue(level.getLines());
+
+        fadedIn = false;
+
+        fadedOut = false;
+
+        shouldFadeOut = false;
+
+        alpha = 0;
     }
 
     @Override
     public void draw(RenderTarget target) {
         world.draw(target);
 
-        // TODO: Fix drawing old level after the level has been complete (look at the player-death branch)
-        target.draw(dialogueBox);
-
         drawInterface(target);
+
+        if (dialogueBox.isOpen()) {
+            if (!fadedIn) {
+                fadeIn();
+            }
+
+            // TODO: Fix drawing old level after the level has been complete (look at the player-death branch)
+            target.draw(dialogueBox);
+
+            if (shouldFadeOut && !fadedOut) {
+                fadeOut();
+
+            } else {
+                shouldFadeOut = false;
+            }
+        }
     }
 
     private void drawInterface(RenderTarget target) {
@@ -198,10 +224,6 @@ public class Playing implements State {
     }
 
     private void updateWorld(Time deltaTime) {
-        if (!level.complete()) {
-            world.update(deltaTime);
-        }
-
         if (level.complete()) {
             System.out.println("Complete level");
 
@@ -213,13 +235,70 @@ public class Playing implements State {
             if (levelIterator.hasNext()) {
                 level = levelIterator.next();
 
+                // Remove bullets from the world
+                world.removeIf(entity -> entity.hasComponent(BulletComponent.class) || entity.hasComponent(EnemyComponent.class));
+
                 levelSystem.setLevel(level);
 
                 dialogueBox.setDialogue(level.getLines());
 
+                shouldFadeOut = true;
+
             } else {
                 completed = true;
             }
+        }
+
+        if (!level.complete()) {
+            world.update(deltaTime);
+        }
+    }
+
+    private void fadeIn() {
+        Color currentColour = new Color(MAX_OPACITY, MAX_OPACITY, MAX_OPACITY, alpha);
+
+        setSpritesFillColour(world.getEntitiesFor(SpriteComponent.class), currentColour);
+
+        setAsteroidsFillColour(world.getEntitiesFor(AsteroidComponent.class), currentColour);
+
+        if (alpha >= MAX_OPACITY) {
+            fadedIn = true;
+
+            fadedOut = false;
+        }
+
+        alpha++;
+    }
+
+    private void fadeOut() {
+        Color currentColour = new Color(MAX_OPACITY, MAX_OPACITY, MAX_OPACITY, alpha);
+
+        setSpritesFillColour(world.getEntitiesFor(SpriteComponent.class), currentColour);
+
+        setAsteroidsFillColour(world.getEntitiesFor(AsteroidComponent.class), currentColour);
+
+        if (alpha <= 0) {
+            fadedIn = false;
+
+            fadedOut = true;
+        }
+
+        alpha--;
+    }
+
+    private void setSpritesFillColour(Set<Entity> entities, Color colour) {
+        for (Entity entity : entities) {
+            SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
+
+            spriteComponent.getSprite().setColor(colour);
+        }
+    }
+
+    private void setAsteroidsFillColour(Set<Entity> entities, Color colour) {
+        for (Entity entity : entities) {
+            AsteroidComponent asteroidComponent = (AsteroidComponent) entity.findComponent(AsteroidComponent.class);
+
+            asteroidComponent.getCircle().setFillColor(colour);
         }
     }
 }
