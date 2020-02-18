@@ -51,11 +51,13 @@ public class DialogueBox implements Drawable {
 
         box.setPosition(boxPos);
 
-        box.setOutlineThickness(10);
+        box.setOutlineThickness(2);
 
-        box.setOutlineColor(Color.BLACK);
+        box.setOutlineColor(Color.WHITE);
 
-        box.setFillColor(Color.WHITE);
+        box.setFillColor(Color.BLACK);
+
+        box.setOutlineColor(Color.WHITE);
 
         font = fontManager.get("font");
 
@@ -65,7 +67,7 @@ public class DialogueBox implements Drawable {
 
         text.setCharacterSize(TEXT_SIZE);
 
-        text.setColor(Color.RED);
+        text.setColor(Color.WHITE);
 
         text.setPosition(new Vector2f(boxPos.x + TEXT_PADDING, boxPos.y + TEXT_PADDING));
 
