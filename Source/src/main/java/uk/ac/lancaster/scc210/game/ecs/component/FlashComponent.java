@@ -42,10 +42,6 @@ public class FlashComponent implements Component {
         elapsedTime = Time.ZERO;
     }
 
-    public RenderStates getCurrentState() {
-        return currentState;
-    }
-
     public void updateRenderState(Time deltaTime) {
         if (flashing) {
             elapsedTime = Time.add(elapsedTime, deltaTime);
@@ -75,5 +71,18 @@ public class FlashComponent implements Component {
         flashing = true;
 
         elapsedTime = deltaTime;
+    }
+
+    public void resetToTexture() {
+        if (flashing) {
+            currentState = textureState;
+
+            // Reset the timer
+            elapsedTime = Time.ZERO;
+        }
+    }
+
+    public RenderStates getCurrentState() {
+        return currentState;
     }
 }

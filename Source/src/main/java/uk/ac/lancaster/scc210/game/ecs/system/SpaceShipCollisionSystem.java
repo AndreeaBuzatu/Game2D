@@ -7,6 +7,7 @@ import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.game.ecs.component.EnemyComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.LivesComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.OrientatedBoxComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
@@ -55,9 +56,11 @@ public class SpaceShipCollisionSystem extends IterativeSystem {
             if (OrientatedBox.areColliding(playerOrientedBox.getOrientatedBox(), entityOrientedBox.getOrientatedBox())) {
                 SpaceShipComponent spaceShipComponent = (SpaceShipComponent) playerEntity.findComponent(SpaceShipComponent.class);
 
+                LivesComponent livesComponent = (LivesComponent) playerEntity.findComponent(LivesComponent.class);
+
                 spaceShipComponent.playHitSound();
 
-                world.removeEntity(playerEntity);
+                livesComponent.kill();
             }
         }
     }

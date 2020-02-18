@@ -1,11 +1,9 @@
 package uk.ac.lancaster.scc210.game.states;
 
 import org.jsfml.audio.Music;
-import org.jsfml.graphics.Color;
-import org.jsfml.graphics.Font;
-import org.jsfml.graphics.RenderTarget;
-import org.jsfml.graphics.Text;
+import org.jsfml.graphics.*;
 import org.jsfml.system.Time;
+import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import uk.ac.lancaster.scc210.engine.ViewSize;
 import uk.ac.lancaster.scc210.engine.content.FontManager;
@@ -102,11 +100,23 @@ public class Playing implements State {
 
         SpaceShipPrototypeManager spaceShipManager = (SpaceShipPrototypeManager) game.getServiceProvider().get(SpaceShipPrototypeManager.class);
 
+        viewSize = (ViewSize) world.getServiceProvider().get(ViewSize.class);
+
+        FloatRect viewBounds = viewSize.getViewBounds();
+
         player = spaceShipManager.get("player").create();
 
-        player.addComponent(new PlayerComponent());
+        PlayerComponent playerComponent = new PlayerComponent();
 
-        ((SpriteComponent) player.findComponent(SpriteComponent.class)).getSprite().setPosition(400, 200);
+        player.addComponent(playerComponent);
+
+        SpriteComponent spriteComponent = (SpriteComponent) player.findComponent(SpriteComponent.class);
+
+        Sprite playerSprite = spriteComponent.getSprite();
+
+        playerComponent.setSpawnPoint(new Vector2f((viewBounds.width / 2) - playerSprite.getGlobalBounds().width, (viewBounds.height / 1.5f) - playerSprite.getGlobalBounds().height));
+
+        playerSprite.setPosition(playerComponent.getSpawnPoint());
 
         world.addEntity(player);
 
@@ -121,8 +131,6 @@ public class Playing implements State {
         example.play();
 
         font = ((FontManager) world.getServiceProvider().get(FontManager.class)).get("font");
-
-        viewSize = (ViewSize) world.getServiceProvider().get(ViewSize.class);
 
         scoreText = new Text();
 

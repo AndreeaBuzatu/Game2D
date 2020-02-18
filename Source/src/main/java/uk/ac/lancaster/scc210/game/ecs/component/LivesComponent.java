@@ -3,10 +3,12 @@ package uk.ac.lancaster.scc210.game.ecs.component;
 import uk.ac.lancaster.scc210.engine.ecs.Component;
 
 public class LivesComponent implements Component {
-    private int lives;
+    private int startingLives, lives;
 
     public LivesComponent(int lives) {
         this.lives = lives;
+
+        startingLives = lives;
     }
 
     public int getLives() {
@@ -20,5 +22,13 @@ public class LivesComponent implements Component {
     public boolean isDead()
     {
         return lives < 1;
+    }
+
+    public void resurrect() {
+        lives = startingLives;
+    }
+
+    public void kill() {
+        lives = 0;
     }
 }

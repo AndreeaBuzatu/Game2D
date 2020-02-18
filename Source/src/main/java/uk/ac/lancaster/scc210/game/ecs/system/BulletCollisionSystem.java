@@ -50,7 +50,10 @@ public class BulletCollisionSystem extends IterativeSystem {
 
                 boolean isItem = transformable.hasComponent(ItemEffectsComponent.class);
 
-                if (colliding && !bothEnemies && !isItem) {
+                // Just in case the bullet creator hits the current entity. (Compare references).
+                boolean sameEntity = bulletCreator == transformable;
+
+                if (colliding && !bothEnemies && !isItem && !sameEntity) {
                     PooledComponent pooledComponent = (PooledComponent) entity.findComponent(PooledComponent.class);
 
                     LivesComponent livesComponent = (LivesComponent) transformable.findComponent(LivesComponent.class);
