@@ -13,7 +13,6 @@ import java.util.Set;
 
 public class BulletCollisionSystem extends IterativeSystem {
     private Set<Entity> transformables;
-
     /**
      * Instantiates a new Iterative system.
      *
@@ -61,6 +60,12 @@ public class BulletCollisionSystem extends IterativeSystem {
                     flashComponent.flash(deltaTime);
 
                     livesComponent.setLives(livesComponent.getLives() - 1);
+
+                    if (transformable.hasComponent(SpaceShipComponent.class)) {
+                        SpaceShipComponent spaceShipComponent = (SpaceShipComponent) transformable.findComponent(SpaceShipComponent.class);
+
+                        spaceShipComponent.playHitSound();
+                    }
 
                     // Return the bullet back to the pool and remove it from the world
                     world.getPool(pooledComponent.getPoolClass()).returnEntity(entity);
