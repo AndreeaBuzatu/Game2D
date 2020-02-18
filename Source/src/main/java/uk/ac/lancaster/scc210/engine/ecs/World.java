@@ -6,19 +6,16 @@ import uk.ac.lancaster.scc210.engine.ecs.system.EntitySystem;
 import uk.ac.lancaster.scc210.engine.pooling.Pool;
 import uk.ac.lancaster.scc210.engine.service.ServiceProvider;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
  * World contains all the entities and systems in the game.
  */
 public class World {
-    private final ArrayList<Entity> entities;
+    private final Set<Entity> entities;
 
-    private final ArrayList<EntitySystem> systems;
+    private final Set<EntitySystem> systems;
 
     private final ArrayList<Pool> pools;
 
@@ -30,9 +27,9 @@ public class World {
     public World(ServiceProvider serviceProvider) {
         this.serviceProvider = serviceProvider;
 
-        entities = new ArrayList<>();
+        entities = new HashSet<>();
 
-        systems = new ArrayList<>();
+        systems = new HashSet<>();
 
         pools = new ArrayList<>();
     }
@@ -46,7 +43,9 @@ public class World {
         if (!entities.contains(entity)) {
             entities.add(entity);
 
-            systems.forEach(system -> system.entityAdded(entity));
+            for (EntitySystem system : systems) {
+                system.entityAdded(entity);
+            }
         }
     }
 
@@ -66,15 +65,19 @@ public class World {
         systems.forEach(system -> system.entityRemoved(entity));
     }
 
+    public void removeEntities(Collection<? extends Entity> entities) {
+        this.entities.removeAll(entities);
+
+        entities.forEach(entity -> systems.forEach(system -> system.entityRemoved(entity)));
+    }
+
     /**
      * Add a System to the world. It will be iterated upon in the next loop.
      *
      * @param system the system to add
      */
     public void addSystem(EntitySystem system) {
-        if (!systems.contains(system)) {
-            systems.add(system);
-        }
+        systems.add(system);
     }
 
     /**

@@ -2,6 +2,7 @@ package uk.ac.lancaster.scc210.game;
 
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import uk.ac.lancaster.scc210.engine.content.ShaderManager;
+import uk.ac.lancaster.scc210.engine.content.SoundBufferManager;
 import uk.ac.lancaster.scc210.engine.content.TextureAnimationManager;
 import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
@@ -40,6 +41,8 @@ public class Game extends StateBasedGame {
 
             ShaderManager shaderManager = (ShaderManager) serviceProvider.get(ShaderManager.class);
 
+            SoundBufferManager soundBufferManager = (SoundBufferManager) serviceProvider.get(SoundBufferManager.class);
+
             BulletDeserialiser bulletDeserialiser = new BulletDeserialiser(deserialiseXML("bullets.xml"));
 
             BulletPrototypeManager bulletPrototypeManager = new BulletPrototypeManager(textureManager, bulletDeserialiser.getSerialised());
@@ -50,7 +53,7 @@ public class Game extends StateBasedGame {
 
             SpaceShipDeserialiser spaceShipDeserialiser = new SpaceShipDeserialiser(deserialiseXML("spaceships.xml"));
 
-            SpaceShipPrototypeManager spaceShipManager = new SpaceShipPrototypeManager(animationManager, shaderManager, bulletPool, spaceShipDeserialiser.getSerialised());
+            SpaceShipPrototypeManager spaceShipManager = new SpaceShipPrototypeManager(animationManager, shaderManager, soundBufferManager, bulletPool, spaceShipDeserialiser.getSerialised());
 
             serviceProvider.put(BulletPool.class, new BulletPool(serviceProvider));
 

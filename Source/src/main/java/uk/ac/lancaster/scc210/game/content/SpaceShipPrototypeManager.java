@@ -2,6 +2,7 @@ package uk.ac.lancaster.scc210.game.content;
 
 import uk.ac.lancaster.scc210.engine.content.ContentManager;
 import uk.ac.lancaster.scc210.engine.content.ShaderManager;
+import uk.ac.lancaster.scc210.engine.content.SoundBufferManager;
 import uk.ac.lancaster.scc210.engine.content.TextureAnimationManager;
 import uk.ac.lancaster.scc210.engine.pooling.Pool;
 import uk.ac.lancaster.scc210.game.prototypes.SpaceShipPrototype;
@@ -20,11 +21,11 @@ public class SpaceShipPrototypeManager extends ContentManager<SpaceShipPrototype
      * @param animationManager     the animation manager to find animations from
      * @param serialisedSpaceShips the XML document which contains Space Ships
      */
-    public SpaceShipPrototypeManager(TextureAnimationManager animationManager, ShaderManager shaderManager, Pool pool, List<SerialisedSpaceShip> serialisedSpaceShips) {
+    public SpaceShipPrototypeManager(TextureAnimationManager animationManager, ShaderManager shaderManager, SoundBufferManager soundBufferManager, Pool pool, List<SerialisedSpaceShip> serialisedSpaceShips) {
         super(null);
 
         for (SerialisedSpaceShip serialisedSpaceShip : serialisedSpaceShips) {
-            SpaceShipPrototype spaceShip = new SpaceShipPrototype(animationManager, shaderManager, pool, serialisedSpaceShip);
+            SpaceShipPrototype spaceShip = new SpaceShipPrototype(animationManager, shaderManager, soundBufferManager, pool, serialisedSpaceShip);
 
             put(serialisedSpaceShip.getName(), spaceShip);
         }

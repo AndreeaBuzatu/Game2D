@@ -28,7 +28,7 @@ public class LevelWave {
 
     private final Prototype prototype;
 
-    private final float spawnTime;
+    private float spawnTime;
 
     private final int numShips;
 
@@ -52,7 +52,7 @@ public class LevelWave {
         numLeftToSpawn = numShips;
     }
 
-    public Entity spawnNew(Time deltaTime) {
+    Entity spawnNew(Time deltaTime) {
         // Create the initial ship - ignore the timer for the first one.
         if (numLeftToSpawn == numShips) {
             Entity entity = create();
@@ -118,7 +118,17 @@ public class LevelWave {
         return entity;
     }
 
-    public Wave getWave() {
+    void reset() {
+        entities.clear();
+
+        spawnTime = SPAWN_TIMER;
+
+        spawnCountUp = COUNT_START;
+
+        numLeftToSpawn = numShips;
+    }
+
+    Wave getWave() {
         return wave;
     }
 

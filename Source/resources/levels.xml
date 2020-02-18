@@ -1,9 +1,9 @@
 <levels>
     <level name="thing">
         <stage>
-            <wave type="straight" start_x="0" start_y="500" end_x="600" end_y="300" num_ships="10"
+            <wave type="straight" start_x="0" start_y="500" end_x="600" end_y="300" num_ships="20"
                   entity_type="spaceship"
-                  ship_name="player"/>
+                  ship_name="other"/>
             <stationary pos_x="800" pos_y="800" entity_type="asteroid"/>
         </stage>
     </level>

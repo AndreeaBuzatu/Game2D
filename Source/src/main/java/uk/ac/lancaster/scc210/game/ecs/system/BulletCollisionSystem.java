@@ -13,7 +13,6 @@ import java.util.Set;
 
 public class BulletCollisionSystem extends IterativeSystem {
     private Set<Entity> transformables;
-
     /**
      * Instantiates a new Iterative system.
      *
@@ -51,7 +50,10 @@ public class BulletCollisionSystem extends IterativeSystem {
 
                 boolean isItem = transformable.hasComponent(ItemEffectsComponent.class);
 
-                if (colliding && !bothEnemies && !isItem) {
+                // Just in case the bullet creator hits the current entity. (Compare references).
+                boolean sameEntity = bulletCreator == transformable;
+
+                if (colliding && !bothEnemies && !isItem && !sameEntity) {
                     PooledComponent pooledComponent = (PooledComponent) entity.findComponent(PooledComponent.class);
 
                     LivesComponent livesComponent = (LivesComponent) transformable.findComponent(LivesComponent.class);
@@ -61,6 +63,12 @@ public class BulletCollisionSystem extends IterativeSystem {
                     flashComponent.flash(deltaTime);
 
                     livesComponent.setLives(livesComponent.getLives() - 1);
+
+                    if (transformable.hasComponent(SpaceShipComponent.class)) {
+                        SpaceShipComponent spaceShipComponent = (SpaceShipComponent) transformable.findComponent(SpaceShipComponent.class);
+
+                        spaceShipComponent.playHitSound();
+                    }
 
                     // Return the bullet back to the pool and remove it from the world
                     world.getPool(pooledComponent.getPoolClass()).returnEntity(entity);
