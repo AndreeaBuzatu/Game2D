@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -64,6 +65,10 @@ public class World {
         entities.remove(entity);
 
         systems.forEach(system -> system.entityRemoved(entity));
+    }
+
+    public void removeIf(Predicate<? super Entity> entities) {
+        this.entities.removeIf(entities);
     }
 
     /**
