@@ -65,7 +65,11 @@ public class LevelDeserialiser extends Deserialiser<Level> {
             Node node = nodes.item(i);
 
             if (foundNode(node)) {
-                serialised.add(new Level(deserialiseStage(node.getChildNodes())));
+                Element elem = (Element) node;
+
+                String name = elem.getAttribute("name");
+
+                serialised.add(new Level(name, deserialiseStage(node.getChildNodes())));
             }
         }
     }

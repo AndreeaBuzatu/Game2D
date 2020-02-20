@@ -10,9 +10,12 @@ public class Level implements Serialised {
 
     private final Iterator<LevelStage> stageIterator;
 
+    private final String name;
+
     private LevelStage currentStage;
 
-    public Level(List<LevelStage> stages) {
+    public Level(String name, List<LevelStage> stages) {
+        this.name = name;
         this.stages = stages;
 
         stageIterator = stages.iterator();
@@ -43,5 +46,9 @@ public class Level implements Serialised {
 
     public LevelStage getCurrentStage() {
         return currentStage;
+    }
+
+    public String getName() {
+        return name;
     }
 }
