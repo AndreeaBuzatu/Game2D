@@ -20,7 +20,7 @@ import uk.ac.lancaster.scc210.game.ecs.system.*;
 import uk.ac.lancaster.scc210.game.level.Level;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
 
-import java.util.Iterator;
+import java.util.Queue;
 
 /**
  * Represents the actual game-play state.
@@ -30,7 +30,7 @@ public class Playing implements State {
 
     public static final int INFO_BOX_HEIGHT = TEXT_SIZE + 5;
 
-    private Iterator<Level> levelIterator;
+    private Queue<Level> levelQueue;
 
     private World world;
 
@@ -56,9 +56,9 @@ public class Playing implements State {
 
         LevelManager levelManager = (LevelManager) game.getServiceProvider().get(LevelManager.class);
 
-        levelIterator = levelManager.getIterator();
+        levelQueue = levelManager.getLevelQueue();
 
-        level = levelIterator.next();
+        level = levelQueue.poll();
 
         world = new World(game.getServiceProvider());
 
@@ -190,8 +190,8 @@ public class Playing implements State {
 
             playerComponent.getCurrentEffects().parallelStream().forEach(itemEffect -> itemEffect.reset(player));
 
-            if (levelIterator.hasNext()) {
-                level = levelIterator.next();
+            if (!levelQueue.isEmpty()) {
+                level = levelQueue.poll();
 
                 levelSystem.setLevel(level);
 
