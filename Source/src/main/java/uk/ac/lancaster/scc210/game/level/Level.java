@@ -35,12 +35,10 @@ public class Level implements Serialised {
     }
 
     public void reset() {
-        //stages.forEach(LevelStage::reset);
         currentStage.reset();
     }
 
     public boolean complete() {
-
         return stages.stream().allMatch(LevelStage::complete);
     }
 

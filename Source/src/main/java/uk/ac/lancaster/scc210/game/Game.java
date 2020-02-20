@@ -11,9 +11,7 @@ import uk.ac.lancaster.scc210.game.content.ItemPrototypeManager;
 import uk.ac.lancaster.scc210.game.content.LevelManager;
 import uk.ac.lancaster.scc210.game.content.SpaceShipPrototypeManager;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
-import uk.ac.lancaster.scc210.game.resources.BulletDeserialiser;
-import uk.ac.lancaster.scc210.game.resources.LevelDeserialiser;
-import uk.ac.lancaster.scc210.game.resources.SpaceShipDeserialiser;
+import uk.ac.lancaster.scc210.game.resources.*;
 import uk.ac.lancaster.scc210.game.states.Completion;
 import uk.ac.lancaster.scc210.game.states.Playing;
 
@@ -66,6 +64,10 @@ public class Game extends StateBasedGame {
             LevelDeserialiser levelDeserialiser = new LevelDeserialiser(spaceShipManager, textureManager, shaderManager, deserialiseXML("levels.xml"));
 
             LevelManager levelManager = new LevelManager(levelDeserialiser.getSerialised());
+
+            PlayerDataDeserialiser playerDataDeserialiser = new PlayerDataDeserialiser(deserialiseXML("player.xml"));
+
+            serviceProvider.put(PlayerData.class, playerDataDeserialiser.getPlayerData());
 
             serviceProvider.put(LevelManager.class, levelManager);
 

@@ -19,8 +19,9 @@ import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 import uk.ac.lancaster.scc210.game.ecs.system.*;
 import uk.ac.lancaster.scc210.game.level.Level;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
+import uk.ac.lancaster.scc210.game.resources.PlayerData;
 
-import java.util.Queue;
+import java.util.List;
 
 /**
  * Represents the actual game-play state.
@@ -30,17 +31,17 @@ public class Playing implements State {
 
     public static final int INFO_BOX_HEIGHT = TEXT_SIZE + 5;
 
-    private Queue<Level> levelQueue;
+    private List<Level> unlockedLevels, totalLevels;
 
     private World world;
 
-    private Level level;
+    private LevelManager levelManager;
 
     private LevelSystem levelSystem;
 
-    private Entity player;
+    private Level level;
 
-    private boolean completed;
+    private Entity player;
 
     private Music example;
 
@@ -50,19 +51,31 @@ public class Playing implements State {
 
     private ViewSize viewSize;
 
+    private boolean completed;
+
+    private int currentUnlocked;
+
     @Override
     public void setup(StateBasedGame game) {
         completed = false;
 
-        LevelManager levelManager = (LevelManager) game.getServiceProvider().get(LevelManager.class);
+        levelManager = (LevelManager) game.getServiceProvider().get(LevelManager.class);
 
-        levelQueue = levelManager.getLevelQueue();
+        PlayerData playerData = (PlayerData) game.getServiceProvider().get(PlayerData.class);
 
-        level = levelQueue.poll();
+        currentUnlocked = levelManager.indexOf(playerData.getUnlockedLevel());
+
+        totalLevels = levelManager.getLevelList();
+
+        unlockedLevels = levelManager.getUnlocked(playerData.getUnlockedLevel());
+
+        level = unlockedLevels.get(currentUnlocked);
 
         world = new World(game.getServiceProvider());
 
         levelSystem = new LevelSystem(world, level);
+
+        //levelSystem.setLevel(levelQueue.get(0));
 
         world.addPool((BulletPool) game.getServiceProvider().get(BulletPool.class));
 
@@ -190,8 +203,12 @@ public class Playing implements State {
 
             playerComponent.getCurrentEffects().parallelStream().forEach(itemEffect -> itemEffect.reset(player));
 
-            if (!levelQueue.isEmpty()) {
-                level = levelQueue.poll();
+            if (currentUnlocked < totalLevels.size() - 1) {
+                currentUnlocked++;
+
+                unlockedLevels = levelManager.getUnlocked(totalLevels.get(currentUnlocked).getName());
+
+                level = unlockedLevels.get(currentUnlocked);
 
                 levelSystem.setLevel(level);
 
