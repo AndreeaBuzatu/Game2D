@@ -3,6 +3,7 @@ package uk.ac.lancaster.scc210.engine;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Vector2f;
+import org.jsfml.system.Vector2i;
 import uk.ac.lancaster.scc210.engine.service.Service;
 import uk.ac.lancaster.scc210.game.states.Playing;
 
@@ -33,64 +34,68 @@ public class ViewSize implements Service {
      * @return if the sprite is out of bounds or not
      */
     public boolean outOfBounds(Sprite sprite) {
-        FloatRect globalBounds = sprite.getGlobalBounds();
+        Vector2i spriteSize = sprite.getTexture().getSize();
 
-        float maxRight = getMaxRight(globalBounds);
+        Vector2i halfSpriteSize = Vector2i.div(spriteSize, 2);
 
-        float maxDown = getMaxDown(globalBounds);
+        float maxRight = getMaxRight(spriteSize);
 
-        return tooFarLeft(globalBounds) || tooFarUp(globalBounds)
-                || tooFarRight(globalBounds, maxRight) || tooFarDown(globalBounds, maxDown);
+        float maxDown = getMaxDown(spriteSize);
+
+        return tooFarLeft(sprite, halfSpriteSize) || tooFarUp(sprite, halfSpriteSize)
+                || tooFarRight(sprite, halfSpriteSize, maxRight) || tooFarDown(sprite, halfSpriteSize, maxDown);
     }
 
     public void resetSprite(Sprite sprite) {
-        FloatRect globalBounds = sprite.getGlobalBounds();
-
         Vector2f spritePos = sprite.getPosition();
 
-        if (tooFarLeft(globalBounds)) {
-            sprite.setPosition(0, spritePos.y);
+        Vector2i spriteSize = sprite.getTexture().getSize();
+
+        Vector2i halfSpriteSize = Vector2i.div(spriteSize, 2);
+
+        if (tooFarLeft(sprite, halfSpriteSize)) {
+            sprite.setPosition(halfSpriteSize.x, spritePos.y);
         }
 
-        if (tooFarUp(globalBounds)) {
-            sprite.setPosition(spritePos.x, Y_MIN);
+        if (tooFarUp(sprite, halfSpriteSize)) {
+            sprite.setPosition(spritePos.x, (halfSpriteSize.y) + Y_MIN);
         }
 
-        float maxRight = getMaxRight(globalBounds);
+        float maxRight = getMaxRight(spriteSize);
 
-        if (tooFarRight(globalBounds, maxRight)) {
-            sprite.setPosition(maxRight, spritePos.y);
+        if (tooFarRight(sprite, halfSpriteSize, maxRight)) {
+            sprite.setPosition(maxRight + (halfSpriteSize.x), spritePos.y);
         }
 
-        float maxDown = getMaxDown(globalBounds);
+        float maxDown = getMaxDown(spriteSize);
 
-        if (tooFarDown(globalBounds, maxDown)) {
-            sprite.setPosition(spritePos.x, maxDown);
+        if (tooFarDown(sprite, halfSpriteSize, maxDown)) {
+            sprite.setPosition(spritePos.x, maxDown + (halfSpriteSize.y));
         }
     }
 
-    private boolean tooFarLeft(FloatRect globalBounds) {
-        return globalBounds.left < X_MIN;
+    private boolean tooFarLeft(Sprite sprite, Vector2i halfSpriteSize) {
+        return (sprite.getPosition().x - (halfSpriteSize.x)) < X_MIN;
     }
 
-    private boolean tooFarUp(FloatRect globalBounds) {
-        return globalBounds.top < Y_MIN;
+    private boolean tooFarUp(Sprite sprite, Vector2i halfSpriteSize) {
+        return (sprite.getPosition().y - (halfSpriteSize.y)) < Y_MIN;
     }
 
-    private boolean tooFarRight(FloatRect globalBounds, float maxRight) {
-        return globalBounds.left > maxRight;
+    private boolean tooFarRight(Sprite sprite, Vector2i halfSpriteSize, float maxRight) {
+        return (sprite.getPosition().x - (halfSpriteSize.x)) > maxRight;
     }
 
-    private boolean tooFarDown(FloatRect globalBounds, float maxDown) {
-        return globalBounds.top > maxDown;
+    private boolean tooFarDown(Sprite sprite, Vector2i halfSpriteSize, float maxDown) {
+        return (sprite.getPosition().y - (halfSpriteSize.y)) > maxDown;
     }
 
-    private float getMaxRight(FloatRect globalBounds) {
-        return viewBounds.width - globalBounds.width;
+    private float getMaxRight(Vector2i spriteSize) {
+        return viewBounds.width - spriteSize.x;
     }
 
-    private float getMaxDown(FloatRect globalBounds) {
-        return viewBounds.height - globalBounds.height;
+    private float getMaxDown(Vector2i spriteSize) {
+        return viewBounds.height - spriteSize.y;
     }
 
     public FloatRect getViewBounds() {

@@ -47,6 +47,9 @@ public class SpaceShipPrototype implements Prototype {
 
         final Sprite sprite = new Sprite(animationComponent.getTextureAnimation().getTexture());
 
+        // Set the sprite's origin to the exact centre of the sprite
+        sprite.setOrigin(sprite.getTexture().getSize().x >> 1, sprite.getTexture().getSize().y >> 1);
+
         final SpriteComponent spriteComponent = new SpriteComponent(sprite);
 
         final SpeedComponent speedComponent = new SpeedComponent(speed);
