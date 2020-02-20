@@ -32,6 +32,8 @@ public class Playing implements State {
 
     public static final int INFO_BOX_HEIGHT = TEXT_SIZE + 5;
 
+    private final int ALPHA_CHANGE = 4;
+
     private final int MAX_OPACITY = 255;
 
     private Iterator<Level> levelIterator;
@@ -56,7 +58,7 @@ public class Playing implements State {
 
     private DialogueBox dialogueBox;
 
-    private boolean fadedIn, fadedOut, shouldFadeOut;
+    private boolean fadedIn, shouldFadeIn, shouldFadeOut;
 
     private int alpha;
 
@@ -156,9 +158,10 @@ public class Playing implements State {
 
         fadedIn = false;
 
-        fadedOut = false;
-
         shouldFadeOut = false;
+
+        // We want to initially fade in the first level
+        shouldFadeIn = true;
 
         alpha = 0;
     }
@@ -167,22 +170,27 @@ public class Playing implements State {
     public void draw(RenderTarget target) {
         world.draw(target);
 
+        handleLevelTransition();
+
         drawInterface(target);
 
         if (dialogueBox.isOpen()) {
-            if (!fadedIn) {
-                fadeIn();
-            }
-
-            // TODO: Fix drawing old level after the level has been complete (look at the player-death branch)
             target.draw(dialogueBox);
 
-            if (shouldFadeOut && !fadedOut) {
-                fadeOut();
+        } else {
+            shouldFadeIn = true;
 
-            } else {
-                shouldFadeOut = false;
-            }
+            shouldFadeOut = false;
+        }
+    }
+
+    private void handleLevelTransition() {
+        if (shouldFadeIn) {
+            fadeIn();
+        }
+
+        if (shouldFadeOut) {
+            fadeOut();
         }
     }
 
@@ -218,7 +226,11 @@ public class Playing implements State {
         if (dialogueBox.isOpen()) {
             dialogueBox.update(deltaTime);
 
-        } else {
+        } else if (!dialogueBox.isOpen() && !fadedIn) {
+            // Remove bullets from the world
+            world.removeIf(entity -> entity.hasComponent(BulletComponent.class) || entity.hasComponent(EnemyComponent.class) || entity.hasComponent(ItemEffectsComponent.class));
+
+        } else if (fadedIn) {
             updateWorld(deltaTime);
         }
     }
@@ -235,12 +247,12 @@ public class Playing implements State {
             if (levelIterator.hasNext()) {
                 level = levelIterator.next();
 
-                // Remove bullets from the world
-                world.removeIf(entity -> entity.hasComponent(BulletComponent.class) || entity.hasComponent(EnemyComponent.class));
 
                 levelSystem.setLevel(level);
 
                 dialogueBox.setDialogue(level.getLines());
+
+                shouldFadeIn = false;
 
                 shouldFadeOut = true;
 
@@ -264,10 +276,10 @@ public class Playing implements State {
         if (alpha >= MAX_OPACITY) {
             fadedIn = true;
 
-            fadedOut = false;
+            alpha = MAX_OPACITY;
         }
 
-        alpha++;
+        alpha += ALPHA_CHANGE;
     }
 
     private void fadeOut() {
@@ -280,10 +292,10 @@ public class Playing implements State {
         if (alpha <= 0) {
             fadedIn = false;
 
-            fadedOut = true;
+            alpha = 0;
         }
 
-        alpha--;
+        alpha -= ALPHA_CHANGE;
     }
 
     private void setSpritesFillColour(Set<Entity> entities, Color colour) {
