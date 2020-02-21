@@ -54,6 +54,25 @@
         </stage>
     </level>
     <level name="dave">
+        <dialogue>
+            <line character="witches">
+                Double, double toil and trouble;
+                Fire burn and caldron bubble.
+                Fillet of a fenny snake,
+                In the caldron boil and bake;
+                Eye of newt and toe of frog,
+                Wool of bat and tongue of dog,
+                Adder's fork and blind-worm's sting,
+                Lizard's leg and howlet's wing,
+                For a charm of powerful trouble,
+                Like a hell-broth boil and bubble.
+
+                Double, double toil and trouble;
+                Fire burn and caldron bubble.
+                Cool it with a baboon's blood,
+                Then the charm is firm and good.
+            </line>
+        </dialogue>
         <stage>
             <wave type="sine" start_x="0" start_y="500" end_x="600" end_y="300" num_ships="20"
                   entity_type="asteroid"
