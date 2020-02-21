@@ -11,7 +11,9 @@ public class SpeedIncreaseEffect implements ItemEffect {
         if (entity.hasComponent(SpeedComponent.class)) {
             SpeedComponent speedComponent = (SpeedComponent) entity.findComponent(SpeedComponent.class);
 
-            oldSpeed = speedComponent.getSpeed();
+            System.out.println("Old speed: " + oldSpeed);
+
+            oldSpeed = speedComponent.getStartingSpeed();
 
             speedComponent.setSpeed(20);
         }
@@ -22,9 +24,9 @@ public class SpeedIncreaseEffect implements ItemEffect {
         if (entity.hasComponent(SpeedComponent.class)) {
             SpeedComponent speedComponent = (SpeedComponent) entity.findComponent(SpeedComponent.class);
 
-            speedComponent.setSpeed(oldSpeed);
+            speedComponent.setSpeed(speedComponent.getStartingSpeed());
 
-            System.out.println("Resetting speed");
+            System.out.println("Resetting speed: " + oldSpeed);
         }
     }
 }

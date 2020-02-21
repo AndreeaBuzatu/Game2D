@@ -36,7 +36,7 @@ public class SpaceShipDeserialiser extends Deserialiser<SerialisedSpaceShip> {
 
                 String animation = elem.getAttribute("animation");
 
-                String[] items = elem.getAttribute("items").split(",");
+                String[] items = elem.getAttribute("items").split("\\s*,\\s*");
 
                 String bullet = elem.getAttribute("bullet");
 

@@ -18,8 +18,8 @@ public class SoundBufferManager extends ContentManager<SoundBuffer> {
     }
 
     public static void playSound(Sound sound) {
-        if (sound.getStatus() == SoundSource.Status.STOPPED || sound.getStatus() == SoundSource.Status.PAUSED) {
+        //if (sound.getStatus() == SoundSource.Status.STOPPED || sound.getStatus() == SoundSource.Status.PAUSED) {
             sound.play();
-        }
+        //}
     }
 }

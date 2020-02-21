@@ -1,5 +1,29 @@
 <levels>
     <level name="thing">
+        <dialogue>
+            <line character="Ishmael">
+                Call me Ishmael. Some years ago—never mind how long precisely—having little
+                or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about
+                a little and see the watery part of the world. It is a way I have of driving off the spleen and
+                regulating the circulation. Whenever I find myself growing grim about the mouth; whenever it is a damp,
+                drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and
+                bringing
+                up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me,
+                that it requires a strong moral principle to prevent me from deliberately stepping into the street,
+                and methodically knocking people’s hats off—then, I account it high time to get to sea as soon as I can.
+                This is my substitute for pistol and ball. With a philosophical flourish Cato throws himself upon his
+                sword;
+                I quietly take to the ship. There is nothing surprising in this. If they but knew it, almost all men in
+                their degree,
+                some time or other, cherish very nearly the same feelings towards the ocean with me.
+            </line>
+            <line character="Other">
+                There now is your insular city of the Manhattoes, belted round by wharves as Indian isles by coral
+                reefs—commerce surrounds it with her surf. Right and left, the streets take you waterward.
+                Its extreme downtown is the battery, where that noble mole is washed by waves, and cooled by breezes,
+                which a few hours previous were out of sight of land. Look at the crowds of water-gazers there.
+            </line>
+        </dialogue>
         <stage>
             <wave type="straight" start_x="0" start_y="500" end_x="600" end_y="300" num_ships="20"
                   entity_type="spaceship"
@@ -8,10 +32,52 @@
         </stage>
     </level>
     <level name="other">
+        <dialogue>
+            <line character="Luke">
+                He went down with them and stood on a level place. A large crowd of his disciples was there and a great
+                number of people from all over Judea, from Jerusalem, and from the coastal region around Tyre and Sidon,
+                who had come to hear him and to be healed of their diseases. Those troubled by impure spirits were
+                cured,
+                and the people all tried to touch him, because power was coming from him and healing them all.
+            </line>
+        </dialogue>
         <stage>
             <wave type="straight" start_x="300" start_y="500" end_x="600" end_y="300" num_ships="1"
                   entity_type="spaceship"
                   ship_name="player"/>
+        </stage>
+        <stage>
+            <wave type="sine" start_x="0" start_y="500" end_x="600" end_y="300" num_ships="20"
+                  entity_type="asteroid"
+                  ship_name="other"/>
+            <stationary pos_x="800" pos_y="800" entity_type="asteroid"/>
+        </stage>
+    </level>
+    <level name="dave">
+        <dialogue>
+            <line character="witches">
+                Double, double toil and trouble;
+                Fire burn and caldron bubble.
+                Fillet of a fenny snake,
+                In the caldron boil and bake;
+                Eye of newt and toe of frog,
+                Wool of bat and tongue of dog,
+                Adder's fork and blind-worm's sting,
+                Lizard's leg and howlet's wing,
+                For a charm of powerful trouble,
+                Like a hell-broth boil and bubble.
+
+                Double, double toil and trouble;
+                Fire burn and caldron bubble.
+                Cool it with a baboon's blood,
+                Then the charm is firm and good.
+            </line>
+        </dialogue>
+        <stage>
+            <wave type="sine" start_x="0" start_y="500" end_x="600" end_y="300" num_ships="20"
+                  entity_type="asteroid"
+                  ship_name="other"/>
+            <stationary pos_x="800" pos_y="800" entity_type="asteroid"/>
         </stage>
     </level>
 </levels>

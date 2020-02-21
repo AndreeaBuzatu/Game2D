@@ -4,6 +4,7 @@ import org.jsfml.graphics.RenderTarget;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Time;
 import org.jsfml.window.Keyboard;
+import uk.ac.lancaster.scc210.engine.ViewSize;
 import uk.ac.lancaster.scc210.engine.controller.Controller;
 import uk.ac.lancaster.scc210.engine.controller.ControllerAxis;
 import uk.ac.lancaster.scc210.engine.controller.ControllerButton;
@@ -21,6 +22,8 @@ import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 public class PlayerMovementSystem extends IterativeSystem {
     private final int SPEED_SCALE_DOWN = 100;
 
+    private final ViewSize viewSize;
+
     private boolean hasAxises;
 
     /**
@@ -30,6 +33,8 @@ public class PlayerMovementSystem extends IterativeSystem {
      */
     public PlayerMovementSystem(World world) {
         super(world, SpriteComponent.class, SpeedComponent.class, RotationComponent.class, PlayerComponent.class);
+
+        viewSize = (ViewSize) world.getServiceProvider().get(ViewSize.class);
 
         hasAxises = false;
 
@@ -86,6 +91,11 @@ public class PlayerMovementSystem extends IterativeSystem {
         }
 
         sprite.move(moveX, moveY);
+
+        // Re-run the collision detection to prevent player from holding down keys to allow them to escape the window
+        if (viewSize.outOfBounds(sprite)) {
+            viewSize.resetSprite(sprite);
+        }
     }
 
     private void handleRotation(Sprite sprite, float rotationAmount, float angle) {

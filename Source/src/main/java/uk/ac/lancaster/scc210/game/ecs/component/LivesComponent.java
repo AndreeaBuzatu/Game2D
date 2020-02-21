@@ -3,7 +3,9 @@ package uk.ac.lancaster.scc210.game.ecs.component;
 import uk.ac.lancaster.scc210.engine.ecs.Component;
 
 public class LivesComponent implements Component {
-    private int startingLives, lives;
+    private final int startingLives;
+
+    private int lives;
 
     public LivesComponent(int lives) {
         this.lives = lives;
