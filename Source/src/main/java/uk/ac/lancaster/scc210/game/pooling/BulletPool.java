@@ -14,7 +14,7 @@ import uk.ac.lancaster.scc210.game.prototypes.BulletPrototype;
  */
 public class BulletPool extends Pool {
     // Who cares if it's static? I don't
-    private static final int INITIAL_BULLETS = 100;
+    private static final int INITIAL_BULLETS = 5000;
 
     private final TextureManager textureManager;
 
@@ -32,10 +32,6 @@ public class BulletPool extends Pool {
         bulletPrototypeManager = (BulletPrototypeManager) serviceProvider.get(BulletPrototypeManager.class);
 
         textureManager = (TextureManager) serviceProvider.get(TextureManager.class);
-
-        for (int i = 0; i < INITIAL_BULLETS; i++) {
-            entities.offer(create());
-        }
     }
 
     @Override

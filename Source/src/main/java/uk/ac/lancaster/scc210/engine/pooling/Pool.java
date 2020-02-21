@@ -5,6 +5,7 @@ import uk.ac.lancaster.scc210.engine.ecs.component.PooledComponent;
 import uk.ac.lancaster.scc210.engine.prototypes.Prototype;
 import uk.ac.lancaster.scc210.engine.service.Service;
 
+import java.util.LinkedList;
 import java.util.Queue;
 
 public abstract class Pool implements Service {
@@ -12,10 +13,17 @@ public abstract class Pool implements Service {
 
     private final Prototype prototype;
 
+    private final int capacity;
+
     protected Pool(final int capacity, final Prototype prototype) {
+        this.capacity = capacity;
         this.prototype = prototype;
 
-        entities = new FixedQueue<>(capacity);
+        entities = new LinkedList<>();
+
+        for (int i = 0; i < capacity; i++) {
+            entities.add(create());
+        }
     }
 
     /**
@@ -24,13 +32,13 @@ public abstract class Pool implements Service {
      * @return the borrowed entity
      */
     protected Entity borrowEntity() {
-        Entity entity;
+        if (!entities.isEmpty()) {
+            System.out.println("Removing, Size: " + entities.size());
 
-        if ((entity = entities.poll()) == null) {
-            return create();
+            return entities.remove();
         }
 
-        return entity;
+        return create();
     }
 
     /**
@@ -40,13 +48,11 @@ public abstract class Pool implements Service {
      * @return the borrowed entity
      */
     public Entity borrowEntity(String entityName) {
-        Entity entity;
-
-        if ((entity = entities.poll()) == null) {
-            return create(entityName);
+        if (!entities.isEmpty()) {
+            return entities.remove();
         }
 
-        return entity;
+        return create(entityName);
     }
 
     /**
@@ -63,8 +69,8 @@ public abstract class Pool implements Service {
     }
 
     public void returnEntity(Entity entity) {
-        if (entity != null) {
-            entities.offer(entity);
+        if (entity != null && entities.size() < capacity) {
+            entities.add(entity);
         }
     }
 
