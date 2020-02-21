@@ -6,6 +6,7 @@ import uk.ac.lancaster.scc210.game.items.ItemEffect;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class PlayerComponent implements Component {
     private Set<ItemEffect> currentEffects;
@@ -25,7 +26,7 @@ public class PlayerComponent implements Component {
     }
 
     public void setCurrentEffects(Set<ItemEffect> currentEffects) {
-        this.currentEffects = currentEffects;
+        this.currentEffects.addAll(currentEffects);
     }
 
     public void changeScore(int score) {
