@@ -7,12 +7,19 @@ import uk.ac.lancaster.scc210.engine.ecs.Component;
 public class SpaceShipComponent implements Component {
     private final String[] items;
 
+    private final String bulletName;
+
     private final Sound firingSound, hitSound;
 
-    public SpaceShipComponent(String[] items, Sound firingSound, Sound hitSound) {
+    public SpaceShipComponent(String[] items, Sound firingSound, Sound hitSound,String bulletName) {
         this.items = items;
         this.firingSound = firingSound;
         this.hitSound = hitSound;
+        this.bulletName = bulletName;
+    }
+
+    public String getBulletName() {
+        return bulletName;
     }
 
     public String[] getItems() {
