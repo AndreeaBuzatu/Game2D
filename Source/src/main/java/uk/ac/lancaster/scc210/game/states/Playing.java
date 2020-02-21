@@ -235,8 +235,22 @@ public class Playing implements State {
             dialogueBox.update(deltaTime);
 
         } else if (!dialogueBox.isOpen() && !fadedIn) {
+            PlayerComponent playerComponent = (PlayerComponent) player.findComponent(PlayerComponent.class);
+
+            SpriteComponent playerSpriteComponent = (SpriteComponent) player.findComponent(SpriteComponent.class);
+
+            Sprite playerSprite = playerSpriteComponent.getSprite();
+
+            // Reset the players position and rotation when the player goes to a new level (and has faded in)
+            playerSprite.setPosition(playerComponent.getSpawnPoint());
+
+            playerSprite.setRotation(0);
+
             // Remove bullets from the world
             world.removeIf(entity -> entity.hasComponent(BulletComponent.class) || entity.hasComponent(EnemyComponent.class) || entity.hasComponent(ItemEffectsComponent.class));
+
+            // Set and respawn the level once it has been cleared
+            levelSystem.setLevel(level);
 
         } else if (fadedIn) {
             updateWorld(deltaTime);
@@ -254,9 +268,6 @@ public class Playing implements State {
 
             if (levelIterator.hasNext()) {
                 level = levelIterator.next();
-
-
-                levelSystem.setLevel(level);
 
                 dialogueBox.setDialogue(level.getLines());
 
