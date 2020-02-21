@@ -8,8 +8,7 @@ import uk.ac.lancaster.scc210.game.ecs.component.FiringPatternComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
 
 public class StarPatternEffect implements ItemEffect {
-
-    private Pattern oldPatern;
+    private Pattern oldPattern;
 
     private Pool pool;
 
@@ -29,7 +28,9 @@ public class StarPatternEffect implements ItemEffect {
 
             FiringPatternComponent firingPatternComponent = (FiringPatternComponent) entity.findComponent(FiringPatternComponent.class);
 
-            oldPatern = firingPatternComponent.getPattern();
+            if (oldPattern == null) {
+                oldPattern = firingPatternComponent.getPattern();
+            }
 
             firingPatternComponent.setPattern(new StarPattern(pool, entity, spaceShipComponent.getBulletName()));
 
@@ -40,6 +41,15 @@ public class StarPatternEffect implements ItemEffect {
 
     @Override
     public void reset(Entity entity) {
+        if (entity.hasComponent(FiringPatternComponent.class) && entity.hasComponent(SpaceShipComponent.class)) {
 
+
+            FiringPatternComponent firingPatternComponent = (FiringPatternComponent) entity.findComponent(FiringPatternComponent.class);
+
+            System.out.println("reset pattern");
+
+            firingPatternComponent.setPattern(oldPattern);
+
+        }
     }
 }
