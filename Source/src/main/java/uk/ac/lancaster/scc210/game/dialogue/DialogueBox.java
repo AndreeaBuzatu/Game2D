@@ -26,7 +26,7 @@ public class DialogueBox implements Drawable {
 
     private final int boxHeight;
 
-    private RectangleShape box;
+    private final RectangleShape box;
 
     private Time elapsedTime;
 
