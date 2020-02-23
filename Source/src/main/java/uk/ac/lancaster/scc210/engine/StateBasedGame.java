@@ -7,7 +7,6 @@ import org.jsfml.graphics.View;
 import org.jsfml.system.Clock;
 import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
-import org.jsfml.window.Keyboard;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
 import org.w3c.dom.Document;
@@ -23,8 +22,8 @@ import uk.ac.lancaster.scc210.engine.service.ServiceProvider;
 import uk.ac.lancaster.scc210.engine.states.State;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.EmptyStackException;
+import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -37,15 +36,11 @@ public class StateBasedGame {
      */
     public static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-    private final int FPS = 60;
+    private final ArrayList<InputListener> inputListeners;
 
-    private final float ZOOM_AMOUNT = 2.0f;
-
-    private final Queue<State> states;
+    private final Stack<State> states;
 
     private final View view;
-
-    private final int windowWidth, windowHeight;
 
     private final ViewSize viewSize;
 
@@ -57,7 +52,11 @@ public class StateBasedGame {
 
     private Time deltaTime, elapsedTime;
 
-    private final ArrayList<InputListener> inputListeners;
+    private final int FPS = 60;
+
+    private final float ZOOM_AMOUNT = 2.0f;
+
+    private final int windowWidth, windowHeight;
 
     /**
      * The Window which is presented to the player.
@@ -92,7 +91,7 @@ public class StateBasedGame {
 
         window.setFramerateLimit(FPS);
 
-        states = new LinkedList<>();
+        states = new Stack<>();
 
         serviceProvider = new ServiceProvider();
 
@@ -185,10 +184,6 @@ public class StateBasedGame {
                 case KEY_PRESSED:
                     inputListeners.forEach(listener -> listener.keyPressed(event.asKeyEvent()));
 
-                    if (event.asKeyEvent().key == Keyboard.Key.ESCAPE) {
-                        window.close();
-                    }
-
                     break;
 
                 case RESIZED:
@@ -203,16 +198,6 @@ public class StateBasedGame {
             }
         }
 
-        if (currentState.complete()) {
-            states.remove();
-
-            State state = states.peek();
-
-            if (state != null) {
-                currentState = states.peek();
-            }
-        }
-
         currentState.update(deltaTime);
     }
 
@@ -224,10 +209,23 @@ public class StateBasedGame {
         window.display();
     }
 
-    protected void addState(State state) {
+    public void pushState(State state) {
+        state.setup(this);
+
         states.add(state);
 
         currentState = states.peek();
+    }
+
+    public void popState() {
+        states.pop();
+
+        try {
+            currentState = states.peek();
+
+        } catch (EmptyStackException e) {
+            window.close();
+        }
     }
 
     /**
