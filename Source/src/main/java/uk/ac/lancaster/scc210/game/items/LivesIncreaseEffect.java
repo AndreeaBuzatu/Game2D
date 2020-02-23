@@ -3,10 +3,11 @@ package uk.ac.lancaster.scc210.game.items;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.game.ecs.component.LivesComponent;
 
-public class LivesIncreaseEffect implements ItemEffect {
-
+public class LivesIncreaseEffect extends PowerUpEffect {
     @Override
     public void react(Entity entity) {
+        super.react(entity);
+
         if (entity.hasComponent(LivesComponent.class)) {
             LivesComponent livesComponent = (LivesComponent) entity.findComponent(LivesComponent.class);
 
@@ -14,10 +15,5 @@ public class LivesIncreaseEffect implements ItemEffect {
 
             livesComponent.setLives(newLives);
         }
-    }
-
-    @Override
-    public void reset(Entity entity) {
-        //TODO - does anything need to go here? Lives reset at death anyway
     }
 }
