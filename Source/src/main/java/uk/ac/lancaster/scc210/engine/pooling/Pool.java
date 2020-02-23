@@ -33,8 +33,6 @@ public abstract class Pool implements Service {
      */
     protected Entity borrowEntity() {
         if (!entities.isEmpty()) {
-            System.out.println("Removing, Size: " + entities.size());
-
             return entities.remove();
         }
 
