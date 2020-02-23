@@ -7,7 +7,7 @@ import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
 
 public class SoundDeserialiser extends Deserialiser<SerialisedSound> {
     public SoundDeserialiser(Document document) throws ResourceNotFoundException {
-        super(document, document.getElementsByTagName("sounds"), "sound");
+        super(document, "sounds", "sound");
     }
 
     @Override

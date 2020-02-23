@@ -24,7 +24,7 @@ public abstract class Deserialiser<T extends Serialised> {
     /**
      * The Document.
      */
-    protected final Document document;
+    protected Document document;
 
     /**
      * The Nodes.
@@ -44,6 +44,10 @@ public abstract class Deserialiser<T extends Serialised> {
 
         serialised = new ArrayList<>();
 
+        if (document == null) {
+            createStandinXML();
+        }
+
         if (document != null) {
             nodes = document.getDocumentElement().getChildNodes();
 
@@ -55,18 +59,22 @@ public abstract class Deserialiser<T extends Serialised> {
      * Instantiates a new Deserialiser.
      *
      * @param document the xml document
-     * @param nodes    the child nodes used to deserialise
+     * @param nodeListTagName    the child nodeListTagName used to deserialise
      * @param tagName  the global tag name
      * @throws ResourceNotFoundException if the resource cannot be created or found
      */
-    Deserialiser(Document document, NodeList nodes, String tagName) throws ResourceNotFoundException {
+    public Deserialiser(Document document, String nodeListTagName, String tagName) throws ResourceNotFoundException {
         this.document = document;
-        this.nodes = nodes;
         this.tagName = tagName;
 
         serialised = new ArrayList<>();
 
-        deserialise();
+        if (document != null) {
+            this.nodes = document.getElementsByTagName(nodeListTagName);
+
+            deserialise();
+        }
+
     }
 
     /**
@@ -97,6 +105,9 @@ public abstract class Deserialiser<T extends Serialised> {
         return node.getNodeType() == Node.ELEMENT_NODE && node.getNodeName().equals(tagName);
     }
 
+    public void createStandinXML() throws ResourceNotFoundException {
+    }
+
     /**
      * Gets serialised.
      *
@@ -104,5 +115,9 @@ public abstract class Deserialiser<T extends Serialised> {
      */
     public List<T> getSerialised() {
         return serialised;
+    }
+
+    public Document getDocument() {
+        return document;
     }
 }

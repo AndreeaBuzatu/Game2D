@@ -17,7 +17,7 @@ public class TextureAtlasDeserialiser extends Deserialiser<SerialisedTextureAtla
      * @throws ResourceNotFoundException when the document can't be found or created
      */
     public TextureAtlasDeserialiser(Document document) throws ResourceNotFoundException {
-        super(document, document.getElementsByTagName("atlas"), "atlas");
+        super(document, "atlas", "atlas");
     }
 
     public void deserialise() throws ResourceNotFoundException {
