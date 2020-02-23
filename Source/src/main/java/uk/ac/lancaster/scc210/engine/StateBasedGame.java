@@ -248,6 +248,14 @@ public class StateBasedGame {
         return null;
     }
 
+    protected Document deserialiseLocalXML(final String fileName) throws ResourceNotFoundException {
+        XMLAdapter xmlAdapter = new XMLAdapter();
+
+        ResourceLoader.loadFromLocalStream(xmlAdapter, fileName);
+
+        return xmlAdapter.getResource();
+    }
+
     /**
      * Gets service provider.
      *
