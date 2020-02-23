@@ -20,6 +20,7 @@ import uk.ac.lancaster.scc210.game.ecs.system.*;
 import uk.ac.lancaster.scc210.game.level.Level;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
 import uk.ac.lancaster.scc210.game.resources.PlayerData;
+import uk.ac.lancaster.scc210.game.resources.PlayerWriter;
 
 import java.util.List;
 
@@ -38,6 +39,8 @@ public class Playing implements State {
     private LevelManager levelManager;
 
     private LevelSystem levelSystem;
+
+    private PlayerWriter playerScoreWriter;
 
     private Level level;
 
@@ -63,19 +66,26 @@ public class Playing implements State {
 
         PlayerData playerData = (PlayerData) game.getServiceProvider().get(PlayerData.class);
 
-        currentUnlocked = levelManager.indexOf(playerData.getUnlockedLevel());
+        String unlockedLevel = playerData.getUnlockedLevel();
+
+        currentUnlocked = levelManager.indexOf(unlockedLevel);
+
+        // If the level can't be found, default to the first level
+        if (currentUnlocked < 0) {
+            unlockedLevel = levelManager.getLevelList().get(0).getName();
+
+            currentUnlocked = levelManager.indexOf(unlockedLevel);
+        }
 
         totalLevels = levelManager.getLevelList();
 
-        unlockedLevels = levelManager.getUnlocked(playerData.getUnlockedLevel());
+        unlockedLevels = levelManager.getUnlocked(unlockedLevel);
 
         level = unlockedLevels.get(currentUnlocked);
 
         world = new World(game.getServiceProvider());
 
         levelSystem = new LevelSystem(world, level);
-
-        //levelSystem.setLevel(levelQueue.get(0));
 
         world.addPool((BulletPool) game.getServiceProvider().get(BulletPool.class));
 
@@ -130,6 +140,8 @@ public class Playing implements State {
         playerComponent.setSpawnPoint(new Vector2f((viewBounds.width / 2) - playerSprite.getGlobalBounds().width, (viewBounds.height / 1.5f) - playerSprite.getGlobalBounds().height));
 
         playerSprite.setPosition(playerComponent.getSpawnPoint());
+
+        playerScoreWriter = (PlayerWriter) game.getServiceProvider().get(PlayerWriter.class);
 
         world.addEntity(player);
 
@@ -211,6 +223,8 @@ public class Playing implements State {
                 level = unlockedLevels.get(currentUnlocked);
 
                 levelSystem.setLevel(level);
+
+                playerScoreWriter.writePlayerLevel(level.getName());
 
             } else {
                 completed = true;

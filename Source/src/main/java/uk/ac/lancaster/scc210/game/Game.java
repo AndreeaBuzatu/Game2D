@@ -1,5 +1,6 @@
 package uk.ac.lancaster.scc210.game;
 
+import org.w3c.dom.Document;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import uk.ac.lancaster.scc210.engine.content.ShaderManager;
 import uk.ac.lancaster.scc210.engine.content.SoundBufferManager;
@@ -25,6 +26,8 @@ public class Game extends StateBasedGame {
      * The constant LOGGER.
      */
     public static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
+    private LevelManager levelManager;
 
     /**
      * Instantiates a new Game.
@@ -63,11 +66,9 @@ public class Game extends StateBasedGame {
 
             LevelDeserialiser levelDeserialiser = new LevelDeserialiser(spaceShipManager, textureManager, shaderManager, deserialiseXML("levels.xml"));
 
-            LevelManager levelManager = new LevelManager(levelDeserialiser.getSerialised());
+            levelManager = new LevelManager(levelDeserialiser.getSerialised());
 
-            PlayerDataDeserialiser playerDataDeserialiser = new PlayerDataDeserialiser(deserialiseXML("player.xml"));
-
-            serviceProvider.put(PlayerData.class, playerDataDeserialiser.getPlayerData());
+            loadPlayerXML();
 
             serviceProvider.put(LevelManager.class, levelManager);
 
@@ -78,5 +79,32 @@ public class Game extends StateBasedGame {
         serviceProvider.put(BulletPool.class, new BulletPool(serviceProvider));
 
         super.addState(new Completion());
+    }
+
+    private void loadPlayerXML() throws ResourceNotFoundException {
+        Document playerDocument = null;
+
+        try {
+            playerDocument = deserialiseLocalXML("player.xml");
+
+        } catch (ResourceNotFoundException ignored) {
+        } finally {
+            PlayerDataDeserialiser playerDataDeserialiser = new PlayerDataDeserialiser(playerDocument, levelManager);
+
+            // If the player.xml file can't be found, create a in-memory replacement, and manually deserialise
+            if (playerDocument == null) {
+                playerDataDeserialiser.createStandinXML();
+
+                playerDocument = playerDataDeserialiser.getDocument();
+
+                playerDataDeserialiser.deserialise();
+            }
+
+            PlayerWriter playerWriter = new PlayerWriter(playerDocument);
+
+            serviceProvider.put(PlayerWriter.class, playerWriter);
+
+            serviceProvider.put(PlayerData.class, playerDataDeserialiser.getPlayerData());
+        }
     }
 }
