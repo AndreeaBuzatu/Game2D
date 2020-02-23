@@ -88,6 +88,8 @@ public class Playing implements State {
 
         world.addSystem(new ItemCollisionSystem(world));
 
+        world.addSystem(new ItemUpdateSystem(world));
+
         world.addSystem(new SpaceShipCollisionSystem(world));
 
         world.addSystem(new EnemyFiringSystem(world));
