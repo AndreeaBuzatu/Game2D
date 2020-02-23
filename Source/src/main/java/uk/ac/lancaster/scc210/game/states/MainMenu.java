@@ -28,6 +28,8 @@ public class MainMenu implements State {
 
     @Override
     public void setup(StateBasedGame game) {
+        LevelSelect levelSelect = new LevelSelect();
+
         fontManager = (FontManager) game.getServiceProvider().get(FontManager.class);
 
         viewSize = (ViewSize) game.getServiceProvider().get(ViewSize.class);
@@ -40,11 +42,11 @@ public class MainMenu implements State {
 
         interfaceList = new InterfaceList(game, fontManager.get("font"), new Vector2f(headerPos.x, headerPos.y + LIST_PADDING));
 
-        interfaceList.addListOption("example", (() -> System.out.println("Hello, world")));
+        interfaceList.addListOption("Play", (() -> System.out.println("Hello, world")));
 
-        interfaceList.addListOption("Other", (() -> System.out.println("Thing")));
+        interfaceList.addListOption("Level Select", (() -> game.pushState(levelSelect)));
 
-        interfaceList.addListOption("Item", (() -> System.out.println("Item")));
+        interfaceList.addListOption("Exit", (game::popState));
 
         interfaceList.setEnabled(true);
     }
@@ -76,10 +78,4 @@ public class MainMenu implements State {
 
         target.draw(interfaceList);
     }
-
-    @Override
-    public boolean complete() {
-        return false;
-    }
-
 }

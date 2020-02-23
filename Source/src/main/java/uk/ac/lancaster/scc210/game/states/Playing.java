@@ -166,11 +166,6 @@ public class Playing implements State {
     }
 
     @Override
-    public boolean complete() {
-        return completed;
-    }
-
-    @Override
     public void update(Time deltaTime) {
         world.update(deltaTime);
 
