@@ -94,7 +94,7 @@ public class FlashComponent implements Component {
         return currentState;
     }
 
-    private void setShaderWhite() {
+    public void setShaderWhite() {
         flashShader.setParameter("result_colour", 1, 1, 1, 1);
     }
 
