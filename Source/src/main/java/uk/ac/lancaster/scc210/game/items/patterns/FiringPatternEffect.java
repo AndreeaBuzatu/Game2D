@@ -1,19 +1,23 @@
-package uk.ac.lancaster.scc210.game.items;
+package uk.ac.lancaster.scc210.game.items.patterns;
 
+import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.pooling.Pool;
 import uk.ac.lancaster.scc210.game.bullets.patterns.Pattern;
 import uk.ac.lancaster.scc210.game.ecs.component.FiringPatternComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
+import uk.ac.lancaster.scc210.game.items.TimedItemEffect;
 
-public abstract class FiringPatternEffect implements ItemEffect {
+public abstract class FiringPatternEffect extends TimedItemEffect {
     protected Pool pool;
 
     protected Pattern pattern;
 
     private Pattern oldPattern;
 
-    FiringPatternEffect(Pool pool) {
+    FiringPatternEffect(Pool pool, Time duration) {
+        super(duration);
+
         this.pool = pool;
     }
 
@@ -54,5 +58,5 @@ public abstract class FiringPatternEffect implements ItemEffect {
         }
     }
 
-    abstract void setPattern(Entity entity);
+    protected abstract void setPattern(Entity entity);
 }
