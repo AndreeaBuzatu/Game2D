@@ -56,13 +56,15 @@ public class BulletCollisionSystem extends IterativeSystem {
                 if (colliding && !bothEnemies && !isItem && !sameEntity) {
                     PooledComponent pooledComponent = (PooledComponent) entity.findComponent(PooledComponent.class);
 
-                    LivesComponent livesComponent = (LivesComponent) transformable.findComponent(LivesComponent.class);
+                    //LivesComponent livesComponent = (LivesComponent) transformable.findComponent(LivesComponent.class);
 
                     FlashComponent flashComponent = (FlashComponent) transformable.findComponent(FlashComponent.class);
 
                     flashComponent.flash(deltaTime);
 
-                    livesComponent.setLives(livesComponent.getLives() - 1);
+                    //livesComponent.setLives(livesComponent.getLives() - 1);
+
+                    bulletComponent.getBulletEffect().react(transformable);
 
                     if (transformable.hasComponent(SpaceShipComponent.class)) {
                         SpaceShipComponent spaceShipComponent = (SpaceShipComponent) transformable.findComponent(SpaceShipComponent.class);

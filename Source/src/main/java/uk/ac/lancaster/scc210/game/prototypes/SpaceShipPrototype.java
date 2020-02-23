@@ -10,6 +10,7 @@ import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.pooling.Pool;
 import uk.ac.lancaster.scc210.engine.prototypes.Prototype;
 import uk.ac.lancaster.scc210.game.bullets.patterns.CrossPattern;
+import uk.ac.lancaster.scc210.game.bullets.patterns.StraightLinePattern;
 import uk.ac.lancaster.scc210.game.ecs.component.*;
 import uk.ac.lancaster.scc210.game.resources.SerialisedSpaceShip;
 
@@ -71,7 +72,7 @@ public class SpaceShipPrototype implements Prototype {
         Entity spaceShip = World.createEntity(animationComponent, spriteComponent, speedComponent, rotationComponent, spaceShipComponent, orientatedBoxComponent, transformableComponent, scoreComponent, livesComponent, flashComponent);
 
         // Let's assume ships will use the straight line pattern for now
-        final FiringPatternComponent firingPatternComponent = new FiringPatternComponent(new CrossPattern(pool, spaceShip, bulletName));
+        final FiringPatternComponent firingPatternComponent = new FiringPatternComponent(new StraightLinePattern(pool, spaceShip, bulletName));
 
         spaceShip.addComponent(firingPatternComponent);
 
