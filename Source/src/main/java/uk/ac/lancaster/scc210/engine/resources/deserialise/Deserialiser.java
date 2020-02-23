@@ -63,7 +63,7 @@ public abstract class Deserialiser<T extends Serialised> {
      * @param tagName  the global tag name
      * @throws ResourceNotFoundException if the resource cannot be created or found
      */
-    public Deserialiser(Document document, String nodeListTagName, String tagName) throws ResourceNotFoundException {
+    protected Deserialiser(Document document, String nodeListTagName, String tagName) throws ResourceNotFoundException {
         this.document = document;
         this.tagName = tagName;
 
@@ -105,7 +105,7 @@ public abstract class Deserialiser<T extends Serialised> {
         return node.getNodeType() == Node.ELEMENT_NODE && node.getNodeName().equals(tagName);
     }
 
-    public void createStandinXML() throws ResourceNotFoundException {
+    protected void createStandinXML() throws ResourceNotFoundException {
     }
 
     /**

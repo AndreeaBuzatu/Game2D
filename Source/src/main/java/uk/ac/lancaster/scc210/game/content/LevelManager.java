@@ -8,7 +8,7 @@ import java.util.List;
 
 public class LevelManager extends ContentManager<Level> {
     // As a HashMap can't ensure ordering, use a queue to enter levels as they are inserted, to ensure ordering
-    private List<Level> levelList;
+    private final List<Level> levelList;
 
     public LevelManager(List<Level> levels) {
         super(null);

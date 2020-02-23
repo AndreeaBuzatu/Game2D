@@ -42,6 +42,7 @@ public class PlayerWriter implements Service {
             System.out.println(playerFile.getAbsolutePath());
 
             // Create if doesn't exist
+            //noinspection ResultOfMethodCallIgnored
             playerFile.createNewFile();
 
             FileWriter writer = new FileWriter(playerFile);
@@ -71,7 +72,7 @@ public class PlayerWriter implements Service {
         }
     }
 
-    protected boolean foundNode(Node node, String tagName) {
+    private boolean foundNode(Node node, String tagName) {
         return node.getNodeType() == Node.ELEMENT_NODE && node.getNodeName().equals(tagName);
     }
 }
