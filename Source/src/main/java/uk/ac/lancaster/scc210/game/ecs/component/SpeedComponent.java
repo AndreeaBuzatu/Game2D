@@ -6,8 +6,6 @@ import uk.ac.lancaster.scc210.engine.ecs.Component;
  * Indicates that an entity has an internal speed.
  */
 public class SpeedComponent implements Component {
-    private final int startingSpeed;
-
     private int speed;
 
     /**
@@ -17,8 +15,6 @@ public class SpeedComponent implements Component {
      */
     public SpeedComponent(int speed) {
         this.speed = speed;
-
-        startingSpeed = speed;
     }
 
     /**
@@ -28,10 +24,6 @@ public class SpeedComponent implements Component {
      */
     public int getSpeed() {
         return speed;
-    }
-
-    public int getStartingSpeed() {
-        return startingSpeed;
     }
 
     public void setSpeed(int speed) {
