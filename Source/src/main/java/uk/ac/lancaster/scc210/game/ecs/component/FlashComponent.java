@@ -18,10 +18,16 @@ public class FlashComponent implements Component {
 
     private RenderStates currentState;
 
+    private Shader flashShader;
+
     private boolean flashing;
 
     public FlashComponent(Sprite sprite, Shader flashShader) {
+        this.flashShader = flashShader;
+
         textureState = new RenderStates(sprite.getTexture());
+
+        setShaderWhite();
 
         flashState = new RenderStates(flashShader);
 
@@ -86,5 +92,13 @@ public class FlashComponent implements Component {
 
     public RenderStates getCurrentState() {
         return currentState;
+    }
+
+    private void setShaderWhite() {
+        flashShader.setParameter("result_colour", 1, 1, 1, 1);
+    }
+
+    public void setShaderRed() {
+        flashShader.setParameter("result_colour", 1, 0, 0, 1);
     }
 }
