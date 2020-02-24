@@ -5,12 +5,14 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import uk.ac.lancaster.scc210.engine.content.ShaderManager;
 import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.prototypes.Prototype;
 import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
 import uk.ac.lancaster.scc210.engine.resources.deserialise.Deserialiser;
+import uk.ac.lancaster.scc210.engine.service.ServiceProvider;
 import uk.ac.lancaster.scc210.game.content.SpaceShipPrototypeManager;
 import uk.ac.lancaster.scc210.game.dialogue.Line;
 import uk.ac.lancaster.scc210.game.ecs.component.*;
@@ -41,8 +43,6 @@ public class LevelDeserialiser extends Deserialiser<Level> {
 
     private final String ASTEROID = "asteroid";
 
-    private final int VIEW_SIZE_FACTOR = 7;
-
     private final SpaceShipPrototypeManager spaceShipManager;
 
     private final AsteroidPrototype asteroidPrototype;
@@ -53,12 +53,12 @@ public class LevelDeserialiser extends Deserialiser<Level> {
      * @param document the xml document
      * @throws ResourceNotFoundException if the resource cannot be created or found
      */
-    public LevelDeserialiser(SpaceShipPrototypeManager spaceShipManager, TextureManager textureManager, ShaderManager shaderManager, Document document) throws ResourceNotFoundException {
+    public LevelDeserialiser(ServiceProvider serviceProvider, Document document) throws ResourceNotFoundException {
         super(document, "level");
 
-        this.spaceShipManager = spaceShipManager;
+        this.spaceShipManager = (SpaceShipPrototypeManager) serviceProvider.get(SpaceShipPrototypeManager.class);
 
-        asteroidPrototype = new AsteroidPrototype(textureManager, shaderManager);
+        asteroidPrototype = new AsteroidPrototype((TextureManager) serviceProvider.get(TextureManager.class), (ShaderManager) serviceProvider.get(ShaderManager.class));
 
         deserialise();
     }
@@ -138,13 +138,13 @@ public class LevelDeserialiser extends Deserialiser<Level> {
             if (foundNode(node, WAVE_TAG)) {
                 Element elem = (Element) node;
 
-                float originX = Float.parseFloat(elem.getAttribute("start_x")) * VIEW_SIZE_FACTOR;
+                float originX = Float.parseFloat(elem.getAttribute("start_x")) * StateBasedGame.ZOOM_AMOUNT;
 
-                float originY = (Float.parseFloat(elem.getAttribute("start_y")) * VIEW_SIZE_FACTOR) + Playing.INFO_BOX_HEIGHT;
+                float originY = (Float.parseFloat(elem.getAttribute("start_y")) + Playing.INFO_BOX_HEIGHT) * StateBasedGame.ZOOM_AMOUNT;
 
-                float destinationX = Float.parseFloat(elem.getAttribute("end_x")) * VIEW_SIZE_FACTOR;
+                float destinationX = Float.parseFloat(elem.getAttribute("end_x")) * StateBasedGame.ZOOM_AMOUNT;
 
-                float destinationY = (Float.parseFloat(elem.getAttribute("end_y")) * VIEW_SIZE_FACTOR) + Playing.INFO_BOX_HEIGHT;
+                float destinationY = (Float.parseFloat(elem.getAttribute("end_y")) + Playing.INFO_BOX_HEIGHT) * StateBasedGame.ZOOM_AMOUNT;
 
                 int numShips = Integer.parseInt(elem.getAttribute("num_ships"));
 
@@ -158,6 +158,12 @@ public class LevelDeserialiser extends Deserialiser<Level> {
                 } else if (entityType.equals(ASTEROID)) {
                     prototype = asteroidPrototype;
                 }
+
+                /*
+                Vector2f origin = new Vector2f(target.mapCoordsToPixel(new Vector2f(originX, originY), view));
+
+                Vector2f destination = new Vector2f(target.mapCoordsToPixel(new Vector2f(destinationX, destinationY), view));
+                 */
 
                 Vector2f origin = new Vector2f(originX, originY);
 
@@ -183,9 +189,9 @@ public class LevelDeserialiser extends Deserialiser<Level> {
             if (foundNode(node, STATIONARY_TAG)) {
                 Element elem = (Element) node;
 
-                float posX = Float.parseFloat(elem.getAttribute("pos_x")) * VIEW_SIZE_FACTOR;
+                float posX = Float.parseFloat(elem.getAttribute("pos_x")) * StateBasedGame.ZOOM_AMOUNT;
 
-                float posY = (Float.parseFloat(elem.getAttribute("pos_y")) * VIEW_SIZE_FACTOR) + Playing.INFO_BOX_HEIGHT;
+                float posY = Float.parseFloat(elem.getAttribute("pos_y")) * StateBasedGame.ZOOM_AMOUNT;
 
                 Vector2f pos = new Vector2f(posX, posY);
 
