@@ -5,6 +5,7 @@ import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
+import uk.ac.lancaster.scc210.game.bullets.effects.BulletEffect;
 import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
 import uk.ac.lancaster.scc210.game.items.ItemEffect;
 
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class ItemUpdateSystem extends IterativeSystem {
+public class PlayerEffectsUpdateSystem extends IterativeSystem {
     private Entity playerEntity;
 
     private PlayerComponent playerComponent;
@@ -22,7 +23,7 @@ public class ItemUpdateSystem extends IterativeSystem {
      *
      * @param world the world containing entities to use
      */
-    public ItemUpdateSystem(World world) {
+    public PlayerEffectsUpdateSystem(World world) {
         super(world, PlayerComponent.class);
     }
 
@@ -46,19 +47,34 @@ public class ItemUpdateSystem extends IterativeSystem {
      */
     @Override
     public void update(Time deltaTime) {
-        if (playerComponent.getCurrentEffects().isEmpty()) {
+        updateBulletEffect(deltaTime);
+
+        if (playerComponent.getCurrentItemEffects().isEmpty()) {
             return;
         }
 
-        List<ItemEffect> itemEffects = playerComponent.getCurrentEffects().stream()
+        List<ItemEffect> itemEffects = playerComponent.getCurrentItemEffects().stream()
                 .filter(ItemEffect::isDead)
                 .collect(Collectors.toList());
 
         itemEffects.forEach(item -> item.reset(playerEntity));
 
-        playerComponent.getCurrentEffects().removeAll(itemEffects);
+        playerComponent.getCurrentItemEffects().removeAll(itemEffects);
 
-        playerComponent.getCurrentEffects().forEach(item -> item.update(deltaTime));
+        playerComponent.getCurrentItemEffects().forEach(item -> item.update(deltaTime));
+    }
+
+    private void updateBulletEffect(Time deltaTime) {
+        BulletEffect bulletEffect = playerComponent.getBulletEffect();
+
+        if (bulletEffect.isDead()) {
+            bulletEffect.reset();
+
+            playerComponent.setBulletEffectToDefault();
+
+        } else {
+            bulletEffect.update(deltaTime);
+        }
     }
 
     /**

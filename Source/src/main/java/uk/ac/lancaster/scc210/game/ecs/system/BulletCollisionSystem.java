@@ -40,17 +40,6 @@ public class BulletCollisionSystem extends IterativeSystem {
 
             Entity bulletCreator = bulletComponent.getCreator();
 
-            if (bulletComponent.getBulletEffect().isDead()) {
-                bulletComponent.getBulletEffect().reset();
-
-                bulletComponent.setBulletEffectToDefault();
-
-                System.out.println("Is dead");
-
-            } else {
-                bulletComponent.getBulletEffect().update(deltaTime);
-            }
-
             for (Entity transformable : transformables) {
                 OrientatedBoxComponent transformableOrientatedBox = (OrientatedBoxComponent) transformable.findComponent(OrientatedBoxComponent.class);
 
@@ -71,7 +60,11 @@ public class BulletCollisionSystem extends IterativeSystem {
 
                     flashComponent.flash(deltaTime);
 
-                    bulletComponent.getBulletEffect().react(transformable);
+                    if (bulletCreator.hasComponent(PlayerComponent.class)) {
+                        PlayerComponent playerComponent = (PlayerComponent) bulletCreator.findComponent(PlayerComponent.class);
+
+                        playerComponent.getBulletEffect().react(transformable);
+                    }
 
                     if (transformable.hasComponent(SpaceShipComponent.class)) {
                         SpaceShipComponent spaceShipComponent = (SpaceShipComponent) transformable.findComponent(SpaceShipComponent.class);
