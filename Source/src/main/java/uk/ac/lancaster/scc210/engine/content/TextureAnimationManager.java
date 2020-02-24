@@ -1,6 +1,7 @@
 package uk.ac.lancaster.scc210.engine.content;
 
 import uk.ac.lancaster.scc210.engine.animation.TextureAnimation;
+import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
 import uk.ac.lancaster.scc210.engine.resources.deserialise.SerialisedAnimation;
 
 import java.util.List;
@@ -14,8 +15,8 @@ public class TextureAnimationManager extends ContentManager<TextureAnimation> {
      *
      * @param serialisedAnimations the serialised animations
      */
-    public TextureAnimationManager(List<SerialisedAnimation> serialisedAnimations) {
-        super(null);
+    public TextureAnimationManager(List<SerialisedAnimation> serialisedAnimations) throws ResourceNotFoundException {
+        super(new TextureAnimation(new TextureAtlas(), 0, 0, 1));
 
         serialisedAnimations
                 .parallelStream()

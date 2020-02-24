@@ -14,11 +14,13 @@ import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
  * The grid must have a fixed width and height (although they can be different).
  */
 public class TextureAtlas {
-    private final String fileName;
+    private final Image textureAtlas;
 
     private final int spriteWidth, spriteHeight;
 
-    private final Image textureAtlas;
+    private final MissingTexture missingTexture;
+
+    private String fileName;
 
     /**
      * Instantiates a new Texture atlas.
@@ -35,7 +37,23 @@ public class TextureAtlas {
 
         textureAtlas = new Image();
 
+        missingTexture = new MissingTexture(spriteWidth, spriteHeight);
+
         ResourceLoader.loadFromStream(new ImageAdapter(textureAtlas), fileName);
+    }
+
+    /**
+     * Instantiates a new Texture Atlas. This should only be used for the TextureAtlasManager, to handle unknown Texture Atlases
+     *
+     * @throws ResourceNotFoundException if the missing texture can't be created. If we reach this point, we're SOI
+     */
+    TextureAtlas() throws ResourceNotFoundException {
+        this.spriteWidth = TextureManager.SPRITE_WIDTH;
+        this.spriteHeight = TextureManager.SPRITE_HEIGHT;
+
+        textureAtlas = new Image();
+
+        missingTexture = new MissingTexture(spriteWidth, spriteHeight);
     }
 
     /**
@@ -44,9 +62,8 @@ public class TextureAtlas {
      * @param row    row to capture from the texture atlas
      * @param column column to capture from the texture atlas
      * @return a texture with the texture atlas as it's texture and a rectangle containing the requested sprite
-     * @throws ResourceNotFoundException when a texture cannot be created from the given row and column
      */
-    public Texture get(final int row, final int column) throws ResourceNotFoundException {
+    public Texture get(final int row, final int column) {
         Texture texture = new Texture();
 
         IntRect area = new IntRect(column * spriteWidth, row * spriteHeight, spriteWidth, spriteHeight);
@@ -57,7 +74,8 @@ public class TextureAtlas {
             return texture;
 
         } catch (TextureCreationException e) {
-            throw new ResourceNotFoundException(fileName);
+            // If the texture can't be created, return the missing texture
+            return missingTexture.getTexture();
         }
     }
 

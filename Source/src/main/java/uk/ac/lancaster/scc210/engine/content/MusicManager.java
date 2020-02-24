@@ -10,7 +10,7 @@ public class MusicManager extends ContentManager<Music> {
      * Instantiates a new Content manager.
      */
     public MusicManager(List<SerialisedMusic> serialisedMusic) {
-        super(null);
+        super(new Music());
 
         serialisedMusic.parallelStream().forEach(piece -> put(piece.getName(), piece.getMusic()));
     }
