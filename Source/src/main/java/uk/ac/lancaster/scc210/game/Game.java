@@ -14,8 +14,7 @@ import uk.ac.lancaster.scc210.game.pooling.BulletPool;
 import uk.ac.lancaster.scc210.game.resources.BulletDeserialiser;
 import uk.ac.lancaster.scc210.game.resources.LevelDeserialiser;
 import uk.ac.lancaster.scc210.game.resources.SpaceShipDeserialiser;
-import uk.ac.lancaster.scc210.game.states.Completion;
-import uk.ac.lancaster.scc210.game.states.Playing;
+import uk.ac.lancaster.scc210.game.states.MainMenu;
 
 import java.util.logging.Logger;
 
@@ -32,7 +31,11 @@ public class Game extends StateBasedGame {
      * Instantiates a new Game.
      */
     public Game() {
-        super("Shooter", 1280, 720, new Playing());
+        super("Shooter", 1280, 720);
+
+        MainMenu mainMenu = new MainMenu();
+
+        pushState(mainMenu);
 
         try {
             TextureAnimationManager animationManager = (TextureAnimationManager) serviceProvider.get(TextureAnimationManager.class);
@@ -74,7 +77,5 @@ public class Game extends StateBasedGame {
         }
 
         serviceProvider.put(BulletPool.class, new BulletPool(serviceProvider));
-
-        super.addState(new Completion());
     }
 }

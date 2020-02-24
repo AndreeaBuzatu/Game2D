@@ -13,4 +13,7 @@
         <texture name="example_bullet" row="0" column="0"/>
         <texture name="asteroid" row="1" column="0"/>
     </atlas>
+    <atlas src="level-select.jpg" texture_width="1280" texture_height="1280">
+        <texture name="level-select" row="0" column="0"/>
+    </atlas>
 </atlases>

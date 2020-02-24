@@ -225,10 +225,6 @@ public class Playing implements State {
         }
     }
 
-    public boolean complete() {
-        return completed;
-    }
-
     @Override
     public void update(Time deltaTime) {
         if (dialogueBox.isOpen()) {

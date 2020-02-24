@@ -7,7 +7,6 @@ import org.jsfml.graphics.View;
 import org.jsfml.system.Clock;
 import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
-import org.jsfml.window.Keyboard;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
 import org.w3c.dom.Document;
@@ -22,8 +21,9 @@ import uk.ac.lancaster.scc210.engine.resources.deserialise.TextureAtlasDeseriali
 import uk.ac.lancaster.scc210.engine.service.ServiceProvider;
 import uk.ac.lancaster.scc210.engine.states.State;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayList;
+import java.util.EmptyStackException;
+import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,15 +36,11 @@ public class StateBasedGame {
      */
     public static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-    private final int FPS = 60;
+    private final ArrayList<InputListener> inputListeners;
 
-    private final float ZOOM_AMOUNT = 2.0f;
-
-    private final Queue<State> states;
+    private final Stack<State> states;
 
     private final View view;
-
-    private final int windowWidth, windowHeight;
 
     private final ViewSize viewSize;
 
@@ -55,6 +51,12 @@ public class StateBasedGame {
     private final Clock clock;
 
     private Time deltaTime, elapsedTime;
+
+    private final int FPS = 60;
+
+    private final float ZOOM_AMOUNT = 2.0f;
+
+    private final int windowWidth, windowHeight;
 
     /**
      * The Window which is presented to the player.
@@ -72,12 +74,10 @@ public class StateBasedGame {
      * @param name         the name of the game. Place onto the window title bar
      * @param windowWidth  the window width
      * @param windowHeight the window height
-     * @param state        the default starting state of the game
      */
-    protected StateBasedGame(final String name, final int windowWidth, final int windowHeight, final State state) {
+    protected StateBasedGame(final String name, final int windowWidth, final int windowHeight) {
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
-        this.currentState = state;
 
         window = new RenderWindow(new VideoMode(windowWidth, windowHeight), name);
 
@@ -91,11 +91,11 @@ public class StateBasedGame {
 
         window.setFramerateLimit(FPS);
 
-        states = new LinkedList<>();
-
-        states.add(currentState);
+        states = new Stack<>();
 
         serviceProvider = new ServiceProvider();
+
+        inputListeners = new ArrayList<>();
 
         try {
             TextureAtlasDeserialiser textureAtlasDeserialiser = new TextureAtlasDeserialiser(deserialiseXML("atlases.xml"));
@@ -182,9 +182,7 @@ public class StateBasedGame {
                     break;
 
                 case KEY_PRESSED:
-                    if (event.asKeyEvent().key == Keyboard.Key.ESCAPE) {
-                        window.close();
-                    }
+                    inputListeners.forEach(listener -> listener.keyPressed(event.asKeyEvent()));
 
                     break;
 
@@ -200,16 +198,6 @@ public class StateBasedGame {
             }
         }
 
-        if (currentState.complete()) {
-            states.remove();
-
-            State state = states.peek();
-
-            if (state != null) {
-                currentState = states.peek();
-            }
-        }
-
         currentState.update(deltaTime);
     }
 
@@ -221,10 +209,23 @@ public class StateBasedGame {
         window.display();
     }
 
-    protected void addState(State state) {
+    public void pushState(State state) {
+        state.setup(this);
+
         states.add(state);
 
         currentState = states.peek();
+    }
+
+    public void popState() {
+        states.pop();
+
+        try {
+            currentState = states.peek();
+
+        } catch (EmptyStackException e) {
+            window.close();
+        }
     }
 
     /**
@@ -260,4 +261,9 @@ public class StateBasedGame {
     private Vector2f setViewSize() {
         return new Vector2f((windowWidth >> 1) * ZOOM_AMOUNT, (windowHeight >> 1) * ZOOM_AMOUNT);
     }
+
+    public void addKeyListener(InputListener inputListener) {
+        inputListeners.add(inputListener);
+    }
+
 }

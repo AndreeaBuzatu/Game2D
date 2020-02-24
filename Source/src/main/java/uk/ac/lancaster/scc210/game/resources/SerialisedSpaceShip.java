@@ -20,7 +20,7 @@ public class SerialisedSpaceShip implements Serialised {
      * @param items     the items the spaceship can drop when destroyed
      * @param bullet    the bullet fired by the spaceship
      * @param speed     the speed of the spaceship
-     * @param score     the score awarded to the plaer when killing this spaceship
+     * @param score     the score awarded to the player when killing this spaceship
      * @param lives     the number of the lives that spaceship has
      * @param firingSound the firing sound of the spaceship
      * @param hitSound  the sound played when colliding
