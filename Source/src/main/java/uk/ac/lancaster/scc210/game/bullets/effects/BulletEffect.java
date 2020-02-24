@@ -1,8 +1,35 @@
 package uk.ac.lancaster.scc210.game.bullets.effects;
 
+import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 
-public interface BulletEffect  {
+import java.util.ArrayList;
+import java.util.List;
 
-    void react(Entity entity);
+public abstract class BulletEffect  {
+    List<Entity> reactedEntities;
+
+    boolean isDead;
+
+    BulletEffect() {
+        reactedEntities = new ArrayList<>();
+
+        isDead = false;
+    }
+
+    public void react(Entity entity) {
+        isDead = false;
+    }
+
+    public abstract void reset();
+
+    public abstract void update(Time deltaTime);
+
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public void setDead(boolean dead) {
+        isDead = dead;
+    }
 }
