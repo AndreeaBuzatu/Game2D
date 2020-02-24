@@ -3,7 +3,6 @@ package uk.ac.lancaster.scc210.game.ecs.component;
 import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.ecs.Component;
 import uk.ac.lancaster.scc210.game.bullets.effects.BulletEffect;
-import uk.ac.lancaster.scc210.game.bullets.effects.FreezeBulletEffect;
 import uk.ac.lancaster.scc210.game.bullets.effects.LivesEffect;
 import uk.ac.lancaster.scc210.game.items.ItemEffect;
 
@@ -24,11 +23,9 @@ public class PlayerComponent implements Component {
     public PlayerComponent() {
         defaultBulletEffect = new LivesEffect();
 
-        bulletEffect = new FreezeBulletEffect();
+        bulletEffect = defaultBulletEffect;
 
         currentItemEffects = new HashSet<>();
-
-        bulletEffect = new FreezeBulletEffect();
 
         currentScore = 0;
     }
@@ -63,6 +60,10 @@ public class PlayerComponent implements Component {
 
     public BulletEffect getBulletEffect() {
         return bulletEffect;
+    }
+
+    public void setBulletEffect(BulletEffect bulletEffect) {
+        this.bulletEffect = bulletEffect;
     }
 
     public void setBulletEffectToDefault() {
