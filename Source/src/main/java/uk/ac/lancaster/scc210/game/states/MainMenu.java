@@ -34,11 +34,10 @@ public class MainMenu implements State {
     public void setup(StateBasedGame game) {
         LevelSelect levelSelect = new LevelSelect();
 
-        /*
         TextureManager textureManager = (TextureManager) game.getServiceProvider().get(TextureManager.class);
 
         background = new Sprite(textureManager.get("level-select.jpg:level-select"));
-         */
+        background.setScale(2, 2);
         fontManager = (FontManager) game.getServiceProvider().get(FontManager.class);
 
         viewSize = (ViewSize) game.getServiceProvider().get(ViewSize.class);
@@ -89,6 +88,7 @@ public class MainMenu implements State {
     public void draw(RenderTarget target) {
         target.draw(menuHeader);
 
+        target.draw(background);
         target.draw(interfaceList);
     }
 }

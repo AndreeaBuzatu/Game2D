@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InterfaceList implements InputListener, Drawable {
-    private final int OPTION_HEIGHT_PADDING = 50;
+    private final int OPTION_HEIGHT_PADDING = 70;
 
     private final List<ListOption> options;
 
