@@ -2,6 +2,7 @@ package uk.ac.lancaster.scc210.game.content;
 
 import uk.ac.lancaster.scc210.engine.content.ContentManager;
 import uk.ac.lancaster.scc210.engine.content.TextureManager;
+import uk.ac.lancaster.scc210.game.items.FreezeBulletEffectItem;
 import uk.ac.lancaster.scc210.game.items.LivesIncreaseEffect;
 import uk.ac.lancaster.scc210.game.items.MissingItemEffect;
 import uk.ac.lancaster.scc210.game.items.SpeedIncreaseEffect;
@@ -24,5 +25,7 @@ public class ItemPrototypeManager extends ContentManager<ItemPrototype> {
         put("linePattern-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new LinePatternEffect(bulletPool)));
 
         put("morningStarPattern-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new MorningStarPatternEffect(bulletPool)));
+
+        put("freezebulleteffect-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new FreezeBulletEffectItem()));
     }
 }
