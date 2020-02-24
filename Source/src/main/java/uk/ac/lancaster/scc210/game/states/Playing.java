@@ -164,6 +164,8 @@ public class Playing implements State {
 
         dialogueBox.setDialogue(level.getLines());
 
+        game.addKeyListener(dialogueBox);
+
         fadedIn = false;
 
         shouldFadeOut = false;

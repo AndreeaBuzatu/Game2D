@@ -4,12 +4,14 @@ import org.jsfml.graphics.*;
 import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
+import org.jsfml.window.event.KeyEvent;
+import uk.ac.lancaster.scc210.engine.InputListener;
 import uk.ac.lancaster.scc210.engine.ViewSize;
 import uk.ac.lancaster.scc210.engine.content.FontManager;
 
 import java.util.List;
 
-public class DialogueBox implements Drawable {
+public class DialogueBox implements Drawable, InputListener {
     private final Time TIME_GAP = Time.getSeconds(1f);
 
     private final int TEXT_SIZE = 60;
@@ -27,6 +29,8 @@ public class DialogueBox implements Drawable {
     private final int boxHeight;
 
     private final RectangleShape box;
+
+    private Keyboard.Key pressedKey;
 
     private Time elapsedTime;
 
@@ -86,8 +90,7 @@ public class DialogueBox implements Drawable {
 
         elapsedTime = Time.add(elapsedTime, deltaTime);
 
-        // TODO: Use KeyListener here
-        if (Keyboard.isKeyPressed(Keyboard.Key.SPACE) && elapsedTime.asSeconds() >= TIME_GAP.asSeconds()) {
+        if (pressedKey == Keyboard.Key.SPACE && elapsedTime.asSeconds() >= TIME_GAP.asSeconds()) {
             formatText();
 
             elapsedTime = Time.ZERO;
@@ -103,6 +106,11 @@ public class DialogueBox implements Drawable {
         renderTarget.draw(box);
 
         renderTarget.draw(text);
+    }
+
+    @Override
+    public void keyPressed(KeyEvent keyevent) {
+        pressedKey = keyevent.key;
     }
 
     private void formatText() {
