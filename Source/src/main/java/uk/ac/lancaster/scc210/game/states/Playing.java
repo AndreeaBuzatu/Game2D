@@ -21,9 +21,8 @@ import uk.ac.lancaster.scc210.game.pooling.BulletPool;
 import uk.ac.lancaster.scc210.game.resources.PlayerData;
 import uk.ac.lancaster.scc210.game.resources.PlayerWriter;
 
-import java.util.Iterator;
-import java.util.Set;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Represents the actual game-play state.
@@ -39,6 +38,8 @@ public class Playing implements State {
 
     private List<Level> unlockedLevels, totalLevels;
 
+    private StateBasedGame game;
+
     private World world;
 
     private LevelManager levelManager;
@@ -50,8 +51,6 @@ public class Playing implements State {
     private Level level;
 
     private Entity player;
-
-    private boolean completed;
 
     private Music example;
 
@@ -69,7 +68,7 @@ public class Playing implements State {
 
     @Override
     public void setup(StateBasedGame game) {
-        completed = false;
+        this.game = game;
 
         levelManager = (LevelManager) game.getServiceProvider().get(LevelManager.class);
 
@@ -305,9 +304,8 @@ public class Playing implements State {
 
                 shouldFadeOut = true;
 
-
             } else {
-                completed = true;
+                game.pushState(new Completion());
             }
         }
 
