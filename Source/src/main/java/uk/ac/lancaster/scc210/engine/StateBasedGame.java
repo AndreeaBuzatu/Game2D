@@ -36,25 +36,23 @@ public class StateBasedGame {
      */
     public static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
+    public static final float ZOOM_AMOUNT = 2.0f;
+
     private final ArrayList<InputListener> inputListeners;
 
     private final Stack<State> states;
 
     private final View view;
 
-    private final ViewSize viewSize;
+    private final Clock clock;
 
     private State currentState;
 
     private Event event;
 
-    private final Clock clock;
-
     private Time deltaTime, elapsedTime;
 
     private final int FPS = 60;
-
-    private final float ZOOM_AMOUNT = 2.0f;
 
     private final int windowWidth, windowHeight;
 
@@ -143,12 +141,10 @@ public class StateBasedGame {
 
         Vector2f viewCentre = view.getCenter();
 
-        Vector2f viewSize = view.getSize();
+        ViewSize viewSize = new ViewSize(new FloatRect(viewCentre.x - view.getSize().x / 2,
+                viewCentre.y - view.getSize().y / 2, view.getSize().x, view.getSize().y));
 
-        this.viewSize = new ViewSize(new FloatRect(viewCentre.x - viewSize.x / 2,
-                viewCentre.y - viewSize.y / 2, viewSize.x, viewSize.y));
-
-        serviceProvider.put(ViewSize.class, this.viewSize);
+        serviceProvider.put(ViewSize.class, viewSize);
 
         clock = new Clock();
 
@@ -265,5 +261,4 @@ public class StateBasedGame {
     public void addKeyListener(InputListener inputListener) {
         inputListeners.add(inputListener);
     }
-
 }
