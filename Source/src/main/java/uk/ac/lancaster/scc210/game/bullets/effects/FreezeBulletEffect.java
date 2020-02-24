@@ -2,13 +2,14 @@ package uk.ac.lancaster.scc210.game.bullets.effects;
 
 import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
+import uk.ac.lancaster.scc210.game.ecs.component.EnemyComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
 
 public class FreezeBulletEffect extends TimedBulletEffect {
     private int oldSpeed;
 
     public FreezeBulletEffect() {
-        super(Time.getSeconds(3));
+        super(Time.getSeconds(10));
 
         oldSpeed = -1;
     }
@@ -28,19 +29,27 @@ public class FreezeBulletEffect extends TimedBulletEffect {
 
             reactedEntities.add(entity);
         }
+
+        if (entity.hasComponent(EnemyComponent.class)) {
+            EnemyComponent enemyComponent = (EnemyComponent) entity.findComponent(EnemyComponent.class);
+
+            enemyComponent.setFiring(false);
+        }
     }
 
     @Override
     public void reset() {
         reactedEntities.forEach(entity -> {
             if (entity.hasComponent(SpeedComponent.class)) {
-                System.out.println("Thawing");
-                
                 SpeedComponent speedComponent = (SpeedComponent) entity.findComponent(SpeedComponent.class);
 
                 speedComponent.setSpeed(oldSpeed);
+            }
 
-                System.out.println("New Speed: " + speedComponent.getSpeed());
+            if (entity.hasComponent(EnemyComponent.class)) {
+                EnemyComponent enemyComponent = (EnemyComponent) entity.findComponent(EnemyComponent.class);
+
+                enemyComponent.setFiring(true);
             }
         });
 
