@@ -26,6 +26,13 @@ public class EnemyFiringSystem extends IterativeSystem {
     @Override
     public void update(Time deltaTime) {
         for (Entity entity : entities) {
+            // Return early if the player can't fire
+            EnemyComponent enemyComponent = (EnemyComponent) entity.findComponent(EnemyComponent.class);
+
+            if (!enemyComponent.canFire()) {
+                return;
+            }
+
             elapsedTime = Time.add(elapsedTime, deltaTime);
 
             if (elapsedTime.asSeconds() > FIRING_GAP.asSeconds()) {
