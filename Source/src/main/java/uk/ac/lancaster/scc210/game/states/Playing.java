@@ -13,14 +13,14 @@ import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.states.State;
 import uk.ac.lancaster.scc210.game.content.LevelManager;
 import uk.ac.lancaster.scc210.game.content.SpaceShipPrototypeManager;
-import uk.ac.lancaster.scc210.game.ecs.component.LivesComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
+import uk.ac.lancaster.scc210.game.dialogue.DialogueBox;
+import uk.ac.lancaster.scc210.game.ecs.component.*;
 import uk.ac.lancaster.scc210.game.ecs.system.*;
 import uk.ac.lancaster.scc210.game.level.Level;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
 
 import java.util.Iterator;
+import java.util.Set;
 
 /**
  * Represents the actual game-play state.
@@ -29,6 +29,10 @@ public class Playing implements State {
     private static final int TEXT_SIZE = 70;
 
     public static final int INFO_BOX_HEIGHT = TEXT_SIZE + 5;
+
+    private final int ALPHA_CHANGE = 4;
+
+    private final int MAX_OPACITY = 255;
 
     private Iterator<Level> levelIterator;
 
@@ -49,6 +53,12 @@ public class Playing implements State {
     private Text scoreText, livesText;
 
     private ViewSize viewSize;
+
+    private DialogueBox dialogueBox;
+
+    private boolean fadedIn, shouldFadeIn, shouldFadeOut;
+
+    private int alpha;
 
     @Override
     public void setup(StateBasedGame game) {
@@ -130,7 +140,9 @@ public class Playing implements State {
 
         example.play();
 
-        font = ((FontManager) world.getServiceProvider().get(FontManager.class)).get("font");
+        FontManager fontManager = (FontManager) world.getServiceProvider().get(FontManager.class);
+
+        font = fontManager.get("font");
 
         scoreText = new Text();
 
@@ -147,41 +159,105 @@ public class Playing implements State {
         livesText.setColor(Color.WHITE);
 
         livesText.setCharacterSize(TEXT_SIZE);
+
+        dialogueBox = new DialogueBox(viewSize, fontManager);
+
+        dialogueBox.setDialogue(level.getLines());
+
+        fadedIn = false;
+
+        shouldFadeOut = false;
+
+        // We want to initially fade in the first level
+        shouldFadeIn = true;
+
+        alpha = 0;
     }
 
     @Override
     public void draw(RenderTarget target) {
         world.draw(target);
 
-        if (player.hasComponent(PlayerComponent.class)) {
-            PlayerComponent playerComponent = (PlayerComponent) player.findComponent(PlayerComponent.class);
+        handleLevelTransition();
 
-            scoreText.setString(String.format("Score: %d", playerComponent.getScore()));
+        drawInterface(target);
+
+        if (dialogueBox.isOpen()) {
+            target.draw(dialogueBox);
+
+        } else {
+            shouldFadeIn = true;
+
+            shouldFadeOut = false;
         }
-
-        if (player.hasComponent(LivesComponent.class)) {
-            LivesComponent livesComponent = (LivesComponent) player.findComponent(LivesComponent.class);
-
-            livesText.setString(String.format("Lives: %d\n", livesComponent.getLives()));
-
-            // Position the text at the left-most edge of the view
-            livesText.setPosition(viewSize.getViewBounds().width - livesText.getGlobalBounds().width, 0);
-        }
-
-        target.draw(scoreText);
-
-        target.draw(livesText);
     }
 
-    @Override
+    private void handleLevelTransition() {
+        if (shouldFadeIn) {
+            fadeIn();
+        }
+
+        if (shouldFadeOut) {
+            fadeOut();
+        }
+    }
+
+    private void drawInterface(RenderTarget target) {
+        if (!dialogueBox.isOpen()) {
+            if (player.hasComponent(PlayerComponent.class)) {
+                PlayerComponent playerComponent = (PlayerComponent) player.findComponent(PlayerComponent.class);
+
+                scoreText.setString(String.format("Score: %d", playerComponent.getScore()));
+            }
+
+            if (player.hasComponent(LivesComponent.class)) {
+                LivesComponent livesComponent = (LivesComponent) player.findComponent(LivesComponent.class);
+
+                livesText.setString(String.format("Lives: %d\n", livesComponent.getLives()));
+
+                // Position the text at the left-most edge of the view
+                livesText.setPosition(viewSize.getViewBounds().width - livesText.getGlobalBounds().width, 0);
+            }
+
+            target.draw(scoreText);
+
+            target.draw(livesText);
+        }
+    }
+
     public boolean complete() {
         return completed;
     }
 
     @Override
     public void update(Time deltaTime) {
-        world.update(deltaTime);
+        if (dialogueBox.isOpen()) {
+            dialogueBox.update(deltaTime);
 
+        } else if (!dialogueBox.isOpen() && !fadedIn) {
+            PlayerComponent playerComponent = (PlayerComponent) player.findComponent(PlayerComponent.class);
+
+            SpriteComponent playerSpriteComponent = (SpriteComponent) player.findComponent(SpriteComponent.class);
+
+            Sprite playerSprite = playerSpriteComponent.getSprite();
+
+            // Reset the players position and rotation when the player goes to a new level (and has faded in)
+            playerSprite.setPosition(playerComponent.getSpawnPoint());
+
+            playerSprite.setRotation(0);
+
+            // Remove bullets from the world
+            world.removeIf(entity -> entity.hasComponent(BulletComponent.class) || entity.hasComponent(EnemyComponent.class) || entity.hasComponent(ItemEffectsComponent.class));
+
+            // Set and respawn the level once it has been cleared
+            levelSystem.setLevel(level);
+
+        } else if (fadedIn) {
+            updateWorld(deltaTime);
+        }
+    }
+
+    private void updateWorld(Time deltaTime) {
         if (level.complete()) {
             System.out.println("Complete level");
 
@@ -193,11 +269,67 @@ public class Playing implements State {
             if (levelIterator.hasNext()) {
                 level = levelIterator.next();
 
-                levelSystem.setLevel(level);
+                dialogueBox.setDialogue(level.getLines());
+
+                shouldFadeIn = false;
+
+                shouldFadeOut = true;
 
             } else {
                 completed = true;
             }
+        }
+
+        if (!level.complete()) {
+            world.update(deltaTime);
+        }
+    }
+
+    private void fadeIn() {
+        Color currentColour = new Color(MAX_OPACITY, MAX_OPACITY, MAX_OPACITY, alpha);
+
+        setSpritesFillColour(world.getEntitiesFor(SpriteComponent.class), currentColour);
+
+        setAsteroidsFillColour(world.getEntitiesFor(AsteroidComponent.class), currentColour);
+
+        if (alpha >= MAX_OPACITY) {
+            fadedIn = true;
+
+            alpha = MAX_OPACITY;
+        }
+
+        alpha += ALPHA_CHANGE;
+    }
+
+    private void fadeOut() {
+        Color currentColour = new Color(MAX_OPACITY, MAX_OPACITY, MAX_OPACITY, alpha);
+
+        setSpritesFillColour(world.getEntitiesFor(SpriteComponent.class), currentColour);
+
+        setAsteroidsFillColour(world.getEntitiesFor(AsteroidComponent.class), currentColour);
+
+        if (alpha <= 0) {
+            fadedIn = false;
+
+            alpha = 0;
+        }
+
+        alpha -= ALPHA_CHANGE;
+    }
+
+    private void setSpritesFillColour(Set<Entity> entities, Color colour) {
+        for (Entity entity : entities) {
+            SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
+
+            spriteComponent.getSprite().setColor(colour);
+        }
+    }
+
+    private void setAsteroidsFillColour(Set<Entity> entities, Color colour) {
+        for (Entity entity : entities) {
+            AsteroidComponent asteroidComponent = (AsteroidComponent) entity.findComponent(AsteroidComponent.class);
+
+            asteroidComponent.getCircle().setFillColor(colour);
         }
     }
 }

@@ -7,6 +7,7 @@ import uk.ac.lancaster.scc210.engine.pooling.Pool;
 import uk.ac.lancaster.scc210.engine.service.ServiceProvider;
 
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -43,9 +44,7 @@ public class World {
         if (!entities.contains(entity)) {
             entities.add(entity);
 
-            for (EntitySystem system : systems) {
-                system.entityAdded(entity);
-            }
+            systems.forEach(system -> system.entityAdded(entity));
         }
     }
 
@@ -69,6 +68,10 @@ public class World {
         this.entities.removeAll(entities);
 
         entities.forEach(entity -> systems.forEach(system -> system.entityRemoved(entity)));
+    }
+
+    public void removeIf(Predicate<? super Entity> entities) {
+        this.entities.removeIf(entities);
     }
 
     /**

@@ -12,6 +12,7 @@ import uk.ac.lancaster.scc210.engine.prototypes.Prototype;
 import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
 import uk.ac.lancaster.scc210.engine.resources.deserialise.Deserialiser;
 import uk.ac.lancaster.scc210.game.content.SpaceShipPrototypeManager;
+import uk.ac.lancaster.scc210.game.dialogue.Line;
 import uk.ac.lancaster.scc210.game.ecs.component.*;
 import uk.ac.lancaster.scc210.game.level.Level;
 import uk.ac.lancaster.scc210.game.level.LevelStage;
@@ -25,6 +26,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LevelDeserialiser extends Deserialiser<Level> {
+    private final String DIALOGUE_TAG = "dialogue";
+
+    private final String LINE_TAG = "line";
+
     private final String STAGE_TAG = "stage";
 
     private final String WAVE_TAG = "wave";
@@ -65,9 +70,44 @@ public class LevelDeserialiser extends Deserialiser<Level> {
             Node node = nodes.item(i);
 
             if (foundNode(node)) {
-                serialised.add(new Level(deserialiseStage(node.getChildNodes())));
+                serialised.add(new Level(deserialiseStage(node.getChildNodes()), deserialiseDialogue(node.getChildNodes())));
             }
         }
+    }
+
+    private List<Line> deserialiseDialogue(NodeList nodes) {
+        List<Line> lines = new ArrayList<>();
+
+        // This is not entirely efficient but oh well...
+        for (int i = 0; i < nodes.getLength(); i++) {
+            Node node = nodes.item(i);
+
+            if (foundNode(node, DIALOGUE_TAG)) {
+                lines.addAll(deserialiseLine(node.getChildNodes()));
+            }
+        }
+
+        return lines;
+    }
+
+    private List<Line> deserialiseLine(NodeList nodes) {
+        List<Line> lines = new ArrayList<>();
+
+        for (int i = 0; i < nodes.getLength(); i++) {
+            Node node = nodes.item(i);
+
+            if (foundNode(node, LINE_TAG)) {
+                Element elem = (Element) node;
+
+                String character = elem.getAttribute("character");
+
+                String line = elem.getTextContent();
+
+                lines.add(new Line(character, line));
+            }
+        }
+
+        return lines;
     }
 
     private List<LevelStage> deserialiseStage(NodeList nodes) throws ResourceNotFoundException {
