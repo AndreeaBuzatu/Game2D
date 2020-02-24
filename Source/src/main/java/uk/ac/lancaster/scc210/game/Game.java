@@ -1,5 +1,6 @@
 package uk.ac.lancaster.scc210.game;
 
+import org.w3c.dom.Document;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import uk.ac.lancaster.scc210.engine.content.ShaderManager;
 import uk.ac.lancaster.scc210.engine.content.SoundBufferManager;
@@ -11,6 +12,8 @@ import uk.ac.lancaster.scc210.game.content.ItemPrototypeManager;
 import uk.ac.lancaster.scc210.game.content.LevelManager;
 import uk.ac.lancaster.scc210.game.content.SpaceShipPrototypeManager;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
+import uk.ac.lancaster.scc210.game.resources.*;
+import uk.ac.lancaster.scc210.game.states.Completion;
 import uk.ac.lancaster.scc210.game.resources.BulletDeserialiser;
 import uk.ac.lancaster.scc210.game.resources.LevelDeserialiser;
 import uk.ac.lancaster.scc210.game.resources.SpaceShipDeserialiser;
@@ -27,6 +30,8 @@ public class Game extends StateBasedGame {
      * The constant LOGGER.
      */
     public static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
+    private LevelManager levelManager;
 
     /**
      * Instantiates a new Game.
@@ -69,7 +74,9 @@ public class Game extends StateBasedGame {
 
             LevelDeserialiser levelDeserialiser = new LevelDeserialiser(serviceProvider, deserialiseXML("levels.xml"));
 
-            LevelManager levelManager = new LevelManager(levelDeserialiser.getSerialised());
+            levelManager = new LevelManager(levelDeserialiser.getSerialised());
+
+            loadPlayerXML();
 
             serviceProvider.put(LevelManager.class, levelManager);
 
@@ -79,6 +86,33 @@ public class Game extends StateBasedGame {
 
         serviceProvider.put(BulletPool.class, new BulletPool(serviceProvider));
 
-        pushState(new Playing());
+        super.addState(new Completion());
+    }
+
+    private void loadPlayerXML() throws ResourceNotFoundException {
+        Document playerDocument = null;
+
+        try {
+            playerDocument = deserialiseLocalXML("player.xml");
+
+        } catch (ResourceNotFoundException ignored) {
+        } finally {
+            PlayerDataDeserialiser playerDataDeserialiser = new PlayerDataDeserialiser(playerDocument, levelManager);
+
+            // If the player.xml file can't be found, create a in-memory replacement, and manually deserialise
+            if (playerDocument == null) {
+                playerDataDeserialiser.createStandinXML();
+
+                playerDocument = playerDataDeserialiser.getDocument();
+
+                playerDataDeserialiser.deserialise();
+            }
+
+            PlayerWriter playerWriter = new PlayerWriter(playerDocument);
+
+            serviceProvider.put(PlayerWriter.class, playerWriter);
+
+            serviceProvider.put(PlayerData.class, playerDataDeserialiser.getPlayerData());
+        }
     }
 }

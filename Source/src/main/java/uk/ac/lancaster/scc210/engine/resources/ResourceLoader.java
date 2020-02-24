@@ -3,6 +3,8 @@ package uk.ac.lancaster.scc210.engine.resources;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
 
 import javax.swing.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Level;
@@ -24,6 +26,16 @@ public class ResourceLoader {
     public static <T extends Resource> void loadFromStream(T resource, String fileName) throws ResourceNotFoundException {
         InputStream stream = loadFromRes(fileName);
 
+        loadStream(stream, resource, fileName);
+    }
+
+    public static <T extends Resource> void loadFromLocalStream(T resource, String fileName) throws ResourceNotFoundException {
+        InputStream stream = loadFromLocal(fileName);
+
+        loadStream(stream, resource, fileName);
+    }
+
+    private static <T extends Resource> void loadStream(InputStream stream, T resource, String fileName) throws ResourceNotFoundException {
         try {
             resource.loadFromFile(stream);
 
@@ -32,6 +44,15 @@ public class ResourceLoader {
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, String.format("Unable to load %s", fileName), ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
 
+            throw new ResourceNotFoundException(fileName);
+        }
+    }
+
+    private static InputStream loadFromLocal(String fileName) throws ResourceNotFoundException {
+        try {
+            return new FileInputStream(String.format("./%s", fileName));
+
+        } catch (FileNotFoundException e) {
             throw new ResourceNotFoundException(fileName);
         }
     }

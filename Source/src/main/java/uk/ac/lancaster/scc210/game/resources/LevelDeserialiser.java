@@ -73,7 +73,11 @@ public class LevelDeserialiser extends Deserialiser<Level> {
             Node node = nodes.item(i);
 
             if (foundNode(node)) {
-                serialised.add(new Level(deserialiseStage(node.getChildNodes()), deserialiseDialogue(node.getChildNodes())));
+                Element elem = (Element) node;
+
+                String name = elem.getAttribute("name");
+
+                serialised.add(new Level(name, deserialiseStage(node.getChildNodes()), deserialiseDialogue(node.getChildNodes())));
             }
         }
     }
@@ -158,12 +162,6 @@ public class LevelDeserialiser extends Deserialiser<Level> {
                 } else if (entityType.equals(ASTEROID)) {
                     prototype = asteroidPrototype;
                 }
-
-                /*
-                Vector2f origin = new Vector2f(target.mapCoordsToPixel(new Vector2f(originX, originY), view));
-
-                Vector2f destination = new Vector2f(target.mapCoordsToPixel(new Vector2f(destinationX, destinationY), view));
-                 */
 
                 Vector2f origin = new Vector2f(originX, originY);
 

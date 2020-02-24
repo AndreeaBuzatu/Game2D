@@ -18,9 +18,12 @@ import uk.ac.lancaster.scc210.game.ecs.component.*;
 import uk.ac.lancaster.scc210.game.ecs.system.*;
 import uk.ac.lancaster.scc210.game.level.Level;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
+import uk.ac.lancaster.scc210.game.resources.PlayerData;
+import uk.ac.lancaster.scc210.game.resources.PlayerWriter;
 
 import java.util.Iterator;
 import java.util.Set;
+import java.util.List;
 
 /**
  * Represents the actual game-play state.
@@ -34,13 +37,17 @@ public class Playing implements State {
 
     private final int MAX_OPACITY = 255;
 
-    private Iterator<Level> levelIterator;
+    private List<Level> unlockedLevels, totalLevels;
 
     private World world;
 
-    private Level level;
+    private LevelManager levelManager;
 
     private LevelSystem levelSystem;
+
+    private PlayerWriter playerScoreWriter;
+
+    private Level level;
 
     private Entity player;
 
@@ -58,17 +65,32 @@ public class Playing implements State {
 
     private boolean fadedIn, shouldFadeIn, shouldFadeOut;
 
-    private int alpha;
+    private int alpha, currentUnlocked;
 
     @Override
     public void setup(StateBasedGame game) {
         completed = false;
 
-        LevelManager levelManager = (LevelManager) game.getServiceProvider().get(LevelManager.class);
+        levelManager = (LevelManager) game.getServiceProvider().get(LevelManager.class);
 
-        levelIterator = levelManager.getIterator();
+        PlayerData playerData = (PlayerData) game.getServiceProvider().get(PlayerData.class);
 
-        level = levelIterator.next();
+        String unlockedLevel = playerData.getUnlockedLevel();
+
+        currentUnlocked = levelManager.indexOf(unlockedLevel);
+
+        // If the level can't be found, default to the first level
+        if (currentUnlocked < 0) {
+            unlockedLevel = levelManager.getLevelList().get(0).getName();
+
+            currentUnlocked = levelManager.indexOf(unlockedLevel);
+        }
+
+        totalLevels = levelManager.getLevelList();
+
+        unlockedLevels = levelManager.getUnlocked(unlockedLevel);
+
+        level = unlockedLevels.get(currentUnlocked);
 
         world = new World(game.getServiceProvider());
 
@@ -127,6 +149,8 @@ public class Playing implements State {
         playerComponent.setSpawnPoint(new Vector2f((viewBounds.width / 2) - playerSprite.getGlobalBounds().width, (viewBounds.height / 1.5f) - playerSprite.getGlobalBounds().height));
 
         playerSprite.setPosition(playerComponent.getSpawnPoint());
+
+        playerScoreWriter = (PlayerWriter) game.getServiceProvider().get(PlayerWriter.class);
 
         world.addEntity(player);
 
@@ -264,14 +288,23 @@ public class Playing implements State {
 
             playerComponent.getCurrentEffects().parallelStream().forEach(itemEffect -> itemEffect.reset(player));
 
-            if (levelIterator.hasNext()) {
-                level = levelIterator.next();
+            if (currentUnlocked < totalLevels.size() - 1) {
+                currentUnlocked++;
+
+                unlockedLevels = levelManager.getUnlocked(totalLevels.get(currentUnlocked).getName());
+
+                level = unlockedLevels.get(currentUnlocked);
+
+                levelSystem.setLevel(level);
+
+                playerScoreWriter.writePlayerLevel(level.getName());
 
                 dialogueBox.setDialogue(level.getLines());
 
                 shouldFadeIn = false;
 
                 shouldFadeOut = true;
+
 
             } else {
                 completed = true;
