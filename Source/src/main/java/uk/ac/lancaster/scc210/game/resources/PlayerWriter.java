@@ -39,8 +39,6 @@ public class PlayerWriter implements Service {
 
             File playerFile = new File("player.xml").getAbsoluteFile();
 
-            System.out.println(playerFile.getAbsolutePath());
-
             // Create if doesn't exist
             //noinspection ResultOfMethodCallIgnored
             playerFile.createNewFile();
@@ -53,8 +51,6 @@ public class PlayerWriter implements Service {
 
         } catch (TransformerException | IOException e) {
             StateBasedGame.LOGGER.log(Level.WARNING, "Unable to save unlocked level in player.xml");
-
-            e.printStackTrace();
         }
     }
 
@@ -62,9 +58,7 @@ public class PlayerWriter implements Service {
         for (int i = 0; i < nodes.getLength(); i++) {
             Node node = nodes.item(i);
 
-            System.out.println(node);
-
-            if (foundNode(node, "player")) {
+            if (foundPlayerNode(node)) {
                 playerElement = (Element) node;
 
                 break;
@@ -72,7 +66,7 @@ public class PlayerWriter implements Service {
         }
     }
 
-    private boolean foundNode(Node node, String tagName) {
-        return node.getNodeType() == Node.ELEMENT_NODE && node.getNodeName().equals(tagName);
+    private boolean foundPlayerNode(Node node) {
+        return node.getNodeType() == Node.ELEMENT_NODE && node.getNodeName().equals("player");
     }
 }

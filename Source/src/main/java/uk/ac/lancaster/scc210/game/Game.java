@@ -13,10 +13,6 @@ import uk.ac.lancaster.scc210.game.content.LevelManager;
 import uk.ac.lancaster.scc210.game.content.SpaceShipPrototypeManager;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
 import uk.ac.lancaster.scc210.game.resources.*;
-import uk.ac.lancaster.scc210.game.states.Completion;
-import uk.ac.lancaster.scc210.game.resources.BulletDeserialiser;
-import uk.ac.lancaster.scc210.game.resources.LevelDeserialiser;
-import uk.ac.lancaster.scc210.game.resources.SpaceShipDeserialiser;
 import uk.ac.lancaster.scc210.game.states.MainMenu;
 import uk.ac.lancaster.scc210.game.states.Playing;
 
@@ -86,7 +82,7 @@ public class Game extends StateBasedGame {
 
         serviceProvider.put(BulletPool.class, new BulletPool(serviceProvider));
 
-        super.addState(new Completion());
+        pushState(new Playing());
     }
 
     private void loadPlayerXML() throws ResourceNotFoundException {
