@@ -2,12 +2,14 @@ package uk.ac.lancaster.scc210.game.states;
 
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.RenderTarget;
+import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Text;
 import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import uk.ac.lancaster.scc210.engine.ViewSize;
 import uk.ac.lancaster.scc210.engine.content.FontManager;
+import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.gui.InterfaceList;
 import uk.ac.lancaster.scc210.engine.states.State;
 
@@ -26,10 +28,17 @@ public class MainMenu implements State {
 
     private FloatRect viewBounds;
 
+    private Sprite background;
+
     @Override
     public void setup(StateBasedGame game) {
         LevelSelect levelSelect = new LevelSelect();
 
+        /*
+        TextureManager textureManager = (TextureManager) game.getServiceProvider().get(TextureManager.class);
+
+        background = new Sprite(textureManager.get("level-select.jpg:level-select"));
+         */
         fontManager = (FontManager) game.getServiceProvider().get(FontManager.class);
 
         viewSize = (ViewSize) game.getServiceProvider().get(ViewSize.class);
@@ -46,9 +55,13 @@ public class MainMenu implements State {
 
         interfaceList.addListOption("Level Select", (() -> game.pushState(levelSelect)));
 
+        interfaceList.addListOption("Help", (game::popState));
+
         interfaceList.addListOption("Exit", (game::popState));
 
         interfaceList.setEnabled(true);
+
+
     }
 
     private void createHeader() {
