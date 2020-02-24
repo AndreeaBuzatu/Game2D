@@ -3,6 +3,7 @@ package uk.ac.lancaster.scc210.game.bullets.effects;
 import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.game.ecs.component.EnemyComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.LivesComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
 
 public class FreezeBulletEffect extends TimedBulletEffect {
@@ -28,6 +29,15 @@ public class FreezeBulletEffect extends TimedBulletEffect {
             speedComponent.setSpeed(0);
 
             reactedEntities.add(entity);
+        }
+
+        // Kill the player if they only have 1 life
+        if (entity.hasComponent(LivesComponent.class)) {
+            LivesComponent livesComponent = (LivesComponent) entity.findComponent(LivesComponent.class);
+
+            if (livesComponent.getLives() <= 1) {
+                livesComponent.kill();
+            }
         }
 
         if (entity.hasComponent(EnemyComponent.class)) {
