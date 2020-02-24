@@ -88,7 +88,7 @@ public class Playing implements State {
 
         world.addSystem(new ItemCollisionSystem(world));
 
-        world.addSystem(new ItemUpdateSystem(world));
+        world.addSystem(new PlayerEffectsUpdateSystem(world));
 
         world.addSystem(new SpaceShipCollisionSystem(world));
 
@@ -190,7 +190,7 @@ public class Playing implements State {
             // Reset the player's current item effects back to the game default
             PlayerComponent playerComponent = (PlayerComponent) player.findComponent(PlayerComponent.class);
 
-            playerComponent.getCurrentEffects().parallelStream().forEach(itemEffect -> itemEffect.reset(player));
+            playerComponent.getCurrentItemEffects().parallelStream().forEach(itemEffect -> itemEffect.reset(player));
 
             if (levelIterator.hasNext()) {
                 level = levelIterator.next();
