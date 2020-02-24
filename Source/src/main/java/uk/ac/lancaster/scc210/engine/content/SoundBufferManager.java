@@ -18,8 +18,9 @@ public class SoundBufferManager extends ContentManager<SoundBuffer> {
     }
 
     public static void playSound(Sound sound) {
-        //if (sound.getStatus() == SoundSource.Status.STOPPED || sound.getStatus() == SoundSource.Status.PAUSED) {
+        // Only play the sound if the sound has been flagged as stop. This is done to prevent the sound from restarting while already playing
+        if (sound.getStatus() == SoundSource.Status.STOPPED) {
             sound.play();
-        //}
+        }
     }
 }

@@ -18,8 +18,10 @@ import uk.ac.lancaster.scc210.game.ecs.component.*;
 import uk.ac.lancaster.scc210.game.ecs.system.*;
 import uk.ac.lancaster.scc210.game.level.Level;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
+import uk.ac.lancaster.scc210.game.resources.PlayerData;
+import uk.ac.lancaster.scc210.game.resources.PlayerWriter;
 
-import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -34,17 +36,21 @@ public class Playing implements State {
 
     private final int MAX_OPACITY = 255;
 
-    private Iterator<Level> levelIterator;
+    private List<Level> unlockedLevels, totalLevels;
+
+    private StateBasedGame game;
 
     private World world;
 
-    private Level level;
+    private LevelManager levelManager;
 
     private LevelSystem levelSystem;
 
-    private Entity player;
+    private PlayerWriter playerScoreWriter;
 
-    private boolean completed;
+    private Level level;
+
+    private Entity player;
 
     private Music example;
 
@@ -58,17 +64,32 @@ public class Playing implements State {
 
     private boolean fadedIn, shouldFadeIn, shouldFadeOut;
 
-    private int alpha;
+    private int alpha, currentUnlocked;
 
     @Override
     public void setup(StateBasedGame game) {
-        completed = false;
+        this.game = game;
 
-        LevelManager levelManager = (LevelManager) game.getServiceProvider().get(LevelManager.class);
+        levelManager = (LevelManager) game.getServiceProvider().get(LevelManager.class);
 
-        levelIterator = levelManager.getIterator();
+        PlayerData playerData = (PlayerData) game.getServiceProvider().get(PlayerData.class);
 
-        level = levelIterator.next();
+        String unlockedLevel = playerData.getUnlockedLevel();
+
+        currentUnlocked = levelManager.indexOf(unlockedLevel);
+
+        // If the level can't be found, default to the first level
+        if (currentUnlocked < 0) {
+            unlockedLevel = levelManager.getLevelList().get(0).getName();
+
+            currentUnlocked = levelManager.indexOf(unlockedLevel);
+        }
+
+        totalLevels = levelManager.getLevelList();
+
+        unlockedLevels = levelManager.getUnlocked(unlockedLevel);
+
+        level = unlockedLevels.get(currentUnlocked);
 
         world = new World(game.getServiceProvider());
 
@@ -128,6 +149,8 @@ public class Playing implements State {
 
         playerSprite.setPosition(playerComponent.getSpawnPoint());
 
+        playerScoreWriter = (PlayerWriter) game.getServiceProvider().get(PlayerWriter.class);
+
         world.addEntity(player);
 
         MusicManager musicManager = (MusicManager) world.getServiceProvider().get(MusicManager.class);
@@ -163,6 +186,8 @@ public class Playing implements State {
         dialogueBox = new DialogueBox(viewSize, fontManager);
 
         dialogueBox.setDialogue(level.getLines());
+
+        game.addKeyListener(dialogueBox);
 
         fadedIn = false;
 
@@ -225,10 +250,6 @@ public class Playing implements State {
         }
     }
 
-    public boolean complete() {
-        return completed;
-    }
-
     @Override
     public void update(Time deltaTime) {
         if (dialogueBox.isOpen()) {
@@ -266,8 +287,16 @@ public class Playing implements State {
 
             playerComponent.getCurrentEffects().parallelStream().forEach(itemEffect -> itemEffect.reset(player));
 
-            if (levelIterator.hasNext()) {
-                level = levelIterator.next();
+            if (currentUnlocked < totalLevels.size() - 1) {
+                currentUnlocked++;
+
+                unlockedLevels = levelManager.getUnlocked(totalLevels.get(currentUnlocked).getName());
+
+                level = unlockedLevels.get(currentUnlocked);
+
+                levelSystem.setLevel(level);
+
+                playerScoreWriter.writePlayerLevel(level.getName());
 
                 dialogueBox.setDialogue(level.getLines());
 
@@ -276,7 +305,7 @@ public class Playing implements State {
                 shouldFadeOut = true;
 
             } else {
-                completed = true;
+                game.pushState(new Completion());
             }
         }
 

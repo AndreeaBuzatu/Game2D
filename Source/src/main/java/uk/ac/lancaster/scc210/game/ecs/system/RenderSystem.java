@@ -6,6 +6,8 @@ import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.game.ecs.component.FlashComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.LivesComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
 /**
@@ -39,6 +41,17 @@ public class RenderSystem extends IterativeSystem {
 
             if (entity.hasComponent(FlashComponent.class)) {
                 FlashComponent flashComponent = (FlashComponent) entity.findComponent(FlashComponent.class);
+
+                // Reset the current shader colour back to white if the previous parameter was red
+                flashComponent.setShaderWhite();
+
+                if (entity.hasComponent(PlayerComponent.class)) {
+                    LivesComponent livesComponent = (LivesComponent) entity.findComponent(LivesComponent.class);
+
+                    if (livesComponent.getLives() == 1) {
+                        flashComponent.setShaderRed();
+                    }
+                }
 
                 target.draw(spriteComponent.getSprite(), flashComponent.getCurrentState());
 

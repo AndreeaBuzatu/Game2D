@@ -1,5 +1,6 @@
 package uk.ac.lancaster.scc210.game;
 
+import org.w3c.dom.Document;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import uk.ac.lancaster.scc210.engine.content.ShaderManager;
 import uk.ac.lancaster.scc210.engine.content.SoundBufferManager;
@@ -11,10 +12,8 @@ import uk.ac.lancaster.scc210.game.content.ItemPrototypeManager;
 import uk.ac.lancaster.scc210.game.content.LevelManager;
 import uk.ac.lancaster.scc210.game.content.SpaceShipPrototypeManager;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
-import uk.ac.lancaster.scc210.game.resources.BulletDeserialiser;
-import uk.ac.lancaster.scc210.game.resources.LevelDeserialiser;
-import uk.ac.lancaster.scc210.game.resources.SpaceShipDeserialiser;
-import uk.ac.lancaster.scc210.game.states.Completion;
+import uk.ac.lancaster.scc210.game.resources.*;
+import uk.ac.lancaster.scc210.game.states.MainMenu;
 import uk.ac.lancaster.scc210.game.states.Playing;
 
 import java.util.logging.Logger;
@@ -28,11 +27,17 @@ public class Game extends StateBasedGame {
      */
     public static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
+    private LevelManager levelManager;
+
     /**
      * Instantiates a new Game.
      */
     public Game() {
-        super("Shooter", 1280, 720, new Playing());
+        super("Shooter", 1280, 720);
+
+        MainMenu mainMenu = new MainMenu();
+
+        //pushState(mainMenu);
 
         try {
             TextureAnimationManager animationManager = (TextureAnimationManager) serviceProvider.get(TextureAnimationManager.class);
@@ -63,9 +68,11 @@ public class Game extends StateBasedGame {
 
             serviceProvider.put(ItemPrototypeManager.class, itemManager);
 
-            LevelDeserialiser levelDeserialiser = new LevelDeserialiser(spaceShipManager, textureManager, shaderManager, deserialiseXML("levels.xml"));
+            LevelDeserialiser levelDeserialiser = new LevelDeserialiser(serviceProvider, deserialiseXML("levels.xml"));
 
-            LevelManager levelManager = new LevelManager(levelDeserialiser.getSerialised());
+            levelManager = new LevelManager(levelDeserialiser.getSerialised());
+
+            loadPlayerXML();
 
             serviceProvider.put(LevelManager.class, levelManager);
 
@@ -75,6 +82,33 @@ public class Game extends StateBasedGame {
 
         serviceProvider.put(BulletPool.class, new BulletPool(serviceProvider));
 
-        super.addState(new Completion());
+        pushState(new Playing());
+    }
+
+    private void loadPlayerXML() throws ResourceNotFoundException {
+        Document playerDocument = null;
+
+        try {
+            playerDocument = deserialiseLocalXML("player.xml");
+
+        } catch (ResourceNotFoundException ignored) {
+        } finally {
+            PlayerDataDeserialiser playerDataDeserialiser = new PlayerDataDeserialiser(playerDocument, levelManager);
+
+            // If the player.xml file can't be found, create a in-memory replacement, and manually deserialise
+            if (playerDocument == null) {
+                playerDataDeserialiser.createStandinXML();
+
+                playerDocument = playerDataDeserialiser.getDocument();
+
+                playerDataDeserialiser.deserialise();
+            }
+
+            PlayerWriter playerWriter = new PlayerWriter(playerDocument);
+
+            serviceProvider.put(PlayerWriter.class, playerWriter);
+
+            serviceProvider.put(PlayerData.class, playerDataDeserialiser.getPlayerData());
+        }
     }
 }

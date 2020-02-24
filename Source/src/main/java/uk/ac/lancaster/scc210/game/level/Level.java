@@ -13,9 +13,12 @@ public class Level implements Serialised {
 
     private final Iterator<LevelStage> stageIterator;
 
+    private final String name;
+
     private LevelStage currentStage;
 
-    public Level(List<LevelStage> stages, List<Line> lines) {
+    public Level(String name, List<LevelStage> stages, List<Line> lines) {
+        this.name = name;
         this.stages = stages;
         this.lines = lines;
 
@@ -36,13 +39,15 @@ public class Level implements Serialised {
     }
 
     public void reset() {
-        //stages.forEach(LevelStage::reset);
         currentStage.reset();
     }
 
     public boolean complete() {
-
         return stages.stream().allMatch(LevelStage::complete);
+    }
+
+    public String getName() {
+        return name;
     }
 
     public LevelStage getCurrentStage() {

@@ -18,9 +18,4 @@ public class Completion implements State {
     @Override
     public void draw(RenderTarget target) {
     }
-
-    @Override
-    public boolean complete() {
-        return false;
-    }
 }

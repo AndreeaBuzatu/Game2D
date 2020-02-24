@@ -47,7 +47,7 @@ public class ContentManager<T> implements Service {
         return content.getOrDefault(key, alternative);
     }
 
-    protected Collection<T> values() {
+    public Collection<T> values() {
         return content.values();
     }
 }
