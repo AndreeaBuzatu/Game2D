@@ -18,6 +18,7 @@ import uk.ac.lancaster.scc210.game.level.Level;
 import uk.ac.lancaster.scc210.game.level.LevelStage;
 import uk.ac.lancaster.scc210.game.level.LevelWave;
 import uk.ac.lancaster.scc210.game.prototypes.AsteroidPrototype;
+import uk.ac.lancaster.scc210.game.states.Playing;
 import uk.ac.lancaster.scc210.game.waves.SineWave;
 import uk.ac.lancaster.scc210.game.waves.StraightLineWave;
 import uk.ac.lancaster.scc210.game.waves.Wave;
@@ -39,6 +40,8 @@ public class LevelDeserialiser extends Deserialiser<Level> {
     private final String SPACE_SHIP = "spaceship";
 
     private final String ASTEROID = "asteroid";
+
+    private final int VIEW_SIZE_FACTOR = 7;
 
     private final SpaceShipPrototypeManager spaceShipManager;
 
@@ -135,13 +138,13 @@ public class LevelDeserialiser extends Deserialiser<Level> {
             if (foundNode(node, WAVE_TAG)) {
                 Element elem = (Element) node;
 
-                float originX = Float.parseFloat(elem.getAttribute("start_x"));
+                float originX = Float.parseFloat(elem.getAttribute("start_x")) * VIEW_SIZE_FACTOR;
 
-                float originY = Float.parseFloat(elem.getAttribute("start_y"));
+                float originY = (Float.parseFloat(elem.getAttribute("start_y")) * VIEW_SIZE_FACTOR) + Playing.INFO_BOX_HEIGHT;
 
-                float destinationX = Float.parseFloat(elem.getAttribute("end_x"));
+                float destinationX = Float.parseFloat(elem.getAttribute("end_x")) * VIEW_SIZE_FACTOR;
 
-                float destinationY = Float.parseFloat(elem.getAttribute("end_y"));
+                float destinationY = (Float.parseFloat(elem.getAttribute("end_y")) * VIEW_SIZE_FACTOR) + Playing.INFO_BOX_HEIGHT;
 
                 int numShips = Integer.parseInt(elem.getAttribute("num_ships"));
 
@@ -180,9 +183,9 @@ public class LevelDeserialiser extends Deserialiser<Level> {
             if (foundNode(node, STATIONARY_TAG)) {
                 Element elem = (Element) node;
 
-                float posX = Float.parseFloat(elem.getAttribute("pos_x"));
+                float posX = Float.parseFloat(elem.getAttribute("pos_x")) * VIEW_SIZE_FACTOR;
 
-                float posY = Float.parseFloat(elem.getAttribute("pos_y"));
+                float posY = (Float.parseFloat(elem.getAttribute("pos_y")) * VIEW_SIZE_FACTOR) + Playing.INFO_BOX_HEIGHT;
 
                 Vector2f pos = new Vector2f(posX, posY);
 
