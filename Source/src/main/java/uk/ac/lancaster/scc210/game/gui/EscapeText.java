@@ -46,6 +46,7 @@ public class EscapeText implements InputListener, Drawable {
 
     @Override
     public void keyPressed(KeyEvent keyevent) {
+        pressedKey = keyevent.key;
     }
 
     @Override

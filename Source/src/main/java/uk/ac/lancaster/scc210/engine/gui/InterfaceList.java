@@ -190,11 +190,11 @@ public class InterfaceList implements InputListener, Drawable {
         return selectedIndex;
     }
 
-    public int getPreviousSelected() {
+    int getPreviousSelected() {
         return previousSelected;
     }
 
-    public void setSelectedIndex(int selectedIndex, int previousSelected) {
+    void setSelectedIndex(int selectedIndex, int previousSelected) {
         this.selectedIndex = selectedIndex;
         this.previousSelected = previousSelected;
     }
