@@ -7,9 +7,9 @@ import uk.ac.lancaster.scc210.engine.content.FontManager;
 public class MenuHeader implements Drawable {
     private final int MENU_TEXT_SIZE = 100;
 
-    private Text menuHeader;
+    private final Text menuHeader;
 
-    private Vector2f position;
+    private final Vector2f position;
 
     public MenuHeader(String label, FontManager fontManager, FloatRect viewBounds) {
         menuHeader = new Text();

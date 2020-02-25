@@ -9,9 +9,9 @@ import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import uk.ac.lancaster.scc210.engine.content.FontManager;
 
 public class EscapeText implements InputListener, Drawable {
-    private StateBasedGame game;
+    private final StateBasedGame game;
 
-    private Text exitText;
+    private final Text exitText;
 
     private Keyboard.Key pressedKey;
 
