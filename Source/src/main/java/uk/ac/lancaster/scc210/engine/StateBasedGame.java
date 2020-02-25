@@ -158,8 +158,6 @@ public class StateBasedGame {
      * Run the game.
      */
     public void run() {
-        states.forEach(state -> state.setup(this));
-
         while (window.isOpen()) {
             update();
 
@@ -186,7 +184,11 @@ public class StateBasedGame {
                     break;
 
                 case TEXT_ENTERED:
-                    inputListeners.forEach(listener -> listener.keyTyped(event.asTextEvent()));
+                    inputListeners.forEach(listener -> {
+                        if (listener != null) {
+                            listener.keyTyped(event.asTextEvent());
+                        }
+                    });
 
                     break;
 
@@ -214,18 +216,28 @@ public class StateBasedGame {
     }
 
     public void pushState(State state) {
-        //state.setup(this);
+        if (currentState != null) {
+            currentState.onExit(this);
+        }
+
+        state.setup(this);
 
         states.add(state);
 
         currentState = states.peek();
+
+        currentState.onEnter(this);
     }
 
     public void popState() {
         states.pop();
 
         try {
+            currentState.onExit(this);
+
             currentState = states.peek();
+
+            currentState.onEnter(this);
 
         } catch (EmptyStackException e) {
             window.close();
@@ -276,5 +288,13 @@ public class StateBasedGame {
 
     public void addKeyListener(InputListener inputListener) {
         inputListeners.add(inputListener);
+    }
+
+    public void removeKeyListener(InputListener inputListener) {
+        inputListeners.remove(inputListener);
+    }
+
+    public Stack<State> getStates() {
+        return states;
     }
 }

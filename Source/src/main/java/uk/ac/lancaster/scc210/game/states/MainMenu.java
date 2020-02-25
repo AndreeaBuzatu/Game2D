@@ -9,6 +9,7 @@ import uk.ac.lancaster.scc210.engine.ViewSize;
 import uk.ac.lancaster.scc210.engine.content.FontManager;
 import uk.ac.lancaster.scc210.engine.gui.InterfaceList;
 import uk.ac.lancaster.scc210.engine.states.State;
+import uk.ac.lancaster.scc210.game.content.StateManager;
 import uk.ac.lancaster.scc210.game.gui.MenuHeader;
 
 public class MainMenu implements State {
@@ -20,9 +21,7 @@ public class MainMenu implements State {
 
     @Override
     public void setup(StateBasedGame game) {
-        LevelSelect levelSelect = new LevelSelect();
-
-        HighScoreList highScoreList = new HighScoreList();
+        StateManager stateManager = (StateManager) game.getServiceProvider().get(StateManager.class);
 
         FontManager fontManager = (FontManager) game.getServiceProvider().get(FontManager.class);
 
@@ -36,15 +35,26 @@ public class MainMenu implements State {
 
         interfaceList = new InterfaceList(game, fontManager.get("font"), new Vector2f(headerPos.x, headerPos.y + LIST_PADDING));
 
-        interfaceList.addListOption("Play", (() -> System.out.println("Hello, world")));
+        // For play create a new playing state so we can easily reset the game
+        interfaceList.addListOption("Play", (() -> game.pushState(new Playing())));
 
-        interfaceList.addListOption("Level Select", (() -> game.pushState(levelSelect)));
+        interfaceList.addListOption("Level Select", (() -> game.pushState(stateManager.get("level-select"))));
 
-        interfaceList.addListOption("High Scores", (() -> game.pushState(highScoreList)));
+        interfaceList.addListOption("High Scores", (() -> game.pushState(stateManager.get("high-score-list"))));
 
         interfaceList.addListOption("Exit", (game::popState));
 
         interfaceList.setEnabled(true);
+    }
+
+    @Override
+    public void onEnter(StateBasedGame game) {
+        game.addKeyListener(interfaceList);
+    }
+
+    @Override
+    public void onExit(StateBasedGame game) {
+        game.removeKeyListener(interfaceList);
     }
 
     @Override

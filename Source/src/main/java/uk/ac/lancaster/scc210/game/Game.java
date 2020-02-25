@@ -74,17 +74,26 @@ public class Game extends StateBasedGame {
 
             HighScoresSerialiser highScoresSerialiser = new HighScoresSerialiser(deserialiseXML("highscores.xml"));
 
-            serviceProvider.put(HighScores.class, new HighScores(highScoresSerialiser.getSerialised()));
+            HighScores highScores = new HighScores(highScoresSerialiser.getSerialised());
+
+            serviceProvider.put(HighScores.class, highScores);
+
+            HighScoreWriter highScoreWriter = new HighScoreWriter(highScores);
+
+            serviceProvider.put(HighScoreWriter.class, highScoreWriter);
 
         } catch (ResourceNotFoundException e) {
             window.close();
         }
 
+        StateManager stateManager = new StateManager();
+
         serviceProvider.put(BulletPool.class, new BulletPool(serviceProvider));
 
-        //pushState(new Playing());
+        serviceProvider.put(StateManager.class, stateManager);
 
-        pushState(new MainMenu());
+
+        pushState(stateManager.get("main-menu"));
     }
 
     private void loadPlayerXML() throws ResourceNotFoundException {

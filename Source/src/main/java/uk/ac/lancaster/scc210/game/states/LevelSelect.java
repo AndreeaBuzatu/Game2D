@@ -60,6 +60,16 @@ public class LevelSelect implements State, InputListener {
         createExitText();
     }
 
+    @Override
+    public void onEnter(StateBasedGame game) {
+
+    }
+
+    @Override
+    public void onExit(StateBasedGame game) {
+
+    }
+
     private void createGrid() {
         // TODO: Update this with the develop branch to use the new level manager and level access system
         // TODO: Prevent the user (or hide) locked levels from being loaded

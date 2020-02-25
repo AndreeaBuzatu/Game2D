@@ -54,6 +54,16 @@ public class HighScoreList implements State {
     }
 
     @Override
+    public void onEnter(StateBasedGame game) {
+        game.addKeyListener(escapeText);
+    }
+
+    @Override
+    public void onExit(StateBasedGame game) {
+        game.removeKeyListener(escapeText);
+    }
+
+    @Override
     public void update(Time deltaTime) {
         escapeText.update();
     }
@@ -73,6 +83,8 @@ public class HighScoreList implements State {
         List<HighScore> highScoreData = highScores.getHighScores();
 
         highScoreList = new InterfaceList(game, fontManager.get("font"), new Vector2f(headerPos.x, headerPos.y + LIST_PADDING));
+
+        game.removeKeyListener(highScoreList);
 
         for (int i = 0; i < highScoreData.size(); i++) {
             HighScore score = highScoreData.get(i);

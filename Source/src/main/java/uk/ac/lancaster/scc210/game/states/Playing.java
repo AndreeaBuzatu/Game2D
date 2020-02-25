@@ -13,6 +13,7 @@ import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.states.State;
 import uk.ac.lancaster.scc210.game.content.LevelManager;
 import uk.ac.lancaster.scc210.game.content.SpaceShipPrototypeManager;
+import uk.ac.lancaster.scc210.game.content.StateManager;
 import uk.ac.lancaster.scc210.game.dialogue.DialogueBox;
 import uk.ac.lancaster.scc210.game.ecs.component.*;
 import uk.ac.lancaster.scc210.game.ecs.system.*;
@@ -200,6 +201,18 @@ public class Playing implements State {
     }
 
     @Override
+    public void onEnter(StateBasedGame game) {
+        game.addKeyListener(dialogueBox);
+    }
+
+    @Override
+    public void onExit(StateBasedGame game) {
+        game.removeKeyListener(dialogueBox);
+
+        level.reset();
+    }
+
+    @Override
     public void draw(RenderTarget target) {
         world.draw(target);
 
@@ -305,7 +318,13 @@ public class Playing implements State {
                 shouldFadeOut = true;
 
             } else {
-                //game.pushState(new Completion(playerComponent.getScore()));
+                StateManager stateManager = (StateManager) game.getServiceProvider().get(StateManager.class);
+
+                Completion completionState = (Completion) stateManager.get("completion");
+
+                completionState.setPlayerScore(playerComponent.getScore());
+
+                game.pushState(completionState);
             }
         }
 

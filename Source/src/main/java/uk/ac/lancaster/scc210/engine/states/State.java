@@ -15,6 +15,10 @@ public interface State {
      */
     void setup(StateBasedGame game);
 
+    void onEnter(StateBasedGame game);
+
+    void onExit(StateBasedGame game);
+
     /**
      * Update the current state of the screen.
      *
