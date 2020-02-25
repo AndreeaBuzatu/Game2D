@@ -30,6 +30,8 @@ public class MainMenu implements State {
     public void setup(StateBasedGame game) {
         LevelSelect levelSelect = new LevelSelect();
 
+        HighScoreList highScoreList = new HighScoreList();
+
         fontManager = (FontManager) game.getServiceProvider().get(FontManager.class);
 
         viewSize = (ViewSize) game.getServiceProvider().get(ViewSize.class);
@@ -45,6 +47,8 @@ public class MainMenu implements State {
         interfaceList.addListOption("Play", (() -> System.out.println("Hello, world")));
 
         interfaceList.addListOption("Level Select", (() -> game.pushState(levelSelect)));
+
+        interfaceList.addListOption("High Scores", (() -> game.pushState(highScoreList)));
 
         interfaceList.addListOption("Exit", (game::popState));
 
