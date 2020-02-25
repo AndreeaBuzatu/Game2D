@@ -45,7 +45,7 @@ public class SineWave extends Wave {
 
             Vector2f wave = new Vector2f((float) (perpendicular.x * waveCurve), (float) (perpendicular.y * waveCurve));
 
-            transformable.setRotation(rotateSprite());
+            transformable.setRotation(rotateSprite(waveAngle));
 
             // If the entity goes out of bounds, reset the entity back to it's starting position
             if (passedDestination(transformable.getPosition())) {
