@@ -22,7 +22,8 @@ public class MainMenu implements State {
 
     private InterfaceList interfaceList;
 
-    private Text menuHeader;
+    private Text menuHeaderTitle1;
+    private Text menuHeaderTitle2;
 
     private FloatRect viewBounds;
 
@@ -42,7 +43,7 @@ public class MainMenu implements State {
 
 
         fontManager = (FontManager) game.getServiceProvider().get(FontManager.class);
-        
+
 
         viewSize = (ViewSize) game.getServiceProvider().get(ViewSize.class);
 
@@ -50,9 +51,13 @@ public class MainMenu implements State {
 
         createHeader();
 
-        Vector2f headerPos = menuHeader.getPosition();
+        Vector2f headerPos1 = menuHeaderTitle1.getPosition();
+        Vector2f headerPos2 = menuHeaderTitle2.getPosition();
 
-        interfaceList = new InterfaceList(game, fontManager.get("font"), new Vector2f(headerPos.x, headerPos.y + LIST_PADDING));
+        /*
+        The position of the menu items
+         */
+        interfaceList = new InterfaceList(game, fontManager.get("font"), new Vector2f(1150,700));
 
         interfaceList.addListOption("Play", (() -> System.out.println("Hello, world")));
 
@@ -66,21 +71,27 @@ public class MainMenu implements State {
     }
 
     private void createHeader() {
-        menuHeader = new Text();
-
-        menuHeader.setString("MISSION:SURVIVE");
+        menuHeaderTitle1 = new Text();
+        menuHeaderTitle2 = new Text();
+        menuHeaderTitle1.setString("MISSION:");
+        menuHeaderTitle2.setString("SURVIVE");
 
 
         //menuHeader.setCharacterSize(MENU_TEXT_SIZE);
 
-        FloatRect headerBounds = menuHeader.getGlobalBounds();
+        FloatRect headerBounds = menuHeaderTitle1.getGlobalBounds();
+        FloatRect headerBounds2 = menuHeaderTitle2.getGlobalBounds();
 
         Vector2f headerPos = new Vector2f((viewBounds.width / 2) - (headerBounds.width / 2), viewBounds.height / 5f);
-
-        menuHeader.setPosition(headerPos);
-        menuHeader.setCharacterSize(200);
-        menuHeader.setColor(Color.YELLOW);
-        menuHeader.setFont(fontManager.get("font2"));
+        Vector2f headerPos2 = new Vector2f((viewBounds.width / 2) - (headerBounds2.width / 2), viewBounds.height / 5f);
+        menuHeaderTitle1.setPosition(headerPos);
+        menuHeaderTitle2.setPosition(headerPos2);
+        menuHeaderTitle1.setCharacterSize(210);
+        menuHeaderTitle2.setCharacterSize(110);
+        menuHeaderTitle1.setColor(Color.add(Color.GREEN, Color.CYAN));
+        menuHeaderTitle2.setColor(Color.YELLOW);
+        menuHeaderTitle1.setFont(fontManager.get("font2"));
+        menuHeaderTitle2.setFont(fontManager.get("font2"));
     }
 
     @Override
@@ -92,6 +103,7 @@ public class MainMenu implements State {
     public void draw(RenderTarget target) {
         target.draw(background);
         target.draw(interfaceList);
-        target.draw(menuHeader);
+        target.draw(menuHeaderTitle1);
+        target.draw(menuHeaderTitle2);
     }
 }
