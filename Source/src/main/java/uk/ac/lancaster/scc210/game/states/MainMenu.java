@@ -31,7 +31,7 @@ public class MainMenu implements State {
     public void setup(StateBasedGame game) {
         LevelSelect levelSelect = new LevelSelect();
         HelpSelect helpSelect = new HelpSelect();
-
+        LeaderboardSelect leaderboardSelect = new LeaderboardSelect();
 
         TextureManager textureManager = (TextureManager) game.getServiceProvider().get(TextureManager.class);
         background = new Sprite(textureManager.get("level-select.jpg:level-select"));
@@ -54,6 +54,8 @@ public class MainMenu implements State {
 
         interfaceList.addListOption("Help", (() -> game.pushState(helpSelect)));
 
+        interfaceList.addListOption("Leaderboard", (() -> game.pushState(leaderboardSelect)));
+
         interfaceList.addListOption("Exit", (game::popState));
 
         interfaceList.setEnabled(true);
@@ -73,7 +75,7 @@ public class MainMenu implements State {
         menuHeaderTitle2.setPosition(headerPos2);
         menuHeaderTitle1.setCharacterSize(60);
         menuHeaderTitle2.setCharacterSize(310);
-        menuHeaderTitle1.setStyle(2);
+        menuHeaderTitle1.setStyle(TextStyle.ITALIC);
         menuHeaderTitle1.setColor(Color.CYAN);
         menuHeaderTitle2.setColor(Color.YELLOW);
         menuHeaderTitle1.setFont(fontManager.get("font"));
