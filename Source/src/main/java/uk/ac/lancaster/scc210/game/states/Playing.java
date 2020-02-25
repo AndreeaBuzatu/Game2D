@@ -305,7 +305,7 @@ public class Playing implements State {
                 shouldFadeOut = true;
 
             } else {
-                game.pushState(new Completion());
+                //game.pushState(new Completion(playerComponent.getScore()));
             }
         }
 

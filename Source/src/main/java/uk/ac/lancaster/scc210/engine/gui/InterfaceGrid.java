@@ -6,6 +6,7 @@ import org.jsfml.graphics.RenderTarget;
 import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.event.KeyEvent;
+import org.jsfml.window.event.TextEvent;
 import uk.ac.lancaster.scc210.engine.InputListener;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
 
@@ -131,5 +132,10 @@ public class InterfaceGrid implements InputListener, Drawable {
         previousKey = pressedKey;
 
         pressedKey = keyevent.key;
+    }
+
+    @Override
+    public void keyTyped(TextEvent textevent) {
+
     }
 }

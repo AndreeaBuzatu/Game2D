@@ -21,8 +21,9 @@ import uk.ac.lancaster.scc210.engine.resources.deserialise.TextureAtlasDeseriali
 import uk.ac.lancaster.scc210.engine.service.ServiceProvider;
 import uk.ac.lancaster.scc210.engine.states.State;
 
-import java.util.ArrayList;
 import java.util.EmptyStackException;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,7 +39,7 @@ public class StateBasedGame {
 
     public static final float ZOOM_AMOUNT = 2.0f;
 
-    private final ArrayList<InputListener> inputListeners;
+    private final Set<InputListener> inputListeners;
 
     private final Stack<State> states;
 
@@ -89,11 +90,13 @@ public class StateBasedGame {
 
         window.setFramerateLimit(FPS);
 
+        window.setKeyRepeatEnabled(false);
+
         states = new Stack<>();
 
         serviceProvider = new ServiceProvider();
 
-        inputListeners = new ArrayList<>();
+        inputListeners = new HashSet<>();
 
         try {
             TextureAtlasDeserialiser textureAtlasDeserialiser = new TextureAtlasDeserialiser(deserialiseXML("atlases.xml"));
@@ -182,6 +185,11 @@ public class StateBasedGame {
 
                     break;
 
+                case TEXT_ENTERED:
+                    inputListeners.forEach(listener -> listener.keyTyped(event.asTextEvent()));
+
+                    break;
+
                 case RESIZED:
                     float aspectRatio = (float) window.getSize().x / window.getSize().y;
 
@@ -206,7 +214,7 @@ public class StateBasedGame {
     }
 
     public void pushState(State state) {
-        state.setup(this);
+        //state.setup(this);
 
         states.add(state);
 

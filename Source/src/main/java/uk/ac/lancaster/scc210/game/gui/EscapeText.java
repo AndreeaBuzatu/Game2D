@@ -3,6 +3,7 @@ package uk.ac.lancaster.scc210.game.gui;
 import org.jsfml.graphics.*;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.event.KeyEvent;
+import org.jsfml.window.event.TextEvent;
 import uk.ac.lancaster.scc210.engine.InputListener;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import uk.ac.lancaster.scc210.engine.content.FontManager;
@@ -45,6 +46,10 @@ public class EscapeText implements InputListener, Drawable {
 
     @Override
     public void keyPressed(KeyEvent keyevent) {
-        pressedKey = keyevent.key;
+    }
+
+    @Override
+    public void keyTyped(TextEvent textevent) {
+
     }
 }
