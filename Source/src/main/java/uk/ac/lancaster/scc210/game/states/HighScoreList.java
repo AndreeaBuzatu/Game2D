@@ -46,7 +46,7 @@ public class HighScoreList implements State {
 
         FloatRect viewBounds = ((ViewSize) game.getServiceProvider().get(ViewSize.class)).getViewBounds();
 
-        menuHeader = new MenuHeader("High Score", fontManager, viewBounds);
+        menuHeader = new MenuHeader("High Scores", fontManager, viewBounds);
 
         escapeText = new EscapeText(fontManager, game);
 
