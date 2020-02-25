@@ -15,7 +15,6 @@ import uk.ac.lancaster.scc210.engine.gui.InterfaceList;
 import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
 import uk.ac.lancaster.scc210.engine.states.State;
 import uk.ac.lancaster.scc210.game.content.HighScores;
-import uk.ac.lancaster.scc210.game.content.StateManager;
 import uk.ac.lancaster.scc210.game.gui.MenuHeader;
 import uk.ac.lancaster.scc210.game.resources.HighScore;
 import uk.ac.lancaster.scc210.game.resources.HighScoreWriter;
@@ -65,8 +64,6 @@ public class Completion implements State, InputListener {
         game.addKeyListener(this);
 
         FontManager fontManager = (FontManager) game.getServiceProvider().get(FontManager.class);
-
-        StateManager stateManager = (StateManager) game.getServiceProvider().get(StateManager.class);
 
         FloatRect viewBounds = ((ViewSize) game.getServiceProvider().get(ViewSize.class)).getViewBounds();
 
