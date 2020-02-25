@@ -28,7 +28,7 @@ public class AnimationDeserialiser extends Deserialiser<SerialisedAnimation> {
     }
 
     @Override
-    protected void deserialise() throws ResourceNotFoundException {
+    protected void deserialise() {
         if (atlasManager == null) {
             return;
         }

@@ -35,9 +35,9 @@ public class Completion implements State, InputListener {
 
     private InterfaceList highScoreList;
 
-    private boolean shouldEnterName;
+    private final boolean shouldEnterName;
 
-    private char[] name;
+    private final char[] name;
 
     private int charsEntered, playerScoreIndex;
 
