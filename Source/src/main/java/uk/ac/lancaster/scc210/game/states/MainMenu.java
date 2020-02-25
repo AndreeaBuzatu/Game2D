@@ -1,9 +1,6 @@
 package uk.ac.lancaster.scc210.game.states;
 
-import org.jsfml.graphics.FloatRect;
-import org.jsfml.graphics.RenderTarget;
-import org.jsfml.graphics.Sprite;
-import org.jsfml.graphics.Text;
+import org.jsfml.graphics.*;
 import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
@@ -12,6 +9,7 @@ import uk.ac.lancaster.scc210.engine.content.FontManager;
 import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.gui.InterfaceList;
 import uk.ac.lancaster.scc210.engine.states.State;
+import java.awt.Font;
 
 public class MainMenu implements State {
     private final int MENU_TEXT_SIZE = 100;
@@ -30,6 +28,8 @@ public class MainMenu implements State {
 
     private Sprite background;
 
+
+
     @Override
     public void setup(StateBasedGame game) {
         LevelSelect levelSelect = new LevelSelect();
@@ -42,6 +42,7 @@ public class MainMenu implements State {
 
 
         fontManager = (FontManager) game.getServiceProvider().get(FontManager.class);
+        
 
         viewSize = (ViewSize) game.getServiceProvider().get(ViewSize.class);
 
@@ -61,19 +62,16 @@ public class MainMenu implements State {
 
         interfaceList.addListOption("Exit", (game::popState));
 
-
         interfaceList.setEnabled(true);
-
-
     }
 
     private void createHeader() {
         menuHeader = new Text();
 
         menuHeader.setString("MISSION:SURVIVE");
-        menuHeader.setFont(fontManager.get("font"));
 
-        menuHeader.setCharacterSize(MENU_TEXT_SIZE);
+
+        //menuHeader.setCharacterSize(MENU_TEXT_SIZE);
 
         FloatRect headerBounds = menuHeader.getGlobalBounds();
 
@@ -81,7 +79,8 @@ public class MainMenu implements State {
 
         menuHeader.setPosition(headerPos);
         menuHeader.setCharacterSize(200);
-
+        menuHeader.setColor(Color.YELLOW);
+        menuHeader.setFont(fontManager.get("font2"));
     }
 
     @Override
