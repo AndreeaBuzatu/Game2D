@@ -67,7 +67,7 @@ public class MainMenu implements State {
 
 
         Vector2f headerPos = new Vector2f(1060,450);
-        Vector2f headerPos2 = new Vector2f(880, 391);
+        Vector2f headerPos2 = new Vector2f(880, 390);
 
         menuHeaderTitle1.setPosition(headerPos);
         menuHeaderTitle2.setPosition(headerPos2);

@@ -62,7 +62,7 @@ public class LevelSelect implements State, InputListener {
     private void createGrid() {
         // TODO: Update this with the develop branch to use the new level manager and level access system
         // TODO: Prevent the user (or hide) locked levels from being loaded
-        interfaceGrid = new InterfaceGrid(game, new Vector2f(viewBounds.width / 4 + 50, viewBounds.height / 3));
+        interfaceGrid = new InterfaceGrid(game, new Vector2f(100,100));
 
         List<Level> levels = new ArrayList<>(levelManager.values());
 
