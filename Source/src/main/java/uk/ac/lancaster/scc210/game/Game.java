@@ -7,14 +7,10 @@ import uk.ac.lancaster.scc210.engine.content.SoundBufferManager;
 import uk.ac.lancaster.scc210.engine.content.TextureAnimationManager;
 import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
-import uk.ac.lancaster.scc210.game.content.BulletPrototypeManager;
-import uk.ac.lancaster.scc210.game.content.ItemPrototypeManager;
-import uk.ac.lancaster.scc210.game.content.LevelManager;
-import uk.ac.lancaster.scc210.game.content.SpaceShipPrototypeManager;
+import uk.ac.lancaster.scc210.game.content.*;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
 import uk.ac.lancaster.scc210.game.resources.*;
 import uk.ac.lancaster.scc210.game.states.MainMenu;
-import uk.ac.lancaster.scc210.game.states.Playing;
 
 import java.util.logging.Logger;
 
@@ -76,13 +72,19 @@ public class Game extends StateBasedGame {
 
             serviceProvider.put(LevelManager.class, levelManager);
 
+            HighScoresSerialiser highScoresSerialiser = new HighScoresSerialiser(deserialiseXML("highscores.xml"));
+
+            serviceProvider.put(HighScores.class, new HighScores(highScoresSerialiser.getSerialised()));
+
         } catch (ResourceNotFoundException e) {
             window.close();
         }
 
         serviceProvider.put(BulletPool.class, new BulletPool(serviceProvider));
 
-        pushState(new Playing());
+        //pushState(new Playing());
+
+        pushState(new MainMenu());
     }
 
     private void loadPlayerXML() throws ResourceNotFoundException {
