@@ -10,20 +10,28 @@ import uk.ac.lancaster.scc210.engine.InputListener;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import uk.ac.lancaster.scc210.engine.content.FontManager;
 import uk.ac.lancaster.scc210.engine.gui.InterfaceList;
+import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
 import uk.ac.lancaster.scc210.engine.states.State;
 import uk.ac.lancaster.scc210.game.content.HighScores;
+import uk.ac.lancaster.scc210.game.content.StateManager;
 import uk.ac.lancaster.scc210.game.resources.HighScore;
+import uk.ac.lancaster.scc210.game.resources.HighScoreWriter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 public class Completion implements State, InputListener {
     private final int NAME_LENGTH = 3;
 
-    private final int playerScore;
+    private int playerScore;
+
+    private StateBasedGame game;
 
     private HighScores highScores;
+
+    private HighScoreWriter highScoreWriter;
 
     private InterfaceList highScoreList;
 
@@ -33,8 +41,8 @@ public class Completion implements State, InputListener {
 
     private int charsEntered, playerScoreIndex;
 
-    public Completion(int playerScore) {
-        this.playerScore = playerScore;
+    public Completion() {
+        playerScore = -1;
 
         name = new char[NAME_LENGTH];
 
@@ -45,9 +53,15 @@ public class Completion implements State, InputListener {
 
     @Override
     public void setup(StateBasedGame game) {
+        this.game = game;
+
         game.addKeyListener(this);
 
         FontManager fontManager = (FontManager) game.getServiceProvider().get(FontManager.class);
+
+        StateManager stateManager = (StateManager) game.getServiceProvider().get(StateManager.class);
+
+        highScoreWriter = (HighScoreWriter) game.getServiceProvider().get(HighScoreWriter.class);
 
         highScores = (HighScores) game.getServiceProvider().get(HighScores.class);
 
@@ -60,13 +74,31 @@ public class Completion implements State, InputListener {
             }));
         }
 
+        game.removeKeyListener(highScoreList);
+
         playerScoreIndex = findPlayerScoreIndex();
 
-        putPlayerScoreInList(playerScoreIndex);
+        if (playerScoreIndex > -1) {
+            putPlayerScoreInList(playerScoreIndex);
+        }
+    }
+
+    @Override
+    public void onEnter(StateBasedGame game) {
+        game.addKeyListener(this);
+    }
+
+    @Override
+    public void onExit(StateBasedGame game) {
+        game.removeKeyListener(this);
     }
 
     @Override
     public void update(Time deltaTime) {
+        if (playerScoreIndex < 0) {
+            return;
+        }
+
         formatScoreInput(playerScoreIndex);
     }
 
@@ -77,6 +109,26 @@ public class Completion implements State, InputListener {
 
     @Override
     public void keyPressed(KeyEvent keyevent) {
+        if (keyevent.key == Keyboard.Key.RETURN) {
+            if (playerScoreIndex > 0 && charsEntered > 0) {
+                try {
+                    highScoreWriter.writeHighScores();
+
+                } catch (ResourceNotFoundException e) {
+                    StateBasedGame.LOGGER.log(Level.WARNING, e.getMessage());
+                }
+            }
+
+            /*
+            WARNING: CRAPPY CODE BELOW!!!
+
+            We pop from the Completion state to the PLaying state back to the Main Menu state
+             */
+            game.popState();
+
+            game.popState();
+        }
+
         if (!shouldEnterName) {
             return;
         }
@@ -105,9 +157,25 @@ public class Completion implements State, InputListener {
     }
 
     private void putPlayerScoreInList(int playerScoreIndex) {
-        HighScore playerScoreData = highScores.getHighScores().get(playerScoreIndex);
+        if (charsEntered > 0 && playerScoreIndex > 0) {
+            return;
+        }
 
-        playerScoreData.setScore(playerScore);
+        String playerName = new String(name).replaceAll("\0", "_");
+
+        HighScore playerScoreData = new HighScore(playerName, playerScore);
+
+        List<HighScore> highScoreData = highScores.getHighScores();
+
+        // Add the score at the given index
+        highScoreData.add(playerScoreIndex, playerScoreData);
+
+        highScoreData.remove(highScoreData.size() - 1);
+
+        // If the player is not third on the high score list, remove the last high score from the high score list
+        if (playerScoreIndex < highScoreData.size() - 1) {
+            playerScoreData.setScore(playerScore);
+        }
     }
 
     private void formatScoreInput(int playerScoreIndex) {
@@ -148,5 +216,9 @@ public class Completion implements State, InputListener {
         }
 
         return highScoreIndex;
+    }
+
+    void setPlayerScore(int playerScore) {
+        this.playerScore = playerScore;
     }
 }
