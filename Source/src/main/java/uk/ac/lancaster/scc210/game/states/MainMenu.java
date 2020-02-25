@@ -2,7 +2,6 @@ package uk.ac.lancaster.scc210.game.states;
 
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.RenderTarget;
-import org.jsfml.graphics.Text;
 import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
@@ -10,21 +9,14 @@ import uk.ac.lancaster.scc210.engine.ViewSize;
 import uk.ac.lancaster.scc210.engine.content.FontManager;
 import uk.ac.lancaster.scc210.engine.gui.InterfaceList;
 import uk.ac.lancaster.scc210.engine.states.State;
+import uk.ac.lancaster.scc210.game.gui.MenuHeader;
 
 public class MainMenu implements State {
-    private final int MENU_TEXT_SIZE = 100;
-
     private final int LIST_PADDING = 250;
-
-    private FontManager fontManager;
-
-    private ViewSize viewSize;
 
     private InterfaceList interfaceList;
 
-    private Text menuHeader;
-
-    private FloatRect viewBounds;
+    private MenuHeader menuHeader;
 
     @Override
     public void setup(StateBasedGame game) {
@@ -32,13 +24,13 @@ public class MainMenu implements State {
 
         HighScoreList highScoreList = new HighScoreList();
 
-        fontManager = (FontManager) game.getServiceProvider().get(FontManager.class);
+        FontManager fontManager = (FontManager) game.getServiceProvider().get(FontManager.class);
 
-        viewSize = (ViewSize) game.getServiceProvider().get(ViewSize.class);
+        ViewSize viewSize = (ViewSize) game.getServiceProvider().get(ViewSize.class);
 
-        viewBounds = viewSize.getViewBounds();
+        FloatRect viewBounds = viewSize.getViewBounds();
 
-        createHeader();
+        menuHeader = new MenuHeader("We Don't Have A Name", fontManager, viewBounds);
 
         Vector2f headerPos = menuHeader.getPosition();
 
@@ -53,22 +45,6 @@ public class MainMenu implements State {
         interfaceList.addListOption("Exit", (game::popState));
 
         interfaceList.setEnabled(true);
-    }
-
-    private void createHeader() {
-        menuHeader = new Text();
-
-        menuHeader.setString("We Don't Have A Name");
-
-        menuHeader.setFont(fontManager.get("font"));
-
-        menuHeader.setCharacterSize(MENU_TEXT_SIZE);
-
-        FloatRect headerBounds = menuHeader.getGlobalBounds();
-
-        Vector2f headerPos = new Vector2f((viewBounds.width / 2) - (headerBounds.width / 2), viewBounds.height / 5f);
-
-        menuHeader.setPosition(headerPos);
     }
 
     @Override
