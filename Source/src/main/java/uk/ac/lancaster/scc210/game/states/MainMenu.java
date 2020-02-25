@@ -25,11 +25,7 @@ public class MainMenu implements State {
     private Text menuHeaderTitle1;
     private Text menuHeaderTitle2;
 
-    private FloatRect viewBounds;
-
     private Sprite background;
-
-
 
     @Override
     public void setup(StateBasedGame game) {
@@ -41,13 +37,9 @@ public class MainMenu implements State {
         background = new Sprite(textureManager.get("level-select.jpg:level-select"));
         background.setScale(2, 2);
 
-
         fontManager = (FontManager) game.getServiceProvider().get(FontManager.class);
 
-
         viewSize = (ViewSize) game.getServiceProvider().get(ViewSize.class);
-
-        viewBounds = viewSize.getViewBounds();
 
         createHeader();
 
@@ -74,11 +66,9 @@ public class MainMenu implements State {
         menuHeaderTitle2.setString("SURVIVE");
 
 
-        FloatRect headerBounds = menuHeaderTitle1.getGlobalBounds();
-        FloatRect headerBounds2 = menuHeaderTitle2.getGlobalBounds();
-
         Vector2f headerPos = new Vector2f(1060,450);
         Vector2f headerPos2 = new Vector2f(880, 390);
+
         menuHeaderTitle1.setPosition(headerPos);
         menuHeaderTitle2.setPosition(headerPos2);
         menuHeaderTitle1.setCharacterSize(60);
