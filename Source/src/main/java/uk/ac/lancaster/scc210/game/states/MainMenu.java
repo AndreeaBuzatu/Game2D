@@ -12,7 +12,7 @@ import uk.ac.lancaster.scc210.engine.states.State;
 import java.awt.Font;
 
 public class MainMenu implements State {
-    private final int MENU_TEXT_SIZE = 100;
+    // private final int MENU_TEXT_SIZE = 100;
 
     private final int LIST_PADDING = 250;
 
@@ -51,8 +51,8 @@ public class MainMenu implements State {
 
         createHeader();
 
-        Vector2f headerPos1 = menuHeaderTitle1.getPosition();
-        Vector2f headerPos2 = menuHeaderTitle2.getPosition();
+        //Vector2f headerPos1 = menuHeaderTitle1.getPosition();
+        //Vector2f headerPos2 = menuHeaderTitle2.getPosition();
 
         /*
         The position of the menu items
@@ -77,16 +77,14 @@ public class MainMenu implements State {
         menuHeaderTitle2.setString("SURVIVE");
 
 
-        //menuHeader.setCharacterSize(MENU_TEXT_SIZE);
-
         FloatRect headerBounds = menuHeaderTitle1.getGlobalBounds();
         FloatRect headerBounds2 = menuHeaderTitle2.getGlobalBounds();
 
-        Vector2f headerPos = new Vector2f((viewBounds.width / 2) - (headerBounds.width / 2), viewBounds.height / 5f);
-        Vector2f headerPos2 = new Vector2f((viewBounds.width / 2) - (headerBounds2.width / 2), viewBounds.height / 5f);
+        Vector2f headerPos = new Vector2f(1070,420);
+        Vector2f headerPos2 = new Vector2f(880, 350);
         menuHeaderTitle1.setPosition(headerPos);
         menuHeaderTitle2.setPosition(headerPos2);
-        menuHeaderTitle1.setCharacterSize(80);
+        menuHeaderTitle1.setCharacterSize(60);
         menuHeaderTitle2.setCharacterSize(310);
         menuHeaderTitle1.setColor(Color.add(Color.GREEN, Color.CYAN));
         menuHeaderTitle2.setColor(Color.YELLOW);
