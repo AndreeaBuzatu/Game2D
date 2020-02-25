@@ -33,11 +33,14 @@ public class MainMenu implements State {
     @Override
     public void setup(StateBasedGame game) {
         LevelSelect levelSelect = new LevelSelect();
+        HelpSelect helpSelect = new HelpSelect();
+
 
         TextureManager textureManager = (TextureManager) game.getServiceProvider().get(TextureManager.class);
-
         background = new Sprite(textureManager.get("level-select.jpg:level-select"));
         background.setScale(2, 2);
+
+
         fontManager = (FontManager) game.getServiceProvider().get(FontManager.class);
 
         viewSize = (ViewSize) game.getServiceProvider().get(ViewSize.class);
@@ -54,7 +57,7 @@ public class MainMenu implements State {
 
         interfaceList.addListOption("Level Select", (() -> game.pushState(levelSelect)));
 
-        interfaceList.addListOption("Help", (game::popState));
+        interfaceList.addListOption("Help", (() -> game.pushState(helpSelect)));
 
         interfaceList.addListOption("Exit", (game::popState));
 
