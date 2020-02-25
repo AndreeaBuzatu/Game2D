@@ -3,11 +3,11 @@ package uk.ac.lancaster.scc210.game.resources;
 import uk.ac.lancaster.scc210.engine.resources.deserialise.Serialised;
 
 public class HighScore implements Serialised {
-    private final String playerName;
+    private String playerName;
 
-    private final int score;
+    private int score;
 
-    HighScore(String playerName, int score) {
+    public HighScore(String playerName, int score) {
         this.playerName = playerName;
         this.score = score;
     }
@@ -18,5 +18,13 @@ public class HighScore implements Serialised {
 
     public int getScore() {
         return score;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }
