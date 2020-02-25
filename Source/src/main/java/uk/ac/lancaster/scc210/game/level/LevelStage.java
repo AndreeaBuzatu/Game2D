@@ -17,11 +17,10 @@ public class LevelStage {
 
     private boolean stationarySpawned;
 
-    public LevelStage(List<LevelWave> waves, List<Entity> stationaryEntities) {
+    public LevelStage(List<LevelWave> waves, Set<Entity> stationaryEntities) {
         this.waves = waves;
 
-        // TODO: Change in deserialiser
-        this.stationaryEntities = new HashSet<>(stationaryEntities);
+        this.stationaryEntities = stationaryEntities;
 
         stationarySaved = new HashSet<>();
 
