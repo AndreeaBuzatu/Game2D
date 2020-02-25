@@ -27,7 +27,7 @@ class ListOption {
 
         text.setFont(font);
 
-        text.setCharacterSize(TEXT_SIZE);
+        text.setCharacterSize(40);
     }
 
     public void draw(RenderTarget target) {

@@ -61,6 +61,7 @@ public class MainMenu implements State {
 
         interfaceList.addListOption("Exit", (game::popState));
 
+
         interfaceList.setEnabled(true);
 
 
@@ -70,7 +71,6 @@ public class MainMenu implements State {
         menuHeader = new Text();
 
         menuHeader.setString("MISSION:SURVIVE");
-
         menuHeader.setFont(fontManager.get("font"));
 
         menuHeader.setCharacterSize(MENU_TEXT_SIZE);
@@ -80,6 +80,8 @@ public class MainMenu implements State {
         Vector2f headerPos = new Vector2f((viewBounds.width / 2) - (headerBounds.width / 2), viewBounds.height / 5f);
 
         menuHeader.setPosition(headerPos);
+        menuHeader.setCharacterSize(200);
+
     }
 
     @Override

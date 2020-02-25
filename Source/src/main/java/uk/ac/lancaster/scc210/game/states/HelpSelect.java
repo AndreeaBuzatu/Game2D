@@ -21,6 +21,7 @@ import java.util.List;
 
 public class HelpSelect implements State, InputListener {
     private StateBasedGame game;
+    private Keyboard.Key pressedKey;
 
     private FontManager fontManager;
 
@@ -34,7 +35,7 @@ public class HelpSelect implements State, InputListener {
 
     private Text exitText;
 
-    private Keyboard.Key pressedKey;
+
 
     @Override
     public void setup(StateBasedGame game) {

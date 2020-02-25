@@ -10,7 +10,7 @@ import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InterfaceList implements InputListener, Drawable {
+public class IntefaceListMenu implements InputListener, Drawable {
     private final int OPTION_HEIGHT_PADDING = 70;
 
     private final List<ListOption> options;
@@ -25,7 +25,7 @@ public class InterfaceList implements InputListener, Drawable {
 
     private boolean enabled;
 
-    public InterfaceList(StateBasedGame game, Font font, Vector2f position) {
+    public IntefaceListMenu(StateBasedGame game, Font font, Vector2f position) {
         this.font = font;
         this.position = position;
 
@@ -40,6 +40,7 @@ public class InterfaceList implements InputListener, Drawable {
         game.addKeyListener(this);
     }
 
+
     public void addListOption(String label, SelectedListener listener) {
         ListOption listOption = new ListOption(font, label);
 
@@ -50,10 +51,6 @@ public class InterfaceList implements InputListener, Drawable {
         setOptionPosition(listOption);
     }
 
-    public void changeSize(int fontSize)
-    {
-        
-    }
     public void update() {
         handleInput();
 
@@ -69,7 +66,7 @@ public class InterfaceList implements InputListener, Drawable {
                 selectedIndex = 0;
             }
 
-            options.get(selectedIndex).setCurrent();
+            //options.get(selectedIndex).setCurrent();
 
             // Deselect the previous item
             if (previousSelected >= 0) {
