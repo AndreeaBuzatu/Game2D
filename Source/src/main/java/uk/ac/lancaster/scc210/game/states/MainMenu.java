@@ -66,7 +66,7 @@ public class MainMenu implements State {
     private void createHeader() {
         menuHeader = new Text();
 
-        menuHeader.setString("We Don't Have A Name");
+        menuHeader.setString("MISSION:SURVIVE");
 
         menuHeader.setFont(fontManager.get("font"));
 
@@ -86,9 +86,8 @@ public class MainMenu implements State {
 
     @Override
     public void draw(RenderTarget target) {
-        target.draw(menuHeader);
-
         target.draw(background);
         target.draw(interfaceList);
+        target.draw(menuHeader);
     }
 }
