@@ -51,7 +51,6 @@ public class LevelStage {
             world.addEntities(wave.getEntities());
 
             wave.getWave().update(wave.getEntities(), deltaTime);
-
         }
     }
 

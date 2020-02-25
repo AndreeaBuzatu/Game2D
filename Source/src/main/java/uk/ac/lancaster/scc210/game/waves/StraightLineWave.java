@@ -4,9 +4,7 @@ import org.jsfml.graphics.Transformable;
 import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
-import uk.ac.lancaster.scc210.game.ecs.component.AsteroidComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.TransformableComponent;
 
 import java.util.Set;
@@ -33,15 +31,12 @@ public class StraightLineWave extends Wave {
 
             float speed = speedComponent.getSpeed();
 
-            float size = 5;
-
             transformable.setRotation(rotateSprite());
-
 
 
             // If the entity goes out of bounds, reset the entity back to it's starting position
             if (passedDestination(transformable.getPosition())) {
-                //transformable.setPosition(origin);
+                transformable.setPosition(-origin.x, -origin.y);
 
                 toRespawn.add(entity);
 
@@ -49,5 +44,7 @@ public class StraightLineWave extends Wave {
                 transformable.move(direction.x * speed, direction.y * speed);
             }
         }
+
+        entities.removeIf(toRespawn::contains);
     }
 }

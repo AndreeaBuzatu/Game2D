@@ -45,8 +45,6 @@ public class SineWave extends Wave {
 
             float speed = speedComponent.getSpeed();
 
-            System.out.println(transformable.getPosition());
-
             calculateMoveToPoint(transformable.getPosition());
 
             Vector2f perpendicular = new Vector2f(-direction.y, direction.x);
@@ -63,12 +61,11 @@ public class SineWave extends Wave {
 
                 toRespawn.add(entity);
 
-
             } else {
                 transformable.move((direction.x * speed) + wave.x, (direction.y * speed) + wave.y);
             }
         }
 
-        entities.removeIf(entity -> toRespawn.contains(entity));
+        entities.removeIf(toRespawn::contains);
     }
 }
