@@ -28,7 +28,15 @@ public class SineWave extends Wave {
 
         double waveAngle = elapsedTime.asSeconds() * Math.PI;
 
+        if (entities.isEmpty()) {
+            return;
+        }
+
         for (Entity entity : entities) {
+            if (toRespawn.contains(entity)) {
+                return;
+            }
+
             TransformableComponent transformableComponent = (TransformableComponent) entity.findComponent(TransformableComponent.class);
 
             Transformable transformable = transformableComponent.getTransformable();
@@ -36,6 +44,8 @@ public class SineWave extends Wave {
             SpeedComponent speedComponent = (SpeedComponent) entity.findComponent(SpeedComponent.class);
 
             float speed = speedComponent.getSpeed();
+
+            System.out.println(transformable.getPosition());
 
             calculateMoveToPoint(transformable.getPosition());
 
@@ -49,11 +59,16 @@ public class SineWave extends Wave {
 
             // If the entity goes out of bounds, reset the entity back to it's starting position
             if (passedDestination(transformable.getPosition())) {
-                transformable.setPosition(origin);
+                transformable.setPosition(-origin.x, -origin.y);
+
+                toRespawn.add(entity);
+
 
             } else {
                 transformable.move((direction.x * speed) + wave.x, (direction.y * speed) + wave.y);
             }
         }
+
+        entities.removeIf(entity -> toRespawn.contains(entity));
     }
 }

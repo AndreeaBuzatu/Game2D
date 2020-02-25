@@ -70,6 +70,10 @@ public class World {
         entities.forEach(entity -> systems.forEach(system -> system.entityRemoved(entity)));
     }
 
+    public void hardRemoveEntities(Collection<? extends Entity> entities) {
+        this.entities.removeAll(entities);
+    }
+
     public void removeIf(Predicate<? super Entity> entities) {
         this.entities.removeIf(entities);
     }
@@ -155,4 +159,5 @@ public class World {
     public ServiceProvider getServiceProvider() {
         return serviceProvider;
     }
+
 }
