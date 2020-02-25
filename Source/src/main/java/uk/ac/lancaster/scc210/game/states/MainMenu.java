@@ -86,11 +86,11 @@ public class MainMenu implements State {
         Vector2f headerPos2 = new Vector2f((viewBounds.width / 2) - (headerBounds2.width / 2), viewBounds.height / 5f);
         menuHeaderTitle1.setPosition(headerPos);
         menuHeaderTitle2.setPosition(headerPos2);
-        menuHeaderTitle1.setCharacterSize(210);
-        menuHeaderTitle2.setCharacterSize(110);
+        menuHeaderTitle1.setCharacterSize(80);
+        menuHeaderTitle2.setCharacterSize(310);
         menuHeaderTitle1.setColor(Color.add(Color.GREEN, Color.CYAN));
         menuHeaderTitle2.setColor(Color.YELLOW);
-        menuHeaderTitle1.setFont(fontManager.get("font2"));
+        menuHeaderTitle1.setFont(fontManager.get("font"));
         menuHeaderTitle2.setFont(fontManager.get("font2"));
     }
 
