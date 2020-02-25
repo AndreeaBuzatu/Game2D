@@ -12,9 +12,9 @@ import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import java.util.ArrayList;
 
 public class InterfaceGrid implements InputListener, Drawable {
-    private final int FIRST_LIST_PADDING = 50;
+    private final int FIRST_LIST_PADDING = 150;
 
-    private final int LIST_WIDTH_PADDING = 160;
+    private final int LIST_WIDTH_PADDING = 180;
 
     private final ArrayList<InterfaceList> lists;
 

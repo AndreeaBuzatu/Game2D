@@ -34,6 +34,9 @@ public class LevelSelect implements State, InputListener {
 
     private Text exitText;
 
+    private Text menuHeaderTitle1;
+    private Text menuHeaderTitle2;
+
     private Keyboard.Key pressedKey;
 
     @Override
@@ -57,12 +60,14 @@ public class LevelSelect implements State, InputListener {
         createGrid();
 
         createExitText();
+
+        createHeader();
     }
 
     private void createGrid() {
         // TODO: Update this with the develop branch to use the new level manager and level access system
         // TODO: Prevent the user (or hide) locked levels from being loaded
-        interfaceGrid = new InterfaceGrid(game, new Vector2f(100,100));
+        interfaceGrid = new InterfaceGrid(game, new Vector2f(700,700));
 
         List<Level> levels = new ArrayList<>(levelManager.values());
 
@@ -86,6 +91,27 @@ public class LevelSelect implements State, InputListener {
         }
 
         interfaceGrid.addColumn(interfaceList);
+    }
+
+    private void createHeader() {
+        menuHeaderTitle1 = new Text();
+        menuHeaderTitle2 = new Text();
+        menuHeaderTitle1.setString("LEVEL:");
+        menuHeaderTitle2.setString("SELECT");
+
+
+        Vector2f headerPos = new Vector2f(1100,480);
+        Vector2f headerPos2 = new Vector2f(1000, 550);
+
+        menuHeaderTitle1.setPosition(headerPos);
+        menuHeaderTitle2.setPosition(headerPos2);
+        menuHeaderTitle1.setCharacterSize(60);
+        menuHeaderTitle2.setCharacterSize(90);
+        menuHeaderTitle1.setStyle(2);
+        menuHeaderTitle1.setColor(Color.CYAN);
+        menuHeaderTitle2.setColor(Color.YELLOW);
+        menuHeaderTitle1.setFont(fontManager.get("font"));
+        menuHeaderTitle2.setFont(fontManager.get("font"));
     }
 
     private void createExitText() {
@@ -118,6 +144,9 @@ public class LevelSelect implements State, InputListener {
         target.draw(interfaceGrid);
 
         target.draw(exitText);
+
+        target.draw(menuHeaderTitle1);
+        target.draw(menuHeaderTitle2);
     }
 
     @Override
