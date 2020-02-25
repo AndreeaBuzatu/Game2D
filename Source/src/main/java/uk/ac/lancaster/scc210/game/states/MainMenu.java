@@ -25,11 +25,7 @@ public class MainMenu implements State {
     private Text menuHeaderTitle1;
     private Text menuHeaderTitle2;
 
-    private FloatRect viewBounds;
-
     private Sprite background;
-
-
 
     @Override
     public void setup(StateBasedGame game) {
@@ -41,23 +37,16 @@ public class MainMenu implements State {
         background = new Sprite(textureManager.get("level-select.jpg:level-select"));
         background.setScale(2, 2);
 
-
         fontManager = (FontManager) game.getServiceProvider().get(FontManager.class);
-
 
         viewSize = (ViewSize) game.getServiceProvider().get(ViewSize.class);
 
-        viewBounds = viewSize.getViewBounds();
-
         createHeader();
-
-        //Vector2f headerPos1 = menuHeaderTitle1.getPosition();
-        //Vector2f headerPos2 = menuHeaderTitle2.getPosition();
 
         /*
         The position of the menu items
          */
-        interfaceList = new InterfaceList(game, fontManager.get("font"), new Vector2f(1150,700));
+        interfaceList = new InterfaceList(game, fontManager.get("font"), new Vector2f(1150,850));
 
         interfaceList.addListOption("Play", (() -> System.out.println("Hello, world")));
 
@@ -77,16 +66,15 @@ public class MainMenu implements State {
         menuHeaderTitle2.setString("SURVIVE");
 
 
-        FloatRect headerBounds = menuHeaderTitle1.getGlobalBounds();
-        FloatRect headerBounds2 = menuHeaderTitle2.getGlobalBounds();
+        Vector2f headerPos = new Vector2f(1060,450);
+        Vector2f headerPos2 = new Vector2f(880, 391);
 
-        Vector2f headerPos = new Vector2f(1070,420);
-        Vector2f headerPos2 = new Vector2f(880, 350);
         menuHeaderTitle1.setPosition(headerPos);
         menuHeaderTitle2.setPosition(headerPos2);
         menuHeaderTitle1.setCharacterSize(60);
         menuHeaderTitle2.setCharacterSize(310);
-        menuHeaderTitle1.setColor(Color.add(Color.GREEN, Color.CYAN));
+        menuHeaderTitle1.setStyle(2);
+        menuHeaderTitle1.setColor(Color.CYAN);
         menuHeaderTitle2.setColor(Color.YELLOW);
         menuHeaderTitle1.setFont(fontManager.get("font"));
         menuHeaderTitle2.setFont(fontManager.get("font2"));
