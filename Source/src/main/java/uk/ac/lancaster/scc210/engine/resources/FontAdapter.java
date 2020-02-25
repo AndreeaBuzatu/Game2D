@@ -14,7 +14,7 @@ public class FontAdapter extends Resource<Font> {
     public FontAdapter(Font font) {
         super(font);
     }
-
+    
     @Override
     public void loadFromFile(InputStream stream) throws IOException {
         resource.loadFromStream(stream);
