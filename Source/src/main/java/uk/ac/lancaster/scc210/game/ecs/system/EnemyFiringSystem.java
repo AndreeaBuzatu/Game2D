@@ -9,12 +9,9 @@ import uk.ac.lancaster.scc210.game.ecs.component.EnemyComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.FiringPatternComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
+import uk.ac.lancaster.scc210.game.patterns.Pattern;
 
 public class EnemyFiringSystem extends IterativeSystem {
-    private final Time FIRING_GAP = Time.getSeconds(1);
-
-    private Time elapsedTime;
-
     /**
      * Instantiates a new Iterative system.
      *
@@ -22,17 +19,22 @@ public class EnemyFiringSystem extends IterativeSystem {
      */
     public EnemyFiringSystem(World world) {
         super(world, SpriteComponent.class, EnemyComponent.class);
-
-        elapsedTime = Time.ZERO;
     }
 
     @Override
     public void update(Time deltaTime) {
+        //elapsedTime = Time.add(elapsedTime, deltaTime);
         for (Entity entity : entities) {
-            elapsedTime = Time.add(elapsedTime, deltaTime);
+            FiringPatternComponent firingPatternComponent = (FiringPatternComponent) entity.findComponent(FiringPatternComponent.class);
 
-            if (elapsedTime.asSeconds() > FIRING_GAP.asSeconds()) {
-                FiringPatternComponent firingPatternComponent = (FiringPatternComponent) entity.findComponent(FiringPatternComponent.class);
+            Pattern firingPattern = firingPatternComponent.getPattern();
+
+            firingPattern.setElapsedTime(Time.add(firingPattern.getElapsedTime(), deltaTime));
+
+            System.out.println("Elapsed Time: " + firingPattern.getElapsedTime().asSeconds() + ", " + firingPattern.getFiringGap().asSeconds());
+
+            if (firingPattern.getElapsedTime().asSeconds() > firingPattern.getFiringGap().asSeconds()) {
+                System.out.println("Hello");
 
                 if (entity.hasComponent(SpaceShipComponent.class)) {
                     SpaceShipComponent spaceShipComponent = (SpaceShipComponent) entity.findComponent(SpaceShipComponent.class);
@@ -42,7 +44,7 @@ public class EnemyFiringSystem extends IterativeSystem {
 
                 world.addEntities(firingPatternComponent.getPattern().create());
 
-                elapsedTime = Time.ZERO;
+                firingPattern.setElapsedTime(Time.ZERO);
             }
         }
     }

@@ -10,14 +10,13 @@ import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.game.ecs.component.FiringPatternComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
+import uk.ac.lancaster.scc210.game.patterns.Pattern;
 
 /**
  * System which handles Entities firing. This system has a pool of pre-allocated bullets which it draws from.
  * The system places Bullets (Entities) into the front-middle of the entity.
  */
 public class PlayerFiringSystem extends IterativeSystem {
-    private final Time FIRING_GAP = Time.getSeconds(0.2f);
-
     private Time elapsedTime;
 
     /**
@@ -33,12 +32,14 @@ public class PlayerFiringSystem extends IterativeSystem {
 
     @Override
     public void update(Time deltaTime) {
-        for (Entity entity : entities) {
-            elapsedTime = Time.add(elapsedTime, deltaTime);
+        elapsedTime = Time.add(elapsedTime, deltaTime);
 
+        for (Entity entity : entities) {
             FiringPatternComponent firingPatternComponent = (FiringPatternComponent) entity.findComponent(FiringPatternComponent.class);
 
-            if ((Keyboard.isKeyPressed(Keyboard.Key.SPACE) || ControllerButton.A_BUTTON.isPressed()) && elapsedTime.asSeconds() > FIRING_GAP.asSeconds()){
+            Pattern firingPattern = firingPatternComponent.getPattern();
+
+            if ((Keyboard.isKeyPressed(Keyboard.Key.SPACE) || ControllerButton.A_BUTTON.isPressed()) && elapsedTime.asSeconds() > firingPattern.getFiringGap().asSeconds()) {
                 world.addEntities(firingPatternComponent.getPattern().create());
 
                 if (entity.hasComponent(SpaceShipComponent.class)) {
