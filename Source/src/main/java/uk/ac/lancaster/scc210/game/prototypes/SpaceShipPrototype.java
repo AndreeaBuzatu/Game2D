@@ -9,8 +9,11 @@ import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.pooling.Pool;
 import uk.ac.lancaster.scc210.engine.prototypes.Prototype;
-import uk.ac.lancaster.scc210.game.bullets.patterns.StraightLinePattern;
+import uk.ac.lancaster.scc210.engine.service.ServiceProvider;
+import uk.ac.lancaster.scc210.game.bullets.patterns.StraightLineBulletPattern;
+import uk.ac.lancaster.scc210.game.content.SpaceShipPrototypeManager;
 import uk.ac.lancaster.scc210.game.ecs.component.*;
+import uk.ac.lancaster.scc210.game.patterns.StartSpaceshipPattern;
 import uk.ac.lancaster.scc210.game.resources.SerialisedSpaceShip;
 
 public class SpaceShipPrototype implements Prototype {
@@ -20,6 +23,8 @@ public class SpaceShipPrototype implements Prototype {
 
     private final ShaderManager shaderManager;
 
+    private final SpaceShipPrototypeManager spaceShipPrototypeManager;
+
     private final Pool pool;
 
     private final String animation, bulletName;
@@ -28,9 +33,10 @@ public class SpaceShipPrototype implements Prototype {
 
     private final int speed, score, lives;
 
-    public SpaceShipPrototype(TextureAnimationManager animationManager, ShaderManager shaderManager, SoundBufferManager soundBufferManager, Pool pool, SerialisedSpaceShip spaceShip) {
-        this.animationManager = animationManager;
-        this.shaderManager = shaderManager;
+    public SpaceShipPrototype(ServiceProvider serviceProvider, SpaceShipPrototypeManager spaceShipPrototypeManager, Pool pool, SerialisedSpaceShip spaceShip) {
+        this.animationManager = (TextureAnimationManager) serviceProvider.get(TextureAnimationManager.class);
+        this.shaderManager = (ShaderManager) serviceProvider.get(ShaderManager.class);
+        this.spaceShipPrototypeManager = spaceShipPrototypeManager;
         this.pool = pool;
         this.animation = spaceShip.getAnimation();
         this.items = spaceShip.getItems();
@@ -38,6 +44,9 @@ public class SpaceShipPrototype implements Prototype {
         this.speed = spaceShip.getSpeed();
         this.score = spaceShip.getScore();
         this.lives = spaceShip.getLives();
+
+        SoundBufferManager soundBufferManager = (SoundBufferManager) serviceProvider.get(SoundBufferManager.class);
+
         this.firingSound = new Sound(soundBufferManager.get(spaceShip.getFiringSound()));
         this.hitSound = new Sound(soundBufferManager.get(spaceShip.getHitSound()));
     }
@@ -71,7 +80,16 @@ public class SpaceShipPrototype implements Prototype {
         Entity spaceShip = World.createEntity(animationComponent, spriteComponent, speedComponent, rotationComponent, spaceShipComponent, orientatedBoxComponent, transformableComponent, scoreComponent, livesComponent, flashComponent);
 
         // Let's assume ships will use the straight line pattern for now
-        final FiringPatternComponent firingPatternComponent = new FiringPatternComponent(new StraightLinePattern(pool, spaceShip, bulletName));
+        //final FiringPatternComponent firingPatternComponent = new FiringPatternComponent(new StarBulletPattern(pool, spaceShip, bulletName));
+        final FiringPatternComponent firingPatternComponent;
+
+        if (livesComponent.getLives() == 3) {
+            firingPatternComponent = new FiringPatternComponent(new StartSpaceshipPattern(spaceShip, spaceShipPrototypeManager));
+
+        } else {
+
+            firingPatternComponent = new FiringPatternComponent(new StraightLineBulletPattern(pool, spaceShip, bulletName));
+        }
 
         spaceShip.addComponent(firingPatternComponent);
 

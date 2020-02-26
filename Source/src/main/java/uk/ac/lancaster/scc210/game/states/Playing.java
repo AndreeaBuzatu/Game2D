@@ -268,7 +268,8 @@ public class Playing implements State {
             playerSprite.setRotation(0);
 
             // Remove bullets from the world
-            world.removeIf(entity -> entity.hasComponent(BulletComponent.class) || entity.hasComponent(EnemyComponent.class) || entity.hasComponent(ItemEffectsComponent.class));
+            world.removeIf(entity -> entity.hasComponent(BulletComponent.class) || entity.hasComponent(FiredComponent.class) ||
+                    entity.hasComponent(EnemyComponent.class) || entity.hasComponent(ItemEffectsComponent.class));
 
             // Set and respawn the level once it has been cleared
             levelSystem.setLevel(level);
