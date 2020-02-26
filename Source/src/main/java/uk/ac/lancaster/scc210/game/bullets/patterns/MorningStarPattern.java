@@ -44,7 +44,7 @@ public class MorningStarPattern extends Pattern {
 
             bulletSprite.setPosition(bulletPos);
 
-            //  bulletSprite.setRotation(spaceShipSprite.getRotation() + (i - 1) * 45);
+             bulletSprite.setRotation(spaceShipSprite.getRotation());
         }
 
         return bullets;
