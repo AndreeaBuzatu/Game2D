@@ -5,34 +5,37 @@ import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.pooling.Pool;
 import uk.ac.lancaster.scc210.game.ecs.component.BulletComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.FiredComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
-public class StarPattern extends Pattern {
+public class StarBulletPattern extends BulletPattern {
     private static final int NUM_BULLETS = 8;
 
-    public StarPattern(Pool pool, Entity spaceShip, String bulletName) {
+    public StarBulletPattern(Pool pool, Entity spaceShip, String bulletName) {
         super(pool, spaceShip, new Entity[NUM_BULLETS], bulletName);
 
         // It doesn't matter if we waste one allocation that's okay...
-        bullets[0] = pool.borrowEntity(bulletName);
+        toFire[0] = pool.borrowEntity(bulletName);
 
-        Sprite bulletSprite = ((SpriteComponent) bullets[0].findComponent(SpriteComponent.class)).getSprite();
+        Sprite bulletSprite = ((SpriteComponent) toFire[0].findComponent(SpriteComponent.class)).getSprite();
 
         // Pre-determine the bullet positions
         position(bulletSprite);
 
         // Let's return the entity back now
-        pool.returnEntity(bullets[0]);
+        pool.returnEntity(toFire[0]);
     }
 
     @Override
     public Entity[] create() {
         for (int i = 0; i < NUM_BULLETS; i++) {
-            bullets[i] = pool.borrowEntity(bulletName);
+            toFire[i] = pool.borrowEntity(spawnedEntityName);
 
-            bullets[i].addComponent(new BulletComponent(entity));
+            toFire[i].addComponent(new BulletComponent(spaceShip));
 
-            Sprite bulletSprite = ((SpriteComponent) bullets[i].findComponent(SpriteComponent.class)).getSprite();
+            toFire[i].addComponent(new FiredComponent());
+
+            Sprite bulletSprite = ((SpriteComponent) toFire[i].findComponent(SpriteComponent.class)).getSprite();
 
             Vector2f bulletPos = spaceShipSprite.getTransform().transformPoint(coords[i]);
 
@@ -41,11 +44,11 @@ public class StarPattern extends Pattern {
             bulletSprite.setRotation(spaceShipSprite.getRotation() + (i - 1) * 45);
         }
 
-        return bullets;
+        return toFire;
     }
 
     @Override
-    void position(Sprite bulletSprite) {
+    public void position(Sprite bulletSprite) {
         float startPoint = -bulletSprite.getLocalBounds().width / 2;
 
         float width = spaceShipSprite.getLocalBounds().width;

@@ -5,7 +5,10 @@ import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
-import uk.ac.lancaster.scc210.game.ecs.component.*;
+import uk.ac.lancaster.scc210.game.ecs.component.EnemyComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.FiringPatternComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
 public class EnemyFiringSystem extends IterativeSystem {
     private final Time FIRING_GAP = Time.getSeconds(1);
@@ -18,7 +21,7 @@ public class EnemyFiringSystem extends IterativeSystem {
      * @param world the world containing entities to use
      */
     public EnemyFiringSystem(World world) {
-        super(world, SpriteComponent.class, AnimationComponent.class, EnemyComponent.class);
+        super(world, SpriteComponent.class, EnemyComponent.class);
 
         elapsedTime = Time.ZERO;
     }

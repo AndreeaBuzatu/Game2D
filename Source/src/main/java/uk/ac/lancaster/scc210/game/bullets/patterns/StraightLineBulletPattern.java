@@ -5,41 +5,44 @@ import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.pooling.Pool;
 import uk.ac.lancaster.scc210.game.ecs.component.BulletComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.FiredComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
-public class StraightLinePattern extends Pattern {
+public class StraightLineBulletPattern extends BulletPattern {
     private static final int NUM_BULLETS = 1;
 
     private final int BULLET_Y_PADDING = -20;
 
-    public StraightLinePattern(Pool pool, Entity spaceShip, String bulletName) {
+    public StraightLineBulletPattern(Pool pool, Entity spaceShip, String bulletName) {
         super(pool, spaceShip, new Entity[NUM_BULLETS], bulletName);
     }
 
     @Override
     public Entity[] create() {
-        bullets[NUM_BULLETS - 1] = pool.borrowEntity(bulletName);
+        toFire[NUM_BULLETS - 1] = pool.borrowEntity(spawnedEntityName);
 
-        bullets[NUM_BULLETS - 1].addComponent(new BulletComponent(entity));
+        toFire[NUM_BULLETS - 1].addComponent(new BulletComponent(spaceShip));
 
-        Sprite bulletSprite = ((SpriteComponent) bullets[NUM_BULLETS - 1].findComponent(SpriteComponent.class)).getSprite();
+        toFire[NUM_BULLETS - 1].addComponent(new FiredComponent());
+
+        Sprite bulletSprite = ((SpriteComponent) toFire[NUM_BULLETS - 1].findComponent(SpriteComponent.class)).getSprite();
 
         position(bulletSprite);
 
-        return bullets;
+        return toFire;
     }
 
     @Override
-    void position(Sprite bulletSprite) {
+    public void position(Sprite toSpawnSprite) {
         // Find the half-width of the entity sprite and the half-width of the bullet sprite
-        float halfWidth = (spaceShipSprite.getLocalBounds().width / 2) - (bulletSprite.getLocalBounds().width / 2);
+        float halfWidth = (spaceShipSprite.getLocalBounds().width / 2) - (toSpawnSprite.getLocalBounds().width / 2);
 
         Vector2f middleCentre = new Vector2f(halfWidth, BULLET_Y_PADDING);
 
         coords[NUM_BULLETS - 1] = spaceShipSprite.getTransform().transformPoint(middleCentre);
 
-        bulletSprite.setPosition(coords[NUM_BULLETS - 1]);
+        toSpawnSprite.setPosition(coords[NUM_BULLETS - 1]);
 
-        bulletSprite.setRotation(spaceShipSprite.getRotation());
+        toSpawnSprite.setRotation(spaceShipSprite.getRotation());
     }
 }
