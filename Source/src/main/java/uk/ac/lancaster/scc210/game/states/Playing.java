@@ -53,7 +53,7 @@ public class Playing implements State {
 
     private Entity player;
 
-    private Music example;
+    private Music music;
 
     private Font font;
 
@@ -112,15 +112,13 @@ public class Playing implements State {
 
         world.addSystem(new AsteroidSystem(world));
 
-        world.addSystem(new AsteroidCollisionSystem(world));
-
         world.addSystem(new BulletCollisionSystem(world));
 
         world.addSystem(new ItemDropSystem(world));
 
         world.addSystem(new ItemCollisionSystem(world));
 
-        world.addSystem(new SpaceShipCollisionSystem(world));
+        world.addSystem(new EnemyCollisionSystem(world));
 
         world.addSystem(new EnemyFiringSystem(world));
 
@@ -156,13 +154,11 @@ public class Playing implements State {
 
         MusicManager musicManager = (MusicManager) world.getServiceProvider().get(MusicManager.class);
 
-        example = musicManager.get("example");
+        music = musicManager.get("example");
 
-        example.setVolume(100);
+        music.setVolume(100);
 
-        example.setLoop(true);
-
-        example.play();
+        music.setLoop(true);
 
         FontManager fontManager = (FontManager) world.getServiceProvider().get(FontManager.class);
 
@@ -203,6 +199,8 @@ public class Playing implements State {
     @Override
     public void onEnter(StateBasedGame game) {
         game.addKeyListener(dialogueBox);
+
+        music.play();
     }
 
     @Override
@@ -210,6 +208,8 @@ public class Playing implements State {
         game.removeKeyListener(dialogueBox);
 
         level.reset();
+
+        music.pause();
     }
 
     @Override

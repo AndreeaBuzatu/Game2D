@@ -14,53 +14,61 @@ import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
 
 import java.util.Optional;
 
-public class SpaceShipCollisionSystem extends IterativeSystem {
-    private Optional<Entity> player;
+public class EnemyCollisionSystem extends IterativeSystem {
+    private final Time COLLISION_GAP = Time.getSeconds(1);
+
+    private Time elapsedTime;
+
+    private Entity player;
 
     /**
      * Instantiates a new Iterative system.
      *
      * @param world the world containing entities to use
      */
-    public SpaceShipCollisionSystem(World world) {
+    public EnemyCollisionSystem(World world) {
         super(world, EnemyComponent.class);
 
-        player = world.getEntitiesFor(PlayerComponent.class).stream().findFirst();
+        player = world.getEntitiesFor(PlayerComponent.class).stream().findFirst().orElse(null);
+
+        elapsedTime = Time.ZERO;
     }
 
     @Override
     public void entityAdded(Entity entity) {
         super.entityAdded(entity);
 
-        player = world.getEntitiesFor(PlayerComponent.class).stream().findFirst();
+        player = world.getEntitiesFor(PlayerComponent.class).stream().findFirst().orElse(null);
     }
 
     @Override
     public void update(Time deltaTime) {
-        if (player.isEmpty()) {
+        if (player == null) {
             return;
         }
 
-        Entity playerEntity = player.get();
+        elapsedTime = Time.add(elapsedTime, deltaTime);
 
         for (Entity entity : entities) {
             // Player can't collide with themselves
-            if (playerEntity == entity) {
+            if (player == entity) {
                 continue;
             }
 
-            OrientatedBoxComponent playerOrientedBox = (OrientatedBoxComponent) playerEntity.findComponent(OrientatedBoxComponent.class);
+            OrientatedBoxComponent playerOrientedBox = (OrientatedBoxComponent) player.findComponent(OrientatedBoxComponent.class);
 
             OrientatedBoxComponent entityOrientedBox = (OrientatedBoxComponent) entity.findComponent(OrientatedBoxComponent.class);
 
-            if (OrientatedBox.areColliding(playerOrientedBox.getOrientatedBox(), entityOrientedBox.getOrientatedBox())) {
-                SpaceShipComponent spaceShipComponent = (SpaceShipComponent) playerEntity.findComponent(SpaceShipComponent.class);
+            if (OrientatedBox.areColliding(playerOrientedBox.getOrientatedBox(), entityOrientedBox.getOrientatedBox()) && elapsedTime.asSeconds() > COLLISION_GAP.asSeconds()) {
+                SpaceShipComponent spaceShipComponent = (SpaceShipComponent) player.findComponent(SpaceShipComponent.class);
 
-                LivesComponent livesComponent = (LivesComponent) playerEntity.findComponent(LivesComponent.class);
+                LivesComponent livesComponent = (LivesComponent) player.findComponent(LivesComponent.class);
 
                 spaceShipComponent.playHitSound();
 
-                livesComponent.kill();
+                elapsedTime = Time.ZERO;
+
+                livesComponent.setLives(livesComponent.getLives() - 1);
             }
         }
     }
