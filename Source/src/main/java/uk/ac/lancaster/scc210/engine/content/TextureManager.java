@@ -32,8 +32,10 @@ public class TextureManager extends ContentManager<Texture> {
                     String atlasName = serialisedTextureAtlas.getTextureAtlas().getFileName();
 
                     String key = String.format("%s:%s", atlasName, texture.getName());
+                    String key2 = String.format("%s:%s", atlasName, texture.getName());
 
                     put(key, texture.getTexture());
+                    put(key2, texture.getTexture());
                 }));
     }
 }

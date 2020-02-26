@@ -16,4 +16,10 @@
     <atlas src="level-select.jpg" texture_width="1280" texture_height="1280">
         <texture name="level-select" row="0" column="0"/>
     </atlas>
+    <atlas src="level-select.jpg" texture_width="1280" texture_height="1280">
+        <texture name="level-select" row="0" column="0"/>
+    </atlas>
+    <atlas src="enemy.png" texture_width="128" texture_height="128">
+        <texture name="enemy" row="0" column="0"/>
+    </atlas>
 </atlases>
