@@ -2,12 +2,10 @@ package uk.ac.lancaster.scc210.game.bullets.effects;
 
 import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
-import uk.ac.lancaster.scc210.game.bullets.effects.BulletEffect;
 import uk.ac.lancaster.scc210.game.ecs.component.LivesComponent;
 
 public abstract class  LivesEffect extends BulletEffect {
-
-    private final int lives;
+    private int lives;
 
     LivesEffect(int lives){
         this.lives = lives;
@@ -22,7 +20,13 @@ public abstract class  LivesEffect extends BulletEffect {
         livesComponent.setLives(livesComponent.getLives() - lives);
     }
 
+    public int getLives() {
+        return lives;
+    }
 
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
 
     @Override
     public void reset() {
