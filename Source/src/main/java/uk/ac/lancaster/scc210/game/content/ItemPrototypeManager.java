@@ -28,6 +28,10 @@ public class ItemPrototypeManager extends ContentManager<ItemPrototype> {
 
         put("lives2bulleteffect-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new Lives2BulletEffectItem()));
 
+        put("degradinglivesbulleteffect-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new DegradingLivesBulletEffectItem()));
+
+
+
 
     }
 }
