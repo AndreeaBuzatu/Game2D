@@ -10,10 +10,12 @@ import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.pooling.Pool;
 import uk.ac.lancaster.scc210.engine.prototypes.Prototype;
 import uk.ac.lancaster.scc210.engine.service.ServiceProvider;
+import uk.ac.lancaster.scc210.game.bullets.patterns.StarBulletPattern;
 import uk.ac.lancaster.scc210.game.bullets.patterns.StraightLineBulletPattern;
 import uk.ac.lancaster.scc210.game.content.SpaceShipPrototypeManager;
 import uk.ac.lancaster.scc210.game.ecs.component.*;
-import uk.ac.lancaster.scc210.game.patterns.StartSpaceshipPattern;
+import uk.ac.lancaster.scc210.game.patterns.Pattern;
+import uk.ac.lancaster.scc210.game.patterns.StarSpaceshipPattern;
 import uk.ac.lancaster.scc210.game.resources.SerialisedSpaceShip;
 
 public class SpaceShipPrototype implements Prototype {
@@ -27,7 +29,7 @@ public class SpaceShipPrototype implements Prototype {
 
     private final Pool pool;
 
-    private final String animation, bulletName;
+    private final String animation, bulletName, pattern;
 
     private final Sound firingSound, hitSound;
 
@@ -41,6 +43,7 @@ public class SpaceShipPrototype implements Prototype {
         this.animation = spaceShip.getAnimation();
         this.items = spaceShip.getItems();
         this.bulletName = spaceShip.getBullet();
+        this.pattern = spaceShip.getPattern();
         this.speed = spaceShip.getSpeed();
         this.score = spaceShip.getScore();
         this.lives = spaceShip.getLives();
@@ -79,20 +82,25 @@ public class SpaceShipPrototype implements Prototype {
 
         Entity spaceShip = World.createEntity(animationComponent, spriteComponent, speedComponent, rotationComponent, spaceShipComponent, orientatedBoxComponent, transformableComponent, scoreComponent, livesComponent, flashComponent);
 
-        // Let's assume ships will use the straight line pattern for now
-        //final FiringPatternComponent firingPatternComponent = new FiringPatternComponent(new StarBulletPattern(pool, spaceShip, bulletName));
-        final FiringPatternComponent firingPatternComponent;
-
-        if (livesComponent.getLives() == 3) {
-            firingPatternComponent = new FiringPatternComponent(new StartSpaceshipPattern(spaceShip, spaceShipPrototypeManager));
-
-        } else {
-
-            firingPatternComponent = new FiringPatternComponent(new StraightLineBulletPattern(pool, spaceShip, bulletName));
-        }
+        final FiringPatternComponent firingPatternComponent = new FiringPatternComponent(findPattern(spaceShip, pattern));
 
         spaceShip.addComponent(firingPatternComponent);
 
         return spaceShip;
+    }
+
+    private Pattern findPattern(Entity spaceShip, String patternName) {
+        System.out.println("called");
+        switch (patternName) {
+            case "star-bullet":
+                return new StarBulletPattern(pool, spaceShip, bulletName);
+
+            case "star-spaceship":
+                return new StarSpaceshipPattern(spaceShip, spaceShipPrototypeManager);
+
+            case "straight-bullet":
+            default:
+                return new StraightLineBulletPattern(pool, spaceShip, bulletName);
+        }
     }
 }
