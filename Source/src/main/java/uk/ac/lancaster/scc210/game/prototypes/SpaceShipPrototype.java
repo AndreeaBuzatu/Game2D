@@ -9,7 +9,6 @@ import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.pooling.Pool;
 import uk.ac.lancaster.scc210.engine.prototypes.Prototype;
-import uk.ac.lancaster.scc210.game.bullets.patterns.CrossPattern;
 import uk.ac.lancaster.scc210.game.bullets.patterns.StraightLinePattern;
 import uk.ac.lancaster.scc210.game.ecs.component.*;
 import uk.ac.lancaster.scc210.game.resources.SerialisedSpaceShip;

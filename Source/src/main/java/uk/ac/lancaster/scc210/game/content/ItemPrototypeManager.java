@@ -2,7 +2,6 @@ package uk.ac.lancaster.scc210.game.content;
 
 import uk.ac.lancaster.scc210.engine.content.ContentManager;
 import uk.ac.lancaster.scc210.engine.content.TextureManager;
-import uk.ac.lancaster.scc210.game.bullets.effects.Lives2Effect;
 import uk.ac.lancaster.scc210.game.items.*;
 import uk.ac.lancaster.scc210.game.items.patterns.LinePatternEffect;
 import uk.ac.lancaster.scc210.game.items.patterns.MorningStarPatternEffect;

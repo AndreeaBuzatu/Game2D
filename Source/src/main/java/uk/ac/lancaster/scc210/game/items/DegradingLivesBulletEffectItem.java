@@ -3,7 +3,6 @@ package uk.ac.lancaster.scc210.game.items;
 import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.game.bullets.effects.DegradingLivesEffect;
-import uk.ac.lancaster.scc210.game.bullets.effects.FreezeBulletEffect;
 import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
 
 public class DegradingLivesBulletEffectItem extends TimedItemEffect {

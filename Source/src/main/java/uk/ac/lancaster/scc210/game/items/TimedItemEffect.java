@@ -3,9 +3,9 @@ package uk.ac.lancaster.scc210.game.items;
 import org.jsfml.system.Time;
 
 public abstract class TimedItemEffect extends ItemEffect {
-    private final Time duration;
+    final Time duration;
 
-    private Time elapsedTime;
+    Time elapsedTime;
 
     protected TimedItemEffect(Time duration) {
         this.duration = duration;

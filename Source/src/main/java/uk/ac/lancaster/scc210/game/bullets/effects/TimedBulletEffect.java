@@ -5,7 +5,7 @@ import org.jsfml.system.Time;
 public abstract class TimedBulletEffect extends BulletEffect {
     private final Time duration;
 
-    private Time elapsedTime;
+    Time elapsedTime;
 
     TimedBulletEffect(Time duration) {
         this.duration = duration;
