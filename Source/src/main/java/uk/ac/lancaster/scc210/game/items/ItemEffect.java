@@ -28,6 +28,7 @@ public abstract class ItemEffect {
      * @param entity the entity to reset
      */
     public void reset(Entity entity) {
+        isDead = true;
     }
 
     public boolean isDead() {
