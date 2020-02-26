@@ -54,6 +54,8 @@ public class MainMenu implements State {
 
         interfaceList.addListOption("Help", (() -> game.pushState(helpSelect)));
 
+        interfaceList.addListOption("Leaderboard", (game::popState));
+
         interfaceList.addListOption("Exit", (game::popState));
 
         interfaceList.setEnabled(true);
@@ -73,7 +75,7 @@ public class MainMenu implements State {
         menuHeaderTitle2.setPosition(headerPos2);
         menuHeaderTitle1.setCharacterSize(60);
         menuHeaderTitle2.setCharacterSize(310);
-        menuHeaderTitle1.setStyle(2);
+        menuHeaderTitle1.setStyle(TextStyle.ITALIC);
         menuHeaderTitle1.setColor(Color.CYAN);
         menuHeaderTitle2.setColor(Color.YELLOW);
         menuHeaderTitle1.setFont(fontManager.get("font"));

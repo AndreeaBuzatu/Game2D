@@ -107,7 +107,7 @@ public class LevelSelect implements State, InputListener {
         menuHeaderTitle2.setPosition(headerPos2);
         menuHeaderTitle1.setCharacterSize(60);
         menuHeaderTitle2.setCharacterSize(90);
-        menuHeaderTitle1.setStyle(2);
+        menuHeaderTitle1.setStyle(3);
         menuHeaderTitle1.setColor(Color.CYAN);
         menuHeaderTitle2.setColor(Color.YELLOW);
         menuHeaderTitle1.setFont(fontManager.get("font"));
