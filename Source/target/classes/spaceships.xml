@@ -1,7 +1,13 @@
 <spaceships>
-    <spaceship name="player" animation="player-ship" speed="5" bullet="player-shoot" items="test-item" score="25"
+    <spaceship name="player" animation="player-ship" speed="5" bullet="player-shoot" pattern="star-bullet"
+               items="test-item" score="25"
                lives="3" firing-sound="player-shoot" hit-sound="player-death"/>
 
-    <spaceship name="other" animation="alien-ship" speed="5" bullet="sample" score="25" items="other-item,test-item" lives="1"
+    <spaceship name="other" animation="alien-ship" speed="5" bullet="sample" pattern="star-spaceship" score="25"
+               items="other-item,test-item" lives="1"
+               firing-sound="enemy-one-shoot" hit-sound="enemy-death"/>
+
+    <spaceship name="spawned-other" animation="player-ship" speed="5" bullet="sample" pattern="star-bullet" score="25"
+               items="other-item,test-item" lives="1"
                firing-sound="enemy-one-shoot" hit-sound="enemy-death"/>
 </spaceships>
