@@ -20,5 +20,7 @@ public class StateManager extends ContentManager<State> {
         put("high-score-list", new HighScoreList());
 
         put("level-select", new LevelSelect());
+
+        put("pause", new PauseMenu());
     }
 }
