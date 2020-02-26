@@ -29,6 +29,8 @@ public class Completion implements State, InputListener {
 
     private final int NAME_LENGTH = 3;
 
+    private final int UNKNOWN_INDEX = -1;
+
     private int playerScore;
 
     private StateBasedGame game;
@@ -41,9 +43,9 @@ public class Completion implements State, InputListener {
 
     private MenuHeader menuHeader;
 
-    private final boolean shouldEnterName;
+    private boolean shouldEnterName;
 
-    private final char[] name;
+    private char[] name;
 
     private int charsEntered, playerScoreIndex;
 
@@ -77,6 +79,12 @@ public class Completion implements State, InputListener {
 
         highScoreList = new InterfaceList(game, fontManager.get("font"), new Vector2f(headerPos.x, headerPos.y + LIST_PADDING));
 
+        playerScoreIndex = findPlayerScoreIndex();
+
+        if (playerScoreIndex > UNKNOWN_INDEX) {
+            putPlayerScoreInList(playerScoreIndex);
+        }
+
         for (int i = 0; i < highScores.getHighScores().size(); i++) {
             HighScore highScoreData = highScores.getHighScores().get(i);
 
@@ -85,12 +93,6 @@ public class Completion implements State, InputListener {
         }
 
         game.removeKeyListener(highScoreList);
-
-        playerScoreIndex = findPlayerScoreIndex();
-
-        if (playerScoreIndex > -1) {
-            putPlayerScoreInList(playerScoreIndex);
-        }
     }
 
     @Override
@@ -101,6 +103,12 @@ public class Completion implements State, InputListener {
     @Override
     public void onExit(StateBasedGame game) {
         game.removeKeyListener(this);
+
+        name = new char[NAME_LENGTH];
+
+        shouldEnterName = true;
+
+        charsEntered = 0;
     }
 
     @Override
@@ -122,7 +130,7 @@ public class Completion implements State, InputListener {
     @Override
     public void keyPressed(KeyEvent keyevent) {
         if (keyevent.key == Keyboard.Key.RETURN) {
-            if (playerScoreIndex > 0 && charsEntered > 0) {
+            if (playerScoreIndex > UNKNOWN_INDEX && charsEntered > 0) {
                 try {
                     highScoreWriter.writeHighScores();
 
@@ -209,7 +217,7 @@ public class Completion implements State, InputListener {
 
         List<Integer> scoreTemp = new ArrayList<>();
 
-        int highScoreIndex = -1;
+        int highScoreIndex = UNKNOWN_INDEX;
 
         int i = 0;
 
