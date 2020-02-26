@@ -31,7 +31,7 @@ public class MainMenu implements State {
     public void setup(StateBasedGame game) {
         LevelSelect levelSelect = new LevelSelect();
         HelpSelect helpSelect = new HelpSelect();
-
+        LeaderboardSelect leaderboardSelect = new LeaderboardSelect();
 
         TextureManager textureManager = (TextureManager) game.getServiceProvider().get(TextureManager.class);
         background = new Sprite(textureManager.get("level-select.jpg:level-select"));
@@ -54,7 +54,7 @@ public class MainMenu implements State {
 
         interfaceList.addListOption("Help", (() -> game.pushState(helpSelect)));
 
-        interfaceList.addListOption("Leaderboard", (game::popState));
+        interfaceList.addListOption("Leaderboard", (() -> game.pushState(leaderboardSelect)));
 
         interfaceList.addListOption("Exit", (game::popState));
 
