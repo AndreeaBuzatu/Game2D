@@ -1,5 +1,6 @@
 package uk.ac.lancaster.scc210.game.patterns;
 
+import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
@@ -48,5 +49,33 @@ public abstract class Pattern {
 
     public void setElapsedTime(Time elapsedTime) {
         this.elapsedTime = elapsedTime;
+    }
+
+    protected void positionStarPatterns(Sprite bulletSprite, FloatRect localBounds) {
+        float startPoint = -bulletSprite.getLocalBounds().width / 2;
+
+        float width = localBounds.width;
+
+        float height = localBounds.height;
+
+        float equalDistance = (float) (Math.sqrt(Math.pow(height, 2) + Math.pow(width, 2)) / Math.sqrt(2));
+
+        float difference = (float) (equalDistance * (Math.sqrt(2) - 1) / 2);
+
+        coords[0] = new Vector2f(startPoint, startPoint);
+
+        coords[1] = new Vector2f(startPoint + equalDistance / 2, -difference);
+
+        coords[2] = new Vector2f(startPoint / 2 + equalDistance, startPoint);
+
+        coords[3] = new Vector2f(startPoint + equalDistance + difference, startPoint + equalDistance / 2);
+
+        coords[4] = new Vector2f(equalDistance, equalDistance);
+
+        coords[5] = new Vector2f(-startPoint + equalDistance / 2, equalDistance + difference);
+
+        coords[6] = new Vector2f(-startPoint, width - startPoint);
+
+        coords[7] = new Vector2f(-startPoint - difference, -startPoint + equalDistance / 2);
     }
 }
