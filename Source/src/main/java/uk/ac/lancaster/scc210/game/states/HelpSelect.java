@@ -35,6 +35,8 @@ public class HelpSelect implements State, InputListener {
 
     private Text exitText;
 
+    private Sprite item1;
+
 
 
     @Override
@@ -54,6 +56,12 @@ public class HelpSelect implements State, InputListener {
         background = new Sprite(textureManager.get("level-select.jpg:level-select"));
 
         background.setScale(2, 2);
+
+        item1 = new Sprite(textureManager.get("enemy.png:enemy"));
+
+        item1.setScale(2,2);
+
+        item1.setPosition(500,500);
 
         createGrid();
 
@@ -113,6 +121,7 @@ public class HelpSelect implements State, InputListener {
     @Override
     public void draw(RenderTarget target) {
         target.draw(background);
+        target.draw(item1);
 
         target.draw(interfaceGrid);
 
