@@ -29,7 +29,7 @@ class TextureDeserialiser extends Deserialiser<SerialisedTexture> {
     }
 
     @Override
-    protected void deserialise() throws ResourceNotFoundException {
+    protected void deserialise() {
         for (int i = 0; i < nodes.getLength(); i++) {
             Node node = nodes.item(i);
 

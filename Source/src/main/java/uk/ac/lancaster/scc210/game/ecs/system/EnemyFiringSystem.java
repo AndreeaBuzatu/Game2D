@@ -31,11 +31,7 @@ public class EnemyFiringSystem extends IterativeSystem {
 
             firingPattern.setElapsedTime(Time.add(firingPattern.getElapsedTime(), deltaTime));
 
-            System.out.println("Elapsed Time: " + firingPattern.getElapsedTime().asSeconds() + ", " + firingPattern.getFiringGap().asSeconds());
-
             if (firingPattern.getElapsedTime().asSeconds() > firingPattern.getFiringGap().asSeconds()) {
-                System.out.println("Hello");
-
                 if (entity.hasComponent(SpaceShipComponent.class)) {
                     SpaceShipComponent spaceShipComponent = (SpaceShipComponent) entity.findComponent(SpaceShipComponent.class);
 
