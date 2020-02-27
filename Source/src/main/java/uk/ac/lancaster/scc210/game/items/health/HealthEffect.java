@@ -1,13 +1,13 @@
-package uk.ac.lancaster.scc210.game.items;
+package uk.ac.lancaster.scc210.game.items.health;
 
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.game.ecs.component.LivesComponent;
+import uk.ac.lancaster.scc210.game.items.PowerUpEffect;
 
-public abstract class HealthEffectItem extends PowerUpEffect {
-
+public abstract class HealthEffect extends PowerUpEffect {
     private final int healthIncrease;
 
-    HealthEffectItem(int healthIncrease) {
+    HealthEffect(int healthIncrease) {
         this.healthIncrease = healthIncrease;
     }
 

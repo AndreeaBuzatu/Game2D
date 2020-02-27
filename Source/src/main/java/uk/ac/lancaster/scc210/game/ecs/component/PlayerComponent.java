@@ -12,7 +12,7 @@ import java.util.Set;
 public class PlayerComponent implements Component {
     private final BulletEffect defaultBulletEffect;
 
-    private Set<ItemEffect> currentItemEffects;
+    private final Set<ItemEffect> currentItemEffects;
 
     private BulletEffect bulletEffect;
 

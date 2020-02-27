@@ -57,7 +57,7 @@ public abstract class Pool implements Service {
      * Create an entity with the default value
      * @return the created entity
      */
-    protected Entity create() {
+    private Entity create() {
         Entity created = prototype.create();
 
         // Add the pooled component here to differentiate it between non-pooled and pooled

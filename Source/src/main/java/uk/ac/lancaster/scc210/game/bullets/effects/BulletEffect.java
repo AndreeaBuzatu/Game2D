@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BulletEffect  {
-    List<Entity> reactedEntities;
+    final List<Entity> reactedEntities;
 
     boolean isDead;
 

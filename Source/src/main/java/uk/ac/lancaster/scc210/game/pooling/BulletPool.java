@@ -49,7 +49,7 @@ public class BulletPool extends Pool {
     }
 
     @Override
-    public Entity create(String bulletName) {
+    protected Entity create(String bulletName) {
         Entity entity = super.borrowEntity();
 
         BulletPrototype bulletPrototype = bulletPrototypeManager.get(bulletName);

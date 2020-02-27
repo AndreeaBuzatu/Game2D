@@ -5,7 +5,7 @@ import org.jsfml.system.Time;
 public abstract class TimedItemEffect extends ItemEffect {
     final Time duration;
 
-    Time elapsedTime;
+    private Time elapsedTime;
 
     protected TimedItemEffect(Time duration) {
         this.duration = duration;

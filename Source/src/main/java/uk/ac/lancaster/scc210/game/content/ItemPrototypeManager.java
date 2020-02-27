@@ -2,7 +2,14 @@ package uk.ac.lancaster.scc210.game.content;
 
 import uk.ac.lancaster.scc210.engine.content.ContentManager;
 import uk.ac.lancaster.scc210.engine.content.TextureManager;
-import uk.ac.lancaster.scc210.game.items.*;
+import uk.ac.lancaster.scc210.game.items.DegradingLivesBulletEffectItem;
+import uk.ac.lancaster.scc210.game.items.FreezeBulletEffectItem;
+import uk.ac.lancaster.scc210.game.items.MissingItemEffect;
+import uk.ac.lancaster.scc210.game.items.SpeedIncreaseEffect;
+import uk.ac.lancaster.scc210.game.items.damage.Damage1EffectItem;
+import uk.ac.lancaster.scc210.game.items.damage.Damage2EffectItem;
+import uk.ac.lancaster.scc210.game.items.health.Health1Effect;
+import uk.ac.lancaster.scc210.game.items.health.Health2Effect;
 import uk.ac.lancaster.scc210.game.items.patterns.LinePatternEffect;
 import uk.ac.lancaster.scc210.game.items.patterns.MorningStarPatternEffect;
 import uk.ac.lancaster.scc210.game.items.patterns.StarPatternEffect;
@@ -14,8 +21,6 @@ public class ItemPrototypeManager extends ContentManager<ItemPrototype> {
         super(new ItemPrototype(textureManager.get(""), new MissingItemEffect()));
 
         put("test-item", new ItemPrototype(textureManager.get("spritesheet.png:item"), new SpeedIncreaseEffect()));
-
-        put("other-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new Health1EffectItem()));
 
         put("starPattern-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new StarPatternEffect(bulletPool)));
 
@@ -31,12 +36,8 @@ public class ItemPrototypeManager extends ContentManager<ItemPrototype> {
 
         put("degradinglivesbulleteffect-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new DegradingLivesBulletEffectItem()));
 
-        put("health1effect-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new Health1EffectItem()));
+        put("health1effect-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new Health1Effect()));
 
-        put("health2effect-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new Health2EffectItem()));
-
-
-
-
+        put("health2effect-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new Health2Effect()));
     }
 }

@@ -9,9 +9,9 @@ import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
 import uk.ac.lancaster.scc210.game.items.TimedItemEffect;
 
 public abstract class FiringPatternEffect extends TimedItemEffect {
-    protected Pool pool;
+    final Pool pool;
 
-    protected Pattern pattern;
+    Pattern pattern;
 
     private Pattern oldPattern;
 
