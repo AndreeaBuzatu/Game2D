@@ -15,7 +15,7 @@ public class ItemPrototypeManager extends ContentManager<ItemPrototype> {
 
         put("test-item", new ItemPrototype(textureManager.get("spritesheet.png:item"), new SpeedIncreaseEffect()));
 
-        put("other-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new LivesIncreaseEffect()));
+        put("other-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new Health1EffectItem()));
 
         put("starPattern-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new StarPatternEffect(bulletPool)));
 
@@ -25,9 +25,15 @@ public class ItemPrototypeManager extends ContentManager<ItemPrototype> {
 
         put("freezebulleteffect-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new FreezeBulletEffectItem()));
 
-        put("lives2bulleteffect-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new Lives2BulletEffectItem()));
+        put("damage1effect-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new Damage1EffectItem()));
+
+        put("damage2effect-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new Damage2EffectItem()));
 
         put("degradinglivesbulleteffect-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new DegradingLivesBulletEffectItem()));
+
+        put("health1effect-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new Health1EffectItem()));
+
+        put("health2effect-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new Health2EffectItem()));
 
 
 

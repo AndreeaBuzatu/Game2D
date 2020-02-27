@@ -3,7 +3,7 @@ package uk.ac.lancaster.scc210.game.ecs.component;
 import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.ecs.Component;
 import uk.ac.lancaster.scc210.game.bullets.effects.BulletEffect;
-import uk.ac.lancaster.scc210.game.bullets.effects.Lives1Effect;
+import uk.ac.lancaster.scc210.game.bullets.effects.Damage1Effect;
 import uk.ac.lancaster.scc210.game.items.ItemEffect;
 
 import java.util.HashSet;
@@ -21,7 +21,7 @@ public class PlayerComponent implements Component {
     private int currentScore;
 
     public PlayerComponent() {
-        defaultBulletEffect = new Lives1Effect();
+        defaultBulletEffect = new Damage1Effect();
 
         bulletEffect = defaultBulletEffect;
 
