@@ -4,10 +4,10 @@ import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.game.ecs.component.LivesComponent;
 
-public abstract class  LivesEffect extends BulletEffect {
+public abstract class DamageEffect extends BulletEffect {
     private int lives;
 
-    LivesEffect(int lives){
+    DamageEffect(int lives){
         this.lives = lives;
     }
 
