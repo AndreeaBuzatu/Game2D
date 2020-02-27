@@ -14,6 +14,7 @@ public abstract class DamageEffectItem extends TimedItemEffect {
         super(Time.getSeconds(5));
 
         this.damageEffect = damageEffect;
+
     }
 
 
