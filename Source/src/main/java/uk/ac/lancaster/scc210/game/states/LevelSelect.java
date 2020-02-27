@@ -5,6 +5,7 @@ import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.event.KeyEvent;
+import org.jsfml.window.event.TextEvent;
 import uk.ac.lancaster.scc210.engine.InputListener;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import uk.ac.lancaster.scc210.engine.ViewSize;
@@ -57,6 +58,16 @@ public class LevelSelect implements State, InputListener {
         createGrid();
 
         createExitText();
+    }
+
+    @Override
+    public void onEnter(StateBasedGame game) {
+
+    }
+
+    @Override
+    public void onExit(StateBasedGame game) {
+
     }
 
     private void createGrid() {
@@ -123,5 +134,10 @@ public class LevelSelect implements State, InputListener {
     @Override
     public void keyPressed(KeyEvent keyevent) {
         pressedKey = keyevent.key;
+    }
+
+    @Override
+    public void keyTyped(TextEvent textevent) {
+
     }
 }

@@ -4,7 +4,7 @@ import uk.ac.lancaster.scc210.engine.ecs.Component;
 import uk.ac.lancaster.scc210.game.bullets.patterns.Pattern;
 
 public class FiringPatternComponent implements Component {
-    private final Pattern pattern;
+    private  Pattern pattern;
 
     public FiringPatternComponent(Pattern pattern) {
         this.pattern = pattern;
@@ -12,5 +12,9 @@ public class FiringPatternComponent implements Component {
 
     public Pattern getPattern() {
         return pattern;
+    }
+
+    public void setPattern(Pattern pattern) {
+        this.pattern = pattern;
     }
 }

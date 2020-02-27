@@ -9,11 +9,7 @@ import uk.ac.lancaster.scc210.game.ecs.component.*;
 import uk.ac.lancaster.scc210.game.level.Level;
 import uk.ac.lancaster.scc210.game.level.LevelStage;
 
-import java.util.Optional;
-
 public class LevelSystem extends IterativeSystem {
-    private Optional<Entity> player;
-
     private Level level;
 
     private LevelStage currentStage;
@@ -31,8 +27,6 @@ public class LevelSystem extends IterativeSystem {
         currentStage = level.getCurrentStage();
 
         world.addEntities(currentStage.getStationaryEntities());
-
-        player = world.getEntitiesFor(PlayerComponent.class).stream().findFirst();
     }
 
     @Override
@@ -60,8 +54,6 @@ public class LevelSystem extends IterativeSystem {
     @Override
     public void entityAdded(Entity entity) {
         super.entityAdded(entity);
-
-        player = world.getEntitiesFor(PlayerComponent.class).stream().findFirst();
     }
 
     @Override
@@ -109,7 +101,10 @@ public class LevelSystem extends IterativeSystem {
         spriteComponent.getSprite().setRotation(0);
 
         // Reset item effects
-        playerComponent.getCurrentEffects().forEach(itemEffect -> itemEffect.reset(player));
+        playerComponent.getCurrentItemEffects().forEach(itemEffect -> itemEffect.reset(player));
+
+        // Reset bullet effects
+        playerComponent.getBulletEffect().reset();
 
         world.addEntity(player);
 

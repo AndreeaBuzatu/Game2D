@@ -3,7 +3,6 @@ package uk.ac.lancaster.scc210.engine.animation;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.content.TextureAtlas;
-import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
 
 /**
  * TextureAnimation is the most basic form of animation. It consists of a series of frames (Textures).
@@ -13,7 +12,6 @@ import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
  * Frames are typically sourced from a Texture Atlas where they are loaded left to right, line-by-line.
  */
 public class TextureAnimation {
-
     // The number of seconds taken per frame. This acts like a count down.
     private final float FPS = 0.5f;
 
@@ -30,9 +28,8 @@ public class TextureAnimation {
      * @param startingRow    the row in the texture atlas to load from (0-indexed)
      * @param startingColumn the column in the texture atlas to load from (0-indexed)
      * @param numFrames      the number of frames to load from the texture atlas at the given position.
-     * @throws ResourceNotFoundException occurs when the a frame cannot be found in the texture atlas
      */
-    public TextureAnimation(final TextureAtlas textureAtlas, final int startingRow, final int startingColumn, final int numFrames) throws ResourceNotFoundException {
+    public TextureAnimation(final TextureAtlas textureAtlas, final int startingRow, final int startingColumn, final int numFrames) {
         frames = new Texture[numFrames];
 
         currentFrame = 0;

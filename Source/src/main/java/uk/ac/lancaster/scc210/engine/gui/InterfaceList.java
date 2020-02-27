@@ -4,6 +4,7 @@ import org.jsfml.graphics.*;
 import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.event.KeyEvent;
+import org.jsfml.window.event.TextEvent;
 import uk.ac.lancaster.scc210.engine.InputListener;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
 
@@ -111,6 +112,11 @@ public class InterfaceList implements InputListener, Drawable {
         pressedKey = keyevent.key;
     }
 
+    @Override
+    public void keyTyped(TextEvent textevent) {
+
+    }
+
     FloatRect getGlobalBounds() {
         // Find the total bounds of the list. The left and top can be found from the first element.
         // The width if the widest element in the list.
@@ -176,7 +182,7 @@ public class InterfaceList implements InputListener, Drawable {
         }
     }
 
-    List<ListOption> getOptions() {
+    public List<ListOption> getOptions() {
         return options;
     }
 

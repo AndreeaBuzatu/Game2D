@@ -11,12 +11,16 @@ import uk.ac.lancaster.scc210.game.ecs.component.FiringPatternComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
 
+import java.util.Optional;
+
 /**
  * System which handles Entities firing. This system has a pool of pre-allocated bullets which it draws from.
  * The system places Bullets (Entities) into the front-middle of the entity.
  */
 public class PlayerFiringSystem extends IterativeSystem {
     private final Time FIRING_GAP = Time.getSeconds(0.2f);
+
+    private Entity playerEntity;
 
     private Time elapsedTime;
 
@@ -32,23 +36,30 @@ public class PlayerFiringSystem extends IterativeSystem {
     }
 
     @Override
+    public void entityAdded(Entity entity) {
+        super.entityAdded(entity);
+
+        Optional<Entity> player = world.getEntitiesFor(PlayerComponent.class).stream().findFirst();
+
+        player.ifPresent(opt -> playerEntity = opt);
+    }
+
+    @Override
     public void update(Time deltaTime) {
-        for (Entity entity : entities) {
-            elapsedTime = Time.add(elapsedTime, deltaTime);
+        elapsedTime = Time.add(elapsedTime, deltaTime);
 
-            FiringPatternComponent firingPatternComponent = (FiringPatternComponent) entity.findComponent(FiringPatternComponent.class);
+        FiringPatternComponent firingPatternComponent = (FiringPatternComponent) playerEntity.findComponent(FiringPatternComponent.class);
 
-            if ((Keyboard.isKeyPressed(Keyboard.Key.SPACE) || ControllerButton.A_BUTTON.isPressed()) && elapsedTime.asSeconds() > FIRING_GAP.asSeconds()){
-                world.addEntities(firingPatternComponent.getPattern().create());
+        if ((Keyboard.isKeyPressed(Keyboard.Key.SPACE) || ControllerButton.A_BUTTON.isPressed()) && elapsedTime.asSeconds() > FIRING_GAP.asSeconds()){
+            world.addEntities(firingPatternComponent.getPattern().create());
 
-                if (entity.hasComponent(SpaceShipComponent.class)) {
-                    SpaceShipComponent spaceShipComponent = (SpaceShipComponent) entity.findComponent(SpaceShipComponent.class);
+            if (playerEntity.hasComponent(SpaceShipComponent.class)) {
+                SpaceShipComponent spaceShipComponent = (SpaceShipComponent) playerEntity.findComponent(SpaceShipComponent.class);
 
-                    spaceShipComponent.playFiringSound();
-                }
-
-                elapsedTime = Time.ZERO;
+                spaceShipComponent.playFiringSound();
             }
+
+            elapsedTime = Time.ZERO;
         }
     }
 

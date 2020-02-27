@@ -1,5 +1,6 @@
 package uk.ac.lancaster.scc210.engine.content;
 
+import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
 import uk.ac.lancaster.scc210.engine.resources.deserialise.SerialisedTextureAtlas;
 
 import java.util.List;
@@ -14,8 +15,8 @@ public class TextureAtlasManager extends ContentManager<TextureAtlas> {
      *
      * @param serialisedTextureAtlases the serialised texture atlases
      */
-    public TextureAtlasManager(List<SerialisedTextureAtlas> serialisedTextureAtlases) {
-        super(null);
+    public TextureAtlasManager(List<SerialisedTextureAtlas> serialisedTextureAtlases) throws ResourceNotFoundException {
+        super(new TextureAtlas());
 
         serialisedTextureAtlases.parallelStream().forEach(serialisedTextureAtlas -> {
             TextureAtlas textureAtlas = serialisedTextureAtlas.getTextureAtlas();

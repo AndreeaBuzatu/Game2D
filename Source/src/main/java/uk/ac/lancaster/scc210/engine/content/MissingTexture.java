@@ -38,6 +38,7 @@ class MissingTexture {
 
         try {
             texture.loadFromImage(image);
+
         } catch (TextureCreationException e) {
             throw new ResourceNotFoundException("Could not create missing texture");
         }

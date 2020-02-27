@@ -1,17 +1,25 @@
 package uk.ac.lancaster.scc210.game.items;
 
+import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 
-/**
- * This interfaces describes how an item should react after it has been collided with.
- */
-public interface ItemEffect {
+public abstract class ItemEffect {
+    boolean isDead;
+
+    ItemEffect() {
+        isDead = false;
+    }
+
+    public abstract void update(Time deltaTime);
+
     /**
      * Describes what should happen to the entity when it collides with an item
      *
      * @param entity the entity to react to
      */
-    void react(Entity entity);
+    public void react(Entity entity) {
+        isDead = false;
+    }
 
     /**
      * At certain stages (e.g. at the end of a level) the item effects are reset to the default. This should be used
@@ -19,5 +27,11 @@ public interface ItemEffect {
      *
      * @param entity the entity to reset
      */
-    void reset(Entity entity);
+    public void reset(Entity entity) {
+        isDead = true;
+    }
+
+    public boolean isDead() {
+        return isDead;
+    }
 }

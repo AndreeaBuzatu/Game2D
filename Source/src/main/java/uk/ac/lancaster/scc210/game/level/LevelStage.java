@@ -13,14 +13,13 @@ import java.util.Set;
 public class LevelStage {
     private final List<LevelWave> waves;
 
-    private final List<Entity> stationaryEntities;
-
-    private final Set<Entity> stationarySaved;
+    private final Set<Entity> stationaryEntities, stationarySaved;
 
     private boolean stationarySpawned;
 
-    public LevelStage(List<LevelWave> waves, List<Entity> stationaryEntities) {
+    public LevelStage(List<LevelWave> waves, Set<Entity> stationaryEntities) {
         this.waves = waves;
+
         this.stationaryEntities = stationaryEntities;
 
         stationarySaved = new HashSet<>();
@@ -48,6 +47,8 @@ public class LevelStage {
                 world.addEntity(newShip);
             }
 
+            world.addEntities(wave.getEntities());
+
             wave.getWave().update(wave.getEntities(), deltaTime);
         }
     }
@@ -70,7 +71,7 @@ public class LevelStage {
         stationarySpawned = false;
     }
 
-    public List<Entity> getStationaryEntities() {
+    public Set<Entity> getStationaryEntities() {
         return stationaryEntities;
     }
 

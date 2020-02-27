@@ -17,6 +17,10 @@ public class StraightLineWave extends Wave {
     @Override
     public void update(Set<Entity> entities, Time deltaTime) {
         for (Entity entity : entities) {
+            if (toRespawn.contains(entity)) {
+                return;
+            }
+
             TransformableComponent transformableComponent = (TransformableComponent) entity.findComponent(TransformableComponent.class);
 
             Transformable transformable = transformableComponent.getTransformable();
@@ -29,13 +33,18 @@ public class StraightLineWave extends Wave {
 
             transformable.setRotation(rotateSprite());
 
+
             // If the entity goes out of bounds, reset the entity back to it's starting position
             if (passedDestination(transformable.getPosition())) {
-                transformable.setPosition(origin);
+                transformable.setPosition(-origin.x, -origin.y);
+
+                toRespawn.add(entity);
 
             } else {
                 transformable.move(direction.x * speed, direction.y * speed);
             }
         }
+
+        entities.removeIf(toRespawn::contains);
     }
 }

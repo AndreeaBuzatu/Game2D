@@ -40,7 +40,7 @@ public class ScoreSystem extends IterativeSystem {
 
         Entity playerEntity = player.get();
 
-        if (entity.hasComponent(ScoreComponent.class)) {
+        if (entity.hasComponent(ScoreComponent.class) && !entity.hasComponent(PlayerComponent.class)) {
             PlayerComponent playerComponent = (PlayerComponent) playerEntity.findComponent(PlayerComponent.class);
 
             ScoreComponent scoreComponent = (ScoreComponent) entity.findComponent(ScoreComponent.class);

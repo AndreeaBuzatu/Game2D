@@ -56,7 +56,7 @@ public class SpaceShipPrototype implements Prototype {
 
         final RotationComponent rotationComponent = new RotationComponent(2f);
 
-        final SpaceShipComponent spaceShipComponent = new SpaceShipComponent(items, firingSound, hitSound);
+        final SpaceShipComponent spaceShipComponent = new SpaceShipComponent(items, firingSound, hitSound, bulletName);
 
         final TransformableComponent transformableComponent = new TransformableComponent(sprite);
 

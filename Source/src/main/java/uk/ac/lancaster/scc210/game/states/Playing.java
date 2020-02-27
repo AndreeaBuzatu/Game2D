@@ -4,6 +4,10 @@ import org.jsfml.audio.Music;
 import org.jsfml.graphics.*;
 import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
+import org.jsfml.window.Keyboard;
+import org.jsfml.window.event.KeyEvent;
+import org.jsfml.window.event.TextEvent;
+import uk.ac.lancaster.scc210.engine.InputListener;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import uk.ac.lancaster.scc210.engine.ViewSize;
 import uk.ac.lancaster.scc210.engine.content.FontManager;
@@ -13,6 +17,7 @@ import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.states.State;
 import uk.ac.lancaster.scc210.game.content.LevelManager;
 import uk.ac.lancaster.scc210.game.content.SpaceShipPrototypeManager;
+import uk.ac.lancaster.scc210.game.content.StateManager;
 import uk.ac.lancaster.scc210.game.dialogue.DialogueBox;
 import uk.ac.lancaster.scc210.game.ecs.component.*;
 import uk.ac.lancaster.scc210.game.ecs.system.*;
@@ -27,7 +32,7 @@ import java.util.Set;
 /**
  * Represents the actual game-play state.
  */
-public class Playing implements State {
+public class Playing implements State, InputListener {
     private static final int TEXT_SIZE = 70;
 
     public static final int INFO_BOX_HEIGHT = TEXT_SIZE + 5;
@@ -44,6 +49,8 @@ public class Playing implements State {
 
     private LevelManager levelManager;
 
+    private StateManager stateManager;
+
     private LevelSystem levelSystem;
 
     private PlayerWriter playerScoreWriter;
@@ -52,7 +59,7 @@ public class Playing implements State {
 
     private Entity player;
 
-    private Music example;
+    private Music music;
 
     private Font font;
 
@@ -62,7 +69,7 @@ public class Playing implements State {
 
     private DialogueBox dialogueBox;
 
-    private boolean fadedIn, shouldFadeIn, shouldFadeOut;
+    private boolean paused, fadedIn, shouldFadeIn, shouldFadeOut;
 
     private int alpha, currentUnlocked;
 
@@ -71,6 +78,8 @@ public class Playing implements State {
         this.game = game;
 
         levelManager = (LevelManager) game.getServiceProvider().get(LevelManager.class);
+
+        stateManager = (StateManager) game.getServiceProvider().get(StateManager.class);
 
         PlayerData playerData = (PlayerData) game.getServiceProvider().get(PlayerData.class);
 
@@ -111,15 +120,15 @@ public class Playing implements State {
 
         world.addSystem(new AsteroidSystem(world));
 
-        world.addSystem(new AsteroidCollisionSystem(world));
-
         world.addSystem(new BulletCollisionSystem(world));
 
         world.addSystem(new ItemDropSystem(world));
 
         world.addSystem(new ItemCollisionSystem(world));
 
-        world.addSystem(new SpaceShipCollisionSystem(world));
+        world.addSystem(new PlayerEffectsUpdateSystem(world));
+
+        world.addSystem(new EnemyCollisionSystem(world));
 
         world.addSystem(new EnemyFiringSystem(world));
 
@@ -155,13 +164,11 @@ public class Playing implements State {
 
         MusicManager musicManager = (MusicManager) world.getServiceProvider().get(MusicManager.class);
 
-        example = musicManager.get("example");
+        music = musicManager.get("example");
 
-        example.setVolume(100);
+        music.setVolume(100);
 
-        example.setLoop(true);
-
-        example.play();
+        music.setLoop(true);
 
         FontManager fontManager = (FontManager) world.getServiceProvider().get(FontManager.class);
 
@@ -189,6 +196,8 @@ public class Playing implements State {
 
         game.addKeyListener(dialogueBox);
 
+        paused = false;
+
         fadedIn = false;
 
         shouldFadeOut = false;
@@ -197,6 +206,41 @@ public class Playing implements State {
         shouldFadeIn = true;
 
         alpha = 0;
+    }
+
+    @Override
+    public void onEnter(StateBasedGame game) {
+        game.addKeyListener(dialogueBox);
+
+        game.addKeyListener(this);
+
+        music.play();
+
+        paused = false;
+    }
+
+    @Override
+    public void onExit(StateBasedGame game) {
+        game.removeKeyListener(dialogueBox);
+
+        game.removeKeyListener(this);
+
+        if (!paused) {
+            level.reset();
+
+            music.pause();
+        }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent keyevent) {
+        if (keyevent.key == Keyboard.Key.ESCAPE) {
+            paused = true;
+        }
+    }
+
+    @Override
+    public void keyTyped(TextEvent textevent) {
     }
 
     @Override
@@ -214,6 +258,8 @@ public class Playing implements State {
             shouldFadeIn = true;
 
             shouldFadeOut = false;
+
+            game.removeKeyListener(dialogueBox);
         }
     }
 
@@ -252,6 +298,12 @@ public class Playing implements State {
 
     @Override
     public void update(Time deltaTime) {
+        if (paused) {
+            game.pushState(stateManager.get("pause"));
+
+            return;
+        }
+
         if (dialogueBox.isOpen()) {
             dialogueBox.update(deltaTime);
 
@@ -285,7 +337,7 @@ public class Playing implements State {
             // Reset the player's current item effects back to the game default
             PlayerComponent playerComponent = (PlayerComponent) player.findComponent(PlayerComponent.class);
 
-            playerComponent.getCurrentEffects().parallelStream().forEach(itemEffect -> itemEffect.reset(player));
+            playerComponent.getCurrentItemEffects().parallelStream().forEach(itemEffect -> itemEffect.reset(player));
 
             if (currentUnlocked < totalLevels.size() - 1) {
                 currentUnlocked++;
@@ -305,7 +357,11 @@ public class Playing implements State {
                 shouldFadeOut = true;
 
             } else {
-                game.pushState(new Completion());
+                Completion completionState = (Completion) stateManager.get("completion");
+
+                completionState.setPlayerScore(playerComponent.getScore());
+
+                game.pushState(completionState);
             }
         }
 

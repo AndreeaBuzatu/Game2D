@@ -6,10 +6,7 @@ import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.prototypes.Prototype;
-import uk.ac.lancaster.scc210.game.ecs.component.AsteroidComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.EnemyComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.WaveComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.*;
 import uk.ac.lancaster.scc210.game.waves.Wave;
 
 import java.util.HashSet;
@@ -34,7 +31,7 @@ public class LevelWave {
 
     private float spawnCountUp;
 
-    private int numLeftToSpawn;
+    private int numLeftToSpawn, entitySize;
 
     public LevelWave(Wave wave, Vector2f origin, Vector2f destination, int numShips, Prototype prototype) {
         this.wave = wave;
@@ -43,7 +40,7 @@ public class LevelWave {
 
         entities = new HashSet<>();
 
-        spriteStart = Vector2f.sub(destination, origin);
+        spriteStart = origin;
 
         spawnTime = SPAWN_TIMER;
 
@@ -66,16 +63,31 @@ public class LevelWave {
 
         spawnCountUp += deltaTime.asSeconds();
 
-        if (spawnCountUp >= spawnTime && !allSpawned()) {
-            Entity entity = create();
+        spawnTime = entitySize >> 7;
 
-            entities.add(entity);
+        if (spawnCountUp >= spawnTime) {
+            if (!allSpawned()) {
+                Entity entity = create();
 
-            spawnCountUp = 0;
+                entities.add(entity);
 
-            numLeftToSpawn--;
+                spawnCountUp = 0;
 
-            return entity;
+                numLeftToSpawn--;
+
+                return entity;
+
+            } else if (!wave.getToRespawn().isEmpty()) {
+                Entity entity = wave.getToRespawn().remove();
+
+                TransformableComponent transformableComponent = (TransformableComponent) entity.findComponent(TransformableComponent.class);
+
+                transformableComponent.getTransformable().setPosition(wave.getOrigin());
+
+                entities.add(entity);
+
+                return entity;
+            }
         }
 
         return null;
@@ -101,18 +113,23 @@ public class LevelWave {
 
         entity.addComponent(new EnemyComponent());
 
+
         if (entity.hasComponent(SpriteComponent.class)) {
             SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
 
             Sprite sprite = spriteComponent.getSprite();
 
             positionSprite(sprite);
+
+            entitySize += spriteComponent.getSprite().getTexture().getSize().x;
         }
 
         if (entity.hasComponent(AsteroidComponent.class)) {
             AsteroidComponent asteroidComponent = (AsteroidComponent) entity.findComponent(AsteroidComponent.class);
 
             asteroidComponent.getCircle().setPosition(spriteStart);
+
+            entitySize += 2*asteroidComponent.getCircle().getRadius();
         }
 
         return entity;

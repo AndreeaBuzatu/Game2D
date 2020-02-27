@@ -4,12 +4,16 @@ import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Set;
 
 public abstract class Wave {
     private final Vector2f destination;
 
     private double vectorDistance;
+
+    final Queue<Entity> toRespawn;
 
     final Vector2f origin;
 
@@ -18,6 +22,8 @@ public abstract class Wave {
     Wave(Vector2f origin, Vector2f destination) {
         this.origin = origin;
         this.destination = destination;
+
+        toRespawn = new LinkedList<>();
     }
 
     public abstract void update(Set<Entity> entities, Time deltaTime);
@@ -48,5 +54,13 @@ public abstract class Wave {
 
     float rotateSprite() {
         return (float) Math.toDegrees(Math.atan2(direction.y - origin.y, direction.x - origin.x)) + 180;
+    }
+
+    public Queue<Entity> getToRespawn() {
+        return toRespawn;
+    }
+
+    public Vector2f getOrigin() {
+        return origin;
     }
 }

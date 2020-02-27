@@ -21,8 +21,9 @@ import uk.ac.lancaster.scc210.engine.resources.deserialise.TextureAtlasDeseriali
 import uk.ac.lancaster.scc210.engine.service.ServiceProvider;
 import uk.ac.lancaster.scc210.engine.states.State;
 
-import java.util.ArrayList;
 import java.util.EmptyStackException;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,7 +39,7 @@ public class StateBasedGame {
 
     public static final float ZOOM_AMOUNT = 2.0f;
 
-    private final ArrayList<InputListener> inputListeners;
+    private final Set<InputListener> inputListeners;
 
     private final Stack<State> states;
 
@@ -89,11 +90,13 @@ public class StateBasedGame {
 
         window.setFramerateLimit(FPS);
 
+        window.setKeyRepeatEnabled(false);
+
         states = new Stack<>();
 
         serviceProvider = new ServiceProvider();
 
-        inputListeners = new ArrayList<>();
+        inputListeners = new HashSet<>();
 
         try {
             TextureAtlasDeserialiser textureAtlasDeserialiser = new TextureAtlasDeserialiser(deserialiseXML("atlases.xml"));
@@ -155,8 +158,6 @@ public class StateBasedGame {
      * Run the game.
      */
     public void run() {
-        states.forEach(state -> state.setup(this));
-
         while (window.isOpen()) {
             update();
 
@@ -179,6 +180,15 @@ public class StateBasedGame {
 
                 case KEY_PRESSED:
                     inputListeners.forEach(listener -> listener.keyPressed(event.asKeyEvent()));
+
+                    break;
+
+                case TEXT_ENTERED:
+                    inputListeners.forEach(listener -> {
+                        if (listener != null) {
+                            listener.keyTyped(event.asTextEvent());
+                        }
+                    });
 
                     break;
 
@@ -206,18 +216,28 @@ public class StateBasedGame {
     }
 
     public void pushState(State state) {
+        if (currentState != null) {
+            currentState.onExit(this);
+        }
+
         state.setup(this);
 
         states.add(state);
 
         currentState = states.peek();
+
+        currentState.onEnter(this);
     }
 
     public void popState() {
         states.pop();
 
         try {
+            currentState.onExit(this);
+
             currentState = states.peek();
+
+            currentState.onEnter(this);
 
         } catch (EmptyStackException e) {
             window.close();
@@ -268,5 +288,13 @@ public class StateBasedGame {
 
     public void addKeyListener(InputListener inputListener) {
         inputListeners.add(inputListener);
+    }
+
+    public void removeKeyListener(InputListener inputListener) {
+        inputListeners.remove(inputListener);
+    }
+
+    public Stack<State> getStates() {
+        return states;
     }
 }
