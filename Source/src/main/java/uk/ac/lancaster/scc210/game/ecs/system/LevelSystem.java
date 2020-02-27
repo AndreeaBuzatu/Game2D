@@ -109,7 +109,10 @@ public class LevelSystem extends IterativeSystem {
         spriteComponent.getSprite().setRotation(0);
 
         // Reset item effects
-        playerComponent.getCurrentEffects().forEach(itemEffect -> itemEffect.reset(player));
+        playerComponent.getCurrentItemEffects().forEach(itemEffect -> itemEffect.reset(player));
+
+        // Reset bullet effects
+        playerComponent.getBulletEffect().reset();
 
         world.addEntity(player);
 

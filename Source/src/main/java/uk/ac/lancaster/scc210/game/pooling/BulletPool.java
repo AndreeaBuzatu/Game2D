@@ -14,7 +14,7 @@ import uk.ac.lancaster.scc210.game.prototypes.BulletPrototype;
  */
 public class BulletPool extends Pool {
     // Who cares if it's static? I don't
-    private static final int INITIAL_BULLETS = 100;
+    private static final int INITIAL_BULLETS = 10;
 
     private final TextureManager textureManager;
 
@@ -32,14 +32,24 @@ public class BulletPool extends Pool {
         bulletPrototypeManager = (BulletPrototypeManager) serviceProvider.get(BulletPrototypeManager.class);
 
         textureManager = (TextureManager) serviceProvider.get(TextureManager.class);
-
-        for (int i = 0; i < INITIAL_BULLETS; i++) {
-            entities.offer(create());
-        }
     }
 
     @Override
-    public Entity create(String bulletName) {
+    public Entity borrowEntity(String bulletName) {
+        if (!entities.isEmpty()) {
+            Entity entity = entities.remove();
+
+            // Set the texture for the given bullet name
+            SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
+
+            spriteComponent.getSprite().setTexture(textureManager.get(bulletName));
+        }
+
+        return create(bulletName);
+    }
+
+    @Override
+    protected Entity create(String bulletName) {
         Entity entity = super.borrowEntity();
 
         BulletPrototype bulletPrototype = bulletPrototypeManager.get(bulletName);

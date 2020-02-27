@@ -64,7 +64,7 @@ public class Game extends StateBasedGame {
 
             serviceProvider.put(SpaceShipPrototypeManager.class, spaceShipManager);
 
-            ItemPrototypeManager itemManager = new ItemPrototypeManager(textureManager);
+            ItemPrototypeManager itemManager = new ItemPrototypeManager(textureManager, bulletPool);
 
             serviceProvider.put(ItemPrototypeManager.class, itemManager);
 

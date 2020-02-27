@@ -119,6 +119,8 @@ public class Playing implements State {
 
         world.addSystem(new ItemCollisionSystem(world));
 
+        world.addSystem(new PlayerEffectsUpdateSystem(world));
+
         world.addSystem(new SpaceShipCollisionSystem(world));
 
         world.addSystem(new EnemyFiringSystem(world));
@@ -285,7 +287,7 @@ public class Playing implements State {
             // Reset the player's current item effects back to the game default
             PlayerComponent playerComponent = (PlayerComponent) player.findComponent(PlayerComponent.class);
 
-            playerComponent.getCurrentEffects().parallelStream().forEach(itemEffect -> itemEffect.reset(player));
+            playerComponent.getCurrentItemEffects().parallelStream().forEach(itemEffect -> itemEffect.reset(player));
 
             if (currentUnlocked < totalLevels.size() - 1) {
                 currentUnlocked++;

@@ -68,7 +68,7 @@ public class ItemCollisionSystem extends IterativeSystem {
 
                 itemEffectsComponent.getItemEffects().parallelStream().forEach(itemEffect -> itemEffect.react(playerEntity));
 
-                playerComponent.setCurrentEffects(itemEffectsComponent.getItemEffects());
+                playerComponent.setCurrentItemEffects(itemEffectsComponent.getItemEffects());
 
                 SoundBufferManager.playSound(pickupSound);
 

@@ -1,24 +1,16 @@
 package uk.ac.lancaster.scc210.game.items;
 
-import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 
-public abstract class ItemEffect {
-    boolean isDead;
-
-    ItemEffect() {
-        isDead = false;
-    }
-
-    public abstract void update(Time deltaTime);
-
+public class MissingItemEffect extends PowerUpEffect {
     /**
      * Describes what should happen to the entity when it collides with an item
      *
      * @param entity the entity to react to
      */
+    @Override
     public void react(Entity entity) {
-        isDead = false;
+
     }
 
     /**
@@ -27,11 +19,8 @@ public abstract class ItemEffect {
      *
      * @param entity the entity to reset
      */
+    @Override
     public void reset(Entity entity) {
-        isDead = true;
-    }
 
-    public boolean isDead() {
-        return isDead;
     }
 }
