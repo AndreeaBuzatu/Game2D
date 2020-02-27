@@ -5,6 +5,7 @@ import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.event.KeyEvent;
+import org.jsfml.window.event.TextEvent;
 import uk.ac.lancaster.scc210.engine.InputListener;
 import uk.ac.lancaster.scc210.engine.ViewSize;
 import uk.ac.lancaster.scc210.engine.content.FontManager;
@@ -111,6 +112,11 @@ public class DialogueBox implements Drawable, InputListener {
     @Override
     public void keyPressed(KeyEvent keyevent) {
         pressedKey = keyevent.key;
+    }
+
+    @Override
+    public void keyTyped(TextEvent textevent) {
+
     }
 
     private void formatText() {

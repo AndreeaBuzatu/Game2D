@@ -26,7 +26,9 @@ import uk.ac.lancaster.scc210.game.waves.StraightLineWave;
 import uk.ac.lancaster.scc210.game.waves.Wave;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class LevelDeserialiser extends Deserialiser<Level> {
     private final String DIALOGUE_TAG = "dialogue";
@@ -178,8 +180,8 @@ public class LevelDeserialiser extends Deserialiser<Level> {
         return waves;
     }
 
-    private List<Entity> deserialiseStationary(NodeList nodes) {
-        List<Entity> entities = new ArrayList<>();
+    private Set<Entity> deserialiseStationary(NodeList nodes) {
+        Set<Entity> entities = new HashSet<>();
 
         for (int i = 0; i < nodes.getLength(); i++) {
             Node node = nodes.item(i);
