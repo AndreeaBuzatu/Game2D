@@ -63,7 +63,8 @@ public class LevelWave {
 
         spawnCountUp += deltaTime.asSeconds();
 
-        spawnTime = entitySize >> 7;
+        //spawnTime = entitySize >> 7;
+        spawnTime = 0;
 
         if (spawnCountUp >= spawnTime) {
             if (!allSpawned()) {
