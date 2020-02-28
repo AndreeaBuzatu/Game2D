@@ -41,6 +41,8 @@ public class Playing implements State, InputListener {
 
     private final int MAX_OPACITY = 255;
 
+    private final int DEFAULT_LIVES = 3;
+
     private List<Level> unlockedLevels, totalLevels;
 
     private StateBasedGame game;
@@ -200,6 +202,13 @@ public class Playing implements State, InputListener {
         player = spaceShipManager.get("player").create();
 
         LivesComponent livesComponent = (LivesComponent) player.findComponent(LivesComponent.class);
+
+        // If the player data has an impossible number of lives, just set an assumed default
+        if (livesComponent.getLives() <= 0) {
+            livesComponent.setLives(DEFAULT_LIVES);
+
+            livesComponent.setStartingLives(DEFAULT_LIVES);
+        }
 
         livesComponent.setLives(playerData.getLives());
 
@@ -362,7 +371,14 @@ public class Playing implements State, InputListener {
 
                 level = unlockedLevels.get(currentUnlocked);
 
-                playerScoreWriter.writePlayerLevel(level.getName());
+                // Write the player data once they have completed a level.
+                playerData.setUnlockedLevel(level.getName());
+
+                playerData.setScore(playerComponent.getScore());
+
+                playerData.setLives(livesComponent.getLives());
+
+                playerScoreWriter.writePlayerLevel(playerData);
 
                 dialogueBox.setDialogue(level.getLines());
 
@@ -375,14 +391,12 @@ public class Playing implements State, InputListener {
 
                 completionState.setPlayerScore(playerComponent.getScore());
 
-                playerComponent.setScore(0);
+                //playerComponent.setScore(0);
 
-                livesComponent.setLives(livesComponent.getStartingLives());
+                //livesComponent.setLives(livesComponent.getStartingLives());
 
                 game.pushState(completionState);
             }
-
-            //playerScoreWriter.writePlayerLevel(level.getName(), playerComponent.getScore(), livesComponent.getLives());
         }
 
         if (!level.complete()) {
