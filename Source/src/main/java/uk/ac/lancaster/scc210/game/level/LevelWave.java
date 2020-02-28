@@ -50,15 +50,15 @@ public class LevelWave {
     }
 
     Entity spawnNew(Time deltaTime) {
+        Entity entity = null;
         // Create the initial ship - ignore the timer for the first one.
         if (numLeftToSpawn == numShips) {
-            Entity entity = create();
+            entity = create();
 
             entities.add(entity);
 
             numLeftToSpawn--;
 
-            return entity;
         }
 
         spawnCountUp += deltaTime.asSeconds();
@@ -67,18 +67,14 @@ public class LevelWave {
 
         if (spawnCountUp >= spawnTime) {
             if (!allSpawned()) {
-                Entity entity = create();
+                 entity = create();
 
                 entities.add(entity);
 
-                spawnCountUp = 0;
-
                 numLeftToSpawn--;
 
-                return entity;
-
             } else if (!wave.getToRespawn().isEmpty()) {
-                Entity entity = wave.getToRespawn().remove();
+                entity = wave.getToRespawn().remove();
 
                 TransformableComponent transformableComponent = (TransformableComponent) entity.findComponent(TransformableComponent.class);
 
@@ -86,11 +82,12 @@ public class LevelWave {
 
                 entities.add(entity);
 
-                return entity;
             }
+
+            spawnCountUp = COUNT_START;
         }
 
-        return null;
+        return entity;
     }
 
     public void remove(Entity entity) {
