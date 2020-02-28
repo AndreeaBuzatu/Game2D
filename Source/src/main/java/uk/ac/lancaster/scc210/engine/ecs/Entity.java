@@ -7,13 +7,19 @@ import java.util.HashMap;
  * Represents an Entity in the world. Each entity contains a set of Components which Systems use.
  */
 public class Entity {
+    private static int ID_INC = 0;
+    
     private final HashMap<Class<? extends Component>, Component> components;
+
+    private final int id;
 
     /**
      * Instantiates a new Entity.
      */
     public Entity() {
         components = new HashMap<>();
+
+        id = ID_INC++;
     }
 
     /**
@@ -23,6 +29,8 @@ public class Entity {
      */
     Entity(Collection<Component> components) {
         this.components = new HashMap<>();
+
+        id = ID_INC++;
 
         for (Component component : components) {
             Class<? extends Component> componentClass = component.getClass();
@@ -66,5 +74,29 @@ public class Entity {
      */
     public Component findComponent(Class<? extends Component> component) {
         return components.getOrDefault(component, null);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null) {
+            return false;
+        }
+
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+
+        Entity entityObj = (Entity) obj;
+
+        return entityObj.id == id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
     }
 }
