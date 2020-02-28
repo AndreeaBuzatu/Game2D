@@ -82,9 +82,11 @@ public class SpaceShipPrototype implements Prototype {
 
         Entity spaceShip = World.createEntity(animationComponent, spriteComponent, speedComponent, rotationComponent, spaceShipComponent, orientatedBoxComponent, transformableComponent, scoreComponent, livesComponent, flashComponent);
 
-        final FiringPatternComponent firingPatternComponent = new FiringPatternComponent(findPattern(spaceShip, pattern));
+        if (pattern != null && !pattern.equals("")) {
+            final FiringPatternComponent firingPatternComponent = new FiringPatternComponent(findPattern(spaceShip, pattern));
 
-        spaceShip.addComponent(firingPatternComponent);
+            spaceShip.addComponent(firingPatternComponent);
+        }
 
         return spaceShip;
     }

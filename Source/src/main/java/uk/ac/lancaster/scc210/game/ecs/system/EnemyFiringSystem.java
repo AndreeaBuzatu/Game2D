@@ -18,7 +18,7 @@ public class EnemyFiringSystem extends IterativeSystem {
      * @param world the world containing entities to use
      */
     public EnemyFiringSystem(World world) {
-        super(world, SpriteComponent.class, EnemyComponent.class);
+        super(world, SpriteComponent.class, EnemyComponent.class, FiringPatternComponent.class);
     }
 
     @Override
