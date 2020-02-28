@@ -31,8 +31,14 @@ public class PlayerWriter implements Service {
         getPlayerElement();
     }
 
-    public void writePlayerLevel(String levelName) {
+    public void writePlayerLevel(String levelName, int score, int lives) {
         playerElement.setAttribute("unlocked-level", levelName);
+
+        playerElement.setAttribute("score", Integer.toString(score));
+
+        playerElement.setAttribute("lives", Integer.toString(lives));
+
+        System.out.println("Score: " + score + ", Lives: " + lives);
 
         try {
             Transformer transformer = TransformerFactory.newInstance().newTransformer();

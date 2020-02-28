@@ -47,11 +47,15 @@ public class Playing implements State, InputListener {
 
     private World world;
 
+    private SpaceShipPrototypeManager spaceShipManager;
+
     private LevelManager levelManager;
 
     private StateManager stateManager;
 
     private LevelSystem levelSystem;
+
+    private PlayerData playerData;
 
     private PlayerWriter playerScoreWriter;
 
@@ -81,7 +85,7 @@ public class Playing implements State, InputListener {
 
         stateManager = (StateManager) game.getServiceProvider().get(StateManager.class);
 
-        PlayerData playerData = (PlayerData) game.getServiceProvider().get(PlayerData.class);
+        playerData = (PlayerData) game.getServiceProvider().get(PlayerData.class);
 
         String unlockedLevel = playerData.getUnlockedLevel();
 
@@ -138,29 +142,7 @@ public class Playing implements State, InputListener {
 
         world.addSystem(new LivesSystem(world));
 
-        SpaceShipPrototypeManager spaceShipManager = (SpaceShipPrototypeManager) game.getServiceProvider().get(SpaceShipPrototypeManager.class);
-
-        viewSize = (ViewSize) world.getServiceProvider().get(ViewSize.class);
-
-        FloatRect viewBounds = viewSize.getViewBounds();
-
-        player = spaceShipManager.get("player").create();
-
-        PlayerComponent playerComponent = new PlayerComponent();
-
-        player.addComponent(playerComponent);
-
-        SpriteComponent spriteComponent = (SpriteComponent) player.findComponent(SpriteComponent.class);
-
-        Sprite playerSprite = spriteComponent.getSprite();
-
-        playerComponent.setSpawnPoint(new Vector2f((viewBounds.width / 2) - playerSprite.getGlobalBounds().width, (viewBounds.height / 1.5f) - playerSprite.getGlobalBounds().height));
-
-        playerSprite.setPosition(playerComponent.getSpawnPoint());
-
-        playerScoreWriter = (PlayerWriter) game.getServiceProvider().get(PlayerWriter.class);
-
-        world.addEntity(player);
+        createPlayer();
 
         MusicManager musicManager = (MusicManager) world.getServiceProvider().get(MusicManager.class);
 
@@ -206,6 +188,38 @@ public class Playing implements State, InputListener {
         shouldFadeIn = true;
 
         alpha = 0;
+    }
+
+    private void createPlayer() {
+        spaceShipManager = (SpaceShipPrototypeManager) game.getServiceProvider().get(SpaceShipPrototypeManager.class);
+
+        viewSize = (ViewSize) world.getServiceProvider().get(ViewSize.class);
+
+        FloatRect viewBounds = viewSize.getViewBounds();
+
+        player = spaceShipManager.get("player").create();
+
+        LivesComponent livesComponent = (LivesComponent) player.findComponent(LivesComponent.class);
+
+        livesComponent.setLives(playerData.getLives());
+
+        PlayerComponent playerComponent = new PlayerComponent();
+
+        playerComponent.setScore(playerData.getScore());
+
+        player.addComponent(playerComponent);
+
+        SpriteComponent spriteComponent = (SpriteComponent) player.findComponent(SpriteComponent.class);
+
+        Sprite playerSprite = spriteComponent.getSprite();
+
+        playerComponent.setSpawnPoint(new Vector2f((viewBounds.width / 2) - playerSprite.getGlobalBounds().width, (viewBounds.height / 1.5f) - playerSprite.getGlobalBounds().height));
+
+        playerSprite.setPosition(playerComponent.getSpawnPoint());
+
+        playerScoreWriter = (PlayerWriter) game.getServiceProvider().get(PlayerWriter.class);
+
+        world.addEntity(player);
     }
 
     @Override
@@ -337,6 +351,8 @@ public class Playing implements State, InputListener {
             // Reset the player's current item effects back to the game default
             PlayerComponent playerComponent = (PlayerComponent) player.findComponent(PlayerComponent.class);
 
+            LivesComponent livesComponent = (LivesComponent) player.findComponent(LivesComponent.class);
+
             playerComponent.getCurrentItemEffects().parallelStream().forEach(itemEffect -> itemEffect.reset(player));
 
             if (currentUnlocked < totalLevels.size() - 1) {
@@ -347,8 +363,6 @@ public class Playing implements State, InputListener {
                 level = unlockedLevels.get(currentUnlocked);
 
                 levelSystem.setLevel(level);
-
-                playerScoreWriter.writePlayerLevel(level.getName());
 
                 dialogueBox.setDialogue(level.getLines());
 
@@ -361,8 +375,14 @@ public class Playing implements State, InputListener {
 
                 completionState.setPlayerScore(playerComponent.getScore());
 
+                playerComponent.setScore(0);
+
+                livesComponent.setLives(livesComponent.getStartingLives());
+
                 game.pushState(completionState);
             }
+
+            //playerScoreWriter.writePlayerLevel(level.getName(), playerComponent.getScore(), livesComponent.getLives());
         }
 
         if (!level.complete()) {

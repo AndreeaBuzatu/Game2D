@@ -33,4 +33,8 @@ public class LivesComponent implements Component {
     public void kill() {
         lives = 0;
     }
+
+    public int getStartingLives() {
+        return startingLives;
+    }
 }

@@ -18,6 +18,8 @@ import uk.ac.lancaster.scc210.game.content.HighScores;
 import uk.ac.lancaster.scc210.game.gui.MenuHeader;
 import uk.ac.lancaster.scc210.game.resources.HighScore;
 import uk.ac.lancaster.scc210.game.resources.HighScoreWriter;
+import uk.ac.lancaster.scc210.game.resources.PlayerData;
+import uk.ac.lancaster.scc210.game.resources.PlayerWriter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -132,6 +134,12 @@ public class Completion implements State, InputListener {
         if (keyevent.key == Keyboard.Key.RETURN) {
             if (playerScoreIndex > UNKNOWN_INDEX && charsEntered > 0) {
                 try {
+                    PlayerWriter playerWriter = (PlayerWriter) game.getServiceProvider().get(PlayerWriter.class);
+
+                    PlayerData playerData = (PlayerData) game.getServiceProvider().get(PlayerData.class);
+
+                    playerWriter.writePlayerLevel(playerData.getUnlockedLevel(), 0, 0);
+
                     highScoreWriter.writeHighScores();
 
                 } catch (ResourceNotFoundException e) {
