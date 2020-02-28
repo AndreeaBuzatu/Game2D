@@ -346,8 +346,6 @@ public class Playing implements State, InputListener {
 
                 level = unlockedLevels.get(currentUnlocked);
 
-                levelSystem.setLevel(level);
-
                 playerScoreWriter.writePlayerLevel(level.getName());
 
                 dialogueBox.setDialogue(level.getLines());
