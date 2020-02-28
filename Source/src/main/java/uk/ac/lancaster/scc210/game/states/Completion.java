@@ -134,18 +134,23 @@ public class Completion implements State, InputListener {
         if (keyevent.key == Keyboard.Key.RETURN) {
             if (playerScoreIndex > UNKNOWN_INDEX && charsEntered > 0) {
                 try {
-                    PlayerWriter playerWriter = (PlayerWriter) game.getServiceProvider().get(PlayerWriter.class);
-
-                    PlayerData playerData = (PlayerData) game.getServiceProvider().get(PlayerData.class);
-
-                    playerWriter.writePlayerLevel(playerData.getUnlockedLevel(), 0, 0);
-
                     highScoreWriter.writeHighScores();
 
                 } catch (ResourceNotFoundException e) {
                     StateBasedGame.LOGGER.log(Level.WARNING, e.getMessage());
                 }
             }
+
+            // Once the player has completed the game, reset their score to 0 and lives back to default and write the file.
+            PlayerWriter playerWriter = (PlayerWriter) game.getServiceProvider().get(PlayerWriter.class);
+
+            PlayerData playerData = (PlayerData) game.getServiceProvider().get(PlayerData.class);
+
+            playerData.setScore(0);
+
+            playerData.resetLives();
+
+            playerWriter.writePlayerLevel(playerData);
 
             /*
             WARNING: CRAPPY CODE BELOW!!!
