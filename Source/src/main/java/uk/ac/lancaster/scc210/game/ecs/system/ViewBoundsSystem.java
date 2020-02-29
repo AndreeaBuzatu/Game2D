@@ -8,10 +8,7 @@ import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.component.PooledComponent;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.engine.pooling.Pool;
-import uk.ac.lancaster.scc210.game.ecs.component.BulletComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.FiredComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.*;
 
 /**
  * System used to prevent an entity from going off screen
@@ -47,6 +44,8 @@ public class ViewBoundsSystem extends IterativeSystem {
                 // Remove any enemy spaceships which leave the screen but aren't in a wave (i.e. fired by another ship) and is not a bullet
                 // Bullet entities (which also have FiredComponent) might contain a Pool which needs special handling
                 if (entity.hasComponent(FiredComponent.class) && !entity.hasComponent(BulletComponent.class)) {
+                    entity.addComponent(new OutOfBoundsComponent());
+
                     world.removeEntity(entity);
 
                     continue;

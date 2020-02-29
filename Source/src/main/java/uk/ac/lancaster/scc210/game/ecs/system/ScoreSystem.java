@@ -5,6 +5,7 @@ import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
+import uk.ac.lancaster.scc210.game.ecs.component.OutOfBoundsComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.ScoreComponent;
 
@@ -40,7 +41,8 @@ public class ScoreSystem extends IterativeSystem {
 
         Entity playerEntity = player.get();
 
-        if (entity.hasComponent(ScoreComponent.class)) {
+        // Entities which leave the bounds of the window (except waves) don't give score
+        if (entity.hasComponent(ScoreComponent.class) && !entity.hasComponent(OutOfBoundsComponent.class)) {
             PlayerComponent playerComponent = (PlayerComponent) playerEntity.findComponent(PlayerComponent.class);
 
             ScoreComponent scoreComponent = (ScoreComponent) entity.findComponent(ScoreComponent.class);

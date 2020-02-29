@@ -6,10 +6,7 @@ import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.game.content.ItemPrototypeManager;
-import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.ScoreComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.*;
 
 import java.util.Random;
 
@@ -46,7 +43,8 @@ public class ItemDropSystem extends IterativeSystem {
     public void entityRemoved(Entity entity) {
         super.entityRemoved(entity);
 
-        if (entity.hasComponent(PlayerComponent.class)) {
+        // The player or entities which are registered as being out of the window bounds (except waves) don't drop items
+        if (entity.hasComponent(PlayerComponent.class) || entity.hasComponent(OutOfBoundsComponent.class)) {
             return;
         }
 
