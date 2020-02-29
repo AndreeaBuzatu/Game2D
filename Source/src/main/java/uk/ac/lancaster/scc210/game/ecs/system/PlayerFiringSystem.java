@@ -10,6 +10,7 @@ import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.game.ecs.component.FiringPatternComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
+import uk.ac.lancaster.scc210.game.ecs.entity.PlayerFinder;
 import uk.ac.lancaster.scc210.game.patterns.Pattern;
 
 /**
@@ -17,6 +18,8 @@ import uk.ac.lancaster.scc210.game.patterns.Pattern;
  * The system places Bullets (Entities) into the front-middle of the entity.
  */
 public class PlayerFiringSystem extends IterativeSystem {
+    private Entity player;
+
     private Time elapsedTime;
 
     /**
@@ -27,29 +30,40 @@ public class PlayerFiringSystem extends IterativeSystem {
     public PlayerFiringSystem(World world) {
         super(world, PlayerComponent.class);
 
+        player = PlayerFinder.findPlayer(world);
+
         elapsedTime = Time.ZERO;
     }
 
     @Override
+    public void entityAdded(Entity entity) {
+        super.entityAdded(entity);
+
+        player = PlayerFinder.findPlayer(world);
+    }
+
+    @Override
     public void update(Time deltaTime) {
+        if (player == null) {
+            return;
+        }
+
         elapsedTime = Time.add(elapsedTime, deltaTime);
 
-        for (Entity entity : entities) {
-            FiringPatternComponent firingPatternComponent = (FiringPatternComponent) entity.findComponent(FiringPatternComponent.class);
+        FiringPatternComponent firingPatternComponent = (FiringPatternComponent) player.findComponent(FiringPatternComponent.class);
 
-            Pattern firingPattern = firingPatternComponent.getPattern();
+        Pattern firingPattern = firingPatternComponent.getPattern();
 
-            if ((Keyboard.isKeyPressed(Keyboard.Key.SPACE) || ControllerButton.A_BUTTON.isPressed()) && elapsedTime.asSeconds() > firingPattern.getFiringGap().asSeconds()) {
-                world.addEntities(firingPatternComponent.getPattern().create());
+        if ((Keyboard.isKeyPressed(Keyboard.Key.SPACE) || ControllerButton.A_BUTTON.isPressed()) && elapsedTime.asSeconds() > firingPattern.getFiringGap().asSeconds()) {
+            world.addEntities(firingPatternComponent.getPattern().create());
 
-                if (entity.hasComponent(SpaceShipComponent.class)) {
-                    SpaceShipComponent spaceShipComponent = (SpaceShipComponent) entity.findComponent(SpaceShipComponent.class);
+            if (player.hasComponent(SpaceShipComponent.class)) {
+                SpaceShipComponent spaceShipComponent = (SpaceShipComponent) player.findComponent(SpaceShipComponent.class);
 
-                    spaceShipComponent.playFiringSound();
-                }
-
-                elapsedTime = Time.ZERO;
+                spaceShipComponent.playFiringSound();
             }
+
+            elapsedTime = Time.ZERO;
         }
     }
 
