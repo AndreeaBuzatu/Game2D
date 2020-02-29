@@ -9,6 +9,7 @@ import uk.ac.lancaster.scc210.engine.ecs.component.PooledComponent;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.engine.pooling.Pool;
 import uk.ac.lancaster.scc210.game.ecs.component.BulletComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.FiredComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
@@ -39,6 +40,15 @@ public class ViewBoundsSystem extends IterativeSystem {
                 // Keep the player within the bounds of the window
                 if (entity.hasComponent(PlayerComponent.class)) {
                     viewSize.resetSprite(spriteComponent.getSprite());
+
+                    continue;
+                }
+
+                // Remove any enemy spaceships which leave the screen but aren't in a wave (i.e. fired by another ship)
+                if (entity.hasComponent(FiredComponent.class)) {
+                    world.removeEntity(entity);
+
+                    continue;
                 }
 
                 // Remove any bullets from screen
