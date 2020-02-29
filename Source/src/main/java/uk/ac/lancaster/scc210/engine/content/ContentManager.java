@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ContentManager<T> implements Service {
     private final ConcurrentHashMap<String, T> content;
 
-    private final T alternative;
+    protected T alternative;
 
     /**
      * Instantiates a new Content manager.

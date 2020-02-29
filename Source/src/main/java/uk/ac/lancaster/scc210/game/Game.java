@@ -54,7 +54,7 @@ public class Game extends StateBasedGame {
 
             SpaceShipDeserialiser spaceShipDeserialiser = new SpaceShipDeserialiser(deserialiseXML("spaceships.xml"));
 
-            SpaceShipPrototypeManager spaceShipManager = new SpaceShipPrototypeManager(animationManager, shaderManager, soundBufferManager, bulletPool, spaceShipDeserialiser.getSerialised());
+            SpaceShipPrototypeManager spaceShipManager = new SpaceShipPrototypeManager(serviceProvider, bulletPool, spaceShipDeserialiser.getSerialised());
 
             serviceProvider.put(BulletPool.class, new BulletPool(serviceProvider));
 

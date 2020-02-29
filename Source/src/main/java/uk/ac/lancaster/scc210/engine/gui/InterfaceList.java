@@ -52,10 +52,14 @@ public class InterfaceList implements InputListener, Drawable {
     }
 
     public void update() {
+        if (!enabled) {
+            return;
+        }
+
         handleInput();
 
         // Don't handle repeat actions
-        if (previousSelected != selectedIndex) {
+        if (previousSelected > -1) {
             // Loop back around from the top to the bottom
             if (selectedIndex < 0) {
                 selectedIndex = options.size() - 1;
@@ -66,16 +70,28 @@ public class InterfaceList implements InputListener, Drawable {
                 selectedIndex = 0;
             }
 
+            ListOption newSelected = options.get(selectedIndex);
+
+            if (newSelected.isEnabled()) {
+                newSelected.setCurrent();
+
+                // Deselect the previous item. Don't set to not current, if the current and previous are the same
+                if (previousSelected >= 0 && selectedIndex != previousSelected) {
+                    options.get(previousSelected).setNotCurrent();
+                }
+
+                if (pressedKey == Keyboard.Key.SPACE || pressedKey == Keyboard.Key.RETURN) {
+                    newSelected.select();
+                }
+
+            } else {
+                // If the currently selected index is listed as disabled, reset the selected index the previous (enabled) option
+                selectedIndex = previousSelected;
+            }
+
+        } else {
+            // If the current selection is the first item in the list, set the first item to be selected by default
             options.get(selectedIndex).setCurrent();
-
-            // Deselect the previous item
-            if (previousSelected >= 0) {
-                options.get(previousSelected).setNotCurrent();
-            }
-
-            if (pressedKey == Keyboard.Key.SPACE || pressedKey == Keyboard.Key.RETURN) {
-                options.get(selectedIndex).select();
-            }
         }
 
         pressedKey = null;

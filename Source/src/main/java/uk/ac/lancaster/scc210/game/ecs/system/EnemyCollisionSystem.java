@@ -9,10 +9,8 @@ import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.game.ecs.component.EnemyComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.LivesComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.OrientatedBoxComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
-
-import java.util.Optional;
+import uk.ac.lancaster.scc210.game.ecs.entity.PlayerFinder;
 
 public class EnemyCollisionSystem extends IterativeSystem {
     private final Time COLLISION_GAP = Time.getSeconds(1);
@@ -29,7 +27,7 @@ public class EnemyCollisionSystem extends IterativeSystem {
     public EnemyCollisionSystem(World world) {
         super(world, EnemyComponent.class);
 
-        player = world.getEntitiesFor(PlayerComponent.class).stream().findFirst().orElse(null);
+        player = PlayerFinder.findPlayer(world);
 
         elapsedTime = Time.ZERO;
     }
@@ -38,7 +36,7 @@ public class EnemyCollisionSystem extends IterativeSystem {
     public void entityAdded(Entity entity) {
         super.entityAdded(entity);
 
-        player = world.getEntitiesFor(PlayerComponent.class).stream().findFirst().orElse(null);
+        player = PlayerFinder.findPlayer(world);
     }
 
     @Override

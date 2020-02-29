@@ -3,10 +3,10 @@ package uk.ac.lancaster.scc210.game.items.patterns;
 import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.pooling.Pool;
-import uk.ac.lancaster.scc210.game.bullets.patterns.Pattern;
 import uk.ac.lancaster.scc210.game.ecs.component.FiringPatternComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
 import uk.ac.lancaster.scc210.game.items.TimedItemEffect;
+import uk.ac.lancaster.scc210.game.patterns.Pattern;
 
 public abstract class FiringPatternEffect extends TimedItemEffect {
     final Pool pool;

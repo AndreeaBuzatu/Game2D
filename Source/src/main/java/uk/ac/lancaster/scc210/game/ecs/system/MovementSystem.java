@@ -4,8 +4,8 @@ import org.jsfml.graphics.RenderTarget;
 import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
-import uk.ac.lancaster.scc210.engine.ecs.component.PooledComponent;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
+import uk.ac.lancaster.scc210.game.ecs.component.FiredComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
@@ -19,7 +19,7 @@ public class MovementSystem extends IterativeSystem {
      * @param world      the world to draw entities from
      */
     public MovementSystem(World world) {
-        super(world, SpriteComponent.class, SpeedComponent.class, PooledComponent.class);
+        super(world, SpriteComponent.class, SpeedComponent.class, FiredComponent.class);
     }
 
     @Override

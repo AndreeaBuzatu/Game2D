@@ -6,14 +6,13 @@ import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.game.ecs.component.FlashComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.LivesComponent;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class LevelStage {
     private final List<LevelWave> waves;
 
-    private final Set<Entity> stationaryEntities, stationarySaved;
+    private final Set<Entity> stationaryEntities;
 
     private boolean stationarySpawned;
 
@@ -21,8 +20,6 @@ public class LevelStage {
         this.waves = waves;
 
         this.stationaryEntities = stationaryEntities;
-
-        stationarySaved = new HashSet<>();
 
         stationarySpawned = false;
     }
@@ -33,6 +30,10 @@ public class LevelStage {
     }
 
     public void spawn(World world, Time deltaTime) {
+        if (hasSpawned()) {
+            return;
+        }
+        
         // Prevent stationary entities from being re-spawned
         if (!stationarySpawned) {
             world.addEntities(stationaryEntities);
@@ -56,8 +57,6 @@ public class LevelStage {
     void reset() {
         waves.forEach(LevelWave::reset);
 
-        stationaryEntities.addAll(stationarySaved);
-
         stationaryEntities.forEach(stationaryEntity -> {
             LivesComponent livesComponent = (LivesComponent) stationaryEntity.findComponent(LivesComponent.class);
 
@@ -75,9 +74,11 @@ public class LevelStage {
         return stationaryEntities;
     }
 
-    public void removeStationaryEntity(Entity entity) {
-        stationarySaved.add(entity);
+    public boolean hasSpawned() {
+        return waves.isEmpty() && stationarySpawned;
+    }
 
+    public void removeStationaryEntity(Entity entity) {
         stationaryEntities.remove(entity);
     }
 }

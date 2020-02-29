@@ -1,5 +1,6 @@
 package uk.ac.lancaster.scc210.engine.gui;
 
+import org.jsfml.graphics.Color;
 import org.jsfml.graphics.Font;
 import org.jsfml.graphics.RenderTarget;
 import org.jsfml.graphics.Text;
@@ -18,6 +19,8 @@ public class ListOption {
 
     private SelectedListener selectedListener;
 
+    private boolean enabled;
+
     ListOption(Font font, String label) {
         this.label = label;
 
@@ -28,6 +31,8 @@ public class ListOption {
         text.setFont(font);
 
         text.setCharacterSize(TEXT_SIZE);
+
+        enabled = true;
     }
 
     public void draw(RenderTarget target) {
@@ -56,5 +61,25 @@ public class ListOption {
 
     public Text getText() {
         return text;
+    }
+
+    boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+
+        if (enabled) {
+            text.setColor(Color.BLACK);
+
+            text.setStyle(Text.REGULAR);
+
+        } else {
+            // Set to light grey
+            text.setColor(new Color(211, 211, 211));
+
+            text.setStyle(Text.ITALIC);
+        }
     }
 }

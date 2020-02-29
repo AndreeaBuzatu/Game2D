@@ -18,6 +18,8 @@ import uk.ac.lancaster.scc210.game.content.HighScores;
 import uk.ac.lancaster.scc210.game.gui.MenuHeader;
 import uk.ac.lancaster.scc210.game.resources.HighScore;
 import uk.ac.lancaster.scc210.game.resources.HighScoreWriter;
+import uk.ac.lancaster.scc210.game.resources.PlayerData;
+import uk.ac.lancaster.scc210.game.resources.PlayerWriter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -138,6 +140,17 @@ public class Completion implements State, InputListener {
                     StateBasedGame.LOGGER.log(Level.WARNING, e.getMessage());
                 }
             }
+
+            // Once the player has completed the game, reset their score to 0 and lives back to default and write the file.
+            PlayerWriter playerWriter = (PlayerWriter) game.getServiceProvider().get(PlayerWriter.class);
+
+            PlayerData playerData = (PlayerData) game.getServiceProvider().get(PlayerData.class);
+
+            playerData.setScore(0);
+
+            playerData.resetLives();
+
+            playerWriter.writePlayerLevel(playerData);
 
             /*
             WARNING: CRAPPY CODE BELOW!!!

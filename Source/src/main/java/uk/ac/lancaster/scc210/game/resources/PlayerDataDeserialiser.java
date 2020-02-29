@@ -47,7 +47,11 @@ public class PlayerDataDeserialiser extends Deserialiser<PlayerData> {
 
                 String unlocked = element.getAttribute("unlocked-level");
 
-                playerData = new PlayerData(unlocked);
+                int score = Integer.parseInt(element.getAttribute("score"));
+
+                int lives = Integer.parseInt(element.getAttribute("lives"));
+
+                playerData = new PlayerData(unlocked, score, lives);
 
                 break;
             }
