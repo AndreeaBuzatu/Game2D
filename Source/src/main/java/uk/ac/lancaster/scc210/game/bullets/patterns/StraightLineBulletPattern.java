@@ -6,6 +6,7 @@ import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.pooling.Pool;
 import uk.ac.lancaster.scc210.game.ecs.component.BulletComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.FiredComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
 public class StraightLineBulletPattern extends BulletPattern {
@@ -24,6 +25,8 @@ public class StraightLineBulletPattern extends BulletPattern {
         toFire[NUM_BULLETS - 1] = pool.borrowEntity(spawnedEntityName);
 
         toFire[NUM_BULLETS - 1].addComponent(new BulletComponent(spaceShip));
+
+        toFire[NUM_BULLETS - 1].addComponent(new FiredComponent());
 
         Sprite bulletSprite = ((SpriteComponent) toFire[NUM_BULLETS - 1].findComponent(SpriteComponent.class)).getSprite();
 

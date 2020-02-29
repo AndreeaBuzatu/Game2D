@@ -44,8 +44,9 @@ public class ViewBoundsSystem extends IterativeSystem {
                     continue;
                 }
 
-                // Remove any enemy spaceships which leave the screen but aren't in a wave (i.e. fired by another ship)
-                if (entity.hasComponent(FiredComponent.class)) {
+                // Remove any enemy spaceships which leave the screen but aren't in a wave (i.e. fired by another ship) and is not a bullet
+                // Bullet entities (which also have FiredComponent) might contain a Pool which needs special handling
+                if (entity.hasComponent(FiredComponent.class) && !entity.hasComponent(BulletComponent.class)) {
                     world.removeEntity(entity);
 
                     continue;
