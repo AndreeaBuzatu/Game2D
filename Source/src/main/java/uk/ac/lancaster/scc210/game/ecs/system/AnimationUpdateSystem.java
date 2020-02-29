@@ -61,6 +61,7 @@ public class AnimationUpdateSystem extends IterativeSystem {
     private void findAnimations() {
         animations = entities
                 .parallelStream()
+                .filter(entity -> entity.hasComponent(AnimationComponent.class))
                 .map(entity -> {
                     AnimationComponent animationComponent = (AnimationComponent) entity.findComponent(AnimationComponent.class);
 

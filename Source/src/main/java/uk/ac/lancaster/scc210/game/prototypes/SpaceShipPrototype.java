@@ -92,7 +92,6 @@ public class SpaceShipPrototype implements Prototype {
     }
 
     private Pattern findPattern(Entity spaceShip, String patternName) {
-        System.out.println("called");
         switch (patternName) {
             case "star-bullet":
                 return new StarBulletPattern(pool, spaceShip, bulletName);
