@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Class-Path: 
+   Source/src/main/java/
+   Source/resources/
+   Source/libs/jsfml.jar 
+Main-Class: uk.ac.lancaster.scc210.Main 
+

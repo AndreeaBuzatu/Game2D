@@ -1,0 +1,19 @@
+#!/bin/bash
+
+MANIFEST="Manifest-Version: 1.0\n"
+
+MANIFEST+="Class-Path: \n"
+MANIFEST+="   Source/src/main/java/"
+MANIFEST+="\n"
+MANIFEST+="   Source/resources/"
+MANIFEST+="\n"
+MANIFEST+="   ${1} \n"
+MANIFEST+="Main-Class: uk.ac.lancaster.scc210.Main \n"
+
+echo -n "" > Source/manifest.mf
+
+echo -e "$MANIFEST" >> Source/manifest.mf
+
+find Source/src/main/java -name '*.java' >s
+javac -cp Source/src/main/java:$1 @s
+jar cmf  Source/manifest.mf $2 @s
