@@ -98,7 +98,7 @@ public class SpaceShipPrototype implements Prototype {
                 return new StarBulletPattern(pool, spaceShip, bulletName);
 
             case "star-spaceship":
-                return new StarSpaceshipPattern(spaceShip, spaceShipPrototypeManager);
+                return new StarSpaceshipPattern(spaceShip, spaceShipPrototypeManager, bulletName);
 
             case "straight-bullet":
             default:

@@ -26,7 +26,7 @@ public class SerialisedSpaceShip implements Serialised {
      * @param firingSound the firing sound of the spaceship
      * @param hitSound  the sound played when colliding
      */
-    SerialisedSpaceShip(String name, String animation, String[] items, String bullet, String pattern, int speed, int score, int lives, String firingSound, String hitSound) {
+    public SerialisedSpaceShip(String name, String animation, String[] items, String bullet, String pattern, int speed, int score, int lives, String firingSound, String hitSound) {
         this.name = name;
         this.animation = animation;
         this.items = items;
