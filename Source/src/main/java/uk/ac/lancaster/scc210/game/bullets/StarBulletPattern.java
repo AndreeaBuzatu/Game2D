@@ -1,4 +1,4 @@
-package uk.ac.lancaster.scc210.game.bullets.patterns;
+package uk.ac.lancaster.scc210.game.bullets;
 
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Sprite;
