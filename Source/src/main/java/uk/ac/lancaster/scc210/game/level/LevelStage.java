@@ -6,7 +6,6 @@ import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.game.ecs.component.FlashComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.LivesComponent;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 

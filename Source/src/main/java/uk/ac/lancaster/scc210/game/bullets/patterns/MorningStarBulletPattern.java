@@ -9,7 +9,7 @@ import uk.ac.lancaster.scc210.game.ecs.component.BulletComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
 public class MorningStarBulletPattern extends BulletPattern {
-    private static Time FIRING_GAP = Time.getSeconds(2);
+    private static final Time FIRING_GAP = Time.getSeconds(2);
 
     private static final int NUM_BULLETS = 13 ;
 

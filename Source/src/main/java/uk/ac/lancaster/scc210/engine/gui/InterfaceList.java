@@ -52,6 +52,10 @@ public class InterfaceList implements InputListener, Drawable {
     }
 
     public void update() {
+        if (!enabled) {
+            return;
+        }
+
         handleInput();
 
         // Don't handle repeat actions
