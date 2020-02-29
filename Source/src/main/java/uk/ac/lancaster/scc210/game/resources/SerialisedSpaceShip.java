@@ -8,7 +8,7 @@ import uk.ac.lancaster.scc210.engine.resources.deserialise.Serialised;
 public class SerialisedSpaceShip implements Serialised {
     private final String[] items;
 
-    private final String name, animation, bullet, firingSound, hitSound;
+    private final String name, animation, bullet, pattern, firingSound, hitSound;
 
     private final int speed, score, lives;
 
@@ -19,17 +19,19 @@ public class SerialisedSpaceShip implements Serialised {
      * @param animation the animation of the spaceship
      * @param items     the items the spaceship can drop when destroyed
      * @param bullet    the bullet fired by the spaceship
+     * @param pattern   the pattern used by bullets
      * @param speed     the speed of the spaceship
      * @param score     the score awarded to the player when killing this spaceship
      * @param lives     the number of the lives that spaceship has
      * @param firingSound the firing sound of the spaceship
      * @param hitSound  the sound played when colliding
      */
-    SerialisedSpaceShip(String name, String animation, String[] items, String bullet, int speed, int score, int lives, String firingSound, String hitSound) {
+    public SerialisedSpaceShip(String name, String animation, String[] items, String bullet, String pattern, int speed, int score, int lives, String firingSound, String hitSound) {
         this.name = name;
         this.animation = animation;
         this.items = items;
         this.bullet = bullet;
+        this.pattern = pattern;
         this.speed = speed;
         this.score = score;
         this.lives = lives;
@@ -62,6 +64,15 @@ public class SerialisedSpaceShip implements Serialised {
      */
     public String getBullet() {
         return bullet;
+    }
+
+    /**
+     * Get the current firing pattern
+     *
+     * @return the current firing pattern
+     */
+    public String getPattern() {
+        return pattern;
     }
 
     /**

@@ -92,6 +92,8 @@ public class StateBasedGame {
 
         window.setKeyRepeatEnabled(false);
 
+        window.setMouseCursorVisible(false);
+
         states = new Stack<>();
 
         serviceProvider = new ServiceProvider();

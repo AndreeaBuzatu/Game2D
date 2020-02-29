@@ -15,6 +15,7 @@ import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.RotationComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
+import uk.ac.lancaster.scc210.game.ecs.entity.PlayerFinder;
 
 /**
  * System which handles keyboard input. Used to move the player around the screen
@@ -23,6 +24,8 @@ public class PlayerMovementSystem extends IterativeSystem {
     private final int SPEED_SCALE_DOWN = 100;
 
     private final ViewSize viewSize;
+
+    private Entity player;
 
     private boolean hasAxises;
 
@@ -36,6 +39,8 @@ public class PlayerMovementSystem extends IterativeSystem {
 
         viewSize = (ViewSize) world.getServiceProvider().get(ViewSize.class);
 
+        player = PlayerFinder.findPlayer(world);
+
         hasAxises = false;
 
         // Don't bother to detect if a controller hasn't been found
@@ -47,20 +52,25 @@ public class PlayerMovementSystem extends IterativeSystem {
     }
 
     @Override
+    public void entityAdded(Entity entity) {
+        super.entityAdded(entity);
+
+        player = PlayerFinder.findPlayer(world);
+    }
+
+    @Override
     public void update(Time deltaTime) {
-        for (Entity entity : entities) {
-            SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
+        SpriteComponent spriteComponent = (SpriteComponent) player.findComponent(SpriteComponent.class);
 
-            SpeedComponent speedComponent = (SpeedComponent) entity.findComponent(SpeedComponent.class);
+        SpeedComponent speedComponent = (SpeedComponent) player.findComponent(SpeedComponent.class);
 
-            RotationComponent rotationComponent = (RotationComponent) entity.findComponent(RotationComponent.class);
+        RotationComponent rotationComponent = (RotationComponent) player.findComponent(RotationComponent.class);
 
-            Sprite sprite = spriteComponent.getSprite();
+        Sprite sprite = spriteComponent.getSprite();
 
-            handleMovement(sprite, speedComponent.getSpeed());
+        handleMovement(sprite, speedComponent.getSpeed());
 
-            handleRotation(sprite, rotationComponent.getRotationAmount(), sprite.getRotation());
-        }
+        handleRotation(sprite, rotationComponent.getRotationAmount(), sprite.getRotation());
     }
 
     @Override

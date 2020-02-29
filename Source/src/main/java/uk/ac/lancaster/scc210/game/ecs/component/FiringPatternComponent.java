@@ -1,7 +1,7 @@
 package uk.ac.lancaster.scc210.game.ecs.component;
 
 import uk.ac.lancaster.scc210.engine.ecs.Component;
-import uk.ac.lancaster.scc210.game.bullets.patterns.Pattern;
+import uk.ac.lancaster.scc210.game.patterns.Pattern;
 
 public class FiringPatternComponent implements Component {
     private  Pattern pattern;

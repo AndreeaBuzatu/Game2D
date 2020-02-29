@@ -75,7 +75,7 @@
             <wave type="sine" start_x="0" start_y="500" end_x="600" end_y="300" num_ships="20"
                   entity_type="asteroid"
                   ship_name="other"/>
-            <stationary pos_x="1280" pos_y="720" entity_type="asteroid"/>
+            <stationary pos_x="1280" pos_y="720" entity_type="spaceship" ship_name="other"/>
         </stage>
     </level>
 </levels>
