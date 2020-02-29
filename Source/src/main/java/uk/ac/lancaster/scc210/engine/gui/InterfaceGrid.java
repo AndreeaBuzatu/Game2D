@@ -78,6 +78,7 @@ public class InterfaceGrid implements InputListener, Drawable {
         }
 
         // Ignore if the previous input is the same as the current
+
         if (previousColumn != currentColumn) {
             if (currentColumn < 0) {
                 currentColumn = lists.size() - 1;
@@ -89,10 +90,6 @@ public class InterfaceGrid implements InputListener, Drawable {
 
             InterfaceList currentList = lists.get(currentColumn);
 
-            if (!currentList.isEnabled()) {
-                currentList.setEnabled(true);
-            }
-
             if (previousColumn >= 0) {
                 InterfaceList previousList = lists.get(previousColumn);
 
@@ -101,8 +98,16 @@ public class InterfaceGrid implements InputListener, Drawable {
                 // Find the number of items in the current list. Subtract 1 to account for 0-indexed arrays
                 int currentOptionsLength = currentList.getOptions().size() - 1;
 
+                if (!currentList.getOptions().get(previousIndex).isEnabled()) {
+                    return;
+                }
+
+                if (!currentList.isEnabled()) {
+                    currentList.setEnabled(true);
+                }
+
                 // Only apply column-by-column movement once
-                if (previousList.isEnabled()) {
+                if (previousList.isEnabled() && currentList.isEnabled()) {
                     // Go from one to column to the other on the same row
                     if (previousIndex < currentOptionsLength) {
                         currentList.setSelectedIndex(previousIndex, previousList.getPreviousSelected());
@@ -114,6 +119,11 @@ public class InterfaceGrid implements InputListener, Drawable {
 
                     previousList.setEnabled(false);
                 }
+
+            } else {
+                // If the previous column is the first set it to be enabled. This is done so that on initial startup
+                // the first column is selected by default
+                currentList.setEnabled(true);
             }
 
             currentList.update();
