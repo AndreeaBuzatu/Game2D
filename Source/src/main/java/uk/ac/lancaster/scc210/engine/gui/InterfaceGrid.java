@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class InterfaceGrid implements InputListener, Drawable {
     private final int FIRST_LIST_PADDING = 50;
 
-    private final int LIST_WIDTH_PADDING = 130;
+    private final int LIST_WIDTH_PADDING = 280;
 
     private final ArrayList<InterfaceList> lists;
 
