@@ -89,6 +89,8 @@ public class StateBasedGame {
 
         window.setFramerateLimit(FPS);
 
+        window.setMouseCursorVisible(false);
+
         states = new Stack<>();
 
         serviceProvider = new ServiceProvider();
