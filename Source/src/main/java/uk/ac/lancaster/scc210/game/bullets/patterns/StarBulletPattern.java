@@ -1,6 +1,5 @@
 package uk.ac.lancaster.scc210.game.bullets.patterns;
 
-import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
@@ -11,7 +10,7 @@ import uk.ac.lancaster.scc210.game.ecs.component.FiredComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
 public class StarBulletPattern extends BulletPattern {
-    private static final Time FIRING_GAP = Time.getSeconds(3);
+    private static final Time FIRING_GAP = Time.getSeconds(0.2f);
 
     private static final int NUM_BULLETS = 8;
 
@@ -53,8 +52,6 @@ public class StarBulletPattern extends BulletPattern {
 
     @Override
     public void position(Sprite bulletSprite) {
-        FloatRect localBounds = bulletSprite.getLocalBounds();
-
-        positionStarPatterns(bulletSprite, localBounds);
+        positionStarPatterns(bulletSprite);
     }
 }

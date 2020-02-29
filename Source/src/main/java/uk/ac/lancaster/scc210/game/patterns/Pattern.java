@@ -51,8 +51,10 @@ public abstract class Pattern {
         this.elapsedTime = elapsedTime;
     }
 
-    protected void positionStarPatterns(Sprite bulletSprite, FloatRect localBounds) {
+    protected void positionStarPatterns(Sprite bulletSprite) {
         float startPoint = -bulletSprite.getLocalBounds().width / 2;
+
+        FloatRect localBounds = spaceShipSprite.getLocalBounds();
 
         float width = localBounds.width;
 

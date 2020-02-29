@@ -17,8 +17,8 @@ public class StarSpaceshipPattern extends Pattern {
 
     private final SpaceShipPrototypeManager spaceShipPrototypeManager;
 
-    public StarSpaceshipPattern(Entity spaceShip, SpaceShipPrototypeManager spaceShipPrototypeManager) {
-        super(spaceShip, new Entity[NUM_BULLETS], "spawned-other", FIRING_GAP);
+    public StarSpaceshipPattern(Entity spaceShip, SpaceShipPrototypeManager spaceShipPrototypeManager, String shipName) {
+        super(spaceShip, new Entity[NUM_BULLETS], shipName, FIRING_GAP);
 
         this.spaceShipPrototypeManager = spaceShipPrototypeManager;
     }
@@ -60,6 +60,6 @@ public class StarSpaceshipPattern extends Pattern {
     public void position(Sprite toSpawnSprite) {
         FloatRect localBounds = toSpawnSprite.getLocalBounds();
 
-        positionStarPatterns(toSpawnSprite, localBounds);
+        positionStarPatterns(toSpawnSprite);
     }
 }
