@@ -1,4 +1,4 @@
-package uk.ac.lancaster.scc210.game.bullets;
+package uk.ac.lancaster.scc210.game.bullets.patterns;
 
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Time;

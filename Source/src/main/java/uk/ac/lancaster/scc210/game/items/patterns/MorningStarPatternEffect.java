@@ -3,7 +3,7 @@ package uk.ac.lancaster.scc210.game.items.patterns;
 import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.pooling.Pool;
-import uk.ac.lancaster.scc210.game.bullets.patterns.MorningStarPattern;
+import uk.ac.lancaster.scc210.game.bullets.patterns.MorningStarBulletPattern;
 import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
 
 public class MorningStarPatternEffect extends FiringPatternEffect {
@@ -15,6 +15,6 @@ public class MorningStarPatternEffect extends FiringPatternEffect {
     protected void setPattern(Entity entity) {
         SpaceShipComponent spaceShipComponent = (SpaceShipComponent) entity.findComponent(SpaceShipComponent.class);
 
-        pattern = new MorningStarPattern(pool, entity, spaceShipComponent.getBulletName());
+        pattern = new MorningStarBulletPattern(pool, entity, spaceShipComponent.getBulletName());
     }
 }
