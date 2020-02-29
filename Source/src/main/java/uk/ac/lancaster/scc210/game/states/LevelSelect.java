@@ -16,6 +16,7 @@ import uk.ac.lancaster.scc210.engine.gui.InterfaceList;
 import uk.ac.lancaster.scc210.engine.states.State;
 import uk.ac.lancaster.scc210.game.content.LevelManager;
 import uk.ac.lancaster.scc210.game.level.Level;
+import uk.ac.lancaster.scc210.game.resources.PlayerData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,8 @@ public class LevelSelect implements State, InputListener {
 
     private Keyboard.Key pressedKey;
 
+    private int currentUnlocked;
+
     @Override
     public void setup(StateBasedGame game) {
         this.game = game;
@@ -49,7 +52,16 @@ public class LevelSelect implements State, InputListener {
 
         viewBounds = ((ViewSize) game.getServiceProvider().get(ViewSize.class)).getViewBounds();
 
+        PlayerData playerData = (PlayerData) game.getServiceProvider().get(PlayerData.class);
+
         TextureManager textureManager = (TextureManager) game.getServiceProvider().get(TextureManager.class);
+
+        currentUnlocked = levelManager.indexOf(playerData.getUnlockedLevel());
+
+        // If the level can't be found, default to the first level
+        if (currentUnlocked < 0) {
+            currentUnlocked = levelManager.indexOf(levelManager.getLevelList().get(0).getName());
+        }
 
         background = new Sprite(textureManager.get("level-select.jpg:level-select"));
 
@@ -75,7 +87,7 @@ public class LevelSelect implements State, InputListener {
         // TODO: Prevent the user (or hide) locked levels from being loaded
         interfaceGrid = new InterfaceGrid(game, new Vector2f(viewBounds.width / 4 + 50, viewBounds.height / 3));
 
-        List<Level> levels = new ArrayList<>(levelManager.values());
+        List<Level> levels = new ArrayList<>(levelManager.getLevelList());
 
         InterfaceList interfaceList = null;
 
@@ -93,7 +105,11 @@ public class LevelSelect implements State, InputListener {
 
             int finalI = i;
 
-            interfaceList.addListOption(String.format("Level %s", i), (() -> System.out.printf("Load level %s here\n", finalI)));
+            interfaceList.addListOption(levels.get(i).getName(), (() -> System.out.printf("Load level %s here\n", finalI)));
+
+            if (i > currentUnlocked) {
+                interfaceList.getOptions().get(i % 3).setEnabled(false);
+            }
         }
 
         interfaceGrid.addColumn(interfaceList);
