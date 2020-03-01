@@ -125,7 +125,7 @@ public class HelpSelect implements State, InputListener {
     private void createHeader() {
         menuHeaderTitle1 = new Text();
         menuHeaderTitle1.setString("HELP:");
-        Vector2f headerPos = new Vector2f(1100,480);
+        Vector2f headerPos = new Vector2f(1155,480);
         menuHeaderTitle1.setPosition(headerPos);
         menuHeaderTitle1.setCharacterSize(60);
         menuHeaderTitle1.setStyle(3);
