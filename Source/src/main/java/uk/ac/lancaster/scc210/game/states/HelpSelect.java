@@ -38,7 +38,10 @@ public class HelpSelect implements State, InputListener {
     private Sprite item1;
 
     private Text menuHeaderTitle1;
-    private Text menuHeaderTitle2;
+
+    private Text textInfo1;
+    private Text textInfo2;
+    private Text textInfo3;
 
 
 
@@ -60,15 +63,13 @@ public class HelpSelect implements State, InputListener {
 
         background.setScale(2, 2);
 
-
-
         item1 = new Sprite(textureManager.get("enemy.png:enemy"));
 
         item1.setScale(2,2);
 
         item1.setPosition(500,500);
 
-
+        createTextInfo();
 
         createExitText();
 
@@ -95,6 +96,29 @@ public class HelpSelect implements State, InputListener {
     }
 
 
+    private void createTextInfo() {
+        textInfo1 = new Text();
+        textInfo2 = new Text();
+        textInfo3 = new Text();
+
+        textInfo1.setString("Hello young survivor");
+        textInfo2.setString("I understand that you have some questions");
+        textInfo3.setString("about mission:SURVIVE. You can find the answers below ↓");
+
+        Vector2f textInfo1Pos1 = new Vector2f(200,480);
+        Vector2f textInfo1Pos2 = new Vector2f(200,480);
+        Vector2f textInfo1Pos3 = new Vector2f(200,480);
+
+        textInfo.setPosition(textInfo1Pos1);
+        textInfo.setPosition(textInfo1Pos2);
+        textInfo.setPosition(textInfo1Pos3);
+        textInfo.setCharacterSize(60);
+        //menuHeaderTitle1.setStyle(3);
+        textInfo.setColor(Color.WHITE);
+        textInfo.setCharacterSize(35);
+        textInfo.setFont(fontManager.get("font"));
+    }
+
     private void createHeader() {
         menuHeaderTitle1 = new Text();
         menuHeaderTitle1.setString("HELP:");
@@ -110,7 +134,7 @@ public class HelpSelect implements State, InputListener {
     public void draw(RenderTarget target) {
         target.draw(background);
         target.draw(item1);
-        //target.draw(interfaceGrid);
+        target.draw(textInfo);
         target.draw(exitText);
         target.draw(menuHeaderTitle1);
     }
