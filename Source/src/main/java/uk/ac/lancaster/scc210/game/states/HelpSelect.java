@@ -135,6 +135,13 @@ public class HelpSelect implements State, InputListener {
         textInfo4.setString("mission:");
         textInfo5.setString("SURVIVAL");
         textInfo6.setString("You can find the answers below ↓");
+        Q.setString("Q");
+        W.setString("W");
+        E.setString("E");
+        A.setString("A");
+        S.setString("S");
+        D.setString("D");
+
 
         controlQ.setString("Q");
         controlE.setString("E");
