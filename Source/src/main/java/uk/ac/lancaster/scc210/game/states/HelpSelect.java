@@ -102,11 +102,11 @@ public class HelpSelect implements State, InputListener {
         textInfo3 = new Text();
 
         textInfo1.setString("Hello young survivor.");
-        textInfo2.setString("I understand that you have some questions");
-        textInfo3.setString("about mission:SURVIVE. You can find the answers below ↓");
+        textInfo2.setString("I understand that you have ");
+        textInfo3.setString("some questions about mission:SURVIVE. You can find the answers below ↓");
 
         Vector2f textInfo1Pos1 = new Vector2f(975,577);
-        Vector2f textInfo1Pos2 = new Vector2f(200,100);
+        Vector2f textInfo1Pos2 = new Vector2f(890,625);
         Vector2f textInfo1Pos3 = new Vector2f(200,100);
 
         textInfo1.setPosition(textInfo1Pos1);
@@ -114,7 +114,7 @@ public class HelpSelect implements State, InputListener {
         textInfo3.setPosition(textInfo1Pos3);
 
         textInfo1.setCharacterSize(30);
-        textInfo2.setCharacterSize(36);
+        textInfo2.setCharacterSize(30);
         textInfo3.setCharacterSize(37);
 
         textInfo1.setFont(fontManager.get("font"));
