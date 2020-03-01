@@ -109,10 +109,14 @@ public class HelpSelect implements State, InputListener {
         Vector2f textInfo1Pos2 = new Vector2f(200,480);
         Vector2f textInfo1Pos3 = new Vector2f(200,480);
 
-        textInfo.setPosition(textInfo1Pos1);
-        textInfo.setPosition(textInfo1Pos2);
-        textInfo.setPosition(textInfo1Pos3);
-        textInfo.setCharacterSize(60);
+        textInfo1.setPosition(textInfo1Pos1);
+        textInfo2.setPosition(textInfo1Pos2);
+        textInfo3.setPosition(textInfo1Pos3);
+
+        textInfo1.setCharacterSize(35);
+        textInfo2.setCharacterSize(40);
+        textInfo3.setCharacterSize(45);
+
         //menuHeaderTitle1.setStyle(3);
         textInfo.setColor(Color.WHITE);
         textInfo.setCharacterSize(35);
