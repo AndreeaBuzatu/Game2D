@@ -3,6 +3,7 @@ package uk.ac.lancaster.scc210.game.ecs.system;
 import org.jsfml.graphics.RenderTarget;
 import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.collision.OrientatedBox;
+import uk.ac.lancaster.scc210.engine.content.SoundManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.component.PooledComponent;
@@ -12,6 +13,8 @@ import uk.ac.lancaster.scc210.game.ecs.component.*;
 import java.util.Set;
 
 public class BulletCollisionSystem extends IterativeSystem {
+    private final SoundManager soundManager;
+
     private Set<Entity> transformables;
     /**
      * Instantiates a new Iterative system.
@@ -22,6 +25,8 @@ public class BulletCollisionSystem extends IterativeSystem {
         super(world, BulletComponent.class);
 
         transformables = world.getEntitiesFor(TransformableComponent.class, FlashComponent.class);
+
+        soundManager = (SoundManager) world.getServiceProvider().get(SoundManager.class);
     }
 
     @Override
@@ -73,7 +78,7 @@ public class BulletCollisionSystem extends IterativeSystem {
                     if (transformable.hasComponent(SpaceShipComponent.class)) {
                         SpaceShipComponent spaceShipComponent = (SpaceShipComponent) transformable.findComponent(SpaceShipComponent.class);
 
-                        spaceShipComponent.playHitSound();
+                        soundManager.playSound(spaceShipComponent.getHitSound());
 
                         spaceShipComponent.getBulletEffect().react(transformable);
                     }

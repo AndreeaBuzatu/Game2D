@@ -2,6 +2,7 @@ package uk.ac.lancaster.scc210.game.ecs.system;
 
 import org.jsfml.graphics.RenderTarget;
 import org.jsfml.system.Time;
+import uk.ac.lancaster.scc210.engine.content.SoundManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
@@ -9,6 +10,8 @@ import uk.ac.lancaster.scc210.game.ecs.component.*;
 import uk.ac.lancaster.scc210.game.patterns.Pattern;
 
 public class EnemyFiringSystem extends IterativeSystem {
+    private final SoundManager soundManager;
+
     /**
      * Instantiates a new Iterative system.
      *
@@ -16,6 +19,8 @@ public class EnemyFiringSystem extends IterativeSystem {
      */
     public EnemyFiringSystem(World world) {
         super(world, SpriteComponent.class, AnimationComponent.class, EnemyComponent.class, FiringPatternComponent.class);
+
+        soundManager = (SoundManager) world.getServiceProvider().get(SoundManager.class);
     }
 
     @Override
@@ -38,7 +43,7 @@ public class EnemyFiringSystem extends IterativeSystem {
                 if (entity.hasComponent(SpaceShipComponent.class)) {
                     SpaceShipComponent spaceShipComponent = (SpaceShipComponent) entity.findComponent(SpaceShipComponent.class);
 
-                    spaceShipComponent.playFiringSound();
+                    soundManager.playSound(spaceShipComponent.getFiringSound());
                 }
 
                 world.addEntities(firingPatternComponent.getPattern().create());

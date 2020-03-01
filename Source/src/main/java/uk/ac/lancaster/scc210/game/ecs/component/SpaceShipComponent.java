@@ -11,11 +11,11 @@ public class SpaceShipComponent implements Component {
 
     private final String bulletName;
 
-    private final Sound firingSound, hitSound;
+    private final String firingSound, hitSound;
 
     private final BulletEffect bulletEffect;
 
-    public SpaceShipComponent(String[] items, Sound firingSound, Sound hitSound,String bulletName) {
+    public SpaceShipComponent(String[] items, String firingSound, String hitSound, String bulletName) {
         this.items = items;
         this.firingSound = firingSound;
         this.hitSound = hitSound;
@@ -31,12 +31,12 @@ public class SpaceShipComponent implements Component {
         return items;
     }
 
-    public void playFiringSound() {
-        SoundBufferManager.playSound(firingSound);
+    public String getFiringSound() {
+        return firingSound;
     }
 
-    public void playHitSound() {
-        SoundBufferManager.playSound(hitSound);
+    public String getHitSound() {
+        return hitSound;
     }
 
     public BulletEffect getBulletEffect() {

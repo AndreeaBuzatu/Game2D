@@ -3,10 +3,12 @@ package uk.ac.lancaster.scc210.game.ecs.system;
 import org.jsfml.graphics.RenderTarget;
 import org.jsfml.system.Time;
 import org.jsfml.window.Keyboard;
+import uk.ac.lancaster.scc210.engine.content.SoundManager;
 import uk.ac.lancaster.scc210.engine.controller.ControllerButton;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
+import uk.ac.lancaster.scc210.engine.service.ServiceProvider;
 import uk.ac.lancaster.scc210.game.ecs.component.FiringPatternComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
@@ -18,6 +20,8 @@ import uk.ac.lancaster.scc210.game.patterns.Pattern;
  * The system places Bullets (Entities) into the front-middle of the entity.
  */
 public class PlayerFiringSystem extends IterativeSystem {
+    private final SoundManager soundManager;
+
     private Entity player;
 
     private Time elapsedTime;
@@ -33,6 +37,8 @@ public class PlayerFiringSystem extends IterativeSystem {
         player = PlayerFinder.findPlayer(world);
 
         elapsedTime = Time.ZERO;
+
+        soundManager = (SoundManager) world.getServiceProvider().get(SoundManager.class);
     }
 
     @Override
@@ -60,7 +66,7 @@ public class PlayerFiringSystem extends IterativeSystem {
             if (player.hasComponent(SpaceShipComponent.class)) {
                 SpaceShipComponent spaceShipComponent = (SpaceShipComponent) player.findComponent(SpaceShipComponent.class);
 
-                    spaceShipComponent.playFiringSound();
+                soundManager.playSound(spaceShipComponent.getFiringSound());
             }
 
             elapsedTime = Time.ZERO;

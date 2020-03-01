@@ -3,6 +3,7 @@ package uk.ac.lancaster.scc210.game.ecs.system;
 import org.jsfml.graphics.RenderTarget;
 import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.collision.OrientatedBox;
+import uk.ac.lancaster.scc210.engine.content.SoundManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
@@ -15,6 +16,8 @@ import uk.ac.lancaster.scc210.game.ecs.entity.PlayerFinder;
 public class EnemyCollisionSystem extends IterativeSystem {
     private final Time COLLISION_GAP = Time.getSeconds(1);
 
+    private final SoundManager soundManager;
+
     private Time elapsedTime;
 
     private Entity player;
@@ -26,6 +29,8 @@ public class EnemyCollisionSystem extends IterativeSystem {
      */
     public EnemyCollisionSystem(World world) {
         super(world, EnemyComponent.class);
+
+        soundManager = (SoundManager) world.getServiceProvider().get(SoundManager.class);
 
         player = PlayerFinder.findPlayer(world);
 
@@ -62,7 +67,7 @@ public class EnemyCollisionSystem extends IterativeSystem {
 
                 LivesComponent livesComponent = (LivesComponent) player.findComponent(LivesComponent.class);
 
-                spaceShipComponent.playHitSound();
+                soundManager.playSound(spaceShipComponent.getHitSound());
 
                 elapsedTime = Time.ZERO;
 

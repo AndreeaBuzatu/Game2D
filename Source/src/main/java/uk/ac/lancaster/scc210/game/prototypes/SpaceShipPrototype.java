@@ -31,7 +31,7 @@ public class SpaceShipPrototype implements Prototype {
 
     private final String animation, bulletName, pattern;
 
-    private final Sound firingSound, hitSound;
+    private final String firingSound, hitSound;
 
     private final int speed, score, lives;
 
@@ -47,11 +47,8 @@ public class SpaceShipPrototype implements Prototype {
         this.speed = spaceShip.getSpeed();
         this.score = spaceShip.getScore();
         this.lives = spaceShip.getLives();
-
-        SoundBufferManager soundBufferManager = (SoundBufferManager) serviceProvider.get(SoundBufferManager.class);
-
-        this.firingSound = new Sound(soundBufferManager.get(spaceShip.getFiringSound()));
-        this.hitSound = new Sound(soundBufferManager.get(spaceShip.getHitSound()));
+        this.firingSound = spaceShip.getFiringSound();
+        this.hitSound = spaceShip.getHitSound();
     }
 
     public Entity create() {
