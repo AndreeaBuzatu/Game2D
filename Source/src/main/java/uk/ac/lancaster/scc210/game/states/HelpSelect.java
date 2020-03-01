@@ -49,6 +49,8 @@ public class HelpSelect implements State, InputListener {
     private Text controlQ;
     private Text controlE;
 
+    private Text textControls;
+    private Text textAim;
 
 
 
@@ -114,17 +116,21 @@ public class HelpSelect implements State, InputListener {
         controlQ = new Text();
         controlE = new Text();
 
+        textControls = new Text();
+        textAim = new Text();
 
-        
         textInfo1.setString("Hello young survivor.");
         textInfo2.setString("I understand that you have ");
         textInfo3.setString("some questions about");
         textInfo4.setString("mission:");
         textInfo5.setString("SURVIVAL");
         textInfo6.setString("You can find the answers below ↓");
+
         controlQ.setString("Q");
         controlE.setString("E");
 
+        textControls.setString("Controls");
+        textAim.setString("Aim");
 
 
         Vector2f textInfo1Pos1 = new Vector2f(975,577);
@@ -160,6 +166,8 @@ public class HelpSelect implements State, InputListener {
         textInfo4.setStyle(TextStyle.ITALIC);
         textInfo4.setColor(Color.CYAN);
         textInfo5.setColor(Color.YELLOW);
+        textControls.setColor(Color.CYAN);
+        textAim.setColor(Color.CYAN);
 
         textInfo1.setFont(fontManager.get("font"));
         textInfo2.setFont(fontManager.get("font"));
@@ -196,6 +204,9 @@ public class HelpSelect implements State, InputListener {
 
         target.draw(controlQ);
         target.draw(controlE);
+
+        target.draw(textControls);
+        //target.draw(textAim);
 
         target.draw(exitText);
         target.draw(menuHeaderTitle1);
