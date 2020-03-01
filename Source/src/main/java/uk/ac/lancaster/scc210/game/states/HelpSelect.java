@@ -60,45 +60,26 @@ public class HelpSelect implements State, InputListener {
 
         background.setScale(2, 2);
 
+
+
         item1 = new Sprite(textureManager.get("enemy.png:enemy"));
 
         item1.setScale(2,2);
 
         item1.setPosition(500,500);
 
-        createGrid();
+
 
         createExitText();
 
         createHeader();
     }
 
-    private void createGrid() {
-        interfaceGrid = new InterfaceGrid(game, new Vector2f(viewBounds.width / 4 + 50, viewBounds.height / 3));
+    @Override
+    public void update(Time deltaTime) {
 
-        List<Level> levels = new ArrayList<>(levelManager.values());
-
-        InterfaceList interfaceList = null;
-
-        for (int i = 0; i < levels.size(); i++) {
-            if (i % 3 == 0) {
-                System.out.println("I: " + i);
-
-                // i % 3 == 0, will == true when i = 0, so in that instance don't add a new column (as one hasn't been created yet)
-                if (i > 0) {
-                    interfaceGrid.addColumn(interfaceList);
-                }
-
-                interfaceList = new InterfaceList(game, fontManager.get("font"), Vector2f.ZERO);
-            }
-
-            int finalI = i;
-
-            interfaceList.addListOption(String.format("Level %s", i), (() -> System.out.printf("Load level %s here\n", finalI)));
-        }
-
-        interfaceGrid.addColumn(interfaceList);
     }
+
 
     private void createExitText() {
         exitText = new Text();
@@ -113,14 +94,6 @@ public class HelpSelect implements State, InputListener {
         exitText.setColor(Color.WHITE);
     }
 
-    @Override
-    public void update(Time deltaTime) {
-        interfaceGrid.update();
-
-        if (game != null && pressedKey != null && pressedKey == Keyboard.Key.ESCAPE) {
-            game.popState();
-        }
-    }
 
     private void createHeader() {
         menuHeaderTitle1 = new Text();
@@ -137,11 +110,8 @@ public class HelpSelect implements State, InputListener {
     public void draw(RenderTarget target) {
         target.draw(background);
         target.draw(item1);
-
-        target.draw(interfaceGrid);
-
+        //target.draw(interfaceGrid);
         target.draw(exitText);
-
         target.draw(menuHeaderTitle1);
     }
 
