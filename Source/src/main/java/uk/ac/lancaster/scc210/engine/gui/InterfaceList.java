@@ -80,9 +80,7 @@ public class InterfaceList implements InputListener, Drawable {
                     options.get(previousSelected).setNotCurrent();
                 }
 
-                if (pressedKey == Keyboard.Key.SPACE || pressedKey == Keyboard.Key.RETURN) {
-                    newSelected.select();
-                }
+                selectOption(newSelected);
 
             } else {
                 // If the currently selected index is listed as disabled, reset the selected index the previous (enabled) option
@@ -91,7 +89,11 @@ public class InterfaceList implements InputListener, Drawable {
 
         } else {
             // If the current selection is the first item in the list, set the first item to be selected by default
-            options.get(selectedIndex).setCurrent();
+            ListOption firstOption = options.get(selectedIndex);
+
+            firstOption.setCurrent();
+
+            selectOption(firstOption);
         }
 
         pressedKey = null;
@@ -100,6 +102,12 @@ public class InterfaceList implements InputListener, Drawable {
     @Override
     public void draw(RenderTarget renderTarget, RenderStates renderStates) {
         options.forEach(option -> option.draw(renderTarget));
+    }
+
+    private void selectOption(ListOption selected) {
+        if (pressedKey == Keyboard.Key.SPACE || pressedKey == Keyboard.Key.RETURN) {
+            selected.select();
+        }
     }
 
     private void handleInput() {
