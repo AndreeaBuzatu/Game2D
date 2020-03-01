@@ -52,6 +52,13 @@ public class HelpSelect implements State, InputListener {
     private Text textControls;
     private Text textAim;
 
+    private Text Q;
+    private Text W;
+    private Text E;
+    private Text A;
+    private Text S;
+    private Text D;
+
 
 
     @Override
@@ -112,12 +119,15 @@ public class HelpSelect implements State, InputListener {
         textInfo4 = new Text();
         textInfo5 = new Text();
         textInfo6 = new Text();
-
         controlQ = new Text();
         controlE = new Text();
-
         textControls = new Text();
-        textAim = new Text();
+        Q = new Text();
+        W = new Text();
+        E = new Text();
+        A = new Text();
+        S = new Text();
+        D = new Text();
 
         textInfo1.setString("Hello young survivor.");
         textInfo2.setString("I understand that you have ");
@@ -141,6 +151,8 @@ public class HelpSelect implements State, InputListener {
         Vector2f textInfo1Pos6= new Vector2f(800,828);
         Vector2f control1= new Vector2f(638,1170);
         Vector2f control2= new Vector2f(925,1170);
+        Vector2f textControlV = new Vector2f(850,890);
+        Vector2f textAimV = new Vector2f(925,890);
 
 
         textInfo1.setPosition(textInfo1Pos1);
@@ -151,6 +163,9 @@ public class HelpSelect implements State, InputListener {
         textInfo6.setPosition(textInfo1Pos6);
         controlQ.setPosition(control1);
         controlE.setPosition(control2);
+        textControls.setPosition(textControlV);
+        textAim.setPosition(textAimV);
+
 
         textInfo1.setCharacterSize(30);
         textInfo2.setCharacterSize(30);
@@ -160,6 +175,9 @@ public class HelpSelect implements State, InputListener {
         textInfo6.setCharacterSize(30);
         controlQ.setCharacterSize(45);
         controlE.setCharacterSize(45);
+        textControls.setCharacterSize(35);
+        textAim.setCharacterSize(35);
+
 
 
 
@@ -177,6 +195,9 @@ public class HelpSelect implements State, InputListener {
         textInfo6.setFont(fontManager.get("font"));
         controlQ.setFont(fontManager.get("font"));
         controlE.setFont(fontManager.get("font"));
+        textControls.setFont(fontManager.get("font"));
+        textAim.setFont(fontManager.get("font"));
+
 
     }
 
