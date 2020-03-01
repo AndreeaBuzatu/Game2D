@@ -13,12 +13,13 @@ import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.game.ecs.component.ItemEffectsComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.OrientatedBoxComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
+import uk.ac.lancaster.scc210.game.ecs.entity.PlayerFinder;
 
 import java.util.Optional;
 
 public class ItemCollisionSystem extends IterativeSystem {
     // We only have one player but the abstraction works like so - oh well
-    private Optional<Entity> player;
+    private Entity player;
 
 
     private final SoundManager soundManager;
@@ -31,7 +32,7 @@ public class ItemCollisionSystem extends IterativeSystem {
     public ItemCollisionSystem(World world) {
         super(world, ItemEffectsComponent.class);
 
-        player = world.getEntitiesFor(PlayerComponent.class).stream().findFirst();
+        player = PlayerFinder.findPlayer(world);
 
         soundManager = (SoundManager) world.getServiceProvider().get(SoundManager.class);
     }
@@ -40,19 +41,17 @@ public class ItemCollisionSystem extends IterativeSystem {
     public void entityAdded(Entity entity) {
         super.entityAdded(entity);
 
-        player = world.getEntitiesFor(PlayerComponent.class).stream().findFirst();
+        player = PlayerFinder.findPlayer(world);
     }
 
     @Override
     public void update(Time deltaTime) {
         // Abort if player can't be found
-        if (player.isEmpty()) {
+        if (player == null) {
             return;
         }
 
-        Entity playerEntity = player.get();
-
-        OrientatedBoxComponent playerOrientedBox = (OrientatedBoxComponent) playerEntity.findComponent(OrientatedBoxComponent.class);
+        OrientatedBoxComponent playerOrientedBox = (OrientatedBoxComponent) player.findComponent(OrientatedBoxComponent.class);
 
         for (Entity entity : entities) {
             OrientatedBoxComponent itemOrientedBox = (OrientatedBoxComponent) entity.findComponent(OrientatedBoxComponent.class);
@@ -62,9 +61,9 @@ public class ItemCollisionSystem extends IterativeSystem {
             if (colliding) {
                 ItemEffectsComponent itemEffectsComponent = (ItemEffectsComponent) entity.findComponent(ItemEffectsComponent.class);
 
-                PlayerComponent playerComponent = (PlayerComponent) playerEntity.findComponent(PlayerComponent.class);
+                PlayerComponent playerComponent = (PlayerComponent) player.findComponent(PlayerComponent.class);
 
-                itemEffectsComponent.getItemEffects().parallelStream().forEach(itemEffect -> itemEffect.react(playerEntity));
+                itemEffectsComponent.getItemEffects().parallelStream().forEach(itemEffect -> itemEffect.react(player));
 
                 playerComponent.setCurrentItemEffects(itemEffectsComponent.getItemEffects());
 
