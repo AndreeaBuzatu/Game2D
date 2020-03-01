@@ -113,14 +113,14 @@ public class HelpSelect implements State, InputListener {
         textInfo3.setString("some questions about");
         textInfo4.setString("mission:");
         textInfo5.setString("SURVIVAL");
-
-        //textInfo6.setString("You can find the answers below ↓");
+        textInfo6.setString("You can find the answers below ↓");
 
         Vector2f textInfo1Pos1 = new Vector2f(975,577);
         Vector2f textInfo1Pos2 = new Vector2f(890,625);
         Vector2f textInfo1Pos3 = new Vector2f(853,675);
         Vector2f textInfo1Pos4 = new Vector2f(1475,675);
         Vector2f textInfo1Pos5 = new Vector2f(1060,660);
+        Vector2f textInfo1Pos6= new Vector2f(1060,660);
 
         textInfo1.setPosition(textInfo1Pos1);
         textInfo2.setPosition(textInfo1Pos2);
