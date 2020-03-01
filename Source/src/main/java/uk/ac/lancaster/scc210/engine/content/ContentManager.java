@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @param <T> the type parameter
  */
 public class ContentManager<T> implements Service {
-    private final ConcurrentHashMap<String, T> content;
+    final ConcurrentHashMap<String, T> content;
 
     protected T alternative;
 

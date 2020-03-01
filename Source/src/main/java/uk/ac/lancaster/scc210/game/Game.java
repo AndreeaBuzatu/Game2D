@@ -31,18 +31,12 @@ public class Game extends StateBasedGame {
     public Game() {
         super("Shooter", 1280, 720);
 
-        MainMenu mainMenu = new MainMenu();
-
-        //pushState(mainMenu);
-
         try {
             TextureAnimationManager animationManager = (TextureAnimationManager) serviceProvider.get(TextureAnimationManager.class);
 
             TextureManager textureManager = (TextureManager) serviceProvider.get(TextureManager.class);
 
             ShaderManager shaderManager = (ShaderManager) serviceProvider.get(ShaderManager.class);
-
-            SoundBufferManager soundBufferManager = (SoundBufferManager) serviceProvider.get(SoundBufferManager.class);
 
             BulletDeserialiser bulletDeserialiser = new BulletDeserialiser(deserialiseXML("bullets.xml"));
 
