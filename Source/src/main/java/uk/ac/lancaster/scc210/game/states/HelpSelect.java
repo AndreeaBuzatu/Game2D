@@ -46,6 +46,18 @@ public class HelpSelect implements State, InputListener {
     private Text textInfo5;
     private Text textInfo6;
 
+    private Text controlQ;
+    private Text controlE;
+
+    private Text textControls;
+    private Text textAim;
+
+    private Text Q = new Text();
+    private Text W = new Text();
+    private Text E = new Text();
+    private Text A = new Text();
+    private Text S = new Text();
+    private Text D = new Text();
 
 
 
@@ -67,11 +79,11 @@ public class HelpSelect implements State, InputListener {
 
         background.setScale(2, 2);
 
-        item1 = new Sprite(textureManager.get("enemy.png:enemy"));
+        item1 = new Sprite(textureManager.get("controls.png:controls"));
 
         item1.setScale(2,2);
 
-        item1.setPosition(500,500);
+        item1.setPosition(550,1130);
 
         createTextInfo();
 
@@ -107,6 +119,10 @@ public class HelpSelect implements State, InputListener {
         textInfo4 = new Text();
         textInfo5 = new Text();
         textInfo6 = new Text();
+        controlQ = new Text();
+        controlE = new Text();
+        textControls = new Text();
+        textAim = new Text();
 
         textInfo1.setString("Hello young survivor.");
         textInfo2.setString("I understand that you have ");
@@ -114,37 +130,90 @@ public class HelpSelect implements State, InputListener {
         textInfo4.setString("mission:");
         textInfo5.setString("SURVIVAL");
         textInfo6.setString("You can find the answers below ↓");
+        controlQ.setString("Q");
+        controlE.setString("E");
+        textControls.setString("Controls");
+        textAim.setString("Aim");
+        Q.setString("Q - rotate left");
+        W.setString("W - move forward");
+        E.setString("E - rotate right");
+        A.setString("A - move left");
+        S.setString("S - move backward");
+        D.setString("D - move right");
 
         Vector2f textInfo1Pos1 = new Vector2f(975,577);
         Vector2f textInfo1Pos2 = new Vector2f(890,625);
         Vector2f textInfo1Pos3 = new Vector2f(853,675);
         Vector2f textInfo1Pos4 = new Vector2f(1475,675);
-        Vector2f textInfo1Pos5 = new Vector2f(1060,660);
-        Vector2f textInfo1Pos6= new Vector2f(1060,660);
+        Vector2f textInfo1Pos5 = new Vector2f(1060,655);
+        Vector2f textInfo1Pos6= new Vector2f(800,828);
+        Vector2f control1= new Vector2f(605,1190);
+        Vector2f control2= new Vector2f(925,1170);
+        Vector2f textControlV = new Vector2f(850,890);
+        Vector2f textAimV = new Vector2f(1500,890);
+        Vector2f qV = new Vector2f(925,900);
+        Vector2f wV = new Vector2f(925,940);
+        Vector2f eV = new Vector2f(925,980);
+        Vector2f aV = new Vector2f(925,1020);
+        Vector2f sV = new Vector2f(925,1060);
+        Vector2f dV = new Vector2f(925,1115);
 
         textInfo1.setPosition(textInfo1Pos1);
         textInfo2.setPosition(textInfo1Pos2);
         textInfo3.setPosition(textInfo1Pos3);
         textInfo4.setPosition(textInfo1Pos4);
         textInfo5.setPosition(textInfo1Pos5);
+        textInfo6.setPosition(textInfo1Pos6);
+        controlQ.setPosition(control1);
+        controlE.setPosition(control2);
+        textControls.setPosition(textControlV);
+        textAim.setPosition(textAimV);
+        Q.setPosition(qV);
+        W.setPosition(wV);
+        E.setPosition(eV);
+        A.setPosition(aV);
+        S.setPosition(sV);
+        D.setPosition(dV);
 
         textInfo1.setCharacterSize(30);
         textInfo2.setCharacterSize(30);
         textInfo3.setCharacterSize(30);
         textInfo4.setCharacterSize(28);
         textInfo5.setCharacterSize(140);
-
+        textInfo6.setCharacterSize(30);
+        controlQ.setCharacterSize(45);
+        controlE.setCharacterSize(45);
+        textControls.setCharacterSize(35);
+        textAim.setCharacterSize(35);
+        Q.setCharacterSize(30);
+        W.setCharacterSize(30);
+        E.setCharacterSize(30);
+        A.setCharacterSize(30);
+        S.setCharacterSize(30);
+        D.setCharacterSize(30);
 
         textInfo4.setStyle(TextStyle.ITALIC);
         textInfo4.setColor(Color.CYAN);
         textInfo5.setColor(Color.YELLOW);
+        textControls.setColor(Color.CYAN);
+        textAim.setColor(Color.CYAN);
 
         textInfo1.setFont(fontManager.get("font"));
         textInfo2.setFont(fontManager.get("font"));
         textInfo3.setFont(fontManager.get("font"));
         textInfo4.setFont(fontManager.get("font"));
         textInfo5.setFont(fontManager.get("font2"));
-
+        textInfo6.setFont(fontManager.get("font"));
+        controlQ.setFont(fontManager.get("font"));
+        controlE.setFont(fontManager.get("font"));
+        textControls.setFont(fontManager.get("font"));
+        textAim.setFont(fontManager.get("font"));
+        Q.setFont(fontManager.get("font"));
+        W.setFont(fontManager.get("font"));
+        E.setFont(fontManager.get("font"));
+        A.setFont(fontManager.get("font"));
+        S.setFont(fontManager.get("font"));
+        D.setFont(fontManager.get("font"));
 
     }
 
@@ -168,6 +237,21 @@ public class HelpSelect implements State, InputListener {
         target.draw(textInfo3);
         target.draw(textInfo4);
         target.draw(textInfo5);
+        target.draw(textInfo6);
+
+        target.draw(controlQ);
+        target.draw(controlE);
+
+        target.draw(textControls);
+        target.draw(textAim);
+
+        target.draw(Q);
+        target.draw(W);
+        target.draw(E);
+        target.draw(A);
+        target.draw(S);
+        target.draw(D);
+
 
         target.draw(exitText);
         target.draw(menuHeaderTitle1);
