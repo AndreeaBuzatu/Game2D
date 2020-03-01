@@ -117,9 +117,6 @@ public class HelpSelect implements State, InputListener {
         textInfo2.setCharacterSize(40);
         textInfo3.setCharacterSize(45);
 
-        //menuHeaderTitle1.setStyle(3);
-        //textInfo.setColor(Color.WHITE);
-
         textInfo1.setFont(fontManager.get("font"));
         textInfo2.setFont(fontManager.get("font"));
         textInfo3.setFont(fontManager.get("font"));
@@ -140,7 +137,9 @@ public class HelpSelect implements State, InputListener {
     public void draw(RenderTarget target) {
         target.draw(background);
         target.draw(item1);
-        target.draw(textInfo);
+        target.draw(textInfo1);
+        target.draw(textInfo2);
+        target.draw(textInfo3);
         target.draw(exitText);
         target.draw(menuHeaderTitle1);
     }
