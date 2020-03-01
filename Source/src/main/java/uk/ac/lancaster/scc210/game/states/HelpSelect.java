@@ -106,19 +106,16 @@ public class HelpSelect implements State, InputListener {
         textInfo3.setString("about mission:SURVIVE. You can find the answers below ↓");
 
         Vector2f textInfo1Pos1 = new Vector2f(200,480);
-        Vector2f textInfo1Pos2 = new Vector2f(200,480);
-        Vector2f textInfo1Pos3 = new Vector2f(200,480);
+        Vector2f textInfo1Pos2 = new Vector2f(200,520);
+        Vector2f textInfo1Pos3 = new Vector2f(200,560);
 
         textInfo1.setPosition(textInfo1Pos1);
         textInfo2.setPosition(textInfo1Pos2);
         textInfo3.setPosition(textInfo1Pos3);
 
         textInfo1.setCharacterSize(35);
-        textInfo2.setCharacterSize(40);
-        textInfo3.setCharacterSize(45);
-
-        //menuHeaderTitle1.setStyle(3);
-        //textInfo.setColor(Color.WHITE);
+        textInfo2.setCharacterSize(36);
+        textInfo3.setCharacterSize(37);
 
         textInfo1.setFont(fontManager.get("font"));
         textInfo2.setFont(fontManager.get("font"));
@@ -140,7 +137,9 @@ public class HelpSelect implements State, InputListener {
     public void draw(RenderTarget target) {
         target.draw(background);
         target.draw(item1);
-        target.draw(textInfo);
+        target.draw(textInfo1);
+        target.draw(textInfo2);
+        target.draw(textInfo3);
         target.draw(exitText);
         target.draw(menuHeaderTitle1);
     }
