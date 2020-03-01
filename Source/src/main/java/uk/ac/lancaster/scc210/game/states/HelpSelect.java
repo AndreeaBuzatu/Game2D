@@ -37,6 +37,9 @@ public class HelpSelect implements State, InputListener {
 
     private Sprite item1;
 
+    private Text menuHeaderTitle1;
+    private Text menuHeaderTitle2;
+
 
 
     @Override
@@ -66,6 +69,8 @@ public class HelpSelect implements State, InputListener {
         createGrid();
 
         createExitText();
+
+        createHeader();
     }
 
     private void createGrid() {
@@ -103,7 +108,6 @@ public class HelpSelect implements State, InputListener {
         exitText.setFont(fontManager.get("font"));
 
         exitText.setPosition(0, 0);
-
         exitText.setCharacterSize(50);
 
         exitText.setColor(Color.WHITE);
@@ -118,6 +122,27 @@ public class HelpSelect implements State, InputListener {
         }
     }
 
+    private void createHeader() {
+        menuHeaderTitle1 = new Text();
+        menuHeaderTitle2 = new Text();
+        menuHeaderTitle1.setString("LEVEL:");
+        menuHeaderTitle2.setString("SELECT");
+
+
+        Vector2f headerPos = new Vector2f(1100,480);
+        Vector2f headerPos2 = new Vector2f(1000, 550);
+
+        menuHeaderTitle1.setPosition(headerPos);
+        menuHeaderTitle2.setPosition(headerPos2);
+        menuHeaderTitle1.setCharacterSize(60);
+        menuHeaderTitle2.setCharacterSize(90);
+        menuHeaderTitle1.setStyle(3);
+        menuHeaderTitle1.setColor(Color.CYAN);
+        menuHeaderTitle2.setColor(Color.YELLOW);
+        menuHeaderTitle1.setFont(fontManager.get("font"));
+        menuHeaderTitle2.setFont(fontManager.get("font"));
+    }
+
     @Override
     public void draw(RenderTarget target) {
         target.draw(background);
@@ -126,6 +151,9 @@ public class HelpSelect implements State, InputListener {
         target.draw(interfaceGrid);
 
         target.draw(exitText);
+
+        target.draw(menuHeaderTitle1);
+        target.draw(menuHeaderTitle2);
     }
 
     @Override
