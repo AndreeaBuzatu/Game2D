@@ -144,11 +144,11 @@ public class HelpSelect implements State, InputListener {
         Vector2f textInfo1Pos1 = new Vector2f(975,577);
         Vector2f textInfo1Pos2 = new Vector2f(890,625);
         Vector2f textInfo1Pos3 = new Vector2f(853,675);
-        Vector2f textInfo1Pos4 = new Vector2f(1475,675);
-        Vector2f textInfo1Pos5 = new Vector2f(1060,655);
+        Vector2f textInfo1Pos4 = new Vector2f(1475,670);
+        Vector2f textInfo1Pos5 = new Vector2f(1060,645);
         Vector2f textInfo1Pos6= new Vector2f(800,828);
         Vector2f control1= new Vector2f(605,1190);
-        Vector2f control2= new Vector2f(925,1170);
+        Vector2f control2= new Vector2f(876,1188);
         Vector2f textControlV = new Vector2f(850,890);
         Vector2f textAimV = new Vector2f(1500,890);
         Vector2f qV = new Vector2f(925,900);
