@@ -43,6 +43,10 @@ public class HelpSelect implements State, InputListener {
     private Text textInfo2;
     private Text textInfo3;
     private Text textInfo4;
+    private Text textInfo5;
+    private Text textInfo6;
+
+
 
 
     @Override
@@ -101,17 +105,22 @@ public class HelpSelect implements State, InputListener {
         textInfo2 = new Text();
         textInfo3 = new Text();
         textInfo4 = new Text();
+        textInfo5 = new Text();
+        textInfo6 = new Text();
 
         textInfo1.setString("Hello young survivor.");
         textInfo2.setString("I understand that you have ");
         textInfo3.setString("some questions about");
         textInfo4.setString("mission:");
-        //textInfo4.setString("You can find the answers below ↓");
+        textInfo5.setString("SURVIVAL");
+
+        //textInfo6.setString("You can find the answers below ↓");
 
         Vector2f textInfo1Pos1 = new Vector2f(975,577);
         Vector2f textInfo1Pos2 = new Vector2f(890,625);
         Vector2f textInfo1Pos3 = new Vector2f(853,675);
         Vector2f textInfo1Pos4 = new Vector2f(1475,675);
+        Vector2f textInfo1Pos5 = new Vector2f(1100,675);
 
         textInfo1.setPosition(textInfo1Pos1);
         textInfo2.setPosition(textInfo1Pos2);
@@ -152,6 +161,7 @@ public class HelpSelect implements State, InputListener {
         target.draw(textInfo2);
         target.draw(textInfo3);
         target.draw(textInfo4);
+        target.draw(textInfo6);
 
         target.draw(exitText);
         target.draw(menuHeaderTitle1);
