@@ -114,6 +114,8 @@ public class HelpSelect implements State, InputListener {
         controlQ = new Text();
         controlE = new Text();
 
+
+        
         textInfo1.setString("Hello young survivor.");
         textInfo2.setString("I understand that you have ");
         textInfo3.setString("some questions about");
@@ -131,8 +133,8 @@ public class HelpSelect implements State, InputListener {
         Vector2f textInfo1Pos4 = new Vector2f(1475,675);
         Vector2f textInfo1Pos5 = new Vector2f(1060,655);
         Vector2f textInfo1Pos6= new Vector2f(800,828);
-        Vector2f control1= new Vector2f(630,1170);
-        Vector2f control2= new Vector2f(650,1170);
+        Vector2f control1= new Vector2f(638,1170);
+        Vector2f control2= new Vector2f(925,1170);
 
 
         textInfo1.setPosition(textInfo1Pos1);
