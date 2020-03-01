@@ -87,7 +87,7 @@ public class HelpSelect implements State, InputListener {
 
         item1.setScale(2,2);
 
-        item1.setPosition(550,1130);
+        item1.setPosition(750,1130);
 
         createTextInfo();
 
@@ -153,18 +153,23 @@ public class HelpSelect implements State, InputListener {
         Vector2f textInfo1Pos4 = new Vector2f(1475,670);
         Vector2f textInfo1Pos5 = new Vector2f(1060,645);
         Vector2f textInfo1Pos6= new Vector2f(800,800);
-        Vector2f control1= new Vector2f(605,1190);
-        Vector2f control2= new Vector2f(876,1188);
-        Vector2f textControlV = new Vector2f(850,845);
-        Vector2f textAimV = new Vector2f(1500,845);
-        Vector2f qV = new Vector2f(800,897);
-        Vector2f wV = new Vector2f(800,935);
-        Vector2f eV = new Vector2f(800,970);
-        Vector2f aV = new Vector2f(800,1005);
-        Vector2f sV = new Vector2f(800,1040);
-        Vector2f dV = new Vector2f(800,1075);
-        Vector2f aim1V = new Vector2f(1320,900);
-        Vector2f aim2V = new Vector2f(1370,950);
+        Vector2f control1= new Vector2f(805,1190);
+        Vector2f control2= new Vector2f(1076,1188);
+        Vector2f textControlV = new Vector2f(860,870);
+        Vector2f textAimV = new Vector2f(1530,930);
+        Vector2f qV = new Vector2f(800,920);
+        Vector2f wV = new Vector2f(800,955);
+        Vector2f eV = new Vector2f(800,990);
+        Vector2f aV = new Vector2f(800,1025);
+        Vector2f sV = new Vector2f(800,1060);
+        Vector2f dV = new Vector2f(800,1095);
+        Vector2f aim1V = new Vector2f(1350,990);
+        Vector2f aim2V = new Vector2f(1400,1040);
+        Vector2f aim3V = new Vector2f(1375,1090);
+        Vector2f aim4V = new Vector2f(1365,1140);
+        Vector2f aim5V = new Vector2f(1375,1190);
+        Vector2f aim6V = new Vector2f(1375,1250);
+        Vector2f aim7V = new Vector2f(1350,1300);
 
 
         textInfo1.setPosition(textInfo1Pos1);
@@ -183,8 +188,15 @@ public class HelpSelect implements State, InputListener {
         A.setPosition(aV);
         S.setPosition(sV);
         D.setPosition(dV);
-        Aim1.setPosition(aim1V);
-        Aim2.setPosition(aim2V);
+        aim1.setPosition(aim1V);
+        aim2.setPosition(aim2V);
+        aim3.setPosition(aim3V);
+        aim4.setPosition(aim4V);
+        aim5.setPosition(aim5V);
+        aim6.setPosition(aim6V);
+        aim7.setPosition(aim7V);
+
+
 
         textInfo1.setCharacterSize(30);
         textInfo2.setCharacterSize(30);
@@ -202,8 +214,8 @@ public class HelpSelect implements State, InputListener {
         A.setCharacterSize(30);
         S.setCharacterSize(30);
         D.setCharacterSize(30);
-        Aim1.setCharacterSize(30);
-        Aim2.setCharacterSize(30);
+        aim1.setCharacterSize(30);
+        aim2.setCharacterSize(30);
 
         textInfo4.setStyle(TextStyle.ITALIC);
         textInfo4.setColor(Color.CYAN);
@@ -227,8 +239,14 @@ public class HelpSelect implements State, InputListener {
         A.setFont(fontManager.get("font"));
         S.setFont(fontManager.get("font"));
         D.setFont(fontManager.get("font"));
-        Aim1.setFont(fontManager.get("font"));
-        Aim2.setFont(fontManager.get("font"));
+        aim1.setFont(fontManager.get("font"));
+        aim2.setFont(fontManager.get("font"));
+        aim3.setFont(fontManager.get("font"));
+        aim4.setFont(fontManager.get("font"));
+        aim5.setFont(fontManager.get("font"));
+        aim6.setFont(fontManager.get("font"));
+        aim7.setFont(fontManager.get("font"));
+
     }
 
     private void createHeader() {
@@ -266,8 +284,13 @@ public class HelpSelect implements State, InputListener {
         target.draw(S);
         target.draw(D);
 
-        target.draw(Aim1);
-        target.draw(Aim2);
+        target.draw(aim1);
+        target.draw(aim2);
+        target.draw(aim3);
+        target.draw(aim4);
+        target.draw(aim5);
+        target.draw(aim6);
+        target.draw(aim7);
 
         target.draw(exitText);
         target.draw(menuHeaderTitle1);
