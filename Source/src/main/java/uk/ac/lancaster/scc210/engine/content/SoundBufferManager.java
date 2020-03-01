@@ -16,11 +16,4 @@ public class SoundBufferManager extends ContentManager<SoundBuffer> {
 
         serialisedSound.parallelStream().forEach(sound -> put(sound.getName(), sound.getSoundBuffer()));
     }
-
-    public static void playSound(Sound sound) {
-        // Only play the sound if the sound has been flagged as stop. This is done to prevent the sound from restarting while already playing
-        if (sound.getStatus() == SoundSource.Status.STOPPED) {
-            sound.play();
-        }
-    }
 }

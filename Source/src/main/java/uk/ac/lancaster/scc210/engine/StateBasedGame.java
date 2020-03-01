@@ -127,6 +127,8 @@ public class StateBasedGame {
 
             serviceProvider.put(SoundBufferManager.class, soundBufferManager);
 
+            serviceProvider.put(SoundManager.class, new SoundManager(soundBufferManager));
+
             if (Shader.isAvailable()) {
                 ShaderManager shaderManager = new ShaderManager();
 
@@ -165,6 +167,10 @@ public class StateBasedGame {
 
             draw();
         }
+
+        serviceProvider.put(SoundManager.class, null);
+
+        serviceProvider.put(MusicManager.class, null);
     }
 
     private void update() {
