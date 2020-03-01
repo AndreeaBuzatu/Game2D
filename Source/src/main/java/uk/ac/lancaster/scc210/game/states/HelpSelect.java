@@ -118,9 +118,11 @@ public class HelpSelect implements State, InputListener {
         textInfo3.setCharacterSize(45);
 
         //menuHeaderTitle1.setStyle(3);
-        textInfo.setColor(Color.WHITE);
-        textInfo.setCharacterSize(35);
-        textInfo.setFont(fontManager.get("font"));
+        //textInfo.setColor(Color.WHITE);
+
+        textInfo1.setFont(fontManager.get("font"));
+        textInfo2.setFont(fontManager.get("font"));
+        textInfo3.setFont(fontManager.get("font"));
     }
 
     private void createHeader() {
