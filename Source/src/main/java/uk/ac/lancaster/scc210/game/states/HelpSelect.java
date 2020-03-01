@@ -39,25 +39,28 @@ public class HelpSelect implements State, InputListener {
 
     private Text menuHeaderTitle1;
 
-    private Text textInfo1;
-    private Text textInfo2;
-    private Text textInfo3;
-    private Text textInfo4;
-    private Text textInfo5;
-    private Text textInfo6;
-
-    private Text controlQ;
-    private Text controlE;
-
-    private Text textControls;
-    private Text textAim;
-
+    private Text textInfo1 = new Text();
+    private Text textInfo2 = new Text();
+    private Text textInfo3 = new Text();
+    private Text textInfo4 = new Text();
+    private Text textInfo5 = new Text();
+    private Text textInfo6 = new Text();
+    private Text controlQ = new Text();
+    private Text controlE = new Text();
+    private Text textControls = new Text();
+    private Text textAim = new Text();
     private Text Q = new Text();
     private Text W = new Text();
     private Text E = new Text();
     private Text A = new Text();
     private Text S = new Text();
     private Text D = new Text();
+    private Text Aim1 = new Text();
+    private Text Aim2 = new Text();
+    private Text Aim3 = new Text();
+    private Text Aim4 = new Text();
+    private Text Aim5 = new Text();
+    private Text Aim6 = new Text();
 
 
 
@@ -113,16 +116,6 @@ public class HelpSelect implements State, InputListener {
 
 
     private void createTextInfo() {
-        textInfo1 = new Text();
-        textInfo2 = new Text();
-        textInfo3 = new Text();
-        textInfo4 = new Text();
-        textInfo5 = new Text();
-        textInfo6 = new Text();
-        controlQ = new Text();
-        controlE = new Text();
-        textControls = new Text();
-        textAim = new Text();
 
         textInfo1.setString("Hello young survivor.");
         textInfo2.setString("I understand that you have ");
@@ -140,6 +133,9 @@ public class HelpSelect implements State, InputListener {
         A.setString("A - move left");
         S.setString("S - move backward");
         D.setString("D - move right");
+        Aim1.setString("You are the pilot");
+        Aim2.setString("of a spaceship ");
+
 
         Vector2f textInfo1Pos1 = new Vector2f(975,577);
         Vector2f textInfo1Pos2 = new Vector2f(890,625);
@@ -151,12 +147,15 @@ public class HelpSelect implements State, InputListener {
         Vector2f control2= new Vector2f(876,1188);
         Vector2f textControlV = new Vector2f(850,845);
         Vector2f textAimV = new Vector2f(1500,845);
-        Vector2f qV = new Vector2f(810,897);
-        Vector2f wV = new Vector2f(810,935);
-        Vector2f eV = new Vector2f(810,970);
-        Vector2f aV = new Vector2f(810,1005);
-        Vector2f sV = new Vector2f(810,1040);
-        Vector2f dV = new Vector2f(810,1075);
+        Vector2f qV = new Vector2f(800,897);
+        Vector2f wV = new Vector2f(800,935);
+        Vector2f eV = new Vector2f(800,970);
+        Vector2f aV = new Vector2f(800,1005);
+        Vector2f sV = new Vector2f(800,1040);
+        Vector2f dV = new Vector2f(800,1075);
+        Vector2f aim1V = new Vector2f(1320,900);
+        Vector2f aim2V = new Vector2f(1370,950);
+
 
         textInfo1.setPosition(textInfo1Pos1);
         textInfo2.setPosition(textInfo1Pos2);
@@ -174,6 +173,8 @@ public class HelpSelect implements State, InputListener {
         A.setPosition(aV);
         S.setPosition(sV);
         D.setPosition(dV);
+        Aim1.setPosition(aim1V);
+        Aim2.setPosition(aim2V);
 
         textInfo1.setCharacterSize(30);
         textInfo2.setCharacterSize(30);
@@ -191,6 +192,8 @@ public class HelpSelect implements State, InputListener {
         A.setCharacterSize(30);
         S.setCharacterSize(30);
         D.setCharacterSize(30);
+        Aim1.setCharacterSize(30);
+        Aim2.setCharacterSize(30);
 
         textInfo4.setStyle(TextStyle.ITALIC);
         textInfo4.setColor(Color.CYAN);
@@ -214,7 +217,8 @@ public class HelpSelect implements State, InputListener {
         A.setFont(fontManager.get("font"));
         S.setFont(fontManager.get("font"));
         D.setFont(fontManager.get("font"));
-
+        Aim1.setFont(fontManager.get("font"));
+        Aim2.setFont(fontManager.get("font"));
     }
 
     private void createHeader() {
@@ -252,6 +256,8 @@ public class HelpSelect implements State, InputListener {
         target.draw(S);
         target.draw(D);
 
+        target.draw(Aim1);
+        target.draw(Aim2);
 
         target.draw(exitText);
         target.draw(menuHeaderTitle1);
