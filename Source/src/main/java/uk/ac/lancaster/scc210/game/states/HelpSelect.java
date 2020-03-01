@@ -52,12 +52,12 @@ public class HelpSelect implements State, InputListener {
     private Text textControls;
     private Text textAim;
 
-    private Text Q;
-    private Text W;
-    private Text E;
-    private Text A;
-    private Text S;
-    private Text D;
+    private Text Q = new Text();
+    private Text W = new Text();
+    private Text E = new Text();
+    private Text A = new Text();
+    private Text S = new Text();
+    private Text D = new Text();
 
 
 
@@ -83,7 +83,7 @@ public class HelpSelect implements State, InputListener {
 
         item1.setScale(2,2);
 
-        item1.setPosition(590,1120);
+        item1.setPosition(550,1130);
 
         createTextInfo();
 
@@ -122,12 +122,7 @@ public class HelpSelect implements State, InputListener {
         controlQ = new Text();
         controlE = new Text();
         textControls = new Text();
-        Q = new Text();
-        W = new Text();
-        E = new Text();
-        A = new Text();
-        S = new Text();
-        D = new Text();
+        textAim = new Text();
 
         textInfo1.setString("Hello young survivor.");
         textInfo2.setString("I understand that you have ");
@@ -152,16 +147,16 @@ public class HelpSelect implements State, InputListener {
         Vector2f textInfo1Pos4 = new Vector2f(1475,675);
         Vector2f textInfo1Pos5 = new Vector2f(1060,655);
         Vector2f textInfo1Pos6= new Vector2f(800,828);
-        Vector2f control1= new Vector2f(638,1170);
+        Vector2f control1= new Vector2f(605,1190);
         Vector2f control2= new Vector2f(925,1170);
         Vector2f textControlV = new Vector2f(850,890);
-        Vector2f textAimV = new Vector2f(925,890);
-        Vector2f qV = new Vector2f(925,890);
-        Vector2f wV = new Vector2f(925,890);
-        Vector2f eV = new Vector2f(925,890);
-        Vector2f aV = new Vector2f(925,890);
-        Vector2f sV = new Vector2f(925,890);
-        Vector2f dV = new Vector2f(925,890);
+        Vector2f textAimV = new Vector2f(1500,890);
+        Vector2f qV = new Vector2f(925,900);
+        Vector2f wV = new Vector2f(925,940);
+        Vector2f eV = new Vector2f(925,980);
+        Vector2f aV = new Vector2f(925,1020);
+        Vector2f sV = new Vector2f(925,1060);
+        Vector2f dV = new Vector2f(925,1115);
 
         textInfo1.setPosition(textInfo1Pos1);
         textInfo2.setPosition(textInfo1Pos2);
@@ -179,8 +174,6 @@ public class HelpSelect implements State, InputListener {
         A.setPosition(aV);
         S.setPosition(sV);
         D.setPosition(dV);
-
-
 
         textInfo1.setCharacterSize(30);
         textInfo2.setCharacterSize(30);
@@ -250,7 +243,15 @@ public class HelpSelect implements State, InputListener {
         target.draw(controlE);
 
         target.draw(textControls);
-        //target.draw(textAim);
+        target.draw(textAim);
+
+        target.draw(Q);
+        target.draw(W);
+        target.draw(E);
+        target.draw(A);
+        target.draw(S);
+        target.draw(D);
+
 
         target.draw(exitText);
         target.draw(menuHeaderTitle1);
