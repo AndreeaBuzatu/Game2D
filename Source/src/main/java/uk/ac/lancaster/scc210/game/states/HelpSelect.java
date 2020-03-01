@@ -135,20 +135,16 @@ public class HelpSelect implements State, InputListener {
         textInfo4.setString("mission:");
         textInfo5.setString("SURVIVAL");
         textInfo6.setString("You can find the answers below ↓");
+        controlQ.setString("Q");
+        controlE.setString("E");
+        textControls.setString("Controls");
+        textAim.setString("Aim");
         Q.setString("Q - rotate left");
         W.setString("W - move forward");
         E.setString("E - rotate right");
         A.setString("A - move left");
         S.setString("S - move backward");
         D.setString("D - move right");
-
-
-        controlQ.setString("Q");
-        controlE.setString("E");
-
-        textControls.setString("Controls");
-        textAim.setString("Aim");
-
 
         Vector2f textInfo1Pos1 = new Vector2f(975,577);
         Vector2f textInfo1Pos2 = new Vector2f(890,625);
@@ -160,7 +156,12 @@ public class HelpSelect implements State, InputListener {
         Vector2f control2= new Vector2f(925,1170);
         Vector2f textControlV = new Vector2f(850,890);
         Vector2f textAimV = new Vector2f(925,890);
-
+        Vector2f qV = new Vector2f(925,890);
+        Vector2f wV = new Vector2f(925,890);
+        Vector2f eV = new Vector2f(925,890);
+        Vector2f aV = new Vector2f(925,890);
+        Vector2f sV = new Vector2f(925,890);
+        Vector2f dV = new Vector2f(925,890);
 
         textInfo1.setPosition(textInfo1Pos1);
         textInfo2.setPosition(textInfo1Pos2);
@@ -172,6 +173,13 @@ public class HelpSelect implements State, InputListener {
         controlE.setPosition(control2);
         textControls.setPosition(textControlV);
         textAim.setPosition(textAimV);
+        Q.setPosition(qV);
+        W.setPosition(wV);
+        E.setPosition(eV);
+        A.setPosition(aV);
+        S.setPosition(sV);
+        D.setPosition(dV);
+
 
 
         textInfo1.setCharacterSize(30);
@@ -184,9 +192,12 @@ public class HelpSelect implements State, InputListener {
         controlE.setCharacterSize(45);
         textControls.setCharacterSize(35);
         textAim.setCharacterSize(35);
-
-
-
+        Q.setCharacterSize(30);
+        W.setCharacterSize(30);
+        E.setCharacterSize(30);
+        A.setCharacterSize(30);
+        S.setCharacterSize(30);
+        D.setCharacterSize(30);
 
         textInfo4.setStyle(TextStyle.ITALIC);
         textInfo4.setColor(Color.CYAN);
@@ -204,7 +215,12 @@ public class HelpSelect implements State, InputListener {
         controlE.setFont(fontManager.get("font"));
         textControls.setFont(fontManager.get("font"));
         textAim.setFont(fontManager.get("font"));
-
+        Q.setFont(fontManager.get("font"));
+        W.setFont(fontManager.get("font"));
+        E.setFont(fontManager.get("font"));
+        A.setFont(fontManager.get("font"));
+        S.setFont(fontManager.get("font"));
+        D.setFont(fontManager.get("font"));
 
     }
 
