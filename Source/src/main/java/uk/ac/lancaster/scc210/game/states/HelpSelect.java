@@ -71,7 +71,7 @@ public class HelpSelect implements State, InputListener {
 
         item1.setScale(2,2);
 
-        item1.setPosition(500,500);
+        item1.setPosition(500,800);
 
         createTextInfo();
 
