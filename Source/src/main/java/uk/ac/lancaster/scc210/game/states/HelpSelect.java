@@ -38,7 +38,10 @@ public class HelpSelect implements State, InputListener {
     private Sprite item1;
 
     private Text menuHeaderTitle1;
-    private Text menuHeaderTitle2;
+
+    private Text textInfo1;
+    private Text textInfo2;
+    private Text textInfo3;
 
 
 
@@ -66,39 +69,18 @@ public class HelpSelect implements State, InputListener {
 
         item1.setPosition(500,500);
 
-        createGrid();
+        createTextInfo();
 
         createExitText();
 
         createHeader();
     }
 
-    private void createGrid() {
-        interfaceGrid = new InterfaceGrid(game, new Vector2f(viewBounds.width / 4 + 50, viewBounds.height / 3));
+    @Override
+    public void update(Time deltaTime) {
 
-        List<Level> levels = new ArrayList<>(levelManager.values());
-
-        InterfaceList interfaceList = null;
-
-        for (int i = 0; i < levels.size(); i++) {
-            if (i % 3 == 0) {
-                System.out.println("I: " + i);
-
-                // i % 3 == 0, will == true when i = 0, so in that instance don't add a new column (as one hasn't been created yet)
-                if (i > 0) {
-                    interfaceGrid.addColumn(interfaceList);
-                }
-
-                interfaceList = new InterfaceList(game, fontManager.get("font"), Vector2f.ZERO);
-            }
-
-            int finalI = i;
-
-            interfaceList.addListOption(String.format("Level %s", i), (() -> System.out.printf("Load level %s here\n", finalI)));
-        }
-
-        interfaceGrid.addColumn(interfaceList);
     }
+
 
     private void createExitText() {
         exitText = new Text();
@@ -113,47 +95,48 @@ public class HelpSelect implements State, InputListener {
         exitText.setColor(Color.WHITE);
     }
 
-    @Override
-    public void update(Time deltaTime) {
-        interfaceGrid.update();
 
-        if (game != null && pressedKey != null && pressedKey == Keyboard.Key.ESCAPE) {
-            game.popState();
-        }
+    private void createTextInfo() {
+        textInfo1 = new Text();
+        textInfo2 = new Text();
+        textInfo3 = new Text();
+
+        textInfo1.setString("Hello young survivor");
+        textInfo2.setString("I understand that you have some questions");
+        textInfo3.setString("about mission:SURVIVE. You can find the answers below ↓");
+
+        Vector2f textInfo1Pos1 = new Vector2f(200,480);
+        Vector2f textInfo1Pos2 = new Vector2f(200,480);
+        Vector2f textInfo1Pos3 = new Vector2f(200,480);
+
+        textInfo.setPosition(textInfo1Pos1);
+        textInfo.setPosition(textInfo1Pos2);
+        textInfo.setPosition(textInfo1Pos3);
+        textInfo.setCharacterSize(60);
+        //menuHeaderTitle1.setStyle(3);
+        textInfo.setColor(Color.WHITE);
+        textInfo.setCharacterSize(35);
+        textInfo.setFont(fontManager.get("font"));
     }
 
     private void createHeader() {
         menuHeaderTitle1 = new Text();
-        menuHeaderTitle2 = new Text();
-        menuHeaderTitle1.setString("LEVEL:");
-        menuHeaderTitle2.setString("SELECT");
-
-
-        Vector2f headerPos = new Vector2f(1100,480);
-        Vector2f headerPos2 = new Vector2f(1000, 550);
-
+        menuHeaderTitle1.setString("HELP:");
+        Vector2f headerPos = new Vector2f(1155,480);
         menuHeaderTitle1.setPosition(headerPos);
-        menuHeaderTitle2.setPosition(headerPos2);
         menuHeaderTitle1.setCharacterSize(60);
-        menuHeaderTitle2.setCharacterSize(90);
-        menuHeaderTitle1.setStyle(3);
+        //menuHeaderTitle1.setStyle(3);
         menuHeaderTitle1.setColor(Color.CYAN);
-        menuHeaderTitle2.setColor(Color.YELLOW);
         menuHeaderTitle1.setFont(fontManager.get("font"));
-        menuHeaderTitle2.setFont(fontManager.get("font"));
     }
 
     @Override
     public void draw(RenderTarget target) {
         target.draw(background);
         target.draw(item1);
-
-        target.draw(interfaceGrid);
-
+        target.draw(textInfo);
         target.draw(exitText);
-
         target.draw(menuHeaderTitle1);
-        target.draw(menuHeaderTitle2);
     }
 
     @Override
