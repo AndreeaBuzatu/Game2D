@@ -106,8 +106,8 @@ public class HelpSelect implements State, InputListener {
         textInfo3.setString("about mission:SURVIVE. You can find the answers below ↓");
 
         Vector2f textInfo1Pos1 = new Vector2f(200,480);
-        Vector2f textInfo1Pos2 = new Vector2f(200,480);
-        Vector2f textInfo1Pos3 = new Vector2f(200,480);
+        Vector2f textInfo1Pos2 = new Vector2f(200,520);
+        Vector2f textInfo1Pos3 = new Vector2f(200,560);
 
         textInfo1.setPosition(textInfo1Pos1);
         textInfo2.setPosition(textInfo1Pos2);
