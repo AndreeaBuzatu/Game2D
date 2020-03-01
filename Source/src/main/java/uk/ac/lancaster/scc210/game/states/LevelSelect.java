@@ -91,8 +91,11 @@ public class LevelSelect implements State, InputListener {
 
         InterfaceList interfaceList = null;
 
+        //Added a variable to keep track of the number of rows per column for testing, else things break
+        int nRows = 7;
+
         for (int i = 0; i < levels.size(); i++) {
-            if (i % 3 == 0) {
+            if (i % nRows == 0) {
                 System.out.println("I: " + i);
 
                 // i % 3 == 0, will == true when i = 0, so in that instance don't add a new column (as one hasn't been created yet)
@@ -108,7 +111,7 @@ public class LevelSelect implements State, InputListener {
             interfaceList.addListOption(levels.get(i).getName(), (() -> System.out.printf("Load level %s here\n", finalI)));
 
             if (i > currentUnlocked) {
-                interfaceList.getOptions().get(i % 3).setEnabled(false);
+                interfaceList.getOptions().get(i % nRows).setEnabled(false);
             }
         }
 
