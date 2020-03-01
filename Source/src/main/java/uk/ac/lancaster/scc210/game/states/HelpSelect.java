@@ -55,12 +55,13 @@ public class HelpSelect implements State, InputListener {
     private Text A = new Text();
     private Text S = new Text();
     private Text D = new Text();
-    private Text Aim1 = new Text();
-    private Text Aim2 = new Text();
-    private Text Aim3 = new Text();
-    private Text Aim4 = new Text();
-    private Text Aim5 = new Text();
-    private Text Aim6 = new Text();
+    private Text aim1 = new Text();
+    private Text aim2 = new Text();
+    private Text aim3 = new Text();
+    private Text aim4 = new Text();
+    private Text aim5 = new Text();
+    private Text aim6 = new Text();
+    private Text aim7 = new Text();
 
 
 
@@ -133,8 +134,17 @@ public class HelpSelect implements State, InputListener {
         A.setString("A - move left");
         S.setString("S - move backward");
         D.setString("D - move right");
-        Aim1.setString("You are the pilot");
-        Aim2.setString("of a spaceship ");
+        aim1.setString("You are the pilot");
+        aim2.setString("of a spaceship ");
+        aim3.setString("which aim in the");
+        aim4.setString("game is to defeat");
+        aim5.setString("the alien waves");
+        aim6.setString("that are trying");
+        aim7.setString("to invade the Earth");
+
+
+
+
 
 
         Vector2f textInfo1Pos1 = new Vector2f(975,577);
