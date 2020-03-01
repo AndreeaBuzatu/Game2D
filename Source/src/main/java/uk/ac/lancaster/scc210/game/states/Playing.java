@@ -20,6 +20,7 @@ import uk.ac.lancaster.scc210.game.content.SpaceShipPrototypeManager;
 import uk.ac.lancaster.scc210.game.content.StateManager;
 import uk.ac.lancaster.scc210.game.dialogue.DialogueBox;
 import uk.ac.lancaster.scc210.game.ecs.component.*;
+import uk.ac.lancaster.scc210.game.ecs.entity.Player;
 import uk.ac.lancaster.scc210.game.ecs.system.*;
 import uk.ac.lancaster.scc210.game.level.Level;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
@@ -89,6 +90,8 @@ public class Playing implements State, InputListener {
 
         playerData = (PlayerData) game.getServiceProvider().get(PlayerData.class);
 
+        viewSize = (ViewSize) game.getServiceProvider().get(ViewSize.class);
+
         String unlockedLevel = playerData.getUnlockedLevel();
 
         currentUnlocked = levelManager.indexOf(unlockedLevel);
@@ -144,7 +147,11 @@ public class Playing implements State, InputListener {
 
         world.addSystem(new LivesSystem(world));
 
-        createPlayer();
+        player = new Player(game.getServiceProvider()).getPlayer();
+
+        playerScoreWriter = (PlayerWriter) game.getServiceProvider().get(PlayerWriter.class);
+
+        world.addEntity(player);
 
         MusicManager musicManager = (MusicManager) world.getServiceProvider().get(MusicManager.class);
 
@@ -192,44 +199,6 @@ public class Playing implements State, InputListener {
         alpha = 0;
     }
 
-    private void createPlayer() {
-        spaceShipManager = (SpaceShipPrototypeManager) game.getServiceProvider().get(SpaceShipPrototypeManager.class);
-
-        viewSize = (ViewSize) world.getServiceProvider().get(ViewSize.class);
-
-        FloatRect viewBounds = viewSize.getViewBounds();
-
-        player = spaceShipManager.get("player").create();
-
-        LivesComponent livesComponent = (LivesComponent) player.findComponent(LivesComponent.class);
-
-        // If the player data has an impossible number of lives, just set an assumed default
-        if (livesComponent.getLives() <= 0) {
-            livesComponent.setLives(DEFAULT_LIVES);
-
-            livesComponent.setStartingLives(DEFAULT_LIVES);
-        }
-
-        livesComponent.setLives(playerData.getLives());
-
-        PlayerComponent playerComponent = new PlayerComponent();
-
-        playerComponent.setScore(playerData.getScore());
-
-        player.addComponent(playerComponent);
-
-        SpriteComponent spriteComponent = (SpriteComponent) player.findComponent(SpriteComponent.class);
-
-        Sprite playerSprite = spriteComponent.getSprite();
-
-        playerComponent.setSpawnPoint(new Vector2f((viewBounds.width / 2) - playerSprite.getGlobalBounds().width, (viewBounds.height / 1.5f) - playerSprite.getGlobalBounds().height));
-
-        playerSprite.setPosition(playerComponent.getSpawnPoint());
-
-        playerScoreWriter = (PlayerWriter) game.getServiceProvider().get(PlayerWriter.class);
-
-        world.addEntity(player);
-    }
 
     @Override
     public void onEnter(StateBasedGame game) {
