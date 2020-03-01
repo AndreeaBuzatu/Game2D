@@ -114,8 +114,8 @@ public class HelpSelect implements State, InputListener {
         textInfo3.setPosition(textInfo1Pos3);
 
         textInfo1.setCharacterSize(35);
-        textInfo2.setCharacterSize(40);
-        textInfo3.setCharacterSize(45);
+        textInfo2.setCharacterSize(36);
+        textInfo3.setCharacterSize(37);
 
         textInfo1.setFont(fontManager.get("font"));
         textInfo2.setFont(fontManager.get("font"));
