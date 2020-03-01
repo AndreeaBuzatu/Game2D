@@ -120,7 +120,9 @@ public class HelpSelect implements State, InputListener {
         textInfo4.setString("mission:");
         textInfo5.setString("SURVIVAL");
         textInfo6.setString("You can find the answers below ↓");
-        controlQ.setString("Q            E");
+        controlQ.setString("Q");
+        controlE.setString("E");
+
 
 
         Vector2f textInfo1Pos1 = new Vector2f(975,577);
@@ -129,7 +131,8 @@ public class HelpSelect implements State, InputListener {
         Vector2f textInfo1Pos4 = new Vector2f(1475,675);
         Vector2f textInfo1Pos5 = new Vector2f(1060,655);
         Vector2f textInfo1Pos6= new Vector2f(800,828);
-        Vector2f controls= new Vector2f(800,828);
+        Vector2f control1= new Vector2f(630,1170);
+        Vector2f control2= new Vector2f(650,1170);
 
 
         textInfo1.setPosition(textInfo1Pos1);
@@ -138,8 +141,8 @@ public class HelpSelect implements State, InputListener {
         textInfo4.setPosition(textInfo1Pos4);
         textInfo5.setPosition(textInfo1Pos5);
         textInfo6.setPosition(textInfo1Pos6);
-        controlQ.setPosition(controls);
-
+        controlQ.setPosition(control1);
+        controlE.setPosition(control2);
 
         textInfo1.setCharacterSize(30);
         textInfo2.setCharacterSize(30);
@@ -147,8 +150,8 @@ public class HelpSelect implements State, InputListener {
         textInfo4.setCharacterSize(28);
         textInfo5.setCharacterSize(140);
         textInfo6.setCharacterSize(30);
-        controlQ.setCharacterSize(90);
-
+        controlQ.setCharacterSize(45);
+        controlE.setCharacterSize(45);
 
 
 
@@ -163,7 +166,9 @@ public class HelpSelect implements State, InputListener {
         textInfo5.setFont(fontManager.get("font2"));
         textInfo6.setFont(fontManager.get("font"));
         controlQ.setFont(fontManager.get("font"));
-  }
+        controlE.setFont(fontManager.get("font"));
+
+    }
 
     private void createHeader() {
         menuHeaderTitle1 = new Text();
@@ -188,7 +193,7 @@ public class HelpSelect implements State, InputListener {
         target.draw(textInfo6);
 
         target.draw(controlQ);
-        //target.draw(controlE);
+        target.draw(controlE);
 
         target.draw(exitText);
         target.draw(menuHeaderTitle1);
