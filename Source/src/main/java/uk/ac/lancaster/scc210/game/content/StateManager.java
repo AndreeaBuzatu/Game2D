@@ -13,8 +13,6 @@ public class StateManager extends ContentManager<State> {
 
         put("main-menu", new MainMenu());
 
-        put("playing", new Playing());
-
         put("completion", new Completion());
 
         put("high-score-list", new HighScoreList());

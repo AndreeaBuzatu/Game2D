@@ -42,15 +42,11 @@ public class Playing implements State, InputListener {
 
     private final int MAX_OPACITY = 255;
 
-    private final int DEFAULT_LIVES = 3;
-
     private List<Level> unlockedLevels, totalLevels;
 
     private StateBasedGame game;
 
     private World world;
-
-    private SpaceShipPrototypeManager spaceShipManager;
 
     private LevelManager levelManager;
 
@@ -198,7 +194,6 @@ public class Playing implements State, InputListener {
 
         alpha = 0;
     }
-
 
     @Override
     public void onEnter(StateBasedGame game) {
@@ -420,5 +415,15 @@ public class Playing implements State, InputListener {
 
             asteroidComponent.getCircle().setFillColor(colour);
         }
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
+
+        levelSystem.setLevel(level);
+
+        currentUnlocked = levelManager.indexOf(level.getName());
+
+        dialogueBox.setDialogue(level.getLines());
     }
 }
