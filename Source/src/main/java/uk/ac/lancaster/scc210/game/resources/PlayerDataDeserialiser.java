@@ -60,7 +60,7 @@ public class PlayerDataDeserialiser extends Deserialiser<PlayerData> {
 
     @Override
     public void createStandinXML() throws ResourceNotFoundException {
-        String playerXML = String.format("<player unlocked-level=\"%s\"/>", levelManager.getLevelList().get(0).getName());
+        String playerXML = String.format("<player unlocked-level=\"%s\" score=\"0\" lives=\"0\"/>", levelManager.getLevelList().get(0).getName());
 
         try {
             DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
