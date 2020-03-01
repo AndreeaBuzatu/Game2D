@@ -74,6 +74,8 @@ public class BulletCollisionSystem extends IterativeSystem {
                         SpaceShipComponent spaceShipComponent = (SpaceShipComponent) transformable.findComponent(SpaceShipComponent.class);
 
                         spaceShipComponent.playHitSound();
+
+                        spaceShipComponent.getBulletEffect().react(transformable);
                     }
 
                     // Return the bullet back to the pool and remove it from the world

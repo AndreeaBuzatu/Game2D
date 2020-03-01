@@ -70,9 +70,5 @@ public class PlayerComponent implements Component {
         this.bulletEffect = defaultBulletEffect;
 
         defaultBulletEffect.setDead(false);
-
-        if (bulletEffect == defaultBulletEffect) {
-            System.out.println("Set to default");
-        }
     }
 }
