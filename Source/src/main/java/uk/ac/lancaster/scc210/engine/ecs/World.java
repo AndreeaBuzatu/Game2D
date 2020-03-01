@@ -139,6 +139,22 @@ public class World {
     }
 
     /**
+     * Given an array of components, find a set of entities which contains at least one of the given components
+     *
+     * @param components the components
+     * @return entities which contain at least component
+     */
+    @SafeVarargs
+    public final Set<Entity> getEntitiesWithAny(Class<? extends Component>... components) {
+        Set<Class<? extends Component>> entityComponents = new HashSet<>(Arrays.asList(components));
+
+        return entities
+                .stream()
+                .filter(entity -> !Collections.disjoint(new HashSet<>(entity.getComponents().keySet()), entityComponents))
+                .collect(Collectors.toSet());
+    }
+
+    /**
      * From a Class<Pool> return the associate Pool
      *
      * @param klass the Pool to find

@@ -9,6 +9,10 @@ import uk.ac.lancaster.scc210.engine.ecs.component.PooledComponent;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.engine.pooling.Pool;
 import uk.ac.lancaster.scc210.game.ecs.component.*;
+import uk.ac.lancaster.scc210.game.prototypes.SpaceShipPrototype;
+
+import java.util.HashSet;
+import java.util.stream.Collectors;
 
 /**
  * System used to prevent an entity from going off screen
@@ -22,9 +26,27 @@ public class ViewBoundsSystem extends IterativeSystem {
      * @param world the world to draw entities from
      */
     public ViewBoundsSystem(World world) {
-        super(world, SpriteComponent.class);
+        super(world);
 
         viewSize = (ViewSize) world.getServiceProvider().get(ViewSize.class);
+
+        entities = world.getEntitiesWithAny(PlayerComponent.class, FiredComponent.class);
+    }
+
+    @Override
+    public void entityAdded(Entity entity) {
+        super.entityAdded(entity);
+
+        entities = world.getEntitiesWithAny(PlayerComponent.class, FiredComponent.class);
+
+        System.out.println(entities.size());
+    }
+
+    @Override
+    public void entityRemoved(Entity entity) {
+        super.entityRemoved(entity);
+
+        entities = world.getEntitiesWithAny(PlayerComponent.class, FiredComponent.class);
     }
 
     @Override
@@ -61,6 +83,8 @@ public class ViewBoundsSystem extends IterativeSystem {
                         Pool entityPool = world.getPool(pooledComponent.getPoolClass());
 
                         entityPool.returnEntity(entity);
+
+                        world.removeEntity(entity);
                     }
                 }
             }
