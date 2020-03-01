@@ -120,25 +120,31 @@ public class HelpSelect implements State, InputListener {
         Vector2f textInfo1Pos2 = new Vector2f(890,625);
         Vector2f textInfo1Pos3 = new Vector2f(853,675);
         Vector2f textInfo1Pos4 = new Vector2f(1475,675);
-        Vector2f textInfo1Pos5 = new Vector2f(1100,675);
+        Vector2f textInfo1Pos5 = new Vector2f(1060,660);
 
         textInfo1.setPosition(textInfo1Pos1);
         textInfo2.setPosition(textInfo1Pos2);
         textInfo3.setPosition(textInfo1Pos3);
         textInfo4.setPosition(textInfo1Pos4);
+        textInfo5.setPosition(textInfo1Pos5);
 
         textInfo1.setCharacterSize(30);
         textInfo2.setCharacterSize(30);
         textInfo3.setCharacterSize(30);
         textInfo4.setCharacterSize(28);
+        textInfo5.setCharacterSize(140);
+
 
         textInfo4.setStyle(TextStyle.ITALIC);
         textInfo4.setColor(Color.CYAN);
+        textInfo5.setColor(Color.YELLOW);
 
         textInfo1.setFont(fontManager.get("font"));
         textInfo2.setFont(fontManager.get("font"));
         textInfo3.setFont(fontManager.get("font"));
         textInfo4.setFont(fontManager.get("font"));
+        textInfo5.setFont(fontManager.get("font2"));
+
 
     }
 
@@ -161,7 +167,7 @@ public class HelpSelect implements State, InputListener {
         target.draw(textInfo2);
         target.draw(textInfo3);
         target.draw(textInfo4);
-        target.draw(textInfo6);
+        target.draw(textInfo5);
 
         target.draw(exitText);
         target.draw(menuHeaderTitle1);
