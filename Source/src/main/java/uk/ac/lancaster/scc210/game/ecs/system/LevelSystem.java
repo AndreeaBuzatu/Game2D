@@ -52,11 +52,6 @@ public class LevelSystem extends IterativeSystem {
     }
 
     @Override
-    public void entityAdded(Entity entity) {
-        super.entityAdded(entity);
-    }
-
-    @Override
     public void update(Time deltaTime) {
         if (currentStage != null && currentStage.complete()) {
             currentStage = level.changeStage();

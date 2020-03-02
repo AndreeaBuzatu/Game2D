@@ -15,6 +15,8 @@ public class OrientatedBox {
 
     private Shape shape;
 
+    private FloatRect globalBounds;
+
     /**
      * Describes a box which accounts for the transformation of the sprite. By default, SFML rectangles do not store the
      * transformation of the rotation. This makes collision checking difficult to implement on transformed rectangles.
@@ -26,6 +28,10 @@ public class OrientatedBox {
         this.sprite = sprite;
 
         points = new Vector2f[POINTS];
+
+        globalBounds = sprite.getGlobalBounds();
+
+        calculatePoints();
     }
 
     /**
@@ -48,18 +54,26 @@ public class OrientatedBox {
          */
         Transform trans = null;
 
-        FloatRect globalBounds = null;
-
         if (sprite != null) {
-            globalBounds = sprite.getGlobalBounds();
+            if (sprite.getGlobalBounds() == globalBounds) {
+                return;
 
-            trans = sprite.getTransform();
+            } else {
+                globalBounds = sprite.getGlobalBounds();
+
+                trans = sprite.getTransform();
+            }
         }
 
         if (shape != null) {
-            globalBounds = shape.getGlobalBounds();
+            if (shape.getGlobalBounds() == globalBounds) {
+                return;
 
-            trans = shape.getTransform();
+            } else {
+                globalBounds = shape.getGlobalBounds();
+
+                trans = shape.getTransform();
+            }
         }
 
         if (globalBounds != null && trans != null) {

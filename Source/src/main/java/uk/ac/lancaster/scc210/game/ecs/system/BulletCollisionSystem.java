@@ -46,6 +46,16 @@ public class BulletCollisionSystem extends IterativeSystem {
             Entity bulletCreator = bulletComponent.getCreator();
 
             for (Entity transformable : transformables) {
+                // Enemies are impervious to each others bullets
+                boolean bothEnemies = bulletCreator.hasComponent(EnemyComponent.class) && transformable.hasComponent(EnemyComponent.class);
+
+                // Just in case the bullet creator hits the current entity. (Compare references).
+                boolean sameEntity = bulletCreator == transformable;
+
+                if (bothEnemies || sameEntity) {
+                    continue;
+                }
+
                 OrientatedBoxComponent transformableOrientatedBox = (OrientatedBoxComponent) transformable.findComponent(OrientatedBoxComponent.class);
 
                 boolean colliding = OrientatedBox.areColliding(entityOrientedBox.getOrientatedBox(), transformableOrientatedBox.getOrientatedBox());
@@ -54,15 +64,9 @@ public class BulletCollisionSystem extends IterativeSystem {
                     continue;
                 }
 
-                // Enemies are impervious to each others bullets
-                boolean bothEnemies = bulletCreator.hasComponent(EnemyComponent.class) && transformable.hasComponent(EnemyComponent.class);
-
                 boolean isItem = transformable.hasComponent(ItemEffectsComponent.class);
 
-                // Just in case the bullet creator hits the current entity. (Compare references).
-                boolean sameEntity = bulletCreator == transformable;
-
-                if (!bothEnemies && !isItem && !sameEntity) {
+                if (!isItem) {
                     PooledComponent pooledComponent = (PooledComponent) entity.findComponent(PooledComponent.class);
 
                     FlashComponent flashComponent = (FlashComponent) transformable.findComponent(FlashComponent.class);

@@ -49,9 +49,7 @@ public class World {
     }
 
     public void addEntities(Entity... entities) {
-        for (Entity entity : entities) {
-            addEntity(entity);
-        }
+        this.entities.addAll(Set.of(entities));
     }
 
     public void addEntities(Collection<? extends Entity> entities) {
@@ -146,11 +144,11 @@ public class World {
      */
     @SafeVarargs
     public final Set<Entity> getEntitiesWithAny(Class<? extends Component>... components) {
-        Set<Class<? extends Component>> entityComponents = new HashSet<>(Arrays.asList(components));
+        Set<Class<? extends Component>> entityComponents = Set.of(components);
 
         return entities
                 .stream()
-                .filter(entity -> !Collections.disjoint(new HashSet<>(entity.getComponents().keySet()), entityComponents))
+                .filter(entity -> !Collections.disjoint(Set.of(entity.getComponents().keySet()), entityComponents))
                 .collect(Collectors.toSet());
     }
 

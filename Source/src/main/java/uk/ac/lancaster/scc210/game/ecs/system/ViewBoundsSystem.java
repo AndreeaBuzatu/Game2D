@@ -38,8 +38,6 @@ public class ViewBoundsSystem extends IterativeSystem {
         super.entityAdded(entity);
 
         entities = world.getEntitiesWithAny(PlayerComponent.class, FiredComponent.class);
-
-        System.out.println(entities.size());
     }
 
     @Override
@@ -74,18 +72,14 @@ public class ViewBoundsSystem extends IterativeSystem {
                 }
 
                 // Remove any bullets from screen
-                if (entity.hasComponent(BulletComponent.class)) {
+                if (entity.hasComponent(BulletComponent.class) && entity.hasComponent(PooledComponent.class)) {
+                    PooledComponent pooledComponent = (PooledComponent) entity.findComponent(PooledComponent.class);
+
+                    Pool entityPool = world.getPool(pooledComponent.getPoolClass());
+
+                    entityPool.returnEntity(entity);
+
                     world.removeEntity(entity);
-
-                    if (entity.hasComponent(PooledComponent.class)) {
-                        PooledComponent pooledComponent = (PooledComponent) entity.findComponent(PooledComponent.class);
-
-                        Pool entityPool = world.getPool(pooledComponent.getPoolClass());
-
-                        entityPool.returnEntity(entity);
-
-                        world.removeEntity(entity);
-                    }
                 }
             }
         }

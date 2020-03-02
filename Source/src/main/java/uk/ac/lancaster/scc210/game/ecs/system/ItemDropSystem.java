@@ -41,8 +41,6 @@ public class ItemDropSystem extends IterativeSystem {
 
     @Override
     public void entityRemoved(Entity entity) {
-        super.entityRemoved(entity);
-
         // The player or entities which are registered as being out of the window bounds (except waves) don't drop items
         if (entity.hasComponent(PlayerComponent.class) || entity.hasComponent(OutOfBoundsComponent.class)) {
             return;
