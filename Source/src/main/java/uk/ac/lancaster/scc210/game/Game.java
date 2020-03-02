@@ -2,6 +2,8 @@ package uk.ac.lancaster.scc210.game;
 
 import org.w3c.dom.Document;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
+import uk.ac.lancaster.scc210.engine.ViewSize;
+import uk.ac.lancaster.scc210.engine.collision.UniformGrid;
 import uk.ac.lancaster.scc210.engine.content.ShaderManager;
 import uk.ac.lancaster.scc210.engine.content.SoundBufferManager;
 import uk.ac.lancaster.scc210.engine.content.TextureAnimationManager;
@@ -75,6 +77,8 @@ public class Game extends StateBasedGame {
             HighScoreWriter highScoreWriter = new HighScoreWriter(highScores);
 
             serviceProvider.put(HighScoreWriter.class, highScoreWriter);
+
+            serviceProvider.put(UniformGrid.class, new UniformGrid((ViewSize) serviceProvider.get(ViewSize.class)));
 
         } catch (ResourceNotFoundException e) {
             window.close();
