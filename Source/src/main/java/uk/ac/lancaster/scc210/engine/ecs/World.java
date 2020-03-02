@@ -9,6 +9,7 @@ import uk.ac.lancaster.scc210.engine.service.ServiceProvider;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * World contains all the entities and systems in the game.
@@ -49,11 +50,17 @@ public class World {
     }
 
     public void addEntities(Entity... entities) {
-        this.entities.addAll(Set.of(entities));
+        Set<Entity> entitySet = new HashSet<>(Arrays.asList(entities));
+
+        this.entities.addAll(entitySet);
+
+        systems.forEach(system -> system.entitiesAdded(entitySet));
     }
 
     public void addEntities(Collection<? extends Entity> entities) {
         this.entities.addAll(entities);
+
+        systems.forEach(system -> system.entitiesAdded(entities));
     }
 
     public void removeEntity(Entity entity) {
@@ -144,11 +151,11 @@ public class World {
      */
     @SafeVarargs
     public final Set<Entity> getEntitiesWithAny(Class<? extends Component>... components) {
-        Set<Class<? extends Component>> entityComponents = Set.of(components);
+        Set<Class<? extends Component>> entityComponents = new HashSet<>(Arrays.asList(components));
 
         return entities
                 .stream()
-                .filter(entity -> !Collections.disjoint(Set.of(entity.getComponents().keySet()), entityComponents))
+                .filter(entity -> !Collections.disjoint(new HashSet<>(entity.getComponents().keySet()), entityComponents))
                 .collect(Collectors.toSet());
     }
 

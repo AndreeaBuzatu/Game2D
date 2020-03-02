@@ -4,6 +4,7 @@ import uk.ac.lancaster.scc210.engine.ecs.Component;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 
+import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -33,8 +34,14 @@ public abstract class IterativeSystem implements EntitySystem {
         entities = world.getEntitiesFor(components);
     }
 
+    /*
     @Override
     public void entityAdded(Entity entity) {
+        this.entities = world.getEntitiesFor(components);
+    }
+
+    @Override
+    public void entitiesAdded(Collection<? extends Entity> entities) {
         this.entities = world.getEntitiesFor(components);
     }
 
@@ -42,4 +49,5 @@ public abstract class IterativeSystem implements EntitySystem {
     public void entityRemoved(Entity entity) {
         this.entities = world.getEntitiesFor(components);
     }
+     */
 }
