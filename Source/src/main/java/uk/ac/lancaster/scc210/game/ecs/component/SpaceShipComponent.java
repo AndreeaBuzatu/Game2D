@@ -1,7 +1,5 @@
 package uk.ac.lancaster.scc210.game.ecs.component;
 
-import org.jsfml.audio.Sound;
-import uk.ac.lancaster.scc210.engine.content.SoundBufferManager;
 import uk.ac.lancaster.scc210.engine.ecs.Component;
 import uk.ac.lancaster.scc210.game.bullets.effects.BulletEffect;
 import uk.ac.lancaster.scc210.game.bullets.effects.Damage1Effect;

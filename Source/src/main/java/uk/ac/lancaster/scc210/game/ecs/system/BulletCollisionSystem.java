@@ -13,7 +13,6 @@ import uk.ac.lancaster.scc210.game.ecs.component.*;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 public class BulletCollisionSystem extends IterativeSystem {
     private final SoundManager soundManager;

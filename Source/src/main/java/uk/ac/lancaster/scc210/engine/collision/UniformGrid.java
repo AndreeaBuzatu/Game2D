@@ -10,7 +10,6 @@ import uk.ac.lancaster.scc210.game.ecs.component.OrientatedBoxComponent;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class UniformGrid implements Service {
     public static final int CELL_SIZE = 128;

@@ -4,7 +4,6 @@ import uk.ac.lancaster.scc210.engine.ecs.Component;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 
-import java.util.Collection;
 import java.util.Set;
 
 /**

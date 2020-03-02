@@ -1,11 +1,8 @@
 package uk.ac.lancaster.scc210.game.ecs.system;
 
-import org.jsfml.audio.Sound;
-import org.jsfml.audio.SoundBuffer;
 import org.jsfml.graphics.RenderTarget;
 import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.collision.OrientatedBox;
-import uk.ac.lancaster.scc210.engine.content.SoundBufferManager;
 import uk.ac.lancaster.scc210.engine.content.SoundManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
@@ -16,7 +13,6 @@ import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
 import uk.ac.lancaster.scc210.game.ecs.entity.PlayerFinder;
 
 import java.util.Collection;
-import java.util.Optional;
 
 public class ItemCollisionSystem extends IterativeSystem {
     // We only have one player but the abstraction works like so - oh well

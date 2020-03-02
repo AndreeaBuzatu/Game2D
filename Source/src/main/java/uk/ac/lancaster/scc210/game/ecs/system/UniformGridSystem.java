@@ -2,17 +2,13 @@ package uk.ac.lancaster.scc210.game.ecs.system;
 
 import org.jsfml.graphics.RenderTarget;
 import org.jsfml.system.Time;
-import uk.ac.lancaster.scc210.engine.collision.Cell;
 import uk.ac.lancaster.scc210.engine.collision.UniformGrid;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
-import uk.ac.lancaster.scc210.game.ecs.component.StationaryComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.TransformableComponent;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class UniformGridSystem extends IterativeSystem {
     private final UniformGrid uniformGrid;

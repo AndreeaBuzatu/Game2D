@@ -58,7 +58,7 @@ public class Entity {
      *
      * @return the components
      */
-    HashMap<Class<? extends Component>, Component> getComponents() {
+    public HashMap<Class<? extends Component>, Component> getComponents() {
         return components;
     }
 

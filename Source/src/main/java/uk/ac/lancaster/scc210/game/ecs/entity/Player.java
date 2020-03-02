@@ -11,12 +11,11 @@ import uk.ac.lancaster.scc210.game.ecs.component.LivesComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 import uk.ac.lancaster.scc210.game.resources.PlayerData;
-import uk.ac.lancaster.scc210.game.resources.PlayerWriter;
 
 public class Player {
     private final int DEFAULT_LIVES = 3;
 
-    private Entity player;
+    private final Entity player;
 
     public Player(ServiceProvider serviceProvider) {
         SpaceShipPrototypeManager spaceShipManager = (SpaceShipPrototypeManager) serviceProvider.get(SpaceShipPrototypeManager.class);

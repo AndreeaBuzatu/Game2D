@@ -3,20 +3,15 @@ package uk.ac.lancaster.scc210.game.ecs.system;
 import org.jsfml.graphics.RenderTarget;
 import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.collision.Cell;
-import uk.ac.lancaster.scc210.engine.collision.OrientatedBox;
 import uk.ac.lancaster.scc210.engine.collision.UniformGrid;
 import uk.ac.lancaster.scc210.engine.content.SoundManager;
-import uk.ac.lancaster.scc210.engine.ecs.Component;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.game.ecs.component.*;
-import uk.ac.lancaster.scc210.game.ecs.entity.PlayerFinder;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class EnemyCollisionSystem extends IterativeSystem {
     private final Time COLLISION_GAP = Time.getSeconds(1);
@@ -26,8 +21,6 @@ public class EnemyCollisionSystem extends IterativeSystem {
     private final UniformGrid uniformGrid;
 
     private Time elapsedTime;
-
-    private Entity player;
 
     /**
      * Instantiates a new Iterative system.
@@ -41,32 +34,15 @@ public class EnemyCollisionSystem extends IterativeSystem {
 
         uniformGrid = (UniformGrid) world.getServiceProvider().get(UniformGrid.class);
 
-        player = PlayerFinder.findPlayer(world);
-
         elapsedTime = Time.ZERO;
     }
 
     @Override
     public void entityAdded(Entity entity) {
-        /*
-        entities = world.getEntitiesFor(EnemyComponent.class);
-
-        if (player == null) {
-            player = PlayerFinder.findPlayer(world);
-        }
-
-         */
     }
 
     @Override
     public void entitiesAdded(Collection<? extends Entity> entities) {
-        /*
-        this.entities = world.getEntitiesFor(EnemyComponent.class);
-
-        if (player == null) {
-            player = PlayerFinder.findPlayer(world);
-        }
-         */
     }
 
     @Override
@@ -132,7 +108,6 @@ public class EnemyCollisionSystem extends IterativeSystem {
 
         return null;
     }
-
 
     @Override
     public void draw(RenderTarget target) {

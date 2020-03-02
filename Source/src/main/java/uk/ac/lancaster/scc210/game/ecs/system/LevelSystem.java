@@ -58,7 +58,7 @@ public class LevelSystem extends IterativeSystem {
         }
 
         // Remove a stationary entity from the List<Entity> stationaryEntities
-        if (entity.hasComponent(StationaryComponent.class)) {
+        if (currentStage != null && entity.hasComponent(StationaryComponent.class)) {
             currentStage.removeStationaryEntity(entity);
         }
     }

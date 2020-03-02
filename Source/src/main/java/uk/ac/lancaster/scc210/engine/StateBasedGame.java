@@ -167,11 +167,7 @@ public class StateBasedGame {
 
             draw();
         }
-
-        serviceProvider.put(SoundManager.class, null);
-
-        serviceProvider.put(MusicManager.class, null);
-    }
+   }
 
     private void update() {
         // Get the elapsed time and restart the clock

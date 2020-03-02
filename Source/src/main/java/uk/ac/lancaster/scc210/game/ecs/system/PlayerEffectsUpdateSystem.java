@@ -12,7 +12,6 @@ import uk.ac.lancaster.scc210.game.items.ItemEffect;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class PlayerEffectsUpdateSystem extends IterativeSystem {

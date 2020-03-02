@@ -9,7 +9,6 @@ import uk.ac.lancaster.scc210.engine.service.ServiceProvider;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * World contains all the entities and systems in the game.

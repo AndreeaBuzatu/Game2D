@@ -12,6 +12,7 @@ import java.util.logging.Level;
 /**
  * Contains the functionality and error handling for loading a resource
  */
+@SuppressWarnings("ALL")
 public class ResourceLoader {
     private static final String ERROR_TITLE = "Unable to load resource";
 

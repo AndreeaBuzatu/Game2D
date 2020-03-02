@@ -1,9 +1,7 @@
 package uk.ac.lancaster.scc210.game.prototypes;
 
-import org.jsfml.audio.Sound;
 import org.jsfml.graphics.Sprite;
 import uk.ac.lancaster.scc210.engine.content.ShaderManager;
-import uk.ac.lancaster.scc210.engine.content.SoundBufferManager;
 import uk.ac.lancaster.scc210.engine.content.TextureAnimationManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
