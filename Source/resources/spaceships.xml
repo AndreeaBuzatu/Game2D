@@ -11,6 +11,14 @@
                items="health1effect-item,speed-item" lives="1"
                firing-sound="enemy-one-shoot" hit-sound="enemy-death"/>
 
+    <spaceship name="enemy-three" animation="alien-ship" speed="5" bullet="sample" pattern="line-bullet" score="50"
+               items="health1effect-item,speed-item" lives="2"
+               firing-sound="enemy-one-shoot" hit-sound="enemy-death"/>
+
+    <spaceship name="enemy-four" animation="alien-ship" speed="5" bullet="sample" pattern="star-bullet" score="75"
+               items="health1effect-item,speed-item" lives="2"
+               firing-sound="enemy-one-shoot" hit-sound="enemy-death"/>
+
     <spaceship name="spawned-other" animation="player-ship" speed="5" bullet="sample" pattern="star-bullet" score="25"
                items="other-item,test-item" lives="1"
                firing-sound="enemy-one-shoot" hit-sound="enemy-death"/>
