@@ -2,7 +2,9 @@ package uk.ac.lancaster.scc210.game.ecs.system;
 
 import org.jsfml.graphics.RenderTarget;
 import org.jsfml.system.Time;
+import uk.ac.lancaster.scc210.engine.ViewSize;
 import uk.ac.lancaster.scc210.engine.collision.OrientatedBox;
+import uk.ac.lancaster.scc210.engine.collision.UniformGrid;
 import uk.ac.lancaster.scc210.engine.content.SoundManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
@@ -27,6 +29,8 @@ public class BulletCollisionSystem extends IterativeSystem {
         transformables = world.getEntitiesFor(TransformableComponent.class, FlashComponent.class);
 
         soundManager = (SoundManager) world.getServiceProvider().get(SoundManager.class);
+
+        new UniformGrid((ViewSize) world.getServiceProvider().get(ViewSize.class));
     }
 
     @Override
