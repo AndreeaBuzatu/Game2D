@@ -17,6 +17,8 @@ import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 import uk.ac.lancaster.scc210.game.ecs.entity.PlayerFinder;
 
+import java.util.Collection;
+
 /**
  * System which handles keyboard input. Used to move the player around the screen
  */
@@ -53,9 +55,25 @@ public class PlayerMovementSystem extends IterativeSystem {
 
     @Override
     public void entityAdded(Entity entity) {
-        super.entityAdded(entity);
+        entities = world.getEntitiesFor(SpriteComponent.class, SpeedComponent.class, RotationComponent.class, PlayerComponent.class);
 
-        player = PlayerFinder.findPlayer(world);
+        if (player == null) {
+            player = PlayerFinder.findPlayer(world);
+        }
+    }
+
+    @Override
+    public void entitiesAdded(Collection<? extends Entity> entities) {
+        this.entities = world.getEntitiesFor(SpriteComponent.class, SpeedComponent.class, RotationComponent.class, PlayerComponent.class);
+
+        if (player == null) {
+            player = PlayerFinder.findPlayer(world);
+        }
+    }
+
+    @Override
+    public void entityRemoved(Entity entity) {
+
     }
 
     @Override

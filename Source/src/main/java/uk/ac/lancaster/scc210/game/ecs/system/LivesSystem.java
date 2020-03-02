@@ -7,6 +7,8 @@ import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.game.ecs.component.LivesComponent;
 
+import java.util.Collection;
+
 public class LivesSystem extends IterativeSystem {
     /**
      * Instantiate the Health System. Each entity *can* have health
@@ -16,6 +18,21 @@ public class LivesSystem extends IterativeSystem {
      */
     public LivesSystem(World world) {
         super(world, LivesComponent.class);
+    }
+
+    @Override
+    public void entityAdded(Entity entity) {
+        entities = world.getEntitiesFor(LivesComponent.class);
+    }
+
+    @Override
+    public void entitiesAdded(Collection<? extends Entity> entities) {
+        this.entities = world.getEntitiesFor(LivesComponent.class);
+    }
+
+    @Override
+    public void entityRemoved(Entity entity) {
+
     }
 
     @Override

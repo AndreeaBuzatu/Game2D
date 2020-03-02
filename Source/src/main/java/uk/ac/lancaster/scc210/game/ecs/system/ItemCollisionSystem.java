@@ -15,6 +15,7 @@ import uk.ac.lancaster.scc210.game.ecs.component.OrientatedBoxComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
 import uk.ac.lancaster.scc210.game.ecs.entity.PlayerFinder;
 
+import java.util.Collection;
 import java.util.Optional;
 
 public class ItemCollisionSystem extends IterativeSystem {
@@ -39,9 +40,25 @@ public class ItemCollisionSystem extends IterativeSystem {
 
     @Override
     public void entityAdded(Entity entity) {
-        super.entityAdded(entity);
+        entities = world.getEntitiesFor(ItemEffectsComponent.class);
 
-        player = PlayerFinder.findPlayer(world);
+        if (player == null) {
+            player = PlayerFinder.findPlayer(world);
+        }
+    }
+
+    @Override
+    public void entitiesAdded(Collection<? extends Entity> entities) {
+        this.entities = world.getEntitiesFor(ItemEffectsComponent.class);
+
+        if (player == null) {
+            player = PlayerFinder.findPlayer(world);
+        }
+    }
+
+    @Override
+    public void entityRemoved(Entity entity) {
+
     }
 
     @Override

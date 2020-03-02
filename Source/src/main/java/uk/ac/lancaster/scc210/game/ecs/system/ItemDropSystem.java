@@ -8,6 +8,7 @@ import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.game.content.ItemPrototypeManager;
 import uk.ac.lancaster.scc210.game.ecs.component.*;
 
+import java.util.Collection;
 import java.util.Random;
 
 public class ItemDropSystem extends IterativeSystem {
@@ -37,6 +38,16 @@ public class ItemDropSystem extends IterativeSystem {
         super(world);
 
         random = new Random();
+    }
+
+    @Override
+    public void entityAdded(Entity entity) {
+
+    }
+
+    @Override
+    public void entitiesAdded(Collection<? extends Entity> entities) {
+
     }
 
     @Override

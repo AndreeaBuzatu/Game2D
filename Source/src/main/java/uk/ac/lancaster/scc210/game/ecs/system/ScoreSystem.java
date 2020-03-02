@@ -10,6 +10,8 @@ import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.ScoreComponent;
 import uk.ac.lancaster.scc210.game.ecs.entity.PlayerFinder;
 
+import java.util.Collection;
+
 public class ScoreSystem extends IterativeSystem {
     private Entity player;
 
@@ -26,15 +28,20 @@ public class ScoreSystem extends IterativeSystem {
 
     @Override
     public void entityAdded(Entity entity) {
-        super.entityAdded(entity);
+        if (player == null) {
+            player = PlayerFinder.findPlayer(world);
+        }
+    }
 
-        player = PlayerFinder.findPlayer(world);
+    @Override
+    public void entitiesAdded(Collection<? extends Entity> entities) {
+        if (player == null) {
+            player = PlayerFinder.findPlayer(world);
+        }
     }
 
     @Override
     public void entityRemoved(Entity entity) {
-        super.entityRemoved(entity);
-
         // Don't precede
         if (player == null) {
             return;

@@ -9,6 +9,8 @@ import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.game.ecs.component.*;
 import uk.ac.lancaster.scc210.game.patterns.Pattern;
 
+import java.util.Collection;
+
 public class EnemyFiringSystem extends IterativeSystem {
     private final SoundManager soundManager;
 
@@ -21,6 +23,21 @@ public class EnemyFiringSystem extends IterativeSystem {
         super(world, SpriteComponent.class, AnimationComponent.class, EnemyComponent.class, FiringPatternComponent.class);
 
         soundManager = (SoundManager) world.getServiceProvider().get(SoundManager.class);
+    }
+
+    @Override
+    public void entityAdded(Entity entity) {
+        entities = world.getEntitiesFor(SpriteComponent.class, AnimationComponent.class, EnemyComponent.class, FiringPatternComponent.class);
+    }
+
+    @Override
+    public void entitiesAdded(Collection<? extends Entity> entities) {
+        this.entities = world.getEntitiesFor(SpriteComponent.class, AnimationComponent.class, EnemyComponent.class, FiringPatternComponent.class);
+    }
+
+    @Override
+    public void entityRemoved(Entity entity) {
+
     }
 
     @Override
@@ -43,7 +60,7 @@ public class EnemyFiringSystem extends IterativeSystem {
                 if (entity.hasComponent(SpaceShipComponent.class)) {
                     SpaceShipComponent spaceShipComponent = (SpaceShipComponent) entity.findComponent(SpaceShipComponent.class);
 
-                    soundManager.playSound(spaceShipComponent.getFiringSound());
+                    //soundManager.playSound(spaceShipComponent.getFiringSound());
                 }
 
                 world.addEntities(firingPatternComponent.getPattern().create());

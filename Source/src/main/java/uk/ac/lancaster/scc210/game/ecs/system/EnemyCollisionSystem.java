@@ -13,6 +13,8 @@ import uk.ac.lancaster.scc210.game.ecs.component.OrientatedBoxComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
 import uk.ac.lancaster.scc210.game.ecs.entity.PlayerFinder;
 
+import java.util.Collection;
+
 public class EnemyCollisionSystem extends IterativeSystem {
     private final Time COLLISION_GAP = Time.getSeconds(1);
 
@@ -39,9 +41,25 @@ public class EnemyCollisionSystem extends IterativeSystem {
 
     @Override
     public void entityAdded(Entity entity) {
-        super.entityAdded(entity);
+        entities = world.getEntitiesFor(EnemyComponent.class);
 
-        player = PlayerFinder.findPlayer(world);
+        if (player == null) {
+            player = PlayerFinder.findPlayer(world);
+        }
+    }
+
+    @Override
+    public void entitiesAdded(Collection<? extends Entity> entities) {
+        this.entities = world.getEntitiesFor(EnemyComponent.class);
+
+        if (player == null) {
+            player = PlayerFinder.findPlayer(world);
+        }
+    }
+
+    @Override
+    public void entityRemoved(Entity entity) {
+
     }
 
     @Override

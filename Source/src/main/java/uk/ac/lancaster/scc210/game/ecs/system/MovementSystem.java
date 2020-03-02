@@ -9,6 +9,8 @@ import uk.ac.lancaster.scc210.game.ecs.component.FiredComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
+import java.util.Collection;
+
 /**
  * System which handles entities moving around the screen which are not keyboard controlled
  */
@@ -20,6 +22,21 @@ public class MovementSystem extends IterativeSystem {
      */
     public MovementSystem(World world) {
         super(world, SpriteComponent.class, SpeedComponent.class, FiredComponent.class);
+    }
+
+    @Override
+    public void entityAdded(Entity entity) {
+        entities = world.getEntitiesFor(SpriteComponent.class, SpeedComponent.class, FiredComponent.class);
+    }
+
+    @Override
+    public void entitiesAdded(Collection<? extends Entity> entities) {
+        this.entities = world.getEntitiesFor(SpriteComponent.class, SpeedComponent.class, FiredComponent.class);
+    }
+
+    @Override
+    public void entityRemoved(Entity entity) {
+
     }
 
     @Override

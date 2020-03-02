@@ -9,6 +9,8 @@ import uk.ac.lancaster.scc210.game.ecs.component.*;
 import uk.ac.lancaster.scc210.game.level.Level;
 import uk.ac.lancaster.scc210.game.level.LevelStage;
 
+import java.util.Collection;
+
 public class LevelSystem extends IterativeSystem {
     private Level level;
 
@@ -27,6 +29,16 @@ public class LevelSystem extends IterativeSystem {
         currentStage = level.getCurrentStage();
 
         world.addEntities(currentStage.getStationaryEntities());
+    }
+
+    @Override
+    public void entityAdded(Entity entity) {
+
+    }
+
+    @Override
+    public void entitiesAdded(Collection<? extends Entity> entities) {
+
     }
 
     @Override

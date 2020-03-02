@@ -5,10 +5,9 @@ import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
-import uk.ac.lancaster.scc210.game.ecs.component.FlashComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.LivesComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.*;
+
+import java.util.Collection;
 
 /**
  * System used to draw non-animated Sprites to the Screen
@@ -21,6 +20,21 @@ public class RenderSystem extends IterativeSystem {
      */
     public RenderSystem(World world) {
         super(world, SpriteComponent.class);
+    }
+
+    @Override
+    public void entityAdded(Entity entity) {
+        entities = world.getEntitiesFor(SpriteComponent.class);
+    }
+
+    @Override
+    public void entitiesAdded(Collection<? extends Entity> entities) {
+        this.entities = world.getEntitiesFor(SpriteComponent.class);
+    }
+
+    @Override
+    public void entityRemoved(Entity entity) {
+
     }
 
     @Override
