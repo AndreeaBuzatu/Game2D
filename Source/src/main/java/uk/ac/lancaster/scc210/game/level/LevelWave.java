@@ -51,6 +51,7 @@ public class LevelWave {
 
     Entity spawnNew(Time deltaTime) {
         Entity entity = null;
+
         // Create the initial ship - ignore the timer for the first one.
         if (numLeftToSpawn == numShips) {
             entity = create();
@@ -58,7 +59,6 @@ public class LevelWave {
             entities.add(entity);
 
             numLeftToSpawn--;
-
         }
 
         spawnCountUp += deltaTime.asSeconds();
@@ -67,7 +67,7 @@ public class LevelWave {
 
         if (spawnCountUp >= spawnTime) {
             if (!allSpawned()) {
-                 entity = create();
+                entity = create();
 
                 entities.add(entity);
 
@@ -81,7 +81,6 @@ public class LevelWave {
                 transformableComponent.getTransformable().setPosition(wave.getOrigin());
 
                 entities.add(entity);
-
             }
 
             spawnCountUp = COUNT_START;
@@ -94,7 +93,7 @@ public class LevelWave {
         entities.remove(entity);
     }
 
-    private boolean allSpawned() {
+    boolean allSpawned() {
         return numLeftToSpawn <= 0;
     }
 
@@ -109,7 +108,6 @@ public class LevelWave {
         entity.addComponent(new WaveComponent(this));
 
         entity.addComponent(new EnemyComponent());
-
 
         if (entity.hasComponent(SpriteComponent.class)) {
             SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);

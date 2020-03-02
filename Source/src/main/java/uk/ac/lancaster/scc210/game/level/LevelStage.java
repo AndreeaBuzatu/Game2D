@@ -29,11 +29,11 @@ public class LevelStage {
         return waves.stream().allMatch(LevelWave::complete) && stationaryEntities.isEmpty();
     }
 
-    public void spawn(World world, Time deltaTime) {
+    public void update(World world, Time deltaTime) {
         if (hasSpawned()) {
             return;
         }
-        
+
         // Prevent stationary entities from being re-spawned
         if (!stationarySpawned) {
             world.addEntities(stationaryEntities);
@@ -44,7 +44,7 @@ public class LevelStage {
         for (LevelWave wave : waves) {
             Entity newShip = wave.spawnNew(deltaTime);
 
-            if (newShip != null) {
+            if (newShip != null && !world.getEntities().contains(newShip)) {
                 world.addEntity(newShip);
             }
 
@@ -75,7 +75,7 @@ public class LevelStage {
     }
 
     public boolean hasSpawned() {
-        return waves.isEmpty() && stationarySpawned;
+        return waves.stream().allMatch(LevelWave::complete) && stationarySpawned;
     }
 
     public void removeStationaryEntity(Entity entity) {
