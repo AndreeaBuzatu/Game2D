@@ -16,4 +16,7 @@
     <atlas src="level-select.jpg" texture_width="1280" texture_height="1280">
         <texture name="level-select" row="0" column="0"/>
     </atlas>
+    <atlas src="enemy_ship_lv1.png" texture_width="64" texture_height="64">
+        <texture name="example_bullet" row="0" column="0"/>
+    </atlas>
 </atlases>
