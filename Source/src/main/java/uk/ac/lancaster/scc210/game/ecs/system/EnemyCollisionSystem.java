@@ -2,23 +2,28 @@ package uk.ac.lancaster.scc210.game.ecs.system;
 
 import org.jsfml.graphics.RenderTarget;
 import org.jsfml.system.Time;
+import uk.ac.lancaster.scc210.engine.collision.Cell;
 import uk.ac.lancaster.scc210.engine.collision.OrientatedBox;
+import uk.ac.lancaster.scc210.engine.collision.UniformGrid;
 import uk.ac.lancaster.scc210.engine.content.SoundManager;
+import uk.ac.lancaster.scc210.engine.ecs.Component;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
-import uk.ac.lancaster.scc210.game.ecs.component.EnemyComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.LivesComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.OrientatedBoxComponent;
-import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.*;
 import uk.ac.lancaster.scc210.game.ecs.entity.PlayerFinder;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class EnemyCollisionSystem extends IterativeSystem {
     private final Time COLLISION_GAP = Time.getSeconds(1);
 
     private final SoundManager soundManager;
+
+    private final UniformGrid uniformGrid;
 
     private Time elapsedTime;
 
@@ -34,6 +39,8 @@ public class EnemyCollisionSystem extends IterativeSystem {
 
         soundManager = (SoundManager) world.getServiceProvider().get(SoundManager.class);
 
+        uniformGrid = (UniformGrid) world.getServiceProvider().get(UniformGrid.class);
+
         player = PlayerFinder.findPlayer(world);
 
         elapsedTime = Time.ZERO;
@@ -41,20 +48,25 @@ public class EnemyCollisionSystem extends IterativeSystem {
 
     @Override
     public void entityAdded(Entity entity) {
+        /*
         entities = world.getEntitiesFor(EnemyComponent.class);
 
         if (player == null) {
             player = PlayerFinder.findPlayer(world);
         }
+
+         */
     }
 
     @Override
     public void entitiesAdded(Collection<? extends Entity> entities) {
+        /*
         this.entities = world.getEntitiesFor(EnemyComponent.class);
 
         if (player == null) {
             player = PlayerFinder.findPlayer(world);
         }
+         */
     }
 
     @Override
@@ -64,35 +76,63 @@ public class EnemyCollisionSystem extends IterativeSystem {
 
     @Override
     public void update(Time deltaTime) {
-        if (player == null) {
-            return;
-        }
-
         elapsedTime = Time.add(elapsedTime, deltaTime);
 
-        for (Entity entity : entities) {
-            // Player can't collide with themselves
-            if (player == entity) {
-                continue;
-            }
+        for (List<Cell> cells : uniformGrid.getGrid()) {
+            for (Cell cell : cells) {
+                if (cell.getEntities().isEmpty()) {
+                    continue;
+                }
 
-            OrientatedBoxComponent playerOrientedBox = (OrientatedBoxComponent) player.findComponent(OrientatedBoxComponent.class);
+                List<Entity[]> collided = cell.checkCollision();
 
-            OrientatedBoxComponent entityOrientedBox = (OrientatedBoxComponent) entity.findComponent(OrientatedBoxComponent.class);
+               for (Entity[] collision : collided) {
+                    if (collision == null) {
+                        continue;
+                    }
 
-            if (OrientatedBox.areColliding(playerOrientedBox.getOrientatedBox(), entityOrientedBox.getOrientatedBox()) && elapsedTime.asSeconds() > COLLISION_GAP.asSeconds()) {
-                SpaceShipComponent spaceShipComponent = (SpaceShipComponent) player.findComponent(SpaceShipComponent.class);
+                    Entity player = findPlayer(collision);
 
-                LivesComponent livesComponent = (LivesComponent) player.findComponent(LivesComponent.class);
+                    Entity enemyShip = findEnemyShip(collision);
 
-                soundManager.playSound(spaceShipComponent.getHitSound());
+                    if ((player != null && enemyShip != null) && elapsedTime.asSeconds() > COLLISION_GAP.asSeconds()) {
+                        SpaceShipComponent spaceShipComponent = (SpaceShipComponent) player.findComponent(SpaceShipComponent.class);
 
-                elapsedTime = Time.ZERO;
+                        LivesComponent livesComponent = (LivesComponent) player.findComponent(LivesComponent.class);
 
-                livesComponent.setLives(livesComponent.getLives() - 1);
+                        soundManager.playSound(spaceShipComponent.getHitSound());
+
+                        elapsedTime = Time.ZERO;
+
+                        livesComponent.setLives(livesComponent.getLives() - 1);
+                    }
+                }
             }
         }
     }
+
+    private Entity findPlayer(Entity[] collided) {
+        if (collided[0].hasComponent(PlayerComponent.class)) {
+            return collided[0];
+
+        } else if (collided[1].hasComponent(PlayerComponent.class)) {
+            return collided[1];
+        }
+
+        return null;
+    }
+
+    private Entity findEnemyShip(Entity[] collided) {
+        if (collided[0].hasComponent(EnemyComponent.class)) {
+            return collided[0];
+
+        } else if (collided[1].hasComponent(EnemyComponent.class)) {
+            return collided[1];
+        }
+
+        return null;
+    }
+
 
     @Override
     public void draw(RenderTarget target) {

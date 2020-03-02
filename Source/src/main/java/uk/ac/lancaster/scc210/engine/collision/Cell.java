@@ -13,7 +13,9 @@ public class Cell {
         entities = new ArrayList<>();
     }
 
-    public Entity[] checkCollision() {
+    public List<Entity[]> checkCollision() {
+        List<Entity[]> collisions = new ArrayList<>();
+
         for (Entity outer : entities) {
             OrientatedBoxComponent outerOrientatedBoxComponent = (OrientatedBoxComponent) outer.findComponent(OrientatedBoxComponent.class);
 
@@ -27,12 +29,12 @@ public class Cell {
                 if (OrientatedBox.areColliding(outerOrientatedBoxComponent.getOrientatedBox(), innerOrientatedBoxComponent.getOrientatedBox())) {
                     //System.out.println("Are colliding: " + System.currentTimeMillis());
 
-                    return new Entity[]{outer, inner};
+                    collisions.add(new Entity[]{outer, inner});
                 }
             }
         }
 
-        return null;
+        return collisions;
     }
 
     public void addEntity(Entity entity) {

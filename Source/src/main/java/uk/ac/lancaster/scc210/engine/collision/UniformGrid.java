@@ -4,12 +4,15 @@ import org.jsfml.graphics.FloatRect;
 import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.ViewSize;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
+import uk.ac.lancaster.scc210.engine.service.Service;
 import uk.ac.lancaster.scc210.game.ecs.component.OrientatedBoxComponent;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class UniformGrid {
+public class UniformGrid implements Service {
     public static final int CELL_SIZE = 128;
 
     private final List<List<Cell>> grid;
@@ -40,12 +43,41 @@ public class UniformGrid {
     }
 
     public void addEntity(Entity entity) {
-        //if (!entity.hasComponent(TransformableComponent.class) && !entity.hasComponent(OrientatedBoxComponent.class)) {
+        placeEntity(entity);
+    }
+
+    public void addEntities(Collection<? extends Entity> entities) {
+        entities.forEach(this::addEntity);
+    }
+
+    public void removeEntity(Entity entity) {
+        grid.forEach(cells -> cells.forEach(cell -> cell.getEntities().remove(entity)));
+    }
+
+    public List<List<Cell>> getGrid() {
+        return grid;
+    }
+
+    public void update() {
+        for (List<Cell> cells : grid) {
+            for (Cell cell : cells) {
+                cell.getEntities().forEach(this::placeEntity);
+            }
+        }
+    }
+
+    public void clear() {
+        for (List<Cell> cells : grid) {
+            for (Cell cell : cells) {
+                cell.clear();
+            }
+        }
+    }
+
+    private void placeEntity(Entity entity) {
         if (!entity.hasComponent(OrientatedBoxComponent.class)) {
             return;
         }
-
-        //TransformableComponent transformableComponent = (TransformableComponent) entity.findComponent(TransformableComponent.class);
 
         OrientatedBoxComponent orientatedBoxComponent = (OrientatedBoxComponent) entity.findComponent(OrientatedBoxComponent.class);
 
@@ -58,25 +90,13 @@ public class UniformGrid {
 
             int row = (int) Math.ceil((point.y - 0) / CELL_SIZE) - 1;
 
-            //System.out.println("Row: " + row + ", Column: " + column);
-
-            //System.out.println("Num Rows: " + numRows + ", Num Columns: " + numColumns);
-
             // Don't allow out of bounds columns
             if (row > 0 && row < numRows && column > 0 && column < numColumns) {
-                grid.get(row).get(column).addEntity(entity);
-            }
-        }
-    }
+                Cell cell = grid.get(row).get(column);
 
-    public List<List<Cell>> getGrid() {
-        return grid;
-    }
-
-    public void clear() {
-        for (List<Cell> cells : grid) {
-            for (Cell cell : cells) {
-                cell.clear();
+                if (!cell.getEntities().contains(entity)) {
+                    grid.get(row).get(column).addEntity(entity);
+                }
             }
         }
     }

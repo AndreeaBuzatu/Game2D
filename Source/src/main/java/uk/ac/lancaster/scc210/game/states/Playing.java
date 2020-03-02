@@ -143,6 +143,8 @@ public class Playing implements State, InputListener {
 
         world.addSystem(new LivesSystem(world));
 
+        world.addSystem(new UniformGridSystem(world));
+
         player = new Player(game.getServiceProvider()).getPlayer();
 
         playerScoreWriter = (PlayerWriter) game.getServiceProvider().get(PlayerWriter.class);

@@ -8,6 +8,7 @@ import uk.ac.lancaster.scc210.engine.prototypes.Prototype;
 import uk.ac.lancaster.scc210.game.ecs.component.OrientatedBoxComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.TransformableComponent;
 
 public class BulletPrototype implements Prototype {
     private final TextureManager textureManager;
@@ -31,7 +32,9 @@ public class BulletPrototype implements Prototype {
 
         final OrientatedBoxComponent orientatedBoxComponent = new OrientatedBoxComponent(sprite);
 
-        return World.createEntity(spriteComponent, speedComponent, orientatedBoxComponent);
+        final TransformableComponent transformableComponent = new TransformableComponent(sprite);
+
+        return World.createEntity(spriteComponent, speedComponent, orientatedBoxComponent, transformableComponent);
     }
 
     public String getTexture() {
