@@ -2,6 +2,7 @@ package uk.ac.lancaster.scc210.game.ecs.system;
 
 import org.jsfml.graphics.RenderTarget;
 import org.jsfml.system.Time;
+import uk.ac.lancaster.scc210.engine.ViewSize;
 import uk.ac.lancaster.scc210.engine.content.SoundManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
@@ -14,6 +15,8 @@ import java.util.Collection;
 public class EnemyFiringSystem extends IterativeSystem {
     private final SoundManager soundManager;
 
+    private final ViewSize viewSize;
+
     /**
      * Instantiates a new Iterative system.
      *
@@ -23,6 +26,8 @@ public class EnemyFiringSystem extends IterativeSystem {
         super(world, SpriteComponent.class, AnimationComponent.class, EnemyComponent.class, FiringPatternComponent.class);
 
         soundManager = (SoundManager) world.getServiceProvider().get(SoundManager.class);
+
+        viewSize = (ViewSize) world.getServiceProvider().get(ViewSize.class);
     }
 
     @Override
@@ -48,11 +53,20 @@ public class EnemyFiringSystem extends IterativeSystem {
 
             FiringPatternComponent firingPatternComponent = (FiringPatternComponent) entity.findComponent(FiringPatternComponent.class);
 
+            SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
+
+            Pattern firingPattern = firingPatternComponent.getPattern();
+
+            if (viewSize.outOfBounds(spriteComponent.getSprite())) {
+                // Reset the elapsed time for out of bound ships
+                firingPattern.setElapsedTime(Time.ZERO);
+
+                continue;
+            }
+
             if (!enemyComponent.canFire()) {
                 return;
             }
-
-            Pattern firingPattern = firingPatternComponent.getPattern();
 
             firingPattern.setElapsedTime(Time.add(firingPattern.getElapsedTime(), deltaTime));
 
