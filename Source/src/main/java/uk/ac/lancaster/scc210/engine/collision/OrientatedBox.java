@@ -47,7 +47,7 @@ public class OrientatedBox {
         points = new Vector2f[POINTS];
     }
 
-    private void calculatePoints() {
+    public void calculatePoints() {
         /*
          * Unfortunately JSFML does not provide an abstraction where Sprite can be considered a Shape (despite storing a RectangleShape).
          * As such, we have to handle to handle two separate cases of Sprite and Shape. This is unfortunate...
@@ -142,5 +142,9 @@ public class OrientatedBox {
         }
 
         return true;
+    }
+
+    public Vector2f[] getPoints() {
+        return points;
     }
 }
