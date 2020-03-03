@@ -45,7 +45,7 @@ public class Completion implements State, InputListener {
 
     private MenuHeader menuHeader;
 
-    private boolean shouldEnterName;
+    private boolean shouldEnterName, hasCompleted;
 
     private char[] name;
 
@@ -57,6 +57,8 @@ public class Completion implements State, InputListener {
         name = new char[NAME_LENGTH];
 
         shouldEnterName = true;
+
+        hasCompleted = false;
 
         charsEntered = 0;
     }
@@ -115,6 +117,12 @@ public class Completion implements State, InputListener {
 
     @Override
     public void update(Time deltaTime) {
+        if (hasCompleted) {
+            game.popState();
+
+            return;
+        }
+
         if (playerScoreIndex < 0) {
             return;
         }
@@ -139,27 +147,23 @@ public class Completion implements State, InputListener {
                 } catch (ResourceNotFoundException e) {
                     StateBasedGame.LOGGER.log(Level.WARNING, e.getMessage());
                 }
+
+                // Once the player has completed the game, reset their score to 0 and lives back to default and write the file.
+                PlayerWriter playerWriter = (PlayerWriter) game.getServiceProvider().get(PlayerWriter.class);
+
+                PlayerData playerData = (PlayerData) game.getServiceProvider().get(PlayerData.class);
+
+                playerData.setScore(0);
+
+                playerData.resetLives();
+
+                playerWriter.writePlayerLevel(playerData);
             }
 
-            // Once the player has completed the game, reset their score to 0 and lives back to default and write the file.
-            PlayerWriter playerWriter = (PlayerWriter) game.getServiceProvider().get(PlayerWriter.class);
+            // Set a flag here so we don't remove the listener while operating on the list
+            hasCompleted = true;
 
-            PlayerData playerData = (PlayerData) game.getServiceProvider().get(PlayerData.class);
-
-            playerData.setScore(0);
-
-            playerData.resetLives();
-
-            playerWriter.writePlayerLevel(playerData);
-
-            /*
-            WARNING: CRAPPY CODE BELOW!!!
-
-            We pop from the Completion state to the PLaying state back to the Main Menu state
-             */
-            game.popState();
-
-            game.popState();
+            return;
         }
 
         if (!shouldEnterName) {
