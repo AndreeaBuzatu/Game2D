@@ -126,7 +126,7 @@ public class HelpSelect implements State, InputListener {
         textInfo6.setString("You can find the answers below ↓");
         controlQ.setString("Q");
         controlE.setString("E");
-        controlSpace.setString("E");
+        controlSpace.setString("SPACE");
         textControls.setString("Controls");
         textAim.setString("Aim");
         Q.setString("Q - rotate left");
@@ -148,7 +148,7 @@ public class HelpSelect implements State, InputListener {
         Vector2f textInfo1Pos6= new Vector2f(800,820);
         Vector2f control1= new Vector2f(693,1190);
         Vector2f control2= new Vector2f(970,1200);
-        Vector2f control3= new Vector2f(970,1200);
+        Vector2f control3= new Vector2f(1230,1367);
         Vector2f textControlV = new Vector2f(1110,1110);
         Vector2f textAimV = new Vector2f(1200,900);
         Vector2f qV = new Vector2f(800,920);
@@ -171,7 +171,6 @@ public class HelpSelect implements State, InputListener {
         controlQ.setPosition(control1);
         controlE.setPosition(control2);
         controlSpace.setPosition(control3);
-
         textControls.setPosition(textControlV);
         textAim.setPosition(textAimV);
         Q.setPosition(qV);
@@ -193,6 +192,7 @@ public class HelpSelect implements State, InputListener {
         textInfo6.setCharacterSize(30);
         controlQ.setCharacterSize(35);
         controlE.setCharacterSize(35);
+        controlSpace.setCharacterSize(35);
         textControls.setCharacterSize(35);
         textAim.setCharacterSize(35);
         Q.setCharacterSize(30);
@@ -218,6 +218,7 @@ public class HelpSelect implements State, InputListener {
         textInfo6.setFont(fontManager.get("font"));
         controlQ.setFont(fontManager.get("font"));
         controlE.setFont(fontManager.get("font"));
+        controlSpace.setFont(fontManager.get("font"));
         textControls.setFont(fontManager.get("font"));
         textAim.setFont(fontManager.get("font"));
         Q.setFont(fontManager.get("font"));
@@ -257,6 +258,7 @@ public class HelpSelect implements State, InputListener {
 
         target.draw(controlQ);
         target.draw(controlE);
+        target.draw(controlSpace);
 
         target.draw(textControls);
         target.draw(textAim);
