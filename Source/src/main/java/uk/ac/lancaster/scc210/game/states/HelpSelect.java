@@ -47,6 +47,7 @@ public class HelpSelect implements State, InputListener {
     private Text textInfo6 = new Text();
     private Text controlQ = new Text();
     private Text controlE = new Text();
+    private Text controlSpace= new Text();
     private Text textControls = new Text();
     private Text textAim = new Text();
     private Text Q = new Text();
@@ -125,6 +126,7 @@ public class HelpSelect implements State, InputListener {
         textInfo6.setString("You can find the answers below ↓");
         controlQ.setString("Q");
         controlE.setString("E");
+        controlSpace.setString("E");
         textControls.setString("Controls");
         textAim.setString("Aim");
         Q.setString("Q - rotate left");
@@ -146,6 +148,7 @@ public class HelpSelect implements State, InputListener {
         Vector2f textInfo1Pos6= new Vector2f(800,820);
         Vector2f control1= new Vector2f(693,1190);
         Vector2f control2= new Vector2f(970,1200);
+        Vector2f control3= new Vector2f(970,1200);
         Vector2f textControlV = new Vector2f(1110,1110);
         Vector2f textAimV = new Vector2f(1200,900);
         Vector2f qV = new Vector2f(800,920);
@@ -167,6 +170,8 @@ public class HelpSelect implements State, InputListener {
         textInfo6.setPosition(textInfo1Pos6);
         controlQ.setPosition(control1);
         controlE.setPosition(control2);
+        controlSpace.setPosition(control3);
+
         textControls.setPosition(textControlV);
         textAim.setPosition(textAimV);
         Q.setPosition(qV);
