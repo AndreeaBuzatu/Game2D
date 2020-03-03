@@ -22,7 +22,7 @@
     <atlas src="enemy.png" texture_width="128" texture_height="128">
         <texture name="enemy" row="0" column="0"/>
     </atlas>
-    <atlas src="controls.png" texture_width="228" texture_height="153">
+    <atlas src="controls.png" texture_width="228" texture_height="199">
         <texture name="controls" row="0" column="0"/>
     </atlas>
 </atlases>
