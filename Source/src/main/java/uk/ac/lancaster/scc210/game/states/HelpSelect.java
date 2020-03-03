@@ -136,10 +136,10 @@ public class HelpSelect implements State, InputListener {
         A.setString("A - move left");
         S.setString("S - move backward");
         D.setString("D - move right");
-        aim1.setString("You are the pilot of a spaceship which aim");
+        aim1.setString("You are the pilot of a spaceship ");
         aim2.setString("");
-        aim3.setString("which aim in the");
-        aim4.setString("game is to defeat");
+        aim3.setString("which aim in the game is to defeat");
+        aim4.setString("");
         aim5.setString("the alien waves");
         aim6.setString("that are trying");
         aim7.setString("to invade the Earth");
@@ -160,7 +160,7 @@ public class HelpSelect implements State, InputListener {
         Vector2f aV = new Vector2f(800,1025);
         Vector2f sV = new Vector2f(800,1060);
         Vector2f dV = new Vector2f(800,1095);
-        Vector2f aim1V = new Vector2f(1000,990);
+        Vector2f aim1V = new Vector2f(820,910);
         Vector2f aim2V = new Vector2f(1400,1040);
         Vector2f aim3V = new Vector2f(1375,1090);
         Vector2f aim4V = new Vector2f(1365,1140);
