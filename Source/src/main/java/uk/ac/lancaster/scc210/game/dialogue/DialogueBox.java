@@ -91,10 +91,12 @@ public class DialogueBox implements Drawable, InputListener {
 
         elapsedTime = Time.add(elapsedTime, deltaTime);
 
-        if (pressedKey == Keyboard.Key.SPACE && elapsedTime.asSeconds() >= TIME_GAP.asSeconds()) {
+        if (pressedKey != null && pressedKey == Keyboard.Key.SPACE && elapsedTime.asSeconds() >= TIME_GAP.asSeconds()) {
             formatText();
 
             elapsedTime = Time.ZERO;
+
+            pressedKey = null;
         }
     }
 
@@ -116,7 +118,6 @@ public class DialogueBox implements Drawable, InputListener {
 
     @Override
     public void keyTyped(TextEvent textevent) {
-
     }
 
     private void formatText() {
