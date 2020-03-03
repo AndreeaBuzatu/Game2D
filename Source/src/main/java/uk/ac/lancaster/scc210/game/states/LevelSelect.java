@@ -1,5 +1,6 @@
 package uk.ac.lancaster.scc210.game.states;
 
+import org.jsfml.audio.Music;
 import org.jsfml.graphics.*;
 import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
@@ -10,6 +11,7 @@ import uk.ac.lancaster.scc210.engine.InputListener;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import uk.ac.lancaster.scc210.engine.ViewSize;
 import uk.ac.lancaster.scc210.engine.content.FontManager;
+import uk.ac.lancaster.scc210.engine.content.MusicManager;
 import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.gui.InterfaceGrid;
 import uk.ac.lancaster.scc210.engine.gui.InterfaceList;
@@ -36,6 +38,8 @@ public class LevelSelect implements State, InputListener {
 
     private Text exitText;
 
+    private Music music;
+
     private Keyboard.Key pressedKey;
 
     private int currentUnlocked;
@@ -45,6 +49,8 @@ public class LevelSelect implements State, InputListener {
         this.game = game;
 
         game.addKeyListener(this);
+
+        MusicManager musicManager = (MusicManager) game.getServiceProvider().get(MusicManager.class);
 
         fontManager = (FontManager) game.getServiceProvider().get(FontManager.class);
 
@@ -67,6 +73,8 @@ public class LevelSelect implements State, InputListener {
 
         background.setScale(2, 2);
 
+        music = musicManager.get("menu_music");
+
         createGrid();
 
         createExitText();
@@ -74,12 +82,12 @@ public class LevelSelect implements State, InputListener {
 
     @Override
     public void onEnter(StateBasedGame game) {
-
+        music.play();
     }
 
     @Override
     public void onExit(StateBasedGame game) {
-
+        music.pause();
     }
 
     private void createGrid() {
