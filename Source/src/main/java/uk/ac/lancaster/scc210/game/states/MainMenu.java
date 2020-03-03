@@ -11,11 +11,17 @@ import uk.ac.lancaster.scc210.engine.content.FontManager;
 import uk.ac.lancaster.scc210.engine.content.MusicManager;
 import uk.ac.lancaster.scc210.engine.gui.InterfaceList;
 import uk.ac.lancaster.scc210.engine.states.State;
+import uk.ac.lancaster.scc210.game.content.LevelManager;
 import uk.ac.lancaster.scc210.game.content.StateManager;
 import uk.ac.lancaster.scc210.game.gui.MenuHeader;
+import uk.ac.lancaster.scc210.game.resources.PlayerData;
 
 public class MainMenu implements State {
     private final int LIST_PADDING = 250;
+
+    private LevelManager levelManager;
+
+    private PlayerData playerData;
 
     private InterfaceList interfaceList;
 
@@ -33,6 +39,10 @@ public class MainMenu implements State {
 
         FloatRect viewBounds = viewSize.getViewBounds();
 
+        levelManager = (LevelManager) game.getServiceProvider().get(LevelManager.class);
+
+        playerData = (PlayerData) game.getServiceProvider().get(PlayerData.class);
+
         menuHeader = new MenuHeader("We Don't Have A Name", fontManager, viewBounds);
 
         Vector2f headerPos = menuHeader.getPosition();
@@ -40,7 +50,7 @@ public class MainMenu implements State {
         interfaceList = new InterfaceList(game, fontManager.get("font"), new Vector2f(headerPos.x, headerPos.y + LIST_PADDING));
 
         // For play create a new playing state so we can easily reset the game
-        interfaceList.addListOption("Play", (() -> game.pushState(new Playing())));
+        interfaceList.addListOption("Play", (() -> game.pushState(new Playing(getUnlockedLevel()))));
 
         interfaceList.addListOption("Level Select", (() -> game.pushState(stateManager.get("level-select"))));
 
@@ -83,5 +93,22 @@ public class MainMenu implements State {
         target.draw(menuHeader);
 
         target.draw(interfaceList);
+    }
+
+    private String getUnlockedLevel() {
+        String unlockedLevel = playerData.getUnlockedLevel();
+
+        int currentUnlocked = levelManager.indexOf(unlockedLevel);
+
+        // If the level can't be found, default to the first level
+        if (currentUnlocked < 0) {
+            unlockedLevel = levelManager.getLevelList().get(0).getName();
+
+            currentUnlocked = levelManager.indexOf(unlockedLevel);
+
+            unlockedLevel = levelManager.getLevelList().get(currentUnlocked).getName();
+        }
+
+        return unlockedLevel;
     }
 }

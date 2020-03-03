@@ -91,8 +91,6 @@ public class LevelSelect implements State, InputListener {
 
         InterfaceList interfaceList = null;
 
-        Playing playing = new Playing();
-
         for (int i = 0; i < levels.size(); i++) {
             if (i % 3 == 0) {
                 System.out.println("I: " + i);
@@ -111,9 +109,9 @@ public class LevelSelect implements State, InputListener {
                 // Pop back to the main menu so that the pause screen can take them back to the main menu
                 game.popState();
 
-                game.pushState(playing);
+                game.pushState(new Playing(levels.get(finalI).getName()));
 
-                playing.setLevel(levels.get(finalI));
+                //playing.setLevel(levels.get(finalI));
             }));
 
             if (i > currentUnlocked) {

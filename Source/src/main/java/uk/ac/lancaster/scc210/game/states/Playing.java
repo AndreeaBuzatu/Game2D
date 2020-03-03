@@ -9,6 +9,7 @@ import org.jsfml.window.event.TextEvent;
 import uk.ac.lancaster.scc210.engine.InputListener;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import uk.ac.lancaster.scc210.engine.ViewSize;
+import uk.ac.lancaster.scc210.engine.collision.UniformGrid;
 import uk.ac.lancaster.scc210.engine.content.FontManager;
 import uk.ac.lancaster.scc210.engine.content.MusicManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
@@ -25,7 +26,6 @@ import uk.ac.lancaster.scc210.game.pooling.BulletPool;
 import uk.ac.lancaster.scc210.game.resources.PlayerData;
 import uk.ac.lancaster.scc210.game.resources.PlayerWriter;
 
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -40,21 +40,19 @@ public class Playing implements State, InputListener {
 
     private final int MAX_OPACITY = 255;
 
-    private List<Level> unlockedLevels, totalLevels;
-
     private StateBasedGame game;
 
     private World world;
 
-    private LevelManager levelManager;
-
     private StateManager stateManager;
 
-    private LevelSystem levelSystem;
+    private UniformGrid uniformGrid;
 
     private PlayerData playerData;
 
     private PlayerWriter playerScoreWriter;
+
+    private LevelLoader levelLoader;
 
     private Level level;
 
@@ -68,17 +66,27 @@ public class Playing implements State, InputListener {
 
     private ViewSize viewSize;
 
+    private LevelSystem levelSystem;
+
     private DialogueBox dialogueBox;
+
+    private String levelName;
 
     private boolean paused, fadedIn, shouldFadeIn, shouldFadeOut;
 
     private int alpha, currentUnlocked;
 
+    Playing(String levelName) {
+        this.levelName = levelName;
+    }
+
     @Override
     public void setup(StateBasedGame game) {
         this.game = game;
 
-        levelManager = (LevelManager) game.getServiceProvider().get(LevelManager.class);
+        FontManager fontManager = (FontManager) game.getServiceProvider().get(FontManager.class);
+
+        LevelManager levelManager = (LevelManager) game.getServiceProvider().get(LevelManager.class);
 
         stateManager = (StateManager) game.getServiceProvider().get(StateManager.class);
 
@@ -86,26 +94,71 @@ public class Playing implements State, InputListener {
 
         viewSize = (ViewSize) game.getServiceProvider().get(ViewSize.class);
 
-        String unlockedLevel = playerData.getUnlockedLevel();
+        uniformGrid = (UniformGrid) game.getServiceProvider().get(UniformGrid.class);
 
-        currentUnlocked = levelManager.indexOf(unlockedLevel);
-
-        // If the level can't be found, default to the first level
-        if (currentUnlocked < 0) {
-            unlockedLevel = levelManager.getLevelList().get(0).getName();
-
-            currentUnlocked = levelManager.indexOf(unlockedLevel);
-        }
-
-        totalLevels = levelManager.getLevelList();
-
-        unlockedLevels = levelManager.getUnlocked(unlockedLevel);
-
-        level = unlockedLevels.get(currentUnlocked);
+        dialogueBox = new DialogueBox(viewSize, fontManager);
 
         world = new World(game.getServiceProvider());
 
+        levelLoader = new LevelLoader(world, levelManager);
+
+        level = levelLoader.loadLevel(levelName);
+
+        setupWorld();
+
+        MusicManager musicManager = (MusicManager) world.getServiceProvider().get(MusicManager.class);
+
+        music = musicManager.get("example");
+
+        music.setVolume(100);
+
+        music.setLoop(true);
+
+        font = fontManager.get("font");
+
+        scoreText = new Text();
+
+        scoreText.setFont(font);
+
+        scoreText.setColor(Color.WHITE);
+
+        scoreText.setCharacterSize(TEXT_SIZE);
+
+        livesText = new Text();
+
+        livesText.setFont(font);
+
+        livesText.setColor(Color.WHITE);
+
+        livesText.setCharacterSize(TEXT_SIZE);
+
+        game.addKeyListener(dialogueBox);
+
+        paused = false;
+
+        fadedIn = false;
+
+        shouldFadeOut = false;
+
+        // We want to initially fade in the first level
+        shouldFadeIn = true;
+
+        alpha = 0;
+    }
+
+    private void setupWorld() {
+
+        /*
+        level = levelManager.get(levelName);
+
         levelSystem = new LevelSystem(world, level);
+         */
+
+        //setLevel(level);
+
+        levelSystem = new LevelSystem(world, level);
+
+        setLevel(level);
 
         world.addPool((BulletPool) game.getServiceProvider().get(BulletPool.class));
 
@@ -148,51 +201,6 @@ public class Playing implements State, InputListener {
         playerScoreWriter = (PlayerWriter) game.getServiceProvider().get(PlayerWriter.class);
 
         world.addEntity(player);
-
-        MusicManager musicManager = (MusicManager) world.getServiceProvider().get(MusicManager.class);
-
-        music = musicManager.get("example");
-
-        music.setVolume(100);
-
-        music.setLoop(true);
-
-        FontManager fontManager = (FontManager) world.getServiceProvider().get(FontManager.class);
-
-        font = fontManager.get("font");
-
-        scoreText = new Text();
-
-        scoreText.setFont(font);
-
-        scoreText.setColor(Color.WHITE);
-
-        scoreText.setCharacterSize(TEXT_SIZE);
-
-        livesText = new Text();
-
-        livesText.setFont(font);
-
-        livesText.setColor(Color.WHITE);
-
-        livesText.setCharacterSize(TEXT_SIZE);
-
-        dialogueBox = new DialogueBox(viewSize, fontManager);
-
-        dialogueBox.setDialogue(level.getLines());
-
-        game.addKeyListener(dialogueBox);
-
-        paused = false;
-
-        fadedIn = false;
-
-        shouldFadeOut = false;
-
-        // We want to initially fade in the first level
-        shouldFadeIn = true;
-
-        alpha = 0;
     }
 
     @Override
@@ -285,6 +293,39 @@ public class Playing implements State, InputListener {
 
     @Override
     public void update(Time deltaTime) {
+        if (level.complete()) {
+            game.popState();
+
+            PlayerComponent playerComponent = (PlayerComponent) player.findComponent(PlayerComponent.class);
+
+            LivesComponent livesComponent = (LivesComponent) player.findComponent(LivesComponent.class);
+
+            if (!levelLoader.levelNotFound() && !levelLoader.lastLevel()) {
+                Level nextLevel = levelLoader.nextLevel();
+
+                playerData.setScore(playerComponent.getScore());
+
+                playerData.setLives(livesComponent.getLives());
+
+                playerScoreWriter.writePlayerLevel(playerData);
+
+                game.pushState(new Playing(nextLevel.getName()));
+
+            } else if (levelLoader.lastLevel()) {
+                Completion completionState = (Completion) stateManager.get("completion");
+
+                completionState.setPlayerScore(playerComponent.getScore());
+
+                playerComponent.setScore(0);
+
+                livesComponent.setLives(livesComponent.getStartingLives());
+
+                game.pushState(completionState);
+            }
+
+            return;
+        }
+
         if (paused) {
             game.pushState(stateManager.get("pause"));
 
@@ -294,7 +335,15 @@ public class Playing implements State, InputListener {
         if (dialogueBox.isOpen()) {
             dialogueBox.update(deltaTime);
 
-        } else if (!dialogueBox.isOpen() && !fadedIn) {
+        } else if (fadedIn) {
+            updateWorld(deltaTime);
+        }
+
+        /*
+        if (dialogueBox.isOpen()) {
+            dialogueBox.update(deltaTime);
+
+        } else if (!dialogueBox.isOpen() && !fadedIn && level.complete()) {
             PlayerComponent playerComponent = (PlayerComponent) player.findComponent(PlayerComponent.class);
 
             SpriteComponent playerSpriteComponent = (SpriteComponent) player.findComponent(SpriteComponent.class);
@@ -311,14 +360,16 @@ public class Playing implements State, InputListener {
                     entity.hasComponent(EnemyComponent.class) || entity.hasComponent(ItemEffectsComponent.class));
 
             // Set and respawn the level once it has been cleared
-            levelSystem.setLevel(level);
+            //levelSystem.setLevel(level);
 
         } else if (fadedIn) {
             updateWorld(deltaTime);
         }
+         */
     }
 
     private void updateWorld(Time deltaTime) {
+        /*
         if (level.complete()) {
             System.out.println("Complete level");
 
@@ -329,10 +380,11 @@ public class Playing implements State, InputListener {
 
             playerComponent.getCurrentItemEffects().parallelStream().forEach(itemEffect -> itemEffect.reset(player));
 
+            /*
             if (currentUnlocked < totalLevels.size() - 1) {
                 currentUnlocked++;
 
-                unlockedLevels = levelManager.getUnlocked(totalLevels.get(currentUnlocked).getName());
+                List<Level> unlockedLevels = levelManager.getUnlocked(totalLevels.get(currentUnlocked).getName());
 
                 level = unlockedLevels.get(currentUnlocked);
 
@@ -345,11 +397,11 @@ public class Playing implements State, InputListener {
 
                 playerScoreWriter.writePlayerLevel(playerData);
 
-                dialogueBox.setDialogue(level.getLines());
-
                 shouldFadeIn = false;
 
                 shouldFadeOut = true;
+
+                //setLevel(level);
 
             } else {
                 Completion completionState = (Completion) stateManager.get("completion");
@@ -362,7 +414,8 @@ public class Playing implements State, InputListener {
 
                 game.pushState(completionState);
             }
-        }
+             */
+        //}
 
         if (!level.complete()) {
             world.update(deltaTime);
@@ -418,11 +471,11 @@ public class Playing implements State, InputListener {
     }
 
     public void setLevel(Level level) {
-        this.level = level;
+        System.out.println("Setting level");
 
-        levelSystem.setLevel(level);
+        uniformGrid.clear();
 
-        currentUnlocked = levelManager.indexOf(level.getName());
+        //levelSystem.setLevel(level);
 
         dialogueBox.setDialogue(level.getLines());
     }
