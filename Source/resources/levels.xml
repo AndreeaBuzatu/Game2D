@@ -180,7 +180,9 @@
             <wave type="sine" start_x="0" start_y="100" end_x="2560" end_y="100" num_ships="10"
                   entity_type="spaceship"
                   ship_name="enemy-one"/>
+            <stationary pos_x="300" pos_y="600" entity_type="spaceship" ship_name="enemy-two"/>
             <stationary pos_x="600" pos_y="600" entity_type="spaceship" ship_name="enemy-two"/>
+            <stationary pos_x="900" pos_y="600" entity_type="spaceship" ship_name="enemy-two"/>
         </stage>
 
         <dialogue>
@@ -199,7 +201,9 @@
             <wave type="sine" start_x="0" start_y="100" end_x="2560" end_y="100" num_ships="10"
                   entity_type="spaceship"
                   ship_name="enemy-one"/>
+            <stationary pos_x="300" pos_y="600" entity_type="spaceship" ship_name="enemy-two"/>
             <stationary pos_x="600" pos_y="600" entity_type="spaceship" ship_name="enemy-two"/>
+            <stationary pos_x="900" pos_y="600" entity_type="spaceship" ship_name="enemy-two"/>
         </stage>
 
         <dialogue>
@@ -218,6 +222,9 @@
             <wave type="straight" start_x="0" start_y="100" end_x="2560" end_y="100" num_ships="10"
                   entity_type="spaceship"
                   ship_name="enemy-three"/>
+            <stationary pos_x="300" pos_y="600" entity_type="spaceship" ship_name="enemy-two"/>
+            <stationary pos_x="600" pos_y="600" entity_type="spaceship" ship_name="enemy-two"/>
+            <stationary pos_x="900" pos_y="600" entity_type="spaceship" ship_name="enemy-two"/>
         </stage>
     </level>
 
@@ -233,7 +240,7 @@
             <wave type="sine" start_x="50" start_y="50" end_x="2560" end_y="50" num_ships="10"
                   entity_type="spaceship"
                   ship_name="enemy-three"/>
-            <wave type="sine" start_x="50" start_y="500" end_x="2560" end_y="50" num_ships="10"
+            <wave type="sine" start_x="1280" start_y="500" end_x="-1280" end_y="50" num_ships="10"
                   entity_type="spaceship"
                   ship_name="enemy-three"/>
             <stationary pos_x="100" pos_y="350" entity_type="spaceship" ship_name="enemy-two"/>
