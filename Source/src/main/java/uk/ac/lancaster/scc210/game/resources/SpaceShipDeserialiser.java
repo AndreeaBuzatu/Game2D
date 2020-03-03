@@ -36,6 +36,8 @@ public class SpaceShipDeserialiser extends Deserialiser<SerialisedSpaceShip> {
 
                 String animation = elem.getAttribute("animation");
 
+                String texture  = elem.getAttribute("texture");
+
                 String[] items = elem.getAttribute("items").split("\\s*,\\s*");
 
                 String bullet = elem.getAttribute("bullet");
@@ -53,7 +55,7 @@ public class SpaceShipDeserialiser extends Deserialiser<SerialisedSpaceShip> {
                 String hitSound = elem.getAttribute("hit-sound");
 
                 if (animation != null) {
-                    serialised.add(new SerialisedSpaceShip(name, animation, items, bullet, pattern, speed, score, lives, firingSound, hitSound));
+                    serialised.add(new SerialisedSpaceShip(name, animation, items, bullet, pattern, speed, score, lives, firingSound, hitSound, texture));
                 }
             }
         }

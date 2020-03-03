@@ -8,7 +8,7 @@ import uk.ac.lancaster.scc210.engine.resources.deserialise.Serialised;
 public class SerialisedSpaceShip implements Serialised {
     private final String[] items;
 
-    private final String name, animation, bullet, pattern, firingSound, hitSound;
+    private final String name, animation, bullet, pattern, firingSound, hitSound, texture;
 
     private final int speed, score, lives;
 
@@ -26,7 +26,7 @@ public class SerialisedSpaceShip implements Serialised {
      * @param firingSound the firing sound of the spaceship
      * @param hitSound  the sound played when colliding
      */
-    public SerialisedSpaceShip(String name, String animation, String[] items, String bullet, String pattern, int speed, int score, int lives, String firingSound, String hitSound) {
+    public SerialisedSpaceShip(String name, String animation, String[] items, String bullet, String pattern, int speed, int score, int lives, String firingSound, String hitSound, String texture) {
         this.name = name;
         this.animation = animation;
         this.items = items;
@@ -37,6 +37,7 @@ public class SerialisedSpaceShip implements Serialised {
         this.lives = lives;
         this.firingSound = firingSound;
         this.hitSound = hitSound;
+        this.texture = texture;
     }
 
     /**
@@ -127,5 +128,9 @@ public class SerialisedSpaceShip implements Serialised {
      */
     public String getHitSound() {
         return hitSound;
+    }
+
+    public String getTexture() {
+        return texture;
     }
 }
