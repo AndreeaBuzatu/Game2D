@@ -8,7 +8,8 @@ import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
 public abstract class Pattern {
-    private final Time firingGap;
+
+    private Time firingGap;
 
     private Time elapsedTime;
 
@@ -33,6 +34,7 @@ public abstract class Pattern {
         coords = new Vector2f[toFire.length];
 
         spaceShipSprite = ((SpriteComponent) spaceShip.findComponent(SpriteComponent.class)).getSprite();
+
     }
 
     public abstract Entity[] create();
@@ -49,6 +51,10 @@ public abstract class Pattern {
 
     public void setElapsedTime(Time elapsedTime) {
         this.elapsedTime = elapsedTime;
+    }
+
+    public void setFiringGap(Time firingGap) {
+        this.firingGap = firingGap;
     }
 
     protected void positionStarPatterns(Sprite bulletSprite) {

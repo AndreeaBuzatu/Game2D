@@ -46,7 +46,7 @@ public class ItemDropSystem extends IterativeSystem {
             return;
         }
 
-        if (percentChance(DROP_CHANCE)) {
+        //if (percentChance(DROP_CHANCE)) {
             if (entity.hasComponent(SpaceShipComponent.class)) {
                 ItemPrototypeManager itemPrototypeManager = (ItemPrototypeManager) world.getServiceProvider().get(ItemPrototypeManager.class);
 
@@ -60,7 +60,7 @@ public class ItemDropSystem extends IterativeSystem {
                     createItem(itemPrototypeManager, item, entity);
                 }
             }
-        }
+        //}
     }
 
     @Override
