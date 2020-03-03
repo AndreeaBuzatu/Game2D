@@ -35,7 +35,7 @@ public abstract class Wave {
     }
 
     private double length(Vector2f vector) {
-        return Math.sqrt((vector.x * vector.x) + (vector.y + vector.y));
+        return Math.sqrt((vector.x * vector.x) + (vector.y * vector.y));
     }
 
     private double distance(Vector2f left, Vector2f right) {
