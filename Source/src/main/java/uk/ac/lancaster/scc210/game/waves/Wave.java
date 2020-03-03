@@ -52,8 +52,22 @@ public abstract class Wave {
         return new Vector2f((float) (vec.x / length), (float) (vec.y / length));
     }
 
-    float rotateSprite() {
-        return (float) Math.toDegrees(Math.atan2(direction.y - origin.y, direction.x - origin.x)) + 180;
+    float rotateSprite(double waveAngle) {
+        float direction = getFacingDirection();
+
+        return (float) Math.toDegrees(Math.sin(waveAngle)) + direction;
+    }
+
+    float getFacingDirection() {
+        float dx = destination.x - origin.x;
+        float dy = destination.y - origin.y;
+        float axis = 90f;
+
+        if (dx < 0) {
+            axis += 180f;
+        }
+
+        return (float) (axis + Math.toDegrees(Math.atan(dy / dx)));
     }
 
     public Queue<Entity> getToRespawn() {

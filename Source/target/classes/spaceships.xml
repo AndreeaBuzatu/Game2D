@@ -3,19 +3,19 @@
                items="" score="0"
                lives="3" firing-sound="player-shoot" hit-sound="player-death"/>
 
-    <spaceship name="enemy-one" animation="alien-ship-4" speed="5" bullet="sample" pattern="" score="25"
+    <spaceship name="enemy-one" animation="alien-ship-1" speed="5" bullet="sample" pattern="" score="5"
                items="health1effect-item,speed-item" lives="1"
                firing-sound="enemy-one-shoot" hit-sound="enemy-death"/>
 
-    <spaceship name="enemy-two" animation="alien-ship-2" speed="5" bullet="sample" pattern="line-bullet" score="25"
+    <spaceship name="enemy-two" animation="alien-ship-2" speed="5" bullet="sample" pattern="line-bullet" score="10"
                items="health1effect-item,speed-item" lives="1"
                firing-sound="enemy-one-shoot" hit-sound="enemy-death"/>
 
-    <spaceship name="enemy-three" animation="alien-ship-3" speed="5" bullet="sample" pattern="line-bullet" score="50"
+    <spaceship name="enemy-three" animation="alien-ship-3" speed="5" bullet="sample" pattern="line-bullet" score="15"
                items="health1effect-item,speed-item" lives="2"
                firing-sound="enemy-one-shoot" hit-sound="enemy-death"/>
 
-    <spaceship name="enemy-four" animation="alien-ship-4" speed="5" bullet="sample" pattern="star-bullet" score="75"
+    <spaceship name="enemy-four" animation="alien-ship-4" speed="5" bullet="sample" pattern="star-bullet" score="20"
                items="health1effect-item,speed-item" lives="2"
                firing-sound="enemy-one-shoot" hit-sound="enemy-death"/>
 
