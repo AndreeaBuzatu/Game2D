@@ -35,10 +35,6 @@ public class UniformGrid implements Service {
                 grid.get(row).add(new Cell());
             }
         }
-
-        System.out.println(viewBounds);
-
-        System.out.println(grid.get(0).size());
     }
 
     public void addEntity(Entity entity) {

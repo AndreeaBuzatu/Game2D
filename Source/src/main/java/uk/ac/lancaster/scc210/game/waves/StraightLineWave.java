@@ -33,7 +33,6 @@ public class StraightLineWave extends Wave {
 
             transformable.setRotation(rotateSprite());
 
-
             // If the entity goes out of bounds, reset the entity back to it's starting position
             if (passedDestination(transformable.getPosition())) {
                 transformable.setPosition(-origin.x, -origin.y);

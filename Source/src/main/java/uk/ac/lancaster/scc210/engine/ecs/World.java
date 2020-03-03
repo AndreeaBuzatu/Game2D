@@ -49,7 +49,7 @@ public class World {
     }
 
     public void addEntities(Entity... entities) {
-        Set<Entity> entitySet = new HashSet<>(Arrays.asList(entities));
+        Set<Entity> entitySet = Set.of(entities);
 
         this.entities.addAll(entitySet);
 
@@ -172,8 +172,17 @@ public class World {
                 .orElse(null);
     }
 
+    public void clear() {
+        entities.clear();
+
+        systems.clear();
+    }
+
     public ServiceProvider getServiceProvider() {
         return serviceProvider;
     }
 
+    public Set<Entity> getEntities() {
+        return entities;
+    }
 }

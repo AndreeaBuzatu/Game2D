@@ -21,6 +21,10 @@ public class LivesComponent implements Component {
         this.lives = lives;
     }
 
+    public int getStartingLives() {
+        return startingLives;
+    }
+
     public void setStartingLives(int startingLives) {
         this.startingLives = startingLives;
     }

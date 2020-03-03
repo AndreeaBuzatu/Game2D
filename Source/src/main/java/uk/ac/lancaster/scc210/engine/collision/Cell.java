@@ -4,13 +4,15 @@ import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.game.ecs.component.OrientatedBoxComponent;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Cell {
-    private final List<Entity> entities;
+    private final Set<Entity> entities;
 
     Cell() {
-        entities = new ArrayList<>();
+        entities = new HashSet<>();
     }
 
     public List<Entity[]> checkCollision() {
@@ -27,8 +29,6 @@ public class Cell {
                 OrientatedBoxComponent innerOrientatedBoxComponent = (OrientatedBoxComponent) inner.findComponent(OrientatedBoxComponent.class);
 
                 if (OrientatedBox.areColliding(outerOrientatedBoxComponent.getOrientatedBox(), innerOrientatedBoxComponent.getOrientatedBox())) {
-                    //System.out.println("Are colliding: " + System.currentTimeMillis());
-
                     collisions.add(new Entity[]{outer, inner});
                 }
             }
@@ -45,7 +45,7 @@ public class Cell {
         entities.clear();
     }
 
-    public List<Entity> getEntities() {
+    public Set<Entity> getEntities() {
         return entities;
     }
 }

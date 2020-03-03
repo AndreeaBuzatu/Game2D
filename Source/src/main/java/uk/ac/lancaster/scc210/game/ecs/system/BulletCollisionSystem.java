@@ -5,14 +5,18 @@ import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.collision.Cell;
 import uk.ac.lancaster.scc210.engine.collision.UniformGrid;
 import uk.ac.lancaster.scc210.engine.content.SoundManager;
+import uk.ac.lancaster.scc210.engine.ecs.Component;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.component.PooledComponent;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.game.ecs.component.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BulletCollisionSystem extends IterativeSystem {
     private final SoundManager soundManager;
@@ -52,9 +56,7 @@ public class BulletCollisionSystem extends IterativeSystem {
                     continue;
                 }
 
-                List<Entity[]> collided = cell.checkCollision();
-
-                for (Entity[] collision : collided) {
+                for (Entity[] collision : cell.checkCollision()) {
                     if (collision == null) {
                         continue;
                     }

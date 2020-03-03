@@ -6,9 +6,11 @@ import uk.ac.lancaster.scc210.engine.collision.UniformGrid;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
+import uk.ac.lancaster.scc210.game.ecs.component.StationaryComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.TransformableComponent;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 public class UniformGridSystem extends IterativeSystem {
     private final UniformGrid uniformGrid;
@@ -30,22 +32,14 @@ public class UniformGridSystem extends IterativeSystem {
     public void entityAdded(Entity entity) {
         entities = world.getEntitiesFor(TransformableComponent.class);
 
-        uniformGrid.addEntities(entities);
-
-        /*
-        System.out.println("Called");
-
-        System.out.println("Contains?: " + this.entities.contains(entity));
-         */
+        uniformGrid.addEntity(entity);
     }
 
     @Override
     public void entitiesAdded(Collection<? extends Entity> entities) {
-        entities = world.getEntitiesFor(TransformableComponent.class);
+        this.entities = world.getEntitiesFor(TransformableComponent.class);
 
         uniformGrid.addEntities(entities);
-
-        //System.out.println("Contains?: " + this.entities.containsAll(entities));
     }
 
     @Override
@@ -55,17 +49,11 @@ public class UniformGridSystem extends IterativeSystem {
 
     @Override
     public void update(Time deltaTime) {
-        /*
-        int entitySum = uniformGrid.getGrid().stream().map(cells -> cells.stream().map(cell -> cell.getEntities().size()).reduce(0, Integer::sum)).reduce(0, Integer::sum);
-
-        System.out.println(entitySum);
-         */
-
         uniformGrid.clear();
 
         uniformGrid.addEntities(entities);
 
-        uniformGrid.update();
+        //uniformGrid.update();
     }
 
     @Override

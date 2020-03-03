@@ -65,12 +65,11 @@ public class LevelSystem extends IterativeSystem {
 
     @Override
     public void update(Time deltaTime) {
-        if (currentStage != null) {
-            if (currentStage.complete()) {
-                currentStage = level.changeStage();
-            }
+        if (currentStage != null && currentStage.complete()) {
+            currentStage = level.changeStage();
 
-            if (!currentStage.hasSpawned()) {
+        } else {
+            if (currentStage != null) {
                 currentStage.update(world, deltaTime);
             }
         }

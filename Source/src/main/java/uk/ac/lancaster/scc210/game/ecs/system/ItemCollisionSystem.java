@@ -76,7 +76,7 @@ public class ItemCollisionSystem extends IterativeSystem {
 
                 PlayerComponent playerComponent = (PlayerComponent) player.findComponent(PlayerComponent.class);
 
-                itemEffectsComponent.getItemEffects().parallelStream().forEach(itemEffect -> itemEffect.react(player));
+                itemEffectsComponent.getItemEffects().forEach(itemEffect -> itemEffect.react(player));
 
                 playerComponent.setCurrentItemEffects(itemEffectsComponent.getItemEffects());
 
