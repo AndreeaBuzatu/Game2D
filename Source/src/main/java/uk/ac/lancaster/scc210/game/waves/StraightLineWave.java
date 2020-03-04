@@ -27,7 +27,7 @@ public class StraightLineWave extends Wave {
     public void update(Set<Entity> entities, Time deltaTime) {
         for (Entity entity : entities) {
             if (toRespawn.contains(entity)) {
-                return;
+                continue;
             }
 
             TransformableComponent transformableComponent = (TransformableComponent) entity.findComponent(TransformableComponent.class);
@@ -52,7 +52,5 @@ public class StraightLineWave extends Wave {
                 transformable.move(direction.x * speed, direction.y * speed);
             }
         }
-
-        entities.removeIf(toRespawn::contains);
     }
 }

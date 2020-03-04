@@ -43,7 +43,7 @@ public class SineWave extends Wave {
 
         for (Entity entity : entities) {
             if (toRespawn.contains(entity)) {
-                return;
+                continue;
             }
 
             TransformableComponent transformableComponent = (TransformableComponent) entity.findComponent(TransformableComponent.class);
@@ -74,7 +74,5 @@ public class SineWave extends Wave {
                 transformable.move((direction.x * speed) + wave.x, (direction.y * speed) + wave.y);
             }
         }
-
-        entities.removeIf(toRespawn::contains);
     }
 }

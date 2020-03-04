@@ -77,6 +77,10 @@ public class LevelWave {
             entities.add(entity);
 
             numLeftToSpawn--;
+
+            spawnCountUp += deltaTime.asSeconds();
+
+            return entity;
         }
 
         spawnCountUp += deltaTime.asSeconds();

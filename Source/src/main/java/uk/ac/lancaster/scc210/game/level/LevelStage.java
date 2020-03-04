@@ -74,8 +74,6 @@ public class LevelStage {
                 world.addEntity(newShip);
             }
 
-            world.addEntities(wave.getEntities());
-
             wave.getWave().update(wave.getEntities(), deltaTime);
         }
     }
