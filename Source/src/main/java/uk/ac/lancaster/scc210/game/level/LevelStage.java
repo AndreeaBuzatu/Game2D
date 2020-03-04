@@ -10,6 +10,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The type Level stage.
+ */
 public class LevelStage {
     private final List<LevelWave> waves;
 
@@ -17,6 +20,12 @@ public class LevelStage {
 
     private boolean stationarySpawned;
 
+    /**
+     * Instantiates a new Level stage.
+     *
+     * @param waves              the waves
+     * @param stationaryEntities the stationary entities
+     */
     public LevelStage(List<LevelWave> waves, Set<Entity> stationaryEntities) {
         this.waves = waves;
 
@@ -30,11 +39,22 @@ public class LevelStage {
         stationarySpawned = false;
     }
 
+    /**
+     * Complete boolean.
+     *
+     * @return the boolean
+     */
     public boolean complete() {
         // All are complete
         return waves.stream().allMatch(LevelWave::complete) && stationaryEntities.isEmpty();
     }
 
+    /**
+     * Update.
+     *
+     * @param world     the world
+     * @param deltaTime the delta time
+     */
     public void update(World world, Time deltaTime) {
         if (hasSpawned()) {
             return;
@@ -60,6 +80,9 @@ public class LevelStage {
         }
     }
 
+    /**
+     * Reset.
+     */
     void reset() {
         waves.forEach(LevelWave::reset);
 
@@ -78,14 +101,29 @@ public class LevelStage {
         stationarySpawned = false;
     }
 
+    /**
+     * Gets stationary entities.
+     *
+     * @return the stationary entities
+     */
     public Set<Entity> getStationaryEntities() {
         return stationaryEntities;
     }
 
+    /**
+     * Has spawned boolean.
+     *
+     * @return the boolean
+     */
     public boolean hasSpawned() {
         return waves.stream().allMatch(LevelWave::complete) && stationarySpawned;
     }
 
+    /**
+     * Remove stationary entity.
+     *
+     * @param entity the entity
+     */
     public void removeStationaryEntity(Entity entity) {
         stationaryEntities.remove(entity);
     }

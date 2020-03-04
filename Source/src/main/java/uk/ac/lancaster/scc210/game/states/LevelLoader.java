@@ -6,6 +6,9 @@ import uk.ac.lancaster.scc210.game.level.Level;
 
 import java.util.List;
 
+/**
+ * The type Level loader.
+ */
 public class LevelLoader {
     private final List<Level> totalLevels;
 
@@ -17,6 +20,12 @@ public class LevelLoader {
     
     private int currentUnlocked;
 
+    /**
+     * Instantiates a new Level loader.
+     *
+     * @param world        the world
+     * @param levelManager the level manager
+     */
     LevelLoader(World world, LevelManager levelManager) {
         this.world = world;
         this.levelManager = levelManager;
@@ -26,6 +35,12 @@ public class LevelLoader {
         currentUnlocked = -1;
     }
 
+    /**
+     * Load level level.
+     *
+     * @param levelName the level name
+     * @return the level
+     */
     Level loadLevel(String levelName) {
         world.clear();
 
@@ -36,6 +51,11 @@ public class LevelLoader {
         return currentLevel;
     }
 
+    /**
+     * Next level level.
+     *
+     * @return the level
+     */
     Level nextLevel() {
         if (currentLevel == null || lastLevel()) {
             return null;
@@ -46,10 +66,20 @@ public class LevelLoader {
         return levelManager.getLevelList().get(currentUnlocked);
     }
 
+    /**
+     * Level not found boolean.
+     *
+     * @return the boolean
+     */
     boolean levelNotFound() {
         return currentUnlocked < 0;
     }
 
+    /**
+     * Last level boolean.
+     *
+     * @return the boolean
+     */
     boolean lastLevel() {
         return currentUnlocked >= totalLevels.size() - 1;
     }

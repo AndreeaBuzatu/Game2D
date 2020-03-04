@@ -26,6 +26,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 
+/**
+ * The type Completion.
+ */
 public class Completion implements State, InputListener {
     private final int LIST_PADDING = 250;
 
@@ -51,6 +54,9 @@ public class Completion implements State, InputListener {
 
     private int charsEntered, playerScoreIndex;
 
+    /**
+     * Instantiates a new Completion.
+     */
     public Completion() {
         playerScore = -1;
 
@@ -255,6 +261,11 @@ public class Completion implements State, InputListener {
         return highScoreIndex;
     }
 
+    /**
+     * Sets player score.
+     *
+     * @param playerScore the player score
+     */
     void setPlayerScore(int playerScore) {
         this.playerScore = playerScore;
     }

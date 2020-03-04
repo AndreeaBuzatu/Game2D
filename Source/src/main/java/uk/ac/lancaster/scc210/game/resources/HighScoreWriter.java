@@ -19,13 +19,26 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * The type High score writer.
+ */
 public class HighScoreWriter implements Service {
     private final HighScores highScores;
 
+    /**
+     * Instantiates a new High score writer.
+     *
+     * @param highScores the high scores
+     */
     public HighScoreWriter(HighScores highScores) {
         this.highScores = highScores;
     }
 
+    /**
+     * Write high scores.
+     *
+     * @throws ResourceNotFoundException the resource not found exception
+     */
     public void writeHighScores() throws ResourceNotFoundException {
         try {
             Transformer transformer = TransformerFactory.newInstance().newTransformer();

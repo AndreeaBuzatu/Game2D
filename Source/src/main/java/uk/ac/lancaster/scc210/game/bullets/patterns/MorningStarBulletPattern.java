@@ -8,6 +8,9 @@ import uk.ac.lancaster.scc210.engine.pooling.Pool;
 import uk.ac.lancaster.scc210.game.ecs.component.BulletComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
+/**
+ * The type Morning star bullet pattern.
+ */
 public class MorningStarBulletPattern extends BulletPattern {
     private static final Time FIRING_GAP = Time.getSeconds(2);
 
@@ -15,6 +18,13 @@ public class MorningStarBulletPattern extends BulletPattern {
 
     private final int BULLET_Y_PADDING = -40;
 
+    /**
+     * Instantiates a new Morning star bullet pattern.
+     *
+     * @param pool       the pool
+     * @param bullet     the bullet
+     * @param bulletName the bullet name
+     */
     public MorningStarBulletPattern(Pool pool, Entity bullet, String bulletName) {
         super(pool, bullet, new Entity[NUM_BULLETS], bulletName, FIRING_GAP);
 

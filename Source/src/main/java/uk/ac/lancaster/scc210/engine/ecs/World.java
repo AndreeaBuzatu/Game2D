@@ -24,6 +24,8 @@ public class World {
 
     /**
      * Instantiates a new World.
+     *
+     * @param serviceProvider the service provider
      */
     public World(ServiceProvider serviceProvider) {
         this.serviceProvider = serviceProvider;
@@ -48,6 +50,11 @@ public class World {
         }
     }
 
+    /**
+     * Add entities.
+     *
+     * @param entities the entities
+     */
     public void addEntities(Entity... entities) {
         Set<Entity> entitySet = Set.of(entities);
 
@@ -56,24 +63,44 @@ public class World {
         systems.forEach(system -> system.entitiesAdded(entitySet));
     }
 
+    /**
+     * Add entities.
+     *
+     * @param entities the entities
+     */
     public void addEntities(Collection<? extends Entity> entities) {
         this.entities.addAll(entities);
 
         systems.forEach(system -> system.entitiesAdded(entities));
     }
 
+    /**
+     * Remove entity.
+     *
+     * @param entity the entity
+     */
     public void removeEntity(Entity entity) {
         entities.remove(entity);
 
         systems.forEach(system -> system.entityRemoved(entity));
     }
 
+    /**
+     * Remove entities.
+     *
+     * @param entities the entities
+     */
     public void removeEntities(Collection<? extends Entity> entities) {
         this.entities.removeAll(entities);
 
         entities.forEach(entity -> systems.forEach(system -> system.entityRemoved(entity)));
     }
 
+    /**
+     * Remove if.
+     *
+     * @param entities the entities
+     */
     public void removeIf(Predicate<? super Entity> entities) {
         this.entities.removeIf(entities);
     }
@@ -100,6 +127,8 @@ public class World {
 
     /**
      * Update all the Systems contained in World.
+     *
+     * @param deltaTime the delta time
      */
     public void update(Time deltaTime) {
         for (EntitySystem system : systems) {
@@ -172,16 +201,29 @@ public class World {
                 .orElse(null);
     }
 
+    /**
+     * Clear.
+     */
     public void clear() {
         entities.clear();
 
         systems.clear();
     }
 
+    /**
+     * Gets service provider.
+     *
+     * @return the service provider
+     */
     public ServiceProvider getServiceProvider() {
         return serviceProvider;
     }
 
+    /**
+     * Gets entities.
+     *
+     * @return the entities
+     */
     public Set<Entity> getEntities() {
         return entities;
     }

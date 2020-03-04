@@ -12,6 +12,9 @@ import uk.ac.lancaster.scc210.game.patterns.Pattern;
 
 import java.util.Collection;
 
+/**
+ * The type Enemy firing system.
+ */
 public class EnemyFiringSystem extends IterativeSystem {
     private final SoundManager soundManager;
 

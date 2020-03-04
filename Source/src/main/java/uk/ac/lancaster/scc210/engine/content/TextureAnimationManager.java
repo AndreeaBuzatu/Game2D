@@ -14,6 +14,7 @@ public class TextureAnimationManager extends ContentManager<TextureAnimation> {
      * From a list of SerialisedAnimations, place them into the manager
      *
      * @param serialisedAnimations the serialised animations
+     * @throws ResourceNotFoundException the resource not found exception
      */
     public TextureAnimationManager(List<SerialisedAnimation> serialisedAnimations) throws ResourceNotFoundException {
         super(new TextureAnimation(new TextureAtlas(), 0, 0, 1));

@@ -8,13 +8,28 @@ import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
 import uk.ac.lancaster.scc210.game.items.TimedItemEffect;
 import uk.ac.lancaster.scc210.game.patterns.Pattern;
 
+/**
+ * The type Firing pattern effect.
+ */
 public abstract class FiringPatternEffect extends TimedItemEffect {
+    /**
+     * The Pool.
+     */
     final Pool pool;
 
+    /**
+     * The Pattern.
+     */
     Pattern pattern;
 
     private Pattern oldPattern;
 
+    /**
+     * Instantiates a new Firing pattern effect.
+     *
+     * @param pool     the pool
+     * @param duration the duration
+     */
     FiringPatternEffect(Pool pool, Time duration) {
         super(duration);
 
@@ -58,5 +73,10 @@ public abstract class FiringPatternEffect extends TimedItemEffect {
         }
     }
 
+    /**
+     * Sets pattern.
+     *
+     * @param entity the entity
+     */
     protected abstract void setPattern(Entity entity);
 }

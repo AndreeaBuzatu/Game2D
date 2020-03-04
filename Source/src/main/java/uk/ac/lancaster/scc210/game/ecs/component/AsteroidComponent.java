@@ -6,9 +6,17 @@ import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.ecs.Component;
 
+/**
+ * The type Asteroid component.
+ */
 public class AsteroidComponent implements Component {
     private final CircleShape circle;
 
+    /**
+     * Instantiates a new Asteroid component.
+     *
+     * @param texture the texture
+     */
     public AsteroidComponent(Texture texture) {
         // Assume the textures have fixed width and height
         circle = new CircleShape(texture.getSize().x);
@@ -23,6 +31,11 @@ public class AsteroidComponent implements Component {
         circle.setOrigin(centreMiddle);
     }
 
+    /**
+     * Gets circle.
+     *
+     * @return the circle
+     */
     public CircleShape getCircle() {
         return circle;
     }

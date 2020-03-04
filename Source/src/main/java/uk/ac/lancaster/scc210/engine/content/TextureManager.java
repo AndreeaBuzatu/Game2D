@@ -10,8 +10,14 @@ import java.util.List;
  * ContentManager for Textures.
  */
 public class TextureManager extends ContentManager<Texture> {
+    /**
+     * The Sprite width.
+     */
     static final int SPRITE_WIDTH = 32;
 
+    /**
+     * The Sprite height.
+     */
     static final int SPRITE_HEIGHT = 32;
 
     /**

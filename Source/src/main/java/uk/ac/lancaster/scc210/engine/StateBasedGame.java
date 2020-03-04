@@ -34,6 +34,9 @@ public class StateBasedGame {
      */
     public static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
+    /**
+     * The constant ZOOM_AMOUNT.
+     */
     public static final float ZOOM_AMOUNT = 2.0f;
 
     private final Set<InputListener> inputListeners;
@@ -221,6 +224,11 @@ public class StateBasedGame {
         window.display();
     }
 
+    /**
+     * Push state.
+     *
+     * @param state the state
+     */
     public void pushState(State state) {
         if (currentState != null) {
             currentState.onExit(this);
@@ -235,6 +243,9 @@ public class StateBasedGame {
         currentState.onEnter(this);
     }
 
+    /**
+     * Pop state.
+     */
     public void popState() {
         states.pop();
 
@@ -271,6 +282,13 @@ public class StateBasedGame {
         return null;
     }
 
+    /**
+     * Deserialise local xml document.
+     *
+     * @param fileName the file name
+     * @return the document
+     * @throws ResourceNotFoundException the resource not found exception
+     */
     protected Document deserialiseLocalXML(final String fileName) throws ResourceNotFoundException {
         XMLAdapter xmlAdapter = new XMLAdapter();
 
@@ -292,14 +310,29 @@ public class StateBasedGame {
         return new Vector2f((windowWidth >> 1) * ZOOM_AMOUNT, (windowHeight >> 1) * ZOOM_AMOUNT);
     }
 
+    /**
+     * Add key listener.
+     *
+     * @param inputListener the input listener
+     */
     public void addKeyListener(InputListener inputListener) {
         inputListeners.add(inputListener);
     }
 
+    /**
+     * Remove key listener.
+     *
+     * @param inputListener the input listener
+     */
     public void removeKeyListener(InputListener inputListener) {
         inputListeners.remove(inputListener);
     }
 
+    /**
+     * Gets states.
+     *
+     * @return the states
+     */
     public Stack<State> getStates() {
         return states;
     }

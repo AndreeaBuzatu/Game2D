@@ -34,6 +34,9 @@ import java.util.Set;
 public class Playing implements State, InputListener {
     private static final int TEXT_SIZE = 70;
 
+    /**
+     * The constant INFO_BOX_HEIGHT.
+     */
     public static final int INFO_BOX_HEIGHT = TEXT_SIZE + 5;
 
     private final int ALPHA_CHANGE = 4;
@@ -76,6 +79,11 @@ public class Playing implements State, InputListener {
 
     private int alpha, currentUnlocked;
 
+    /**
+     * Instantiates a new Playing.
+     *
+     * @param levelName the level name
+     */
     Playing(String levelName) {
         this.levelName = levelName;
     }
@@ -392,6 +400,11 @@ public class Playing implements State, InputListener {
         }
     }
 
+    /**
+     * Sets level.
+     *
+     * @param level the level
+     */
     public void setLevel(Level level) {
     }
 }

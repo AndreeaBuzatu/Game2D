@@ -7,6 +7,9 @@ import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.prototypes.Prototype;
 import uk.ac.lancaster.scc210.game.ecs.component.*;
 
+/**
+ * The type Asteroid prototype.
+ */
 public class AsteroidPrototype implements Prototype {
     private final int ASTEROID_SCORE = 10;
 
@@ -14,6 +17,12 @@ public class AsteroidPrototype implements Prototype {
 
     private final ShaderManager shaderManager;
 
+    /**
+     * Instantiates a new Asteroid prototype.
+     *
+     * @param textureManager the texture manager
+     * @param shaderManager  the shader manager
+     */
     public AsteroidPrototype(TextureManager textureManager, ShaderManager shaderManager) {
         this.textureManager = textureManager;
         this.shaderManager = shaderManager;

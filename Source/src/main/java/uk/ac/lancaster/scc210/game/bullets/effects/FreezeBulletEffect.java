@@ -6,9 +6,15 @@ import uk.ac.lancaster.scc210.game.ecs.component.EnemyComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.LivesComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
 
+/**
+ * The type Freeze bullet effect.
+ */
 public class FreezeBulletEffect extends TimedBulletEffect {
     private int oldSpeed;
 
+    /**
+     * Instantiates a new Freeze bullet effect.
+     */
     public FreezeBulletEffect() {
         super(Time.getSeconds(10));
 

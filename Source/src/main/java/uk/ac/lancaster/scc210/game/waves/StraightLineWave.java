@@ -9,7 +9,16 @@ import uk.ac.lancaster.scc210.game.ecs.component.TransformableComponent;
 
 import java.util.Set;
 
+/**
+ * The type Straight line wave.
+ */
 public class StraightLineWave extends Wave {
+    /**
+     * Instantiates a new Straight line wave.
+     *
+     * @param origin      the origin
+     * @param destination the destination
+     */
     public StraightLineWave(Vector2f origin, Vector2f destination) {
         super(origin, destination);
     }

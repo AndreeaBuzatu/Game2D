@@ -15,16 +15,16 @@ public class SerialisedSpaceShip implements Serialised {
     /**
      * Instantiates a new Serialised space ship.
      *
-     * @param name      the name of the spaceship
-     * @param animation the animation of the spaceship
-     * @param items     the items the spaceship can drop when destroyed
-     * @param bullet    the bullet fired by the spaceship
-     * @param pattern   the pattern used by bullets
-     * @param speed     the speed of the spaceship
-     * @param score     the score awarded to the player when killing this spaceship
-     * @param lives     the number of the lives that spaceship has
+     * @param name        the name of the spaceship
+     * @param animation   the animation of the spaceship
+     * @param items       the items the spaceship can drop when destroyed
+     * @param bullet      the bullet fired by the spaceship
+     * @param pattern     the pattern used by bullets
+     * @param speed       the speed of the spaceship
+     * @param score       the score awarded to the player when killing this spaceship
+     * @param lives       the number of the lives that spaceship has
      * @param firingSound the firing sound of the spaceship
-     * @param hitSound  the sound played when colliding
+     * @param hitSound    the sound played when colliding
      */
     public SerialisedSpaceShip(String name, String animation, String[] items, String bullet, String pattern, int speed, int score, int lives, String firingSound, String hitSound) {
         this.name = name;

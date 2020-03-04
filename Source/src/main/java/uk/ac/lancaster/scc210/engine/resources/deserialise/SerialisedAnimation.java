@@ -29,7 +29,7 @@ public class SerialisedAnimation implements Serialised {
     /**
      * Gets animation.
      *
-     * @return animation
+     * @return animation animation
      */
     public TextureAnimation getAnimation() {
         return animation;

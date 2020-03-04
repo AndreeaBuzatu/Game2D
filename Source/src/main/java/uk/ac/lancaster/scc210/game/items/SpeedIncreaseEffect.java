@@ -4,9 +4,15 @@ import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
 
+/**
+ * The type Speed increase effect.
+ */
 public class SpeedIncreaseEffect extends TimedItemEffect {
     private int oldSpeed;
 
+    /**
+     * Instantiates a new Speed increase effect.
+     */
     public SpeedIncreaseEffect() {
         super(Time.getSeconds(5));
 

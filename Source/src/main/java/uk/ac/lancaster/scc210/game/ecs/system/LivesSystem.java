@@ -9,12 +9,14 @@ import uk.ac.lancaster.scc210.game.ecs.component.LivesComponent;
 
 import java.util.Collection;
 
+/**
+ * The type Lives system.
+ */
 public class LivesSystem extends IterativeSystem {
     /**
      * Instantiate the Health System. Each entity *can* have health
      *
-     * @param world      the world containing entities to use
-     *
+     * @param world the world containing entities to use
      */
     public LivesSystem(World world) {
         super(world, LivesComponent.class);

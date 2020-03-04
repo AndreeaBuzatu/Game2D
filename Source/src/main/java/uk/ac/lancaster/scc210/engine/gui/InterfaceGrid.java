@@ -12,6 +12,9 @@ import uk.ac.lancaster.scc210.engine.StateBasedGame;
 
 import java.util.ArrayList;
 
+/**
+ * The type Interface grid.
+ */
 public class InterfaceGrid implements InputListener, Drawable {
     private final int FIRST_LIST_PADDING = 50;
 
@@ -27,6 +30,12 @@ public class InterfaceGrid implements InputListener, Drawable {
 
     private float listWidthSum;
 
+    /**
+     * Instantiates a new Interface grid.
+     *
+     * @param game     the game
+     * @param position the position
+     */
     public InterfaceGrid(StateBasedGame game, Vector2f position) {
         this.position = position;
 
@@ -41,6 +50,11 @@ public class InterfaceGrid implements InputListener, Drawable {
         game.addKeyListener(this);
     }
 
+    /**
+     * Add column.
+     *
+     * @param list the list
+     */
     public void addColumn(InterfaceList list) {
         lists.add(list);
 
@@ -59,6 +73,9 @@ public class InterfaceGrid implements InputListener, Drawable {
         list.setPosition(new Vector2f(position.x + listWidthSum, position.y));
     }
 
+    /**
+     * Update.
+     */
     public void update() {
         // Don't process if nothing is pressed or not enabled
         if ((pressedKey == null && previousKey != null)) {

@@ -5,7 +5,6 @@ import java.util.HashMap;
 /**
  * A manager for services. Wraps a HashMap around HashMap<Class<? extends Service>, Service>.
  * This is used to share objects around the program without directly sharing many instances and passing many parameters.
- *
  */
 public class ServiceProvider {
     private final HashMap<Class<? extends Service>, Service> services;

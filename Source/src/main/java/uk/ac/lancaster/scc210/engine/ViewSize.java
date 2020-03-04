@@ -46,6 +46,11 @@ public class ViewSize implements Service {
                 || tooFarRight(sprite, halfSpriteSize, maxRight) || tooFarDown(sprite, halfSpriteSize, maxDown);
     }
 
+    /**
+     * Reset sprite.
+     *
+     * @param sprite the sprite
+     */
     public void resetSprite(Sprite sprite) {
         Vector2f spritePos = sprite.getPosition();
 
@@ -98,6 +103,11 @@ public class ViewSize implements Service {
         return viewBounds.height - spriteSize.y;
     }
 
+    /**
+     * Gets view bounds.
+     *
+     * @return the view bounds
+     */
     public FloatRect getViewBounds() {
         return viewBounds;
     }

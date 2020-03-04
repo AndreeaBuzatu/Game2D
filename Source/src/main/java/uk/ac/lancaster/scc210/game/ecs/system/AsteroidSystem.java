@@ -10,6 +10,9 @@ import uk.ac.lancaster.scc210.game.ecs.component.FlashComponent;
 
 import java.util.Collection;
 
+/**
+ * The type Asteroid system.
+ */
 public class AsteroidSystem extends IterativeSystem {
     /**
      * Instantiates a new Iterative system.
@@ -46,12 +49,5 @@ public class AsteroidSystem extends IterativeSystem {
 
     @Override
     public void draw(RenderTarget target) {
-        for (Entity entity : entities) {
-            AsteroidComponent asteroidComponent = (AsteroidComponent) entity.findComponent(AsteroidComponent.class);
-
-            FlashComponent flashComponent = (FlashComponent) entity.findComponent(FlashComponent.class);
-
-            target.draw(asteroidComponent.getCircle(), flashComponent.getCurrentState());
-        }
     }
 }
