@@ -83,11 +83,15 @@ public class EnemyCollisionSystem extends IterativeSystem {
                 if ((player != null && enemyShip != null) && elapsedTime.asSeconds() > COLLISION_GAP.asSeconds()) {
                     SpaceShipComponent spaceShipComponent = (SpaceShipComponent) player.findComponent(SpaceShipComponent.class);
 
+                    FlashComponent flashComponent = (FlashComponent) player.findComponent(FlashComponent.class);
+
                     LivesComponent livesComponent = (LivesComponent) player.findComponent(LivesComponent.class);
 
                     soundManager.playSound(spaceShipComponent.getHitSound());
 
                     elapsedTime = Time.ZERO;
+
+                    flashComponent.flash(deltaTime);
 
                     livesComponent.setLives(livesComponent.getLives() - 1);
                 }
@@ -103,7 +107,7 @@ public class EnemyCollisionSystem extends IterativeSystem {
 
     private Entity findEnemyShip(Set<Entity> collided) {
         return collided.stream()
-                .filter(entity -> entity.hasComponent(EnemyComponent.class))
+                .filter(entity -> entity.hasComponent(EnemyComponent.class) && entity.hasComponent(FlashComponent.class))
                 .findFirst().orElse(null);
     }
 
