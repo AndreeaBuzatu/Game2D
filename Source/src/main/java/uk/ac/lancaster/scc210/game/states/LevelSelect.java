@@ -21,6 +21,9 @@ import uk.ac.lancaster.scc210.game.resources.PlayerData;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Level select.
+ */
 public class LevelSelect implements State, InputListener {
     private StateBasedGame game;
 
@@ -93,8 +96,6 @@ public class LevelSelect implements State, InputListener {
 
         for (int i = 0; i < levels.size(); i++) {
             if (i % 3 == 0) {
-                System.out.println("I: " + i);
-
                 // i % 3 == 0, will == true when i = 0, so in that instance don't add a new column (as one hasn't been created yet)
                 if (i > 0) {
                     interfaceGrid.addColumn(interfaceList);
@@ -105,7 +106,14 @@ public class LevelSelect implements State, InputListener {
 
             int finalI = i;
 
-            interfaceList.addListOption(levels.get(i).getName(), (() -> System.out.printf("Load level %s here\n", finalI)));
+            interfaceList.addListOption(levels.get(i).getName(), (() -> {
+                // Pop back to the main menu so that the pause screen can take them back to the main menu
+                game.popState();
+
+                game.pushState(new Playing(levels.get(finalI).getName()));
+
+                //playing.setLevel(levels.get(finalI));
+            }));
 
             if (i > currentUnlocked) {
                 interfaceList.getOptions().get(i % 3).setEnabled(false);

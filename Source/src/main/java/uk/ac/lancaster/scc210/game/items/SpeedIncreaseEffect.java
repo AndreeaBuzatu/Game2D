@@ -2,11 +2,21 @@ package uk.ac.lancaster.scc210.game.items;
 
 import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
+import uk.ac.lancaster.scc210.game.ecs.component.FiringPatternComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
+import uk.ac.lancaster.scc210.game.patterns.Pattern;
 
+/**
+ * The type Speed increase effect.
+ */
 public class SpeedIncreaseEffect extends TimedItemEffect {
     private int oldSpeed;
 
+    private Time oldGap;
+
+    /**
+     * Instantiates a new Speed increase effect.
+     */
     public SpeedIncreaseEffect() {
         super(Time.getSeconds(5));
 
@@ -21,9 +31,17 @@ public class SpeedIncreaseEffect extends TimedItemEffect {
         if (entity.hasComponent(SpeedComponent.class)) {
             SpeedComponent speedComponent = (SpeedComponent) entity.findComponent(SpeedComponent.class);
 
+            FiringPatternComponent firingPatternComponent = (FiringPatternComponent) entity.findComponent(FiringPatternComponent.class);
+
+            Pattern pattern = firingPatternComponent.getPattern();
+
             if (oldSpeed == -1) {
                 oldSpeed = speedComponent.getSpeed();
             }
+
+            oldGap = pattern.getFiringGap();
+
+            pattern.setFiringGap(Time.getSeconds(oldGap.asSeconds() / 4));
 
             speedComponent.setSpeed(20);
         }
@@ -33,6 +51,9 @@ public class SpeedIncreaseEffect extends TimedItemEffect {
     public void reset(Entity entity) {
         if (entity.hasComponent(SpeedComponent.class)) {
             SpeedComponent speedComponent = (SpeedComponent) entity.findComponent(SpeedComponent.class);
+            FiringPatternComponent firingPatternComponent = (FiringPatternComponent) entity.findComponent(FiringPatternComponent.class);
+
+            firingPatternComponent.getPattern().setFiringGap(oldGap);
 
             speedComponent.setSpeed(oldSpeed);
         }

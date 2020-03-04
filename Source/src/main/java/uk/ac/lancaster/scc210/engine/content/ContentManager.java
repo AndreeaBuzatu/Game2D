@@ -12,8 +12,14 @@ import java.util.concurrent.ConcurrentHashMap;
  * @param <T> the type parameter
  */
 public class ContentManager<T> implements Service {
-    private final ConcurrentHashMap<String, T> content;
+    /**
+     * The Content.
+     */
+    final ConcurrentHashMap<String, T> content;
 
+    /**
+     * The Alternative.
+     */
     protected T alternative;
 
     /**
@@ -47,6 +53,11 @@ public class ContentManager<T> implements Service {
         return content.getOrDefault(key, alternative);
     }
 
+    /**
+     * Values collection.
+     *
+     * @return the collection
+     */
     public Collection<T> values() {
         return content.values();
     }

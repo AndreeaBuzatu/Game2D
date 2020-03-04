@@ -5,6 +5,9 @@ import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.game.bullets.effects.DegradingLivesEffect;
 import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
 
+/**
+ * The type Degrading lives bullet effect item.
+ */
 public class DegradingLivesBulletEffectItem extends TimedItemEffect {
     private final Time SECOND = Time.getSeconds(1);
 
@@ -14,6 +17,9 @@ public class DegradingLivesBulletEffectItem extends TimedItemEffect {
 
     private DegradingLivesEffect degradingLivesEffect;
 
+    /**
+     * Instantiates a new Degrading lives bullet effect item.
+     */
     public DegradingLivesBulletEffectItem() {
         super(Time.getSeconds(10));
 
@@ -36,8 +42,6 @@ public class DegradingLivesBulletEffectItem extends TimedItemEffect {
             elapsedSeconds = Time.ZERO;
 
             if (degradingLivesEffect.getLives() >= 0) {
-                System.out.println(degradingLivesEffect.getLives());
-
                 degradingLivesEffect.setLives(degradingLivesEffect.getLives() - 1);
             }
         }

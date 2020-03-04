@@ -9,6 +9,11 @@ import uk.ac.lancaster.scc210.game.ecs.component.*;
 import uk.ac.lancaster.scc210.game.level.Level;
 import uk.ac.lancaster.scc210.game.level.LevelStage;
 
+import java.util.Collection;
+
+/**
+ * The type Level system.
+ */
 public class LevelSystem extends IterativeSystem {
     private Level level;
 
@@ -18,6 +23,7 @@ public class LevelSystem extends IterativeSystem {
      * Instantiates a new Iterative system.
      *
      * @param world the world containing entities to use
+     * @param level the level
      */
     public LevelSystem(World world, Level level) {
         super(world);
@@ -27,6 +33,16 @@ public class LevelSystem extends IterativeSystem {
         currentStage = level.getCurrentStage();
 
         world.addEntities(currentStage.getStationaryEntities());
+    }
+
+    @Override
+    public void entityAdded(Entity entity) {
+
+    }
+
+    @Override
+    public void entitiesAdded(Collection<? extends Entity> entities) {
+
     }
 
     @Override
@@ -46,24 +62,19 @@ public class LevelSystem extends IterativeSystem {
         }
 
         // Remove a stationary entity from the List<Entity> stationaryEntities
-        if (entity.hasComponent(StationaryComponent.class)) {
+        if (currentStage != null && entity.hasComponent(StationaryComponent.class)) {
             currentStage.removeStationaryEntity(entity);
         }
-    }
-
-    @Override
-    public void entityAdded(Entity entity) {
-        super.entityAdded(entity);
     }
 
     @Override
     public void update(Time deltaTime) {
         if (currentStage != null && currentStage.complete()) {
             currentStage = level.changeStage();
-            
+
         } else {
-            if (currentStage != null && !currentStage.hasSpawned()) {
-                currentStage.spawn(world, deltaTime);
+            if (currentStage != null) {
+                currentStage.update(world, deltaTime);
             }
         }
     }
@@ -111,6 +122,11 @@ public class LevelSystem extends IterativeSystem {
         level.reset();
     }
 
+    /**
+     * Sets level.
+     *
+     * @param level the level
+     */
     public void setLevel(Level level) {
         this.level = level;
 

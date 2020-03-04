@@ -8,6 +8,9 @@ import uk.ac.lancaster.scc210.engine.InputListener;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import uk.ac.lancaster.scc210.engine.content.FontManager;
 
+/**
+ * The type Escape text.
+ */
 public class EscapeText implements InputListener, Drawable {
     private final StateBasedGame game;
 
@@ -15,6 +18,12 @@ public class EscapeText implements InputListener, Drawable {
 
     private Keyboard.Key pressedKey;
 
+    /**
+     * Instantiates a new Escape text.
+     *
+     * @param fontManager the font manager
+     * @param game        the game
+     */
     public EscapeText(FontManager fontManager, StateBasedGame game) {
         this.game = game;
 
@@ -38,6 +47,9 @@ public class EscapeText implements InputListener, Drawable {
         renderTarget.draw(exitText);
     }
 
+    /**
+     * Update.
+     */
     public void update() {
         if (game != null && pressedKey != null && pressedKey == Keyboard.Key.ESCAPE) {
             game.popState();

@@ -21,10 +21,7 @@ import uk.ac.lancaster.scc210.engine.resources.deserialise.TextureAtlasDeseriali
 import uk.ac.lancaster.scc210.engine.service.ServiceProvider;
 import uk.ac.lancaster.scc210.engine.states.State;
 
-import java.util.EmptyStackException;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -37,6 +34,9 @@ public class StateBasedGame {
      */
     public static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
+    /**
+     * The constant ZOOM_AMOUNT.
+     */
     public static final float ZOOM_AMOUNT = 2.0f;
 
     private final Set<InputListener> inputListeners;
@@ -77,6 +77,11 @@ public class StateBasedGame {
     protected StateBasedGame(final String name, final int windowWidth, final int windowHeight) {
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
+
+        // Only load the shared object on windows
+        if (System.getProperty("os.name").toLowerCase().contains("nux")) {
+            System.load(Objects.requireNonNull(StateBasedGame.class.getClassLoader().getResource("libfixxinit.so")).getFile());
+        }
 
         window = new RenderWindow(new VideoMode(windowWidth, windowHeight), name);
 
@@ -127,6 +132,8 @@ public class StateBasedGame {
 
             serviceProvider.put(SoundBufferManager.class, soundBufferManager);
 
+            serviceProvider.put(SoundManager.class, new SoundManager(soundBufferManager));
+
             if (Shader.isAvailable()) {
                 ShaderManager shaderManager = new ShaderManager();
 
@@ -165,7 +172,7 @@ public class StateBasedGame {
 
             draw();
         }
-    }
+   }
 
     private void update() {
         // Get the elapsed time and restart the clock
@@ -217,6 +224,11 @@ public class StateBasedGame {
         window.display();
     }
 
+    /**
+     * Push state.
+     *
+     * @param state the state
+     */
     public void pushState(State state) {
         if (currentState != null) {
             currentState.onExit(this);
@@ -231,6 +243,9 @@ public class StateBasedGame {
         currentState.onEnter(this);
     }
 
+    /**
+     * Pop state.
+     */
     public void popState() {
         states.pop();
 
@@ -267,6 +282,13 @@ public class StateBasedGame {
         return null;
     }
 
+    /**
+     * Deserialise local xml document.
+     *
+     * @param fileName the file name
+     * @return the document
+     * @throws ResourceNotFoundException the resource not found exception
+     */
     protected Document deserialiseLocalXML(final String fileName) throws ResourceNotFoundException {
         XMLAdapter xmlAdapter = new XMLAdapter();
 
@@ -288,14 +310,29 @@ public class StateBasedGame {
         return new Vector2f((windowWidth >> 1) * ZOOM_AMOUNT, (windowHeight >> 1) * ZOOM_AMOUNT);
     }
 
+    /**
+     * Add key listener.
+     *
+     * @param inputListener the input listener
+     */
     public void addKeyListener(InputListener inputListener) {
         inputListeners.add(inputListener);
     }
 
+    /**
+     * Remove key listener.
+     *
+     * @param inputListener the input listener
+     */
     public void removeKeyListener(InputListener inputListener) {
         inputListeners.remove(inputListener);
     }
 
+    /**
+     * Gets states.
+     *
+     * @return the states
+     */
     public Stack<State> getStates() {
         return states;
     }

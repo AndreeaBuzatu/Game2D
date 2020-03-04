@@ -5,6 +5,9 @@ import org.jsfml.graphics.Font;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * The type Font adapter.
+ */
 public class FontAdapter extends Resource<Font> {
     /**
      * Instantiates a new Font Adapter.

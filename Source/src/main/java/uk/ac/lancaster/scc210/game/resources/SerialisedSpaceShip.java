@@ -8,25 +8,25 @@ import uk.ac.lancaster.scc210.engine.resources.deserialise.Serialised;
 public class SerialisedSpaceShip implements Serialised {
     private final String[] items;
 
-    private final String name, animation, bullet, pattern, firingSound, hitSound;
+    private final String name, animation, bullet, pattern, firingSound, hitSound, texture;
 
     private final int speed, score, lives;
 
     /**
      * Instantiates a new Serialised space ship.
      *
-     * @param name      the name of the spaceship
-     * @param animation the animation of the spaceship
-     * @param items     the items the spaceship can drop when destroyed
-     * @param bullet    the bullet fired by the spaceship
-     * @param pattern   the pattern used by bullets
-     * @param speed     the speed of the spaceship
-     * @param score     the score awarded to the player when killing this spaceship
-     * @param lives     the number of the lives that spaceship has
+     * @param name        the name of the spaceship
+     * @param animation   the animation of the spaceship
+     * @param items       the items the spaceship can drop when destroyed
+     * @param bullet      the bullet fired by the spaceship
+     * @param pattern     the pattern used by bullets
+     * @param speed       the speed of the spaceship
+     * @param score       the score awarded to the player when killing this spaceship
+     * @param lives       the number of the lives that spaceship has
      * @param firingSound the firing sound of the spaceship
-     * @param hitSound  the sound played when colliding
+     * @param hitSound    the sound played when colliding
      */
-    public SerialisedSpaceShip(String name, String animation, String[] items, String bullet, String pattern, int speed, int score, int lives, String firingSound, String hitSound) {
+    public SerialisedSpaceShip(String name, String animation, String[] items, String bullet, String pattern, int speed, int score, int lives, String firingSound, String hitSound, String texture) {
         this.name = name;
         this.animation = animation;
         this.items = items;
@@ -37,6 +37,7 @@ public class SerialisedSpaceShip implements Serialised {
         this.lives = lives;
         this.firingSound = firingSound;
         this.hitSound = hitSound;
+        this.texture = texture;
     }
 
     /**
@@ -127,5 +128,9 @@ public class SerialisedSpaceShip implements Serialised {
      */
     public String getHitSound() {
         return hitSound;
+    }
+
+    public String getTexture() {
+        return texture;
     }
 }

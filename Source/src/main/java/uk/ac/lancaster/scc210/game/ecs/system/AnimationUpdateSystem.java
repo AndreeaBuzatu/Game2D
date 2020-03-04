@@ -9,6 +9,7 @@ import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.game.ecs.component.AnimationComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
+import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -29,15 +30,18 @@ public class AnimationUpdateSystem extends IterativeSystem {
 
     @Override
     public void entityAdded(Entity entity) {
-        super.entityAdded(entity);
+        entities = world.getEntitiesFor(SpriteComponent.class, AnimationComponent.class);
 
         findAnimations();
     }
 
     @Override
-    public void entityRemoved(Entity entity) {
-        super.entityRemoved(entity);
+    public void entitiesAdded(Collection<? extends Entity> entities) {
+        this.entities = world.getEntitiesFor(SpriteComponent.class, AnimationComponent.class);
+    }
 
+    @Override
+    public void entityRemoved(Entity entity) {
         findAnimations();
     }
 

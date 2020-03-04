@@ -9,11 +9,21 @@ import uk.ac.lancaster.scc210.game.ecs.component.BulletComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.FiredComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
+/**
+ * The type Star bullet pattern.
+ */
 public class StarBulletPattern extends BulletPattern {
     private static final Time FIRING_GAP = Time.getSeconds(0.2f);
 
     private static final int NUM_BULLETS = 8;
 
+    /**
+     * Instantiates a new Star bullet pattern.
+     *
+     * @param pool       the pool
+     * @param spaceShip  the space ship
+     * @param bulletName the bullet name
+     */
     public StarBulletPattern(Pool pool, Entity spaceShip, String bulletName) {
         super(pool, spaceShip, new Entity[NUM_BULLETS], bulletName, FIRING_GAP);
 

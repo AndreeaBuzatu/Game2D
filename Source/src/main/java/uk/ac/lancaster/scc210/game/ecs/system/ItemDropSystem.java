@@ -8,8 +8,12 @@ import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.game.content.ItemPrototypeManager;
 import uk.ac.lancaster.scc210.game.ecs.component.*;
 
+import java.util.Collection;
 import java.util.Random;
 
+/**
+ * The type Item drop system.
+ */
 public class ItemDropSystem extends IterativeSystem {
     // Lower bounds for item score
     private final int MIN_SCORE = 1;
@@ -31,7 +35,7 @@ public class ItemDropSystem extends IterativeSystem {
     /**
      * Instantiates a new Iterative system.
      *
-     * @param world      the world containing entities to use
+     * @param world the world containing entities to use
      */
     public ItemDropSystem(World world) {
         super(world);
@@ -40,15 +44,23 @@ public class ItemDropSystem extends IterativeSystem {
     }
 
     @Override
-    public void entityRemoved(Entity entity) {
-        super.entityRemoved(entity);
+    public void entityAdded(Entity entity) {
 
+    }
+
+    @Override
+    public void entitiesAdded(Collection<? extends Entity> entities) {
+
+    }
+
+    @Override
+    public void entityRemoved(Entity entity) {
         // The player or entities which are registered as being out of the window bounds (except waves) don't drop items
         if (entity.hasComponent(PlayerComponent.class) || entity.hasComponent(OutOfBoundsComponent.class)) {
             return;
         }
 
-        if (percentChance(DROP_CHANCE)) {
+        //if (percentChance(DROP_CHANCE)) {
             if (entity.hasComponent(SpaceShipComponent.class)) {
                 ItemPrototypeManager itemPrototypeManager = (ItemPrototypeManager) world.getServiceProvider().get(ItemPrototypeManager.class);
 
@@ -62,7 +74,7 @@ public class ItemDropSystem extends IterativeSystem {
                     createItem(itemPrototypeManager, item, entity);
                 }
             }
-        }
+        //}
     }
 
     @Override

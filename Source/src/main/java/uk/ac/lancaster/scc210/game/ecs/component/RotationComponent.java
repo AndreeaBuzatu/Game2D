@@ -6,8 +6,14 @@ import uk.ac.lancaster.scc210.engine.ecs.Component;
  * Component which indicates that an Entity can rotate
  */
 public class RotationComponent implements Component {
+    /**
+     * The constant MAX_ROTATION.
+     */
     public static final float MAX_ROTATION = 360;
 
+    /**
+     * The constant MIN_ROTATION.
+     */
     public static final float MIN_ROTATION = 0;
 
     private final float rotationAmount;

@@ -4,17 +4,30 @@ import org.jsfml.graphics.RenderTarget;
 import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 
+import java.util.Collection;
+
 /**
  * Represents a generic interface for an type of System to implement.
  */
 public interface EntitySystem {
     /**
      * Called when an Entity is added from the world.
+     *
+     * @param entity the entity
      */
     void entityAdded(Entity entity);
 
     /**
+     * Entities added.
+     *
+     * @param entities the entities
+     */
+    void entitiesAdded(Collection<? extends Entity> entities);
+
+    /**
      * Called when an Entity is removed from the world.
+     *
+     * @param entity the entity
      */
     void entityRemoved(Entity entity);
 

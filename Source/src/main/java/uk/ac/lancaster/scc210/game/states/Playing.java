@@ -3,30 +3,29 @@ package uk.ac.lancaster.scc210.game.states;
 import org.jsfml.audio.Music;
 import org.jsfml.graphics.*;
 import org.jsfml.system.Time;
-import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.event.KeyEvent;
 import org.jsfml.window.event.TextEvent;
 import uk.ac.lancaster.scc210.engine.InputListener;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import uk.ac.lancaster.scc210.engine.ViewSize;
+import uk.ac.lancaster.scc210.engine.collision.UniformGrid;
 import uk.ac.lancaster.scc210.engine.content.FontManager;
 import uk.ac.lancaster.scc210.engine.content.MusicManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.states.State;
 import uk.ac.lancaster.scc210.game.content.LevelManager;
-import uk.ac.lancaster.scc210.game.content.SpaceShipPrototypeManager;
 import uk.ac.lancaster.scc210.game.content.StateManager;
 import uk.ac.lancaster.scc210.game.dialogue.DialogueBox;
 import uk.ac.lancaster.scc210.game.ecs.component.*;
+import uk.ac.lancaster.scc210.game.ecs.entity.Player;
 import uk.ac.lancaster.scc210.game.ecs.system.*;
 import uk.ac.lancaster.scc210.game.level.Level;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
 import uk.ac.lancaster.scc210.game.resources.PlayerData;
 import uk.ac.lancaster.scc210.game.resources.PlayerWriter;
 
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -35,31 +34,28 @@ import java.util.Set;
 public class Playing implements State, InputListener {
     private static final int TEXT_SIZE = 70;
 
+    /**
+     * The constant INFO_BOX_HEIGHT.
+     */
     public static final int INFO_BOX_HEIGHT = TEXT_SIZE + 5;
 
     private final int ALPHA_CHANGE = 4;
 
     private final int MAX_OPACITY = 255;
 
-    private final int DEFAULT_LIVES = 3;
-
-    private List<Level> unlockedLevels, totalLevels;
-
     private StateBasedGame game;
 
     private World world;
 
-    private SpaceShipPrototypeManager spaceShipManager;
-
-    private LevelManager levelManager;
-
     private StateManager stateManager;
 
-    private LevelSystem levelSystem;
+    private UniformGrid uniformGrid;
 
     private PlayerData playerData;
 
     private PlayerWriter playerScoreWriter;
+
+    private LevelLoader levelLoader;
 
     private Level level;
 
@@ -73,42 +69,99 @@ public class Playing implements State, InputListener {
 
     private ViewSize viewSize;
 
+    private LevelSystem levelSystem;
+
     private DialogueBox dialogueBox;
+
+    private final String levelName;
 
     private boolean paused, fadedIn, shouldFadeIn, shouldFadeOut;
 
-    private int alpha, currentUnlocked;
+    private int alpha;
+
+    /**
+     * Instantiates a new Playing.
+     *
+     * @param levelName the level name
+     */
+    Playing(String levelName) {
+        this.levelName = levelName;
+    }
 
     @Override
     public void setup(StateBasedGame game) {
         this.game = game;
 
-        levelManager = (LevelManager) game.getServiceProvider().get(LevelManager.class);
+        FontManager fontManager = (FontManager) game.getServiceProvider().get(FontManager.class);
+
+        LevelManager levelManager = (LevelManager) game.getServiceProvider().get(LevelManager.class);
 
         stateManager = (StateManager) game.getServiceProvider().get(StateManager.class);
 
         playerData = (PlayerData) game.getServiceProvider().get(PlayerData.class);
 
-        String unlockedLevel = playerData.getUnlockedLevel();
+        viewSize = (ViewSize) game.getServiceProvider().get(ViewSize.class);
 
-        currentUnlocked = levelManager.indexOf(unlockedLevel);
+        uniformGrid = (UniformGrid) game.getServiceProvider().get(UniformGrid.class);
 
-        // If the level can't be found, default to the first level
-        if (currentUnlocked < 0) {
-            unlockedLevel = levelManager.getLevelList().get(0).getName();
-
-            currentUnlocked = levelManager.indexOf(unlockedLevel);
-        }
-
-        totalLevels = levelManager.getLevelList();
-
-        unlockedLevels = levelManager.getUnlocked(unlockedLevel);
-
-        level = unlockedLevels.get(currentUnlocked);
+        dialogueBox = new DialogueBox(viewSize, fontManager);
 
         world = new World(game.getServiceProvider());
 
+        levelLoader = new LevelLoader(world, levelManager);
+
+        level = levelLoader.loadLevel(levelName);
+
+        level.restartLevel();
+
+        setupWorld();
+
+        MusicManager musicManager = (MusicManager) world.getServiceProvider().get(MusicManager.class);
+
+        music = musicManager.get("example");
+
+        music.setVolume(100);
+
+        music.setLoop(true);
+
+        font = fontManager.get("font");
+
+        scoreText = new Text();
+
+        scoreText.setFont(font);
+
+        scoreText.setColor(Color.WHITE);
+
+        scoreText.setCharacterSize(TEXT_SIZE);
+
+        livesText = new Text();
+
+        livesText.setFont(font);
+
+        livesText.setColor(Color.WHITE);
+
+        livesText.setCharacterSize(TEXT_SIZE);
+
+        game.addKeyListener(dialogueBox);
+
+        paused = false;
+
+        fadedIn = false;
+
+        shouldFadeOut = false;
+
+        // We want to initially fade in the first level
+        shouldFadeIn = true;
+
+        alpha = 0;
+    }
+
+    private void setupWorld() {
         levelSystem = new LevelSystem(world, level);
+
+        uniformGrid.clear();
+
+        dialogueBox.setDialogue(level.getLines());
 
         world.addPool((BulletPool) game.getServiceProvider().get(BulletPool.class));
 
@@ -144,87 +197,9 @@ public class Playing implements State, InputListener {
 
         world.addSystem(new LivesSystem(world));
 
-        createPlayer();
+        world.addSystem(new UniformGridSystem(world));
 
-        MusicManager musicManager = (MusicManager) world.getServiceProvider().get(MusicManager.class);
-
-        music = musicManager.get("example");
-
-        music.setVolume(100);
-
-        music.setLoop(true);
-
-        FontManager fontManager = (FontManager) world.getServiceProvider().get(FontManager.class);
-
-        font = fontManager.get("font");
-
-        scoreText = new Text();
-
-        scoreText.setFont(font);
-
-        scoreText.setColor(Color.WHITE);
-
-        scoreText.setCharacterSize(TEXT_SIZE);
-
-        livesText = new Text();
-
-        livesText.setFont(font);
-
-        livesText.setColor(Color.WHITE);
-
-        livesText.setCharacterSize(TEXT_SIZE);
-
-        dialogueBox = new DialogueBox(viewSize, fontManager);
-
-        dialogueBox.setDialogue(level.getLines());
-
-        game.addKeyListener(dialogueBox);
-
-        paused = false;
-
-        fadedIn = false;
-
-        shouldFadeOut = false;
-
-        // We want to initially fade in the first level
-        shouldFadeIn = true;
-
-        alpha = 0;
-    }
-
-    private void createPlayer() {
-        spaceShipManager = (SpaceShipPrototypeManager) game.getServiceProvider().get(SpaceShipPrototypeManager.class);
-
-        viewSize = (ViewSize) world.getServiceProvider().get(ViewSize.class);
-
-        FloatRect viewBounds = viewSize.getViewBounds();
-
-        player = spaceShipManager.get("player").create();
-
-        LivesComponent livesComponent = (LivesComponent) player.findComponent(LivesComponent.class);
-
-        // If the player data has an impossible number of lives, just set an assumed default
-        if (livesComponent.getLives() <= 0) {
-            livesComponent.setLives(DEFAULT_LIVES);
-
-            livesComponent.setStartingLives(DEFAULT_LIVES);
-        }
-
-        livesComponent.setLives(playerData.getLives());
-
-        PlayerComponent playerComponent = new PlayerComponent();
-
-        playerComponent.setScore(playerData.getScore());
-
-        player.addComponent(playerComponent);
-
-        SpriteComponent spriteComponent = (SpriteComponent) player.findComponent(SpriteComponent.class);
-
-        Sprite playerSprite = spriteComponent.getSprite();
-
-        playerComponent.setSpawnPoint(new Vector2f((viewBounds.width / 2) - playerSprite.getGlobalBounds().width, (viewBounds.height / 1.5f) - playerSprite.getGlobalBounds().height));
-
-        playerSprite.setPosition(playerComponent.getSpawnPoint());
+        player = new Player(game.getServiceProvider()).getPlayer();
 
         playerScoreWriter = (PlayerWriter) game.getServiceProvider().get(PlayerWriter.class);
 
@@ -321,6 +296,41 @@ public class Playing implements State, InputListener {
 
     @Override
     public void update(Time deltaTime) {
+        if (level.complete()) {
+            game.popState();
+
+            PlayerComponent playerComponent = (PlayerComponent) player.findComponent(PlayerComponent.class);
+
+            LivesComponent livesComponent = (LivesComponent) player.findComponent(LivesComponent.class);
+
+            if (!levelLoader.levelNotFound() && !levelLoader.lastLevel()) {
+                Level nextLevel = levelLoader.nextLevel();
+
+                playerData.setScore(playerComponent.getScore());
+
+                playerData.setLives(livesComponent.getLives());
+
+                playerData.setUnlockedLevel(nextLevel.getName());
+
+                playerScoreWriter.writePlayerLevel(playerData);
+
+                game.pushState(new Playing(nextLevel.getName()));
+
+            } else if (levelLoader.lastLevel()) {
+                Completion completionState = (Completion) stateManager.get("completion");
+
+                completionState.setPlayerScore(playerComponent.getScore());
+
+                playerComponent.setScore(0);
+
+                livesComponent.setLives(livesComponent.getStartingLives());
+
+                game.pushState(completionState);
+            }
+
+            return;
+        }
+
         if (paused) {
             game.pushState(stateManager.get("pause"));
 
@@ -330,75 +340,12 @@ public class Playing implements State, InputListener {
         if (dialogueBox.isOpen()) {
             dialogueBox.update(deltaTime);
 
-        } else if (!dialogueBox.isOpen() && !fadedIn) {
-            PlayerComponent playerComponent = (PlayerComponent) player.findComponent(PlayerComponent.class);
-
-            SpriteComponent playerSpriteComponent = (SpriteComponent) player.findComponent(SpriteComponent.class);
-
-            Sprite playerSprite = playerSpriteComponent.getSprite();
-
-            // Reset the players position and rotation when the player goes to a new level (and has faded in)
-            playerSprite.setPosition(playerComponent.getSpawnPoint());
-
-            playerSprite.setRotation(0);
-
-            // Remove bullets from the world
-            world.removeIf(entity -> entity.hasComponent(BulletComponent.class) || entity.hasComponent(FiredComponent.class) ||
-                    entity.hasComponent(EnemyComponent.class) || entity.hasComponent(ItemEffectsComponent.class));
-
-            // Set and respawn the level once it has been cleared
-            levelSystem.setLevel(level);
-
         } else if (fadedIn) {
             updateWorld(deltaTime);
         }
     }
 
     private void updateWorld(Time deltaTime) {
-        if (level.complete()) {
-            System.out.println("Complete level");
-
-            // Reset the player's current item effects back to the game default
-            PlayerComponent playerComponent = (PlayerComponent) player.findComponent(PlayerComponent.class);
-
-            LivesComponent livesComponent = (LivesComponent) player.findComponent(LivesComponent.class);
-
-            playerComponent.getCurrentItemEffects().parallelStream().forEach(itemEffect -> itemEffect.reset(player));
-
-            if (currentUnlocked < totalLevels.size() - 1) {
-                currentUnlocked++;
-
-                unlockedLevels = levelManager.getUnlocked(totalLevels.get(currentUnlocked).getName());
-
-                level = unlockedLevels.get(currentUnlocked);
-
-                // Write the player data once they have completed a level.
-                playerData.setUnlockedLevel(level.getName());
-
-                playerData.setScore(playerComponent.getScore());
-
-                playerData.setLives(livesComponent.getLives());
-
-                playerScoreWriter.writePlayerLevel(playerData);
-
-                dialogueBox.setDialogue(level.getLines());
-
-                shouldFadeIn = false;
-
-                shouldFadeOut = true;
-
-            } else {
-                Completion completionState = (Completion) stateManager.get("completion");
-
-                completionState.setPlayerScore(playerComponent.getScore());
-
-                //playerComponent.setScore(0);
-
-                //livesComponent.setLives(livesComponent.getStartingLives());
-
-                game.pushState(completionState);
-            }
-        }
 
         if (!level.complete()) {
             world.update(deltaTime);
@@ -451,5 +398,13 @@ public class Playing implements State, InputListener {
 
             asteroidComponent.getCircle().setFillColor(colour);
         }
+    }
+
+    /**
+     * Sets level.
+     *
+     * @param level the level
+     */
+    public void setLevel(Level level) {
     }
 }

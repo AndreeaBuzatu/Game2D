@@ -17,6 +17,9 @@ public abstract class IterativeSystem implements EntitySystem {
 
     private final Class<? extends Component>[] components;
 
+    /**
+     * The World.
+     */
     protected final World world;
 
     /**
@@ -33,8 +36,14 @@ public abstract class IterativeSystem implements EntitySystem {
         entities = world.getEntitiesFor(components);
     }
 
+    /*
     @Override
     public void entityAdded(Entity entity) {
+        this.entities = world.getEntitiesFor(components);
+    }
+
+    @Override
+    public void entitiesAdded(Collection<? extends Entity> entities) {
         this.entities = world.getEntitiesFor(components);
     }
 
@@ -42,4 +51,5 @@ public abstract class IterativeSystem implements EntitySystem {
     public void entityRemoved(Entity entity) {
         this.entities = world.getEntitiesFor(components);
     }
+     */
 }

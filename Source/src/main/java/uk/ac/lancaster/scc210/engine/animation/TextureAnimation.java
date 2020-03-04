@@ -8,7 +8,7 @@ import uk.ac.lancaster.scc210.engine.content.TextureAtlas;
  * TextureAnimation is the most basic form of animation. It consists of a series of frames (Textures).
  * Animations are played by looping through each frame one-by-one at a rate of 24FPS.
  * Once the final frame has been reached, the animation goes back to the first animation.
- *
+ * <p>
  * Frames are typically sourced from a Texture Atlas where they are loaded left to right, line-by-line.
  */
 public class TextureAnimation {
@@ -57,6 +57,7 @@ public class TextureAnimation {
     /**
      * Changes the texture at this point in time for the animation speed.
      *
+     * @param deltaTime the delta time
      */
     public void animate(Time deltaTime) {
         frameTimeRemaining -= deltaTime.asSeconds();

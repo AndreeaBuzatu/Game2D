@@ -16,6 +16,9 @@ import uk.ac.lancaster.scc210.game.resources.HighScore;
 
 import java.util.List;
 
+/**
+ * The type High score list.
+ */
 public class HighScoreList implements State {
     private final int LIST_PADDING = 250;
 

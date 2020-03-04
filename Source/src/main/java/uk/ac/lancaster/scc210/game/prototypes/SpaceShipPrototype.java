@@ -1,10 +1,9 @@
 package uk.ac.lancaster.scc210.game.prototypes;
 
-import org.jsfml.audio.Sound;
 import org.jsfml.graphics.Sprite;
 import uk.ac.lancaster.scc210.engine.content.ShaderManager;
-import uk.ac.lancaster.scc210.engine.content.SoundBufferManager;
 import uk.ac.lancaster.scc210.engine.content.TextureAnimationManager;
+import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.pooling.Pool;
@@ -18,10 +17,15 @@ import uk.ac.lancaster.scc210.game.patterns.Pattern;
 import uk.ac.lancaster.scc210.game.patterns.StarSpaceshipPattern;
 import uk.ac.lancaster.scc210.game.resources.SerialisedSpaceShip;
 
+/**
+ * The type Space ship prototype.
+ */
 public class SpaceShipPrototype implements Prototype {
     private final String[] items;
 
     private final TextureAnimationManager animationManager;
+
+    private final TextureManager textureManager;
 
     private final ShaderManager shaderManager;
 
@@ -29,14 +33,23 @@ public class SpaceShipPrototype implements Prototype {
 
     private final Pool pool;
 
-    private final String animation, bulletName, pattern;
+    private final String animation, bulletName, pattern, texture;
 
-    private final Sound firingSound, hitSound;
+    private final String firingSound, hitSound;
 
     private final int speed, score, lives;
 
+    /**
+     * Instantiates a new Space ship prototype.
+     *
+     * @param serviceProvider           the service provider
+     * @param spaceShipPrototypeManager the space ship prototype manager
+     * @param pool                      the pool
+     * @param spaceShip                 the space ship
+     */
     public SpaceShipPrototype(ServiceProvider serviceProvider, SpaceShipPrototypeManager spaceShipPrototypeManager, Pool pool, SerialisedSpaceShip spaceShip) {
         this.animationManager = (TextureAnimationManager) serviceProvider.get(TextureAnimationManager.class);
+        this.textureManager = (TextureManager) serviceProvider.get(TextureManager.class);
         this.shaderManager = (ShaderManager) serviceProvider.get(ShaderManager.class);
         this.spaceShipPrototypeManager = spaceShipPrototypeManager;
         this.pool = pool;
@@ -47,17 +60,25 @@ public class SpaceShipPrototype implements Prototype {
         this.speed = spaceShip.getSpeed();
         this.score = spaceShip.getScore();
         this.lives = spaceShip.getLives();
+        this.firingSound = spaceShip.getFiringSound();
+        this.hitSound = spaceShip.getHitSound();
+        this.texture = spaceShip.getTexture();
 
-        SoundBufferManager soundBufferManager = (SoundBufferManager) serviceProvider.get(SoundBufferManager.class);
-
-        this.firingSound = new Sound(soundBufferManager.get(spaceShip.getFiringSound()));
-        this.hitSound = new Sound(soundBufferManager.get(spaceShip.getHitSound()));
     }
 
     public Entity create() {
-        final AnimationComponent animationComponent = new AnimationComponent(animationManager.get(animation));
+        final Sprite sprite;
 
-        final Sprite sprite = new Sprite(animationComponent.getTextureAnimation().getTexture());
+        AnimationComponent animationComponent = null;
+
+        if (!animation.equals("")) {
+            animationComponent = new AnimationComponent(animationManager.get(animation));
+
+            sprite = new Sprite(animationComponent.getTextureAnimation().getTexture());
+
+        } else {
+            sprite = new Sprite(textureManager.get(texture));
+        }
 
         // Set the sprite's origin to the exact centre of the sprite
         sprite.setOrigin(sprite.getTexture().getSize().x >> 1, sprite.getTexture().getSize().y >> 1);
@@ -80,12 +101,16 @@ public class SpaceShipPrototype implements Prototype {
 
         final FlashComponent flashComponent = new FlashComponent(sprite, shaderManager.get("flash"));
 
-        Entity spaceShip = World.createEntity(animationComponent, spriteComponent, speedComponent, rotationComponent, spaceShipComponent, orientatedBoxComponent, transformableComponent, scoreComponent, livesComponent, flashComponent);
+        Entity spaceShip = World.createEntity(spriteComponent, speedComponent, rotationComponent, spaceShipComponent, orientatedBoxComponent, transformableComponent, scoreComponent, livesComponent, flashComponent);
 
         if (pattern != null && !pattern.equals("")) {
             final FiringPatternComponent firingPatternComponent = new FiringPatternComponent(findPattern(spaceShip, pattern));
 
             spaceShip.addComponent(firingPatternComponent);
+        }
+
+        if (animationComponent != null) {
+            spaceShip.addComponent(animationComponent);
         }
 
         return spaceShip;

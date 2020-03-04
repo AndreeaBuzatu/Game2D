@@ -12,6 +12,9 @@ import uk.ac.lancaster.scc210.engine.content.FontManager;
 
 import java.util.List;
 
+/**
+ * The type Dialogue box.
+ */
 public class DialogueBox implements Drawable, InputListener {
     private final Time TIME_GAP = Time.getSeconds(1f);
 
@@ -39,6 +42,12 @@ public class DialogueBox implements Drawable, InputListener {
 
     private int offset;
 
+    /**
+     * Instantiates a new Dialogue box.
+     *
+     * @param viewSize    the view size
+     * @param fontManager the font manager
+     */
     public DialogueBox(ViewSize viewSize, FontManager fontManager) {
         box = new RectangleShape();
 
@@ -84,6 +93,11 @@ public class DialogueBox implements Drawable, InputListener {
         elapsedTime = Time.ZERO;
     }
 
+    /**
+     * Update.
+     *
+     * @param deltaTime the delta time
+     */
     public void update(Time deltaTime) {
         if (!open) {
             return;
@@ -187,6 +201,11 @@ public class DialogueBox implements Drawable, InputListener {
         return i - 1;
     }
 
+    /**
+     * Sets dialogue.
+     *
+     * @param lines the lines
+     */
     public void setDialogue(List<Line> lines) {
         // Clear the buffer
         stringBuffer.setLength(0);
@@ -206,6 +225,11 @@ public class DialogueBox implements Drawable, InputListener {
         formatText();
     }
 
+    /**
+     * Is open boolean.
+     *
+     * @return the boolean
+     */
     public boolean isOpen() {
         return open;
     }

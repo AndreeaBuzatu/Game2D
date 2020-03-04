@@ -2,15 +2,15 @@ package uk.ac.lancaster.scc210.game;
 
 import org.w3c.dom.Document;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
+import uk.ac.lancaster.scc210.engine.ViewSize;
+import uk.ac.lancaster.scc210.engine.collision.UniformGrid;
 import uk.ac.lancaster.scc210.engine.content.ShaderManager;
-import uk.ac.lancaster.scc210.engine.content.SoundBufferManager;
 import uk.ac.lancaster.scc210.engine.content.TextureAnimationManager;
 import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
 import uk.ac.lancaster.scc210.game.content.*;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
 import uk.ac.lancaster.scc210.game.resources.*;
-import uk.ac.lancaster.scc210.game.states.MainMenu;
 
 import java.util.logging.Logger;
 
@@ -31,18 +31,12 @@ public class Game extends StateBasedGame {
     public Game() {
         super("Shooter", 1280, 720);
 
-        MainMenu mainMenu = new MainMenu();
-
-        //pushState(mainMenu);
-
         try {
             TextureAnimationManager animationManager = (TextureAnimationManager) serviceProvider.get(TextureAnimationManager.class);
 
             TextureManager textureManager = (TextureManager) serviceProvider.get(TextureManager.class);
 
             ShaderManager shaderManager = (ShaderManager) serviceProvider.get(ShaderManager.class);
-
-            SoundBufferManager soundBufferManager = (SoundBufferManager) serviceProvider.get(SoundBufferManager.class);
 
             BulletDeserialiser bulletDeserialiser = new BulletDeserialiser(deserialiseXML("bullets.xml"));
 
@@ -81,6 +75,8 @@ public class Game extends StateBasedGame {
             HighScoreWriter highScoreWriter = new HighScoreWriter(highScores);
 
             serviceProvider.put(HighScoreWriter.class, highScoreWriter);
+
+            serviceProvider.put(UniformGrid.class, new UniformGrid((ViewSize) serviceProvider.get(ViewSize.class)));
 
         } catch (ResourceNotFoundException e) {
             window.close();

@@ -12,6 +12,7 @@ import java.util.logging.Level;
 /**
  * Contains the functionality and error handling for loading a resource
  */
+@SuppressWarnings("ALL")
 public class ResourceLoader {
     private static final String ERROR_TITLE = "Unable to load resource";
 
@@ -29,6 +30,14 @@ public class ResourceLoader {
         loadStream(stream, resource, fileName);
     }
 
+    /**
+     * Load from local stream.
+     *
+     * @param <T>      the type parameter
+     * @param resource the resource
+     * @param fileName the file name
+     * @throws ResourceNotFoundException the resource not found exception
+     */
     public static <T extends Resource> void loadFromLocalStream(T resource, String fileName) throws ResourceNotFoundException {
         InputStream stream = loadFromLocal(fileName);
 

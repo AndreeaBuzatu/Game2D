@@ -3,13 +3,27 @@ package uk.ac.lancaster.scc210.game.items;
 import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 
+/**
+ * The type Item effect.
+ */
 public abstract class ItemEffect {
+    /**
+     * The Is dead.
+     */
     boolean isDead;
 
+    /**
+     * Instantiates a new Item effect.
+     */
     ItemEffect() {
         isDead = false;
     }
 
+    /**
+     * Update.
+     *
+     * @param deltaTime the delta time
+     */
     public abstract void update(Time deltaTime);
 
     /**
@@ -31,6 +45,11 @@ public abstract class ItemEffect {
         isDead = true;
     }
 
+    /**
+     * Is dead boolean.
+     *
+     * @return the boolean
+     */
     public boolean isDead() {
         return isDead;
     }

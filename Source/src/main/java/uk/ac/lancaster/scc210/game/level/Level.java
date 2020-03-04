@@ -6,17 +6,27 @@ import uk.ac.lancaster.scc210.game.dialogue.Line;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * The type Level.
+ */
 public class Level implements Serialised {
     private final List<LevelStage> stages;
 
     private final List<Line> lines;
 
-    private final Iterator<LevelStage> stageIterator;
+    private Iterator<LevelStage> stageIterator;
 
     private final String name;
 
     private LevelStage currentStage;
 
+    /**
+     * Instantiates a new Level.
+     *
+     * @param name   the name
+     * @param stages the stages
+     * @param lines  the lines
+     */
     public Level(String name, List<LevelStage> stages, List<Line> lines) {
         this.name = name;
         this.stages = stages;
@@ -27,6 +37,11 @@ public class Level implements Serialised {
         currentStage = stageIterator.next();
     }
 
+    /**
+     * Change stage level stage.
+     *
+     * @return the level stage
+     */
     public LevelStage changeStage() {
         if (stageIterator.hasNext()) {
             currentStage = stageIterator.next();
@@ -38,22 +53,56 @@ public class Level implements Serialised {
         }
     }
 
+    /**
+     * Restart level.
+     */
+    public void restartLevel() {
+        stages.forEach(LevelStage::reset);
+
+        currentStage = stages.get(0);
+
+        stageIterator = stages.iterator();
+    }
+
+    /**
+     * Reset.
+     */
     public void reset() {
         currentStage.reset();
     }
 
+    /**
+     * Complete boolean.
+     *
+     * @return the boolean
+     */
     public boolean complete() {
         return stages.stream().allMatch(LevelStage::complete);
     }
 
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Gets current stage.
+     *
+     * @return the current stage
+     */
     public LevelStage getCurrentStage() {
         return currentStage;
     }
 
+    /**
+     * Gets lines.
+     *
+     * @return the lines
+     */
     public List<Line> getLines() {
         return lines;
     }

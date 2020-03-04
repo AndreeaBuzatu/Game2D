@@ -6,13 +6,17 @@ import org.jsfml.graphics.ShaderSourceException;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * The type Shader adapter.
+ */
 public class ShaderAdapter extends Resource<Shader> {
     private final Shader.Type shaderType;
 
     /**
      * Instantiates a new ShaderAdapter.
      *
-     * @param shader the shader
+     * @param shader     the shader
+     * @param shaderType the shader type
      */
     public ShaderAdapter(Shader shader, Shader.Type shaderType) {
         super(null);

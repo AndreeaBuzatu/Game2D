@@ -5,7 +5,16 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
 
+/**
+ * The type Sound deserialiser.
+ */
 public class SoundDeserialiser extends Deserialiser<SerialisedSound> {
+    /**
+     * Instantiates a new Sound deserialiser.
+     *
+     * @param document the document
+     * @throws ResourceNotFoundException the resource not found exception
+     */
     public SoundDeserialiser(Document document) throws ResourceNotFoundException {
         super(document, "sounds", "sound");
     }
