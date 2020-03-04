@@ -16,6 +16,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * The type Enemy collision system.
+ */
 public class EnemyCollisionSystem extends IterativeSystem {
     private final Time COLLISION_GAP = Time.getSeconds(1);
 

@@ -16,6 +16,9 @@ import uk.ac.lancaster.scc210.game.content.StateManager;
 import uk.ac.lancaster.scc210.game.gui.MenuHeader;
 import uk.ac.lancaster.scc210.game.resources.PlayerData;
 
+/**
+ * The type Main menu.
+ */
 public class MainMenu implements State {
     private final int LIST_PADDING = 250;
 

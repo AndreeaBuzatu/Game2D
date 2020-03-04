@@ -10,6 +10,9 @@ import uk.ac.lancaster.scc210.game.ecs.component.EnemyComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.FiredComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
+/**
+ * The type Star spaceship pattern.
+ */
 public class StarSpaceshipPattern extends Pattern {
     private static final Time FIRING_GAP = Time.getSeconds(5);
 
@@ -17,6 +20,13 @@ public class StarSpaceshipPattern extends Pattern {
 
     private final SpaceShipPrototypeManager spaceShipPrototypeManager;
 
+    /**
+     * Instantiates a new Star spaceship pattern.
+     *
+     * @param spaceShip                 the space ship
+     * @param spaceShipPrototypeManager the space ship prototype manager
+     * @param shipName                  the ship name
+     */
     public StarSpaceshipPattern(Entity spaceShip, SpaceShipPrototypeManager spaceShipPrototypeManager, String shipName) {
         super(spaceShip, new Entity[NUM_BULLETS], shipName, FIRING_GAP);
 

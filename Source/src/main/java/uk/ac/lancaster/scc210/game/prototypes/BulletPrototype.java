@@ -10,6 +10,9 @@ import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.TransformableComponent;
 
+/**
+ * The type Bullet prototype.
+ */
 public class BulletPrototype implements Prototype {
     private final TextureManager textureManager;
 
@@ -17,6 +20,13 @@ public class BulletPrototype implements Prototype {
 
     private final int speed;
 
+    /**
+     * Instantiates a new Bullet prototype.
+     *
+     * @param textureManager the texture manager
+     * @param texture        the texture
+     * @param speed          the speed
+     */
     public BulletPrototype(TextureManager textureManager, String texture, int speed) {
         this.textureManager = textureManager;
         this.texture = texture;
@@ -37,10 +47,20 @@ public class BulletPrototype implements Prototype {
         return World.createEntity(spriteComponent, speedComponent, orientatedBoxComponent, transformableComponent);
     }
 
+    /**
+     * Gets texture.
+     *
+     * @return the texture
+     */
     public String getTexture() {
         return texture;
     }
 
+    /**
+     * Gets speed.
+     *
+     * @return the speed
+     */
     public int getSpeed() {
         return speed;
     }

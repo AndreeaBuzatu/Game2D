@@ -10,13 +10,16 @@ import uk.ac.lancaster.scc210.game.ecs.component.TransformableComponent;
 
 import java.util.Collection;
 
+/**
+ * The type Uniform grid system.
+ */
 public class UniformGridSystem extends IterativeSystem {
     private final UniformGrid uniformGrid;
 
     /**
      * Instantiates a new Iterative system.
      *
-     * @param world      the world containing entities to use
+     * @param world the world containing entities to use
      */
     public UniformGridSystem(World world) {
         super(world, TransformableComponent.class);

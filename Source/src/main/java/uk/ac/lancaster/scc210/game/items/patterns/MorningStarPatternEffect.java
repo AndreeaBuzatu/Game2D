@@ -6,7 +6,15 @@ import uk.ac.lancaster.scc210.engine.pooling.Pool;
 import uk.ac.lancaster.scc210.game.bullets.patterns.MorningStarBulletPattern;
 import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
 
+/**
+ * The type Morning star pattern effect.
+ */
 public class MorningStarPatternEffect extends FiringPatternEffect {
+    /**
+     * Instantiates a new Morning star pattern effect.
+     *
+     * @param pool the pool
+     */
     public MorningStarPatternEffect(Pool pool) {
         super(pool, Time.getSeconds(3));
     }

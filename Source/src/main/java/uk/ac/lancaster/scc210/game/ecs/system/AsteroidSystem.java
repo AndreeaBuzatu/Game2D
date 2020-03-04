@@ -10,6 +10,9 @@ import uk.ac.lancaster.scc210.game.ecs.component.FlashComponent;
 
 import java.util.Collection;
 
+/**
+ * The type Asteroid system.
+ */
 public class AsteroidSystem extends IterativeSystem {
     /**
      * Instantiates a new Iterative system.

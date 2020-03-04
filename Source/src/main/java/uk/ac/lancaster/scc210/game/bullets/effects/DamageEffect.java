@@ -4,9 +4,17 @@ import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.game.ecs.component.LivesComponent;
 
+/**
+ * The type Damage effect.
+ */
 public abstract class DamageEffect extends BulletEffect {
     private int lives;
 
+    /**
+     * Instantiates a new Damage effect.
+     *
+     * @param lives the lives
+     */
     DamageEffect(int lives){
         this.lives = lives;
     }
@@ -20,10 +28,20 @@ public abstract class DamageEffect extends BulletEffect {
         livesComponent.setLives(livesComponent.getLives() - lives);
     }
 
+    /**
+     * Gets lives.
+     *
+     * @return the lives
+     */
     public int getLives() {
         return lives;
     }
 
+    /**
+     * Sets lives.
+     *
+     * @param lives the lives
+     */
     public void setLives(int lives) {
         this.lives = lives;
     }

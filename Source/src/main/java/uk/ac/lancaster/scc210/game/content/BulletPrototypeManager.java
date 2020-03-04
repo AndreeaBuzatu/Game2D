@@ -7,6 +7,9 @@ import uk.ac.lancaster.scc210.game.resources.SerialisedBullet;
 
 import java.util.List;
 
+/**
+ * The type Bullet prototype manager.
+ */
 public class BulletPrototypeManager extends ContentManager<BulletPrototype> {
     /**
      * Instantiates a new Bullet Prototype Manager.

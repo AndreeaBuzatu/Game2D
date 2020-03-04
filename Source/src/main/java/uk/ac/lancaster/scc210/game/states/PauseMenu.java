@@ -11,6 +11,9 @@ import uk.ac.lancaster.scc210.engine.gui.InterfaceList;
 import uk.ac.lancaster.scc210.engine.states.State;
 import uk.ac.lancaster.scc210.game.gui.MenuHeader;
 
+/**
+ * The type Pause menu.
+ */
 public class PauseMenu implements State {
     private final int LIST_PADDING = 250;
 

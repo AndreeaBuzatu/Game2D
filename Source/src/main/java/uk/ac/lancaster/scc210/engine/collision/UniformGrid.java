@@ -11,13 +11,24 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * The type Uniform grid.
+ */
 public class UniformGrid implements Service {
+    /**
+     * The constant CELL_SIZE.
+     */
     public static final int CELL_SIZE = 128;
 
     private final List<List<Cell>> grid;
 
     private final int numRows, numColumns;
 
+    /**
+     * Instantiates a new Uniform grid.
+     *
+     * @param viewSize the view size
+     */
     public UniformGrid(ViewSize viewSize) {
         FloatRect viewBounds = viewSize.getViewBounds();
 
@@ -37,24 +48,47 @@ public class UniformGrid implements Service {
         }
     }
 
+    /**
+     * Add entity.
+     *
+     * @param entity the entity
+     */
     public void addEntity(Entity entity) {
         placeEntity(entity);
     }
 
+    /**
+     * Add entities.
+     *
+     * @param entities the entities
+     */
     public void addEntities(Collection<? extends Entity> entities) {
         entities.forEach(this::addEntity);
     }
 
+    /**
+     * Remove entity.
+     *
+     * @param entity the entity
+     */
     public void removeEntity(Entity entity) {
         grid.forEach(cells -> cells.forEach(cell -> cell.getEntities().remove(entity)));
 
         update();
     }
 
+    /**
+     * Gets grid.
+     *
+     * @return the grid
+     */
     public List<List<Cell>> getGrid() {
         return grid;
     }
 
+    /**
+     * Update.
+     */
     public void update() {
         for (List<Cell> cells : grid) {
             for (Cell cell : cells) {
@@ -63,6 +97,9 @@ public class UniformGrid implements Service {
         }
     }
 
+    /**
+     * Clear.
+     */
     public void clear() {
         for (List<Cell> cells : grid) {
             for (Cell cell : cells) {
@@ -96,6 +133,11 @@ public class UniformGrid implements Service {
         }
     }
 
+    /**
+     * Gets size.
+     *
+     * @return the size
+     */
     public int getSize() {
         int sum = 0;
 

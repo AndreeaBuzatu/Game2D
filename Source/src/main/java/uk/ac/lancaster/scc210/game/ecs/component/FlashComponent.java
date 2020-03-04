@@ -7,6 +7,9 @@ import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.Component;
 
+/**
+ * The type Flash component.
+ */
 public class FlashComponent implements Component {
     private final Time FLASH_LENGTH = Time.getSeconds(0.3f);
 
@@ -22,6 +25,12 @@ public class FlashComponent implements Component {
 
     private boolean flashing;
 
+    /**
+     * Instantiates a new Flash component.
+     *
+     * @param sprite      the sprite
+     * @param flashShader the flash shader
+     */
     public FlashComponent(Sprite sprite, Shader flashShader) {
         this.flashShader = flashShader;
 
@@ -38,6 +47,12 @@ public class FlashComponent implements Component {
         elapsedTime = Time.ZERO;
     }
 
+    /**
+     * Instantiates a new Flash component.
+     *
+     * @param circleShape the circle shape
+     * @param flashShader the flash shader
+     */
     public FlashComponent(CircleShape circleShape, Shader flashShader) {
         textureState = new RenderStates(circleShape.getTexture());
 
@@ -50,6 +65,11 @@ public class FlashComponent implements Component {
         elapsedTime = Time.ZERO;
     }
 
+    /**
+     * Update render state.
+     *
+     * @param deltaTime the delta time
+     */
     public void updateRenderState(Time deltaTime) {
         if (flashing) {
             elapsedTime = Time.add(elapsedTime, deltaTime);
@@ -68,6 +88,11 @@ public class FlashComponent implements Component {
         }
     }
 
+    /**
+     * Flash.
+     *
+     * @param deltaTime the delta time
+     */
     public void flash(Time deltaTime) {
         // Don't bother to flash if shaders aren't available
         if (flashing || !Shader.isAvailable()) {
@@ -81,6 +106,9 @@ public class FlashComponent implements Component {
         elapsedTime = deltaTime;
     }
 
+    /**
+     * Reset to texture.
+     */
     public void resetToTexture() {
         if (flashing) {
             currentState = textureState;
@@ -90,14 +118,25 @@ public class FlashComponent implements Component {
         }
     }
 
+    /**
+     * Gets current state.
+     *
+     * @return the current state
+     */
     public RenderStates getCurrentState() {
         return currentState;
     }
 
+    /**
+     * Sets shader white.
+     */
     public void setShaderWhite() {
         flashShader.setParameter("result_colour", 1, 1, 1, 1);
     }
 
+    /**
+     * Sets shader red.
+     */
     public void setShaderRed() {
         flashShader.setParameter("result_colour", 1, 0, 0, 1);
     }

@@ -14,6 +14,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The type Player effects update system.
+ */
 public class PlayerEffectsUpdateSystem extends IterativeSystem {
     private Entity player;
 

@@ -12,6 +12,9 @@ import uk.ac.lancaster.scc210.game.waves.Wave;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * The type Level wave.
+ */
 public class LevelWave {
     private final float SPAWN_TIMER = 0.5f;
 
@@ -33,6 +36,15 @@ public class LevelWave {
 
     private int numLeftToSpawn, entitySize;
 
+    /**
+     * Instantiates a new Level wave.
+     *
+     * @param wave        the wave
+     * @param origin      the origin
+     * @param destination the destination
+     * @param numShips    the num ships
+     * @param prototype   the prototype
+     */
     public LevelWave(Wave wave, Vector2f origin, Vector2f destination, int numShips, Prototype prototype) {
         this.wave = wave;
         this.numShips = numShips;
@@ -49,6 +61,12 @@ public class LevelWave {
         numLeftToSpawn = numShips;
     }
 
+    /**
+     * Spawn new entity.
+     *
+     * @param deltaTime the delta time
+     * @return the entity
+     */
     Entity spawnNew(Time deltaTime) {
         Entity entity = null;
 
@@ -89,14 +107,29 @@ public class LevelWave {
         return entity;
     }
 
+    /**
+     * Remove.
+     *
+     * @param entity the entity
+     */
     public void remove(Entity entity) {
         entities.remove(entity);
     }
 
+    /**
+     * All spawned boolean.
+     *
+     * @return the boolean
+     */
     boolean allSpawned() {
         return numLeftToSpawn <= 0;
     }
 
+    /**
+     * Complete boolean.
+     *
+     * @return the boolean
+     */
     boolean complete() {
         // All the spaceships are now dead
         return entities.isEmpty() && allSpawned();
@@ -130,6 +163,9 @@ public class LevelWave {
         return entity;
     }
 
+    /**
+     * Reset.
+     */
     void reset() {
         entities.clear();
 
@@ -140,14 +176,29 @@ public class LevelWave {
         numLeftToSpawn = numShips;
     }
 
+    /**
+     * Gets wave.
+     *
+     * @return the wave
+     */
     Wave getWave() {
         return wave;
     }
 
+    /**
+     * Sets entities.
+     *
+     * @param entities the entities
+     */
     public void setEntities(Set<Entity> entities) {
         this.entities = entities;
     }
 
+    /**
+     * Gets entities.
+     *
+     * @return the entities
+     */
     public Set<Entity> getEntities() {
         return entities;
     }

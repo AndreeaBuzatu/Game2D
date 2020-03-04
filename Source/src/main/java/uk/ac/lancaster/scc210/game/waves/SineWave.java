@@ -9,11 +9,20 @@ import uk.ac.lancaster.scc210.game.ecs.component.TransformableComponent;
 
 import java.util.Set;
 
+/**
+ * The type Sine wave.
+ */
 public class SineWave extends Wave {
     private final float waveAmp;
 
     private Time elapsedTime;
 
+    /**
+     * Instantiates a new Sine wave.
+     *
+     * @param origin      the origin
+     * @param destination the destination
+     */
     public SineWave(Vector2f origin, Vector2f destination) {
         super(origin, destination);
 

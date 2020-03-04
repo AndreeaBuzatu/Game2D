@@ -12,11 +12,19 @@ import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 import uk.ac.lancaster.scc210.game.resources.PlayerData;
 
+/**
+ * The type Player.
+ */
 public class Player {
     private final int DEFAULT_LIVES = 3;
 
     private final Entity player;
 
+    /**
+     * Instantiates a new Player.
+     *
+     * @param serviceProvider the service provider
+     */
     public Player(ServiceProvider serviceProvider) {
         SpaceShipPrototypeManager spaceShipManager = (SpaceShipPrototypeManager) serviceProvider.get(SpaceShipPrototypeManager.class);
 
@@ -54,6 +62,11 @@ public class Player {
         playerSprite.setPosition(playerComponent.getSpawnPoint());
     }
 
+    /**
+     * Gets player.
+     *
+     * @return the player
+     */
     public Entity getPlayer() {
         return player;
     }

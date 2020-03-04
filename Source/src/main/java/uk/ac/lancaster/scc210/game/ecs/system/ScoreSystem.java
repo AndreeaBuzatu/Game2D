@@ -12,6 +12,9 @@ import uk.ac.lancaster.scc210.game.ecs.entity.PlayerFinder;
 
 import java.util.Collection;
 
+/**
+ * The type Score system.
+ */
 public class ScoreSystem extends IterativeSystem {
     private Entity player;
 

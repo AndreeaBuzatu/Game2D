@@ -16,7 +16,7 @@ public class RenderSystem extends IterativeSystem {
     /**
      * Instantiates a new Iterative system.
      *
-     * @param world  the world to draw entities from
+     * @param world the world to draw entities from
      */
     public RenderSystem(World world) {
         super(world, SpriteComponent.class);

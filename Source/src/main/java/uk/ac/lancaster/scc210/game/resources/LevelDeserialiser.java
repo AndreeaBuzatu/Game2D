@@ -30,6 +30,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The type Level deserialiser.
+ */
 public class LevelDeserialiser extends Deserialiser<Level> {
     private final String DIALOGUE_TAG = "dialogue";
 
@@ -52,7 +55,8 @@ public class LevelDeserialiser extends Deserialiser<Level> {
     /**
      * Instantiates a new Deserialiser.
      *
-     * @param document the xml document
+     * @param serviceProvider the service provider
+     * @param document        the xml document
      * @throws ResourceNotFoundException if the resource cannot be created or found
      */
     public LevelDeserialiser(ServiceProvider serviceProvider, Document document) throws ResourceNotFoundException {

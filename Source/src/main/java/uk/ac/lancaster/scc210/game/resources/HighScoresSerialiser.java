@@ -6,6 +6,9 @@ import org.w3c.dom.Node;
 import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
 import uk.ac.lancaster.scc210.engine.resources.deserialise.Deserialiser;
 
+/**
+ * The type High scores serialiser.
+ */
 public class HighScoresSerialiser extends Deserialiser<HighScore> {
     /**
      * Instantiates a new Deserialiser.

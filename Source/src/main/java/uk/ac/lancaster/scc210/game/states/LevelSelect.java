@@ -21,6 +21,9 @@ import uk.ac.lancaster.scc210.game.resources.PlayerData;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Level select.
+ */
 public class LevelSelect implements State, InputListener {
     private StateBasedGame game;
 

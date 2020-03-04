@@ -6,6 +6,9 @@ import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Transform;
 import org.jsfml.system.Vector2f;
 
+/**
+ * The type Orientated box.
+ */
 public class OrientatedBox {
     private static final int POINTS = 4;
 
@@ -47,6 +50,9 @@ public class OrientatedBox {
         points = new Vector2f[POINTS];
     }
 
+    /**
+     * Calculate points.
+     */
     public void calculatePoints() {
         /*
          * Unfortunately JSFML does not provide an abstraction where Sprite can be considered a Shape (despite storing a RectangleShape).
@@ -111,7 +117,7 @@ public class OrientatedBox {
     /**
      * Performs a Separate Axis Theorem collision check between two boxes (including rotation and scaling).
      * This method should be used to account for rotation when performing collision checks between two entities
-     *
+     * <p>
      * See: https://github.com/SFML/SFML/wiki/Source%3A-Simple-Collision-Detection-for-SFML-2 for the exact implementation
      * of the theorem, this code adapts it for Java and changes the abstraction in an attempt to improve performance.
      *
@@ -144,6 +150,11 @@ public class OrientatedBox {
         return true;
     }
 
+    /**
+     * Get points vector 2 f [ ].
+     *
+     * @return the vector 2 f [ ]
+     */
     public Vector2f[] getPoints() {
         return points;
     }

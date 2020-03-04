@@ -15,10 +15,14 @@ import uk.ac.lancaster.scc210.game.ecs.component.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * The type Bullet collision system.
+ */
 public class BulletCollisionSystem extends IterativeSystem {
     private final SoundManager soundManager;
 
     private final UniformGrid uniformGrid;
+
     /**
      * Instantiates a new Iterative system.
      *

@@ -18,7 +18,7 @@ public class MovementSystem extends IterativeSystem {
     /**
      * Instantiates a new Iterative system.
      *
-     * @param world      the world to draw entities from
+     * @param world the world to draw entities from
      */
     public MovementSystem(World world) {
         super(world, SpriteComponent.class, SpeedComponent.class, FiredComponent.class);

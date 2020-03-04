@@ -23,6 +23,7 @@ class MissingTexture {
      *
      * @param spriteWidth  width at which to draw MissingTexture
      * @param spriteHeight height at which to draw MissingTexture
+     * @throws ResourceNotFoundException the resource not found exception
      */
     MissingTexture(final int spriteWidth, final int spriteHeight) throws ResourceNotFoundException {
         this.spriteWidth = spriteWidth;

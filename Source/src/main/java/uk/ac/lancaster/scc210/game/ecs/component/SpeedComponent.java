@@ -26,6 +26,11 @@ public class SpeedComponent implements Component {
         return speed;
     }
 
+    /**
+     * Sets speed.
+     *
+     * @param speed the speed
+     */
     public void setSpeed(int speed) {
         this.speed = speed;
     }

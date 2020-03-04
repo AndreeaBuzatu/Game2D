@@ -9,6 +9,9 @@ import uk.ac.lancaster.scc210.game.ecs.component.BulletComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.FiredComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
+/**
+ * The type Straight line bullet pattern.
+ */
 public class StraightLineBulletPattern extends BulletPattern {
     private static final Time FIRING_GAP = Time.getSeconds(1);
 
@@ -16,6 +19,13 @@ public class StraightLineBulletPattern extends BulletPattern {
 
     private final int BULLET_Y_PADDING = -20;
 
+    /**
+     * Instantiates a new Straight line bullet pattern.
+     *
+     * @param pool       the pool
+     * @param spaceShip  the space ship
+     * @param bulletName the bullet name
+     */
     public StraightLineBulletPattern(Pool pool, Entity spaceShip, String bulletName) {
         super(pool, spaceShip, new Entity[NUM_BULLETS], bulletName, FIRING_GAP);
     }

@@ -11,6 +11,9 @@ import uk.ac.lancaster.scc210.game.level.LevelStage;
 
 import java.util.Collection;
 
+/**
+ * The type Level system.
+ */
 public class LevelSystem extends IterativeSystem {
     private Level level;
 
@@ -20,6 +23,7 @@ public class LevelSystem extends IterativeSystem {
      * Instantiates a new Iterative system.
      *
      * @param world the world containing entities to use
+     * @param level the level
      */
     public LevelSystem(World world, Level level) {
         super(world);
@@ -118,6 +122,11 @@ public class LevelSystem extends IterativeSystem {
         level.reset();
     }
 
+    /**
+     * Sets level.
+     *
+     * @param level the level
+     */
     public void setLevel(Level level) {
         this.level = level;
 

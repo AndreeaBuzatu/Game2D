@@ -17,7 +17,8 @@ public class SpaceShipPrototypeManager extends ContentManager<SpaceShipPrototype
      * Instantiates a new Space ship manager.
      * Places the given serialisedSpaceShips, place the Space Ships into the manager.
      *
-     * @param serviceProvider the service provider is used to access resources
+     * @param serviceProvider      the service provider is used to access resources
+     * @param pool                 the pool
      * @param serialisedSpaceShips the XML document which contains Space Ships
      */
     public SpaceShipPrototypeManager(ServiceProvider serviceProvider, Pool pool, List<SerialisedSpaceShip> serialisedSpaceShips) {

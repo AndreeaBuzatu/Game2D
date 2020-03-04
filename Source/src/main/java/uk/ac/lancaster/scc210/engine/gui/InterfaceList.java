@@ -11,6 +11,9 @@ import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Interface list.
+ */
 public class InterfaceList implements InputListener, Drawable {
     private final int OPTION_HEIGHT_PADDING = 50;
 
@@ -26,6 +29,13 @@ public class InterfaceList implements InputListener, Drawable {
 
     private boolean enabled;
 
+    /**
+     * Instantiates a new Interface list.
+     *
+     * @param game     the game
+     * @param font     the font
+     * @param position the position
+     */
     public InterfaceList(StateBasedGame game, Font font, Vector2f position) {
         this.font = font;
         this.position = position;
@@ -41,6 +51,12 @@ public class InterfaceList implements InputListener, Drawable {
         game.addKeyListener(this);
     }
 
+    /**
+     * Add list option.
+     *
+     * @param label    the label
+     * @param listener the listener
+     */
     public void addListOption(String label, SelectedListener listener) {
         ListOption listOption = new ListOption(font, label);
 
@@ -51,6 +67,9 @@ public class InterfaceList implements InputListener, Drawable {
         setOptionPosition(listOption);
     }
 
+    /**
+     * Update.
+     */
     public void update() {
         if (!enabled) {
             return;
@@ -141,6 +160,11 @@ public class InterfaceList implements InputListener, Drawable {
 
     }
 
+    /**
+     * Gets global bounds.
+     *
+     * @return the global bounds
+     */
     FloatRect getGlobalBounds() {
         // Find the total bounds of the list. The left and top can be found from the first element.
         // The width if the widest element in the list.
@@ -174,6 +198,11 @@ public class InterfaceList implements InputListener, Drawable {
         return bounds;
     }
 
+    /**
+     * Sets position.
+     *
+     * @param position the position
+     */
     public void setPosition(Vector2f position) {
         this.position = position;
 
@@ -194,10 +223,20 @@ public class InterfaceList implements InputListener, Drawable {
         option.setPosition(pos);
     }
 
+    /**
+     * Is enabled boolean.
+     *
+     * @return the boolean
+     */
     boolean isEnabled() {
         return enabled;
     }
 
+    /**
+     * Sets enabled.
+     *
+     * @param enabled the enabled
+     */
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
 
@@ -206,18 +245,39 @@ public class InterfaceList implements InputListener, Drawable {
         }
     }
 
+    /**
+     * Gets options.
+     *
+     * @return the options
+     */
     public List<ListOption> getOptions() {
         return options;
     }
 
+    /**
+     * Gets selected index.
+     *
+     * @return the selected index
+     */
     int getSelectedIndex() {
         return selectedIndex;
     }
 
+    /**
+     * Gets previous selected.
+     *
+     * @return the previous selected
+     */
     int getPreviousSelected() {
         return previousSelected;
     }
 
+    /**
+     * Sets selected index.
+     *
+     * @param selectedIndex    the selected index
+     * @param previousSelected the previous selected
+     */
     void setSelectedIndex(int selectedIndex, int previousSelected) {
         this.selectedIndex = selectedIndex;
         this.previousSelected = previousSelected;

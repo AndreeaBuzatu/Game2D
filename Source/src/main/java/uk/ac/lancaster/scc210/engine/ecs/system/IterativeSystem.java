@@ -17,6 +17,9 @@ public abstract class IterativeSystem implements EntitySystem {
 
     private final Class<? extends Component>[] components;
 
+    /**
+     * The World.
+     */
     protected final World world;
 
     /**

@@ -14,6 +14,9 @@ import uk.ac.lancaster.scc210.game.ecs.entity.PlayerFinder;
 
 import java.util.Collection;
 
+/**
+ * The type Item collision system.
+ */
 public class ItemCollisionSystem extends IterativeSystem {
     // We only have one player but the abstraction works like so - oh well
     private Entity player;

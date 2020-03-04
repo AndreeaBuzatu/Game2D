@@ -15,11 +15,20 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * The type Item prototype.
+ */
 public class ItemPrototype implements Prototype {
     private final Texture texture;
 
     private final Set<ItemEffect> itemEffects;
 
+    /**
+     * Instantiates a new Item prototype.
+     *
+     * @param texture     the texture
+     * @param itemEffects the item effects
+     */
     public ItemPrototype(Texture texture, ItemEffect... itemEffects) {
         this.texture = texture;
         this.itemEffects = new HashSet<>(Arrays.asList(itemEffects));
