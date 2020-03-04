@@ -40,7 +40,7 @@ public class StraightLineWave extends Wave {
 
             float speed = speedComponent.getSpeed();
 
-            transformable.setRotation(rotateSprite());
+            transformable.setRotation(rotateSprite(0));
 
             // If the entity goes out of bounds, reset the entity back to it's starting position
             if (passedDestination(transformable.getPosition())) {
