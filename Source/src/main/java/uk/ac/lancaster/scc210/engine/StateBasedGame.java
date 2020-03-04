@@ -75,7 +75,10 @@ public class StateBasedGame {
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
 
-        System.load(Objects.requireNonNull(StateBasedGame.class.getClassLoader().getResource("libfixxinit.so")).getFile());
+        // Only load the shared object on windows
+        if (System.getProperty("os.name").toLowerCase().contains("nux")) {
+            System.load(Objects.requireNonNull(StateBasedGame.class.getClassLoader().getResource("libfixxinit.so")).getFile());
+        }
 
         window = new RenderWindow(new VideoMode(windowWidth, windowHeight), name);
 
