@@ -234,6 +234,13 @@ public class LevelDeserialiser extends Deserialiser<Level> {
 
         SpriteComponent spriteComponent = (SpriteComponent) spaceShip.findComponent(SpriteComponent.class);
 
+        try {
+            int rotation = Integer.parseInt((elem.getAttribute("rotation")));
+
+            spriteComponent.getSprite().setRotation(rotation);
+        } catch (NumberFormatException ignored) {
+        }
+
         spriteComponent.getSprite().setPosition(position);
 
         return spaceShip;
