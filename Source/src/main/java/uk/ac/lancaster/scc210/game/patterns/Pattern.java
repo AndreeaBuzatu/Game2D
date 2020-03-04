@@ -11,7 +11,7 @@ import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
  * The type Pattern.
  */
 public abstract class Pattern {
-    private final Time firingGap;
+    private Time firingGap;
 
     private Time elapsedTime;
 
@@ -100,6 +100,10 @@ public abstract class Pattern {
      */
     public void setElapsedTime(Time elapsedTime) {
         this.elapsedTime = elapsedTime;
+    }
+
+    public void setFiringGap(Time firingGap) {
+        this.firingGap = firingGap;
     }
 
     /**

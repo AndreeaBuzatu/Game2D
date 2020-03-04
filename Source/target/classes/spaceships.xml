@@ -5,9 +5,9 @@
 
     <spaceship name="other" animation="alien-ship" speed="5" bullet="sample" pattern="" score="25"
                items="other-item,test-item" lives="1"
-               firing-sound="enemy-one-shoot" hit-sound="enemy-death"/>
+               firing-sound="enemy-shoot" hit-sound="enemy-death"/>
 
     <spaceship name="spawned-other" animation="player-ship" speed="5" bullet="sample" pattern="star-bullet" score="25"
                items="other-item,test-item" lives="1"
-               firing-sound="enemy-one-shoot" hit-sound="enemy-death"/>
+               firing-sound="enemy-shoot" hit-sound="enemy-death"/>
 </spaceships>

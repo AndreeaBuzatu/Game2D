@@ -1,4 +1,5 @@
 <music>
-    <piece name="example" src="example.ogg"/>
-    <piece name="menu_music" src="menumusic.ogg"/>
+    <piece name="boss_music" src="boss_music.ogg"/>
+    <piece name="battle_music" src="boss_music.ogg"/>
+    <piece name="menu_music" src="menu_music.ogg"/>
 </music>

@@ -20,7 +20,7 @@ public class AlterantiveSpaceShipPrototype {
      * @param pool                      the pool
      */
     public AlterantiveSpaceShipPrototype(ServiceProvider serviceProvider, SpaceShipPrototypeManager spaceShipPrototypeManager, Pool pool) {
-        SerialisedSpaceShip serialisedSpaceShip = new SerialisedSpaceShip("unknown", "", new String[]{""}, "", "", 1, 0, 1, "", "");
+        SerialisedSpaceShip serialisedSpaceShip = new SerialisedSpaceShip("unknown", "", new String[]{""}, "", "", 1, 0, 1, "", "", "");
 
         alternative = new SpaceShipPrototype(serviceProvider, spaceShipPrototypeManager, pool, serialisedSpaceShip);
     }
