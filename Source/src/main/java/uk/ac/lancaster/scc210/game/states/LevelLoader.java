@@ -7,11 +7,11 @@ import uk.ac.lancaster.scc210.game.level.Level;
 import java.util.List;
 
 public class LevelLoader {
-    private List<Level> totalLevels;
+    private final List<Level> totalLevels;
 
-    private LevelManager levelManager;
+    private final LevelManager levelManager;
 
-    private World world;
+    private final World world;
 
     private Level currentLevel;
     

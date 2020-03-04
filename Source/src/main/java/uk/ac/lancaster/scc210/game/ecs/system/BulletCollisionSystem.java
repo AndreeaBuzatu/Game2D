@@ -5,7 +5,6 @@ import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.collision.Cell;
 import uk.ac.lancaster.scc210.engine.collision.UniformGrid;
 import uk.ac.lancaster.scc210.engine.content.SoundManager;
-import uk.ac.lancaster.scc210.engine.ecs.Component;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.component.PooledComponent;

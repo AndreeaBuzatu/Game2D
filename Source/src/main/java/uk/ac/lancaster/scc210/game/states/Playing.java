@@ -70,7 +70,7 @@ public class Playing implements State, InputListener {
 
     private DialogueBox dialogueBox;
 
-    private String levelName;
+    private final String levelName;
 
     private boolean paused, fadedIn, shouldFadeIn, shouldFadeOut;
 
