@@ -78,8 +78,6 @@ public class Playing implements State, InputListener {
 
     Playing(String levelName) {
         this.levelName = levelName;
-
-        System.out.println("Loading level: " + levelName);
     }
 
     @Override
@@ -153,7 +151,9 @@ public class Playing implements State, InputListener {
     private void setupWorld() {
         levelSystem = new LevelSystem(world, level);
 
-        setLevel(level);
+        uniformGrid.clear();
+
+        dialogueBox.setDialogue(level.getLines());
 
         world.addPool((BulletPool) game.getServiceProvider().get(BulletPool.class));
 
@@ -302,6 +302,8 @@ public class Playing implements State, InputListener {
 
                 playerData.setLives(livesComponent.getLives());
 
+                playerData.setUnlockedLevel(nextLevel.getName());
+
                 playerScoreWriter.writePlayerLevel(playerData);
 
                 game.pushState(new Playing(nextLevel.getName()));
@@ -391,10 +393,5 @@ public class Playing implements State, InputListener {
     }
 
     public void setLevel(Level level) {
-        System.out.println("Setting level");
-
-        uniformGrid.clear();
-
-        dialogueBox.setDialogue(level.getLines());
     }
 }
