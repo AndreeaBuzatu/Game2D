@@ -21,10 +21,7 @@ import uk.ac.lancaster.scc210.engine.resources.deserialise.TextureAtlasDeseriali
 import uk.ac.lancaster.scc210.engine.service.ServiceProvider;
 import uk.ac.lancaster.scc210.engine.states.State;
 
-import java.util.EmptyStackException;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -77,6 +74,8 @@ public class StateBasedGame {
     protected StateBasedGame(final String name, final int windowWidth, final int windowHeight) {
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
+
+        System.load(Objects.requireNonNull(StateBasedGame.class.getClassLoader().getResource("libfixxinit.so")).getFile());
 
         window = new RenderWindow(new VideoMode(windowWidth, windowHeight), name);
 
