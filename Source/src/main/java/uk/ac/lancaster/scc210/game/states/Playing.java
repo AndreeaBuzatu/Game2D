@@ -78,6 +78,8 @@ public class Playing implements State, InputListener {
 
     Playing(String levelName) {
         this.levelName = levelName;
+
+        System.out.println("Loading level: " + levelName);
     }
 
     @Override
@@ -103,6 +105,8 @@ public class Playing implements State, InputListener {
         levelLoader = new LevelLoader(world, levelManager);
 
         level = levelLoader.loadLevel(levelName);
+
+        level.restartLevel();
 
         setupWorld();
 
@@ -147,15 +151,6 @@ public class Playing implements State, InputListener {
     }
 
     private void setupWorld() {
-
-        /*
-        level = levelManager.get(levelName);
-
-        levelSystem = new LevelSystem(world, level);
-         */
-
-        //setLevel(level);
-
         levelSystem = new LevelSystem(world, level);
 
         setLevel(level);
@@ -338,84 +333,9 @@ public class Playing implements State, InputListener {
         } else if (fadedIn) {
             updateWorld(deltaTime);
         }
-
-        /*
-        if (dialogueBox.isOpen()) {
-            dialogueBox.update(deltaTime);
-
-        } else if (!dialogueBox.isOpen() && !fadedIn && level.complete()) {
-            PlayerComponent playerComponent = (PlayerComponent) player.findComponent(PlayerComponent.class);
-
-            SpriteComponent playerSpriteComponent = (SpriteComponent) player.findComponent(SpriteComponent.class);
-
-            Sprite playerSprite = playerSpriteComponent.getSprite();
-
-            // Reset the players position and rotation when the player goes to a new level (and has faded in)
-            playerSprite.setPosition(playerComponent.getSpawnPoint());
-
-            playerSprite.setRotation(0);
-
-            // Remove bullets from the world
-            world.removeIf(entity -> entity.hasComponent(BulletComponent.class) || entity.hasComponent(FiredComponent.class) ||
-                    entity.hasComponent(EnemyComponent.class) || entity.hasComponent(ItemEffectsComponent.class));
-
-            // Set and respawn the level once it has been cleared
-            //levelSystem.setLevel(level);
-
-        } else if (fadedIn) {
-            updateWorld(deltaTime);
-        }
-         */
     }
 
     private void updateWorld(Time deltaTime) {
-        /*
-        if (level.complete()) {
-            System.out.println("Complete level");
-
-            // Reset the player's current item effects back to the game default
-            PlayerComponent playerComponent = (PlayerComponent) player.findComponent(PlayerComponent.class);
-
-            LivesComponent livesComponent = (LivesComponent) player.findComponent(LivesComponent.class);
-
-            playerComponent.getCurrentItemEffects().parallelStream().forEach(itemEffect -> itemEffect.reset(player));
-
-            /*
-            if (currentUnlocked < totalLevels.size() - 1) {
-                currentUnlocked++;
-
-                List<Level> unlockedLevels = levelManager.getUnlocked(totalLevels.get(currentUnlocked).getName());
-
-                level = unlockedLevels.get(currentUnlocked);
-
-                // Write the player data once they have completed a level.
-                playerData.setUnlockedLevel(level.getName());
-
-                playerData.setScore(playerComponent.getScore());
-
-                playerData.setLives(livesComponent.getLives());
-
-                playerScoreWriter.writePlayerLevel(playerData);
-
-                shouldFadeIn = false;
-
-                shouldFadeOut = true;
-
-                //setLevel(level);
-
-            } else {
-                Completion completionState = (Completion) stateManager.get("completion");
-
-                completionState.setPlayerScore(playerComponent.getScore());
-
-                //playerComponent.setScore(0);
-
-                //livesComponent.setLives(livesComponent.getStartingLives());
-
-                game.pushState(completionState);
-            }
-             */
-        //}
 
         if (!level.complete()) {
             world.update(deltaTime);
@@ -474,8 +394,6 @@ public class Playing implements State, InputListener {
         System.out.println("Setting level");
 
         uniformGrid.clear();
-
-        //levelSystem.setLevel(level);
 
         dialogueBox.setDialogue(level.getLines());
     }

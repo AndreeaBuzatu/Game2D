@@ -124,7 +124,7 @@ public class LevelWave {
 
             asteroidComponent.getCircle().setPosition(spriteStart);
 
-            entitySize = (int) (2*asteroidComponent.getCircle().getRadius());
+            entitySize = (int) (2 * asteroidComponent.getCircle().getRadius());
         }
 
         return entity;

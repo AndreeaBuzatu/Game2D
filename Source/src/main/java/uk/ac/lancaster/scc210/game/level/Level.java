@@ -11,7 +11,7 @@ public class Level implements Serialised {
 
     private final List<Line> lines;
 
-    private final Iterator<LevelStage> stageIterator;
+    private Iterator<LevelStage> stageIterator;
 
     private final String name;
 
@@ -36,6 +36,14 @@ public class Level implements Serialised {
         } else {
             return null;
         }
+    }
+
+    public void restartLevel() {
+        stages.forEach(LevelStage::reset);
+
+        currentStage = stages.get(0);
+
+        stageIterator = stages.iterator();
     }
 
     public void reset() {
