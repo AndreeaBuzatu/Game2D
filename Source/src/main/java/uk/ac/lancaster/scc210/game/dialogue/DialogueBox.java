@@ -10,6 +10,8 @@ import uk.ac.lancaster.scc210.engine.InputListener;
 import uk.ac.lancaster.scc210.engine.ViewSize;
 import uk.ac.lancaster.scc210.engine.content.FontManager;
 
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -22,6 +24,8 @@ public class DialogueBox implements Drawable, InputListener {
 
     private final int TEXT_PADDING = 10;
 
+    private Iterator<Line> lineIterator;
+
     private final Text text;
 
     private final Font font;
@@ -30,9 +34,9 @@ public class DialogueBox implements Drawable, InputListener {
 
     private final FloatRect viewBounds;
 
-    private final int boxHeight;
-
     private final RectangleShape box;
+
+    private final int boxHeight;
 
     private Keyboard.Key pressedKey;
 
@@ -106,9 +110,18 @@ public class DialogueBox implements Drawable, InputListener {
         elapsedTime = Time.add(elapsedTime, deltaTime);
 
         if (pressedKey == Keyboard.Key.SPACE && elapsedTime.asSeconds() >= TIME_GAP.asSeconds()) {
-            formatText();
+            if (formatText()) {
+                if (lineIterator != null && lineIterator.hasNext()) {
+                    formatDialogue();
+
+                } else {
+                    open = false;
+                }
+            }
 
             elapsedTime = Time.ZERO;
+
+            pressedKey = null;
         }
     }
 
@@ -133,11 +146,11 @@ public class DialogueBox implements Drawable, InputListener {
 
     }
 
-    private void formatText() {
+    private boolean formatText() {
         // If the offset extends beyond the length of the string (- 1 to account for the offset being 0-indexed), then
         // indicate we should close.
         if (offset >= stringBuffer.length() - 1) {
-            open = false;
+            return true;
         }
 
         // Save the starting offset so we can use it as the starting point for trimming the text
@@ -170,6 +183,8 @@ public class DialogueBox implements Drawable, InputListener {
 
         // Remove any preceding newlines of spaces.
         text.setString(output.trim());
+
+        return false;
     }
 
     private boolean shouldInsertNewLine(int start) {
@@ -207,18 +222,31 @@ public class DialogueBox implements Drawable, InputListener {
      * @param lines the lines
      */
     public void setDialogue(List<Line> lines) {
+        if (lineIterator == null) {
+            lineIterator = lines.iterator();
+        }
+
+        if (!lines.isEmpty()) {
+            formatDialogue();
+
+        } else {
+            open = false;
+        }
+    }
+
+    private void formatDialogue() {
+        text.setString("");
+
         // Clear the buffer
         stringBuffer.setLength(0);
 
         offset = 0;
 
-        for (Line line : lines) {
-            stringBuffer.append(String.format("%s: ", line.getCharacter()));
+        Line line = lineIterator.next();
 
-            stringBuffer.append(line.getLine());
+        stringBuffer.append(String.format("%s: ", line.getCharacter()));
 
-            stringBuffer.append("\n");
-        }
+        stringBuffer.append(line.getLine());
 
         open = true;
 
