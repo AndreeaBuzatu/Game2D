@@ -1,5 +1,6 @@
 package uk.ac.lancaster.scc210.game.resources;
 
+import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Vector2f;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -234,10 +235,20 @@ public class LevelDeserialiser extends Deserialiser<Level> {
 
         SpriteComponent spriteComponent = (SpriteComponent) spaceShip.findComponent(SpriteComponent.class);
 
+        Sprite sprite = spriteComponent.getSprite();
+
         try {
             int rotation = Integer.parseInt((elem.getAttribute("rotation")));
 
-            spriteComponent.getSprite().setRotation(rotation);
+            if (rotation > RotationComponent.MAX_ROTATION) {
+                sprite.setRotation(rotation - ((int) (rotation / RotationComponent.MAX_ROTATION) * RotationComponent.MAX_ROTATION ));
+
+            } else if (rotation < RotationComponent.MIN_ROTATION) {
+                sprite.setRotation(rotation + ( (int) (Math.abs(rotation) / RotationComponent.MAX_ROTATION) + 1) * RotationComponent.MAX_ROTATION);
+
+            } else {
+                sprite.rotate(rotation);
+            }
         } catch (NumberFormatException ignored) {
         }
 
