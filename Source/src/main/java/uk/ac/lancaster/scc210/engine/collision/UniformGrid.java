@@ -24,9 +24,9 @@ public class UniformGrid implements Service {
         grid = new ArrayList<>();
 
         // Round the numbers up so the entire view is covered
-        numRows = (int) Math.ceil(viewBounds.width / CELL_SIZE);
+        numRows = (int) Math.ceil(viewBounds.height / CELL_SIZE);
 
-        numColumns = (int) Math.ceil(viewBounds.height / CELL_SIZE);
+        numColumns = (int) Math.ceil(viewBounds.width / CELL_SIZE);
 
         for (int row = 0; row < numRows; row++) {
             grid.add(new ArrayList<>());
@@ -86,6 +86,8 @@ public class UniformGrid implements Service {
             int column = (int) Math.ceil((point.x - 0) / CELL_SIZE) - 1;
 
             int row = (int) Math.ceil((point.y - 0) / CELL_SIZE) - 1;
+
+            System.out.printf("Total: (%d, %d), Current: (%d, %d)\n", numRows, numColumns, row, column);
 
             // Don't allow out of bounds columns
             if (row > 0 && row < numRows && column > 0 && column < numColumns) {
