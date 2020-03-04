@@ -1,11 +1,14 @@
 package uk.ac.lancaster.scc210.game.ecs.system;
 
+import org.jsfml.graphics.Drawable;
+import org.jsfml.graphics.RenderStates;
 import org.jsfml.graphics.RenderTarget;
 import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.game.ecs.component.*;
+import uk.ac.lancaster.scc210.game.ecs.entity.Player;
 
 import java.util.Collection;
 
@@ -19,22 +22,24 @@ public class RenderSystem extends IterativeSystem {
      * @param world the world to draw entities from
      */
     public RenderSystem(World world) {
-        super(world, SpriteComponent.class);
+        super(world);
+
+        entities = world.getEntitiesWithAny(SpriteComponent.class, AsteroidComponent.class);
     }
 
     @Override
     public void entityAdded(Entity entity) {
-        entities = world.getEntitiesFor(SpriteComponent.class);
+        entities = world.getEntitiesWithAny(SpriteComponent.class, AsteroidComponent.class);
     }
 
     @Override
     public void entitiesAdded(Collection<? extends Entity> entities) {
-        this.entities = world.getEntitiesFor(SpriteComponent.class);
+        this.entities = world.getEntitiesWithAny(SpriteComponent.class, AsteroidComponent.class);
     }
 
     @Override
     public void entityRemoved(Entity entity) {
-        this.entities = world.getEntitiesFor(SpriteComponent.class);
+        this.entities = world.getEntitiesWithAny(SpriteComponent.class, AsteroidComponent.class);
     }
 
     @Override
@@ -53,27 +58,38 @@ public class RenderSystem extends IterativeSystem {
         for (Entity entity : entities) {
             SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
 
+            Drawable drawable = null;
+
+            RenderStates renderStates = RenderStates.DEFAULT;
+
+            if (entity.hasComponent(SpriteComponent.class)) {
+                drawable = spriteComponent.getSprite();
+            }
+
+            if (entity.hasComponent(AsteroidComponent.class)) {
+                drawable = ((AsteroidComponent) entity.findComponent(AsteroidComponent.class)).getCircle();
+            }
+
             if (entity.hasComponent(FlashComponent.class)) {
                 FlashComponent flashComponent = (FlashComponent) entity.findComponent(FlashComponent.class);
-
-                // TODO: Fix bug where all entities flash red if player has 1 life remaining
-
-                // Reset the current shader colour back to white if the previous parameter was red
-                flashComponent.setShaderWhite();
 
                 if (entity.hasComponent(PlayerComponent.class)) {
                     LivesComponent livesComponent = (LivesComponent) entity.findComponent(LivesComponent.class);
 
+                    // Flash the player red if they only have 1 remaining
                     if (livesComponent.getLives() == 1) {
                         flashComponent.setShaderRed();
                     }
+                    
+                } else {
+                    // If the previous shader was white, reset back to white
+                    flashComponent.setShaderWhite();
                 }
 
-                target.draw(spriteComponent.getSprite(), flashComponent.getCurrentState());
-
-            } else {
-                target.draw(spriteComponent.getSprite());
+                renderStates = flashComponent.getCurrentState();
             }
+
+            target.draw(drawable, renderStates);
         }
     }
 }

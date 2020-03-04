@@ -49,12 +49,5 @@ public class AsteroidSystem extends IterativeSystem {
 
     @Override
     public void draw(RenderTarget target) {
-        for (Entity entity : entities) {
-            AsteroidComponent asteroidComponent = (AsteroidComponent) entity.findComponent(AsteroidComponent.class);
-
-            FlashComponent flashComponent = (FlashComponent) entity.findComponent(FlashComponent.class);
-
-            target.draw(asteroidComponent.getCircle(), flashComponent.getCurrentState());
-        }
     }
 }

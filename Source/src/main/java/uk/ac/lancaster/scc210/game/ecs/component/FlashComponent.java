@@ -54,7 +54,11 @@ public class FlashComponent implements Component {
      * @param flashShader the flash shader
      */
     public FlashComponent(CircleShape circleShape, Shader flashShader) {
+        this.flashShader = flashShader;
+
         textureState = new RenderStates(circleShape.getTexture());
+
+        setShaderWhite();
 
         flashState = new RenderStates(flashShader);
 
