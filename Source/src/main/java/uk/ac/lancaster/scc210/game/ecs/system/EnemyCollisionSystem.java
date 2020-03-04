@@ -13,6 +13,8 @@ import uk.ac.lancaster.scc210.game.ecs.component.*;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class EnemyCollisionSystem extends IterativeSystem {
     private final Time COLLISION_GAP = Time.getSeconds(1);
@@ -55,59 +57,51 @@ public class EnemyCollisionSystem extends IterativeSystem {
     public void update(Time deltaTime) {
         elapsedTime = Time.add(elapsedTime, deltaTime);
 
-        for (List<Cell> cells : uniformGrid.getGrid()) {
-            for (Cell cell : cells) {
-                if (cell.getEntities().isEmpty()) {
+        List<Cell> cells = uniformGrid.getGrid().stream()
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+
+        for (Cell cell : cells) {
+            if (cell.getEntities().isEmpty()) {
+                continue;
+            }
+
+            Set<Set<Entity>> collided = cell.checkCollision();
+
+            for (Set<Entity> collision : collided) {
+                if (collision == null) {
                     continue;
                 }
 
-                List<Entity[]> collided = cell.checkCollision();
+                Entity player = findPlayer(collision);
 
-               for (Entity[] collision : collided) {
-                    if (collision == null) {
-                        continue;
-                    }
+                Entity enemyShip = findEnemyShip(collision);
 
-                    Entity player = findPlayer(collision);
+                if ((player != null && enemyShip != null) && elapsedTime.asSeconds() > COLLISION_GAP.asSeconds()) {
+                    SpaceShipComponent spaceShipComponent = (SpaceShipComponent) player.findComponent(SpaceShipComponent.class);
 
-                    Entity enemyShip = findEnemyShip(collision);
+                    LivesComponent livesComponent = (LivesComponent) player.findComponent(LivesComponent.class);
 
-                    if ((player != null && enemyShip != null) && elapsedTime.asSeconds() > COLLISION_GAP.asSeconds()) {
-                        SpaceShipComponent spaceShipComponent = (SpaceShipComponent) player.findComponent(SpaceShipComponent.class);
+                    soundManager.playSound(spaceShipComponent.getHitSound());
 
-                        LivesComponent livesComponent = (LivesComponent) player.findComponent(LivesComponent.class);
+                    elapsedTime = Time.ZERO;
 
-                        soundManager.playSound(spaceShipComponent.getHitSound());
-
-                        elapsedTime = Time.ZERO;
-
-                        livesComponent.setLives(livesComponent.getLives() - 1);
-                    }
+                    livesComponent.setLives(livesComponent.getLives() - 1);
                 }
             }
         }
     }
 
-    private Entity findPlayer(Entity[] collided) {
-        if (collided[0].hasComponent(PlayerComponent.class)) {
-            return collided[0];
-
-        } else if (collided[1].hasComponent(PlayerComponent.class)) {
-            return collided[1];
-        }
-
-        return null;
+    private Entity findPlayer(Set<Entity> collided) {
+        return collided.stream()
+                .filter(entity -> entity.hasComponent(PlayerComponent.class))
+                .findFirst().orElse(null);
     }
 
-    private Entity findEnemyShip(Entity[] collided) {
-        if (collided[0].hasComponent(EnemyComponent.class)) {
-            return collided[0];
-
-        } else if (collided[1].hasComponent(EnemyComponent.class)) {
-            return collided[1];
-        }
-
-        return null;
+    private Entity findEnemyShip(Set<Entity> collided) {
+        return collided.stream()
+                .filter(entity -> entity.hasComponent(EnemyComponent.class))
+                .findFirst().orElse(null);
     }
 
     @Override

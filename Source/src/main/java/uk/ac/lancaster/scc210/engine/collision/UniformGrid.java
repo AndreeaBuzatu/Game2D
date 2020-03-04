@@ -47,6 +47,8 @@ public class UniformGrid implements Service {
 
     public void removeEntity(Entity entity) {
         grid.forEach(cells -> cells.forEach(cell -> cell.getEntities().remove(entity)));
+
+        update();
     }
 
     public List<List<Cell>> getGrid() {
@@ -87,12 +89,20 @@ public class UniformGrid implements Service {
 
             // Don't allow out of bounds columns
             if (row > 0 && row < numRows && column > 0 && column < numColumns) {
-                Cell cell = grid.get(row).get(column);
-
-                if (!cell.getEntities().contains(entity)) {
-                    grid.get(row).get(column).addEntity(entity);
-                }
+                grid.get(row).get(column).addEntity(entity);
             }
         }
+    }
+
+    public int getSize() {
+        int sum = 0;
+
+        for (List<Cell> cells : grid) {
+            for (Cell cell : cells) {
+                sum += cell.getEntities().size();
+            }
+        }
+
+        return sum;
     }
 }

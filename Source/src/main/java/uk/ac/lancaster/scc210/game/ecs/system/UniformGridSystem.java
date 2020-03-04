@@ -6,11 +6,9 @@ import uk.ac.lancaster.scc210.engine.collision.UniformGrid;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
-import uk.ac.lancaster.scc210.game.ecs.component.StationaryComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.TransformableComponent;
 
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 public class UniformGridSystem extends IterativeSystem {
     private final UniformGrid uniformGrid;
@@ -33,13 +31,15 @@ public class UniformGridSystem extends IterativeSystem {
         entities = world.getEntitiesFor(TransformableComponent.class);
 
         uniformGrid.addEntity(entity);
+
+        uniformGrid.addEntities(entities);
     }
 
     @Override
     public void entitiesAdded(Collection<? extends Entity> entities) {
         this.entities = world.getEntitiesFor(TransformableComponent.class);
 
-        uniformGrid.addEntities(entities);
+        uniformGrid.addEntities(this.entities);
     }
 
     @Override
@@ -49,11 +49,7 @@ public class UniformGridSystem extends IterativeSystem {
 
     @Override
     public void update(Time deltaTime) {
-        uniformGrid.clear();
-
-        uniformGrid.addEntities(entities);
-
-        //uniformGrid.update();
+        uniformGrid.update();
     }
 
     @Override
