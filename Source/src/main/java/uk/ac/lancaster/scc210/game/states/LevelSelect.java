@@ -96,8 +96,6 @@ public class LevelSelect implements State, InputListener {
 
         for (int i = 0; i < levels.size(); i++) {
             if (i % 3 == 0) {
-                System.out.println("I: " + i);
-
                 // i % 3 == 0, will == true when i = 0, so in that instance don't add a new column (as one hasn't been created yet)
                 if (i > 0) {
                     interfaceGrid.addColumn(interfaceList);

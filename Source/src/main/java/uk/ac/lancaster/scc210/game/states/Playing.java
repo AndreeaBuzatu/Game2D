@@ -77,7 +77,7 @@ public class Playing implements State, InputListener {
 
     private boolean paused, fadedIn, shouldFadeIn, shouldFadeOut;
 
-    private int alpha, currentUnlocked;
+    private int alpha;
 
     /**
      * Instantiates a new Playing.

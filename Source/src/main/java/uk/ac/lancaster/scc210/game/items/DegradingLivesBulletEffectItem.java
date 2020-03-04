@@ -42,8 +42,6 @@ public class DegradingLivesBulletEffectItem extends TimedItemEffect {
             elapsedSeconds = Time.ZERO;
 
             if (degradingLivesEffect.getLives() >= 0) {
-                System.out.println(degradingLivesEffect.getLives());
-
                 degradingLivesEffect.setLives(degradingLivesEffect.getLives() - 1);
             }
         }

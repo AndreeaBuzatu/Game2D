@@ -51,8 +51,6 @@ public class PlayerWriter implements Service {
 
         playerElement.setAttribute("lives", Integer.toString(playerData.getLives()));
 
-        System.out.println("Score: " + playerData.getScore() + ", Lives: " + playerData.getLives());
-
         try {
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
 

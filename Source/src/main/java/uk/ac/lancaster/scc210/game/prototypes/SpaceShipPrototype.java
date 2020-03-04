@@ -76,12 +76,8 @@ public class SpaceShipPrototype implements Prototype {
 
             sprite = new Sprite(animationComponent.getTextureAnimation().getTexture());
 
-            System.out.println(animation);
-
         } else {
             sprite = new Sprite(textureManager.get(texture));
-
-            System.out.println(textureManager.get(texture));
         }
 
         // Set the sprite's origin to the exact centre of the sprite
