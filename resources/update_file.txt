@@ -1,0 +1,11 @@
+Every other ship a part from the ones without _px at the end of their upload name hasn't been resized to a higher resolution.
+
+Currently we have enemy_shipxx.png(xx is the number of the ship uploaded),sprite_xx, and Enemyxx is the amount of ships 
+
+with resolution under 128px. 
+
+-----------NEW UPDATE-----------------------------------------
+
+Shipxx_128.png is every other ship uploaded with higher resolution than what previously planned. 
+
+--------------------------------------------------------------
