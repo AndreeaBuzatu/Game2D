@@ -4,6 +4,9 @@ import org.jsfml.graphics.*;
 import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.content.FontManager;
 
+/**
+ * The type Menu header.
+ */
 public class MenuHeader implements Drawable {
     private final int MENU_TEXT_SIZE = 100;
 
@@ -11,6 +14,13 @@ public class MenuHeader implements Drawable {
 
     private final Vector2f position;
 
+    /**
+     * Instantiates a new Menu header.
+     *
+     * @param label       the label
+     * @param fontManager the font manager
+     * @param viewBounds  the view bounds
+     */
     public MenuHeader(String label, FontManager fontManager, FloatRect viewBounds) {
         menuHeader = new Text();
 
@@ -32,6 +42,11 @@ public class MenuHeader implements Drawable {
         renderTarget.draw(menuHeader);
     }
 
+    /**
+     * Gets position.
+     *
+     * @return the position
+     */
     public Vector2f getPosition() {
         return position;
     }

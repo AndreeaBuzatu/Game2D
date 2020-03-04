@@ -15,6 +15,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.StringReader;
 
+/**
+ * The type Player data deserialiser.
+ */
 public class PlayerDataDeserialiser extends Deserialiser<PlayerData> {
     private static final String PLAYER_TAG = "player";
 
@@ -25,7 +28,8 @@ public class PlayerDataDeserialiser extends Deserialiser<PlayerData> {
     /**
      * Instantiates a new Deserialiser.
      *
-     * @param document the xml document
+     * @param document     the xml document
+     * @param levelManager the level manager
      * @throws ResourceNotFoundException if the resource cannot be created or found
      */
     public PlayerDataDeserialiser(Document document, LevelManager levelManager) throws ResourceNotFoundException {
@@ -78,6 +82,11 @@ public class PlayerDataDeserialiser extends Deserialiser<PlayerData> {
         }
     }
 
+    /**
+     * Gets player data.
+     *
+     * @return the player data
+     */
     public PlayerData getPlayerData() {
         return playerData;
     }

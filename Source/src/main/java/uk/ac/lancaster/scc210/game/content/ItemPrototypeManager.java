@@ -16,7 +16,16 @@ import uk.ac.lancaster.scc210.game.items.patterns.StarPatternEffect;
 import uk.ac.lancaster.scc210.game.pooling.BulletPool;
 import uk.ac.lancaster.scc210.game.prototypes.ItemPrototype;
 
+/**
+ * The type Item prototype manager.
+ */
 public class ItemPrototypeManager extends ContentManager<ItemPrototype> {
+    /**
+     * Instantiates a new Item prototype manager.
+     *
+     * @param textureManager the texture manager
+     * @param bulletPool     the bullet pool
+     */
     public ItemPrototypeManager(TextureManager textureManager, BulletPool bulletPool) {
         super(new ItemPrototype(textureManager.get(""), new MissingItemEffect()));
 

@@ -3,6 +3,9 @@ package uk.ac.lancaster.scc210.engine.content;
 import org.jsfml.audio.Sound;
 import org.jsfml.audio.SoundSource;
 
+/**
+ * The type Sound manager.
+ */
 public class SoundManager extends ContentManager<Sound> {
     private final int MAX_SOUNDS = 255;
 
@@ -11,6 +14,7 @@ public class SoundManager extends ContentManager<Sound> {
     /**
      * Instantiates a new Content manager.
      *
+     * @param soundBufferManager the sound buffer manager
      */
     public SoundManager(SoundBufferManager soundBufferManager) {
         super(new Sound());
@@ -35,6 +39,11 @@ public class SoundManager extends ContentManager<Sound> {
         return null;
     }
 
+    /**
+     * Play sound.
+     *
+     * @param name the name
+     */
     public void playSound(String name) {
         if (content.containsKey(name) && currentSounds < MAX_SOUNDS) {
             Sound sound = content.get(name);

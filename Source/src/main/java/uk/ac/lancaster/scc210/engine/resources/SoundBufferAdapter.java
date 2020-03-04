@@ -5,6 +5,9 @@ import org.jsfml.audio.SoundBuffer;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * The type Sound buffer adapter.
+ */
 public class SoundBufferAdapter extends Resource<SoundBuffer> {
     /**
      * Instantiates a new Resource.

@@ -12,10 +12,15 @@ import uk.ac.lancaster.scc210.game.waves.Wave;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * The type Level wave.
+ */
 public class LevelWave {
-    private final float SPAWN_TIMER = 0.5f;
+    private final float ENTITY_GAP = 150f;
 
-    private final float COUNT_START = 0;
+    private final Time SPAWN_TIMER = Time.getSeconds(0.5f);
+
+    private final Time COUNT_START = Time.ZERO;
 
     private Set<Entity> entities;
 
@@ -25,14 +30,21 @@ public class LevelWave {
 
     private final Prototype prototype;
 
-    private float spawnTime;
+    private Time spawnTime, spawnCountUp, entitySize;
 
     private final int numShips;
 
-    private float spawnCountUp;
+    private int numLeftToSpawn;
 
-    private int numLeftToSpawn, entitySize;
-
+    /**
+     * Instantiates a new Level wave.
+     *
+     * @param wave        the wave
+     * @param origin      the origin
+     * @param destination the destination
+     * @param numShips    the num ships
+     * @param prototype   the prototype
+     */
     public LevelWave(Wave wave, Vector2f origin, Vector2f destination, int numShips, Prototype prototype) {
         this.wave = wave;
         this.numShips = numShips;
@@ -47,10 +59,19 @@ public class LevelWave {
         spawnCountUp = COUNT_START;
 
         numLeftToSpawn = numShips;
+
+        entitySize = Time.ZERO;
     }
 
+    /**
+     * Spawn new entity.
+     *
+     * @param deltaTime the delta time
+     * @return the entity
+     */
     Entity spawnNew(Time deltaTime) {
         Entity entity = null;
+
         // Create the initial ship - ignore the timer for the first one.
         if (numLeftToSpawn == numShips) {
             entity = create();
@@ -59,15 +80,18 @@ public class LevelWave {
 
             numLeftToSpawn--;
 
+            spawnCountUp = Time.add(spawnCountUp, deltaTime);
+
+            return entity;
         }
 
-        spawnCountUp += deltaTime.asSeconds();
+        spawnCountUp = Time.add(spawnCountUp, deltaTime);
 
-        spawnTime = entitySize / 150f;
+        spawnTime = Time.div(entitySize, ENTITY_GAP);
 
-        if (spawnCountUp >= spawnTime) {
+        if (spawnCountUp.asSeconds() >= spawnTime.asSeconds()) {
             if (!allSpawned()) {
-                 entity = create();
+                entity = create();
 
                 entities.add(entity);
 
@@ -81,7 +105,6 @@ public class LevelWave {
                 transformableComponent.getTransformable().setPosition(wave.getOrigin());
 
                 entities.add(entity);
-
             }
 
             spawnCountUp = COUNT_START;
@@ -90,14 +113,29 @@ public class LevelWave {
         return entity;
     }
 
+    /**
+     * Remove.
+     *
+     * @param entity the entity
+     */
     public void remove(Entity entity) {
         entities.remove(entity);
     }
 
-    private boolean allSpawned() {
+    /**
+     * All spawned boolean.
+     *
+     * @return the boolean
+     */
+    boolean allSpawned() {
         return numLeftToSpawn <= 0;
     }
 
+    /**
+     * Complete boolean.
+     *
+     * @return the boolean
+     */
     boolean complete() {
         // All the spaceships are now dead
         return entities.isEmpty() && allSpawned();
@@ -110,7 +148,6 @@ public class LevelWave {
 
         entity.addComponent(new EnemyComponent());
 
-
         if (entity.hasComponent(SpriteComponent.class)) {
             SpriteComponent spriteComponent = (SpriteComponent) entity.findComponent(SpriteComponent.class);
 
@@ -118,7 +155,8 @@ public class LevelWave {
 
             positionSprite(sprite);
 
-            entitySize = spriteComponent.getSprite().getTexture().getSize().x + 90;
+            // Express the size as some amount of time
+            entitySize = Time.getSeconds(spriteComponent.getSprite().getTexture().getSize().x + 90);
         }
 
         if (entity.hasComponent(AsteroidComponent.class)) {
@@ -126,12 +164,16 @@ public class LevelWave {
 
             asteroidComponent.getCircle().setPosition(spriteStart);
 
-            entitySize = (int) (2*asteroidComponent.getCircle().getRadius());
+            // Express the size as some amount of time
+            entitySize =  Time.getSeconds(asteroidComponent.getCircle().getRadius() * 2);
         }
 
         return entity;
     }
 
+    /**
+     * Reset.
+     */
     void reset() {
         entities.clear();
 
@@ -142,14 +184,29 @@ public class LevelWave {
         numLeftToSpawn = numShips;
     }
 
+    /**
+     * Gets wave.
+     *
+     * @return the wave
+     */
     Wave getWave() {
         return wave;
     }
 
+    /**
+     * Sets entities.
+     *
+     * @param entities the entities
+     */
     public void setEntities(Set<Entity> entities) {
         this.entities = entities;
     }
 
+    /**
+     * Gets entities.
+     *
+     * @return the entities
+     */
     public Set<Entity> getEntities() {
         return entities;
     }

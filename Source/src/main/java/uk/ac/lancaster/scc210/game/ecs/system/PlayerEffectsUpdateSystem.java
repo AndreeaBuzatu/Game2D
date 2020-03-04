@@ -7,14 +7,18 @@ import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.game.bullets.effects.BulletEffect;
 import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
+import uk.ac.lancaster.scc210.game.ecs.entity.PlayerFinder;
 import uk.ac.lancaster.scc210.game.items.ItemEffect;
 
+import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * The type Player effects update system.
+ */
 public class PlayerEffectsUpdateSystem extends IterativeSystem {
-    private Entity playerEntity;
+    private Entity player;
 
     private PlayerComponent playerComponent;
 
@@ -29,15 +33,24 @@ public class PlayerEffectsUpdateSystem extends IterativeSystem {
 
     @Override
     public void entityAdded(Entity entity) {
-        super.entityAdded(entity);
+        if (player == null) {
+            player = PlayerFinder.findPlayer(world);
 
-        Optional<Entity> player = world.getEntitiesFor(PlayerComponent.class).stream().findFirst();
+            playerComponent = (PlayerComponent) player.findComponent(PlayerComponent.class);
+        }
+    }
 
-        player.ifPresent(opt -> {
-            playerEntity = opt;
+    @Override
+    public void entitiesAdded(Collection<? extends Entity> entities) {
+        if (player == null) {
+            player = PlayerFinder.findPlayer(world);
 
-            playerComponent = (PlayerComponent) playerEntity.findComponent(PlayerComponent.class);
-        });
+            playerComponent = (PlayerComponent) player.findComponent(PlayerComponent.class);
+        }
+    }
+
+    @Override
+    public void entityRemoved(Entity entity) {
     }
 
     /**
@@ -47,6 +60,10 @@ public class PlayerEffectsUpdateSystem extends IterativeSystem {
      */
     @Override
     public void update(Time deltaTime) {
+        if (player == null) {
+            return;
+        }
+
         updateBulletEffect(deltaTime);
 
         if (playerComponent.getCurrentItemEffects().isEmpty()) {
@@ -57,7 +74,7 @@ public class PlayerEffectsUpdateSystem extends IterativeSystem {
                 .filter(ItemEffect::isDead)
                 .collect(Collectors.toList());
 
-        itemEffects.forEach(item -> item.reset(playerEntity));
+        itemEffects.forEach(item -> item.reset(player));
 
         playerComponent.getCurrentItemEffects().removeAll(itemEffects);
 

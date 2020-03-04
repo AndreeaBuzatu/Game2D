@@ -2,6 +2,9 @@ package uk.ac.lancaster.scc210.game.ecs.component;
 
 import uk.ac.lancaster.scc210.engine.ecs.Component;
 
+/**
+ * The type Out of bounds component.
+ */
 /*
  * Describes an entity which has exceeded the bounds of the window and needs special handling.
  * This is mostly used for entities which have code that runs when removed. In some instances,

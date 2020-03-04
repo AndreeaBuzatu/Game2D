@@ -15,13 +15,15 @@ import uk.ac.lancaster.scc210.engine.gui.InterfaceGrid;
 import uk.ac.lancaster.scc210.engine.gui.InterfaceList;
 import uk.ac.lancaster.scc210.engine.states.State;
 import uk.ac.lancaster.scc210.game.content.LevelManager;
-import uk.ac.lancaster.scc210.game.content.StateManager;
 import uk.ac.lancaster.scc210.game.level.Level;
 import uk.ac.lancaster.scc210.game.resources.PlayerData;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Level select.
+ */
 public class LevelSelect implements State, InputListener {
     private StateBasedGame game;
 
@@ -92,8 +94,6 @@ public class LevelSelect implements State, InputListener {
 
         InterfaceList interfaceList = null;
 
-        Playing playing = new Playing();
-
         for (int i = 0; i < levels.size(); i++) {
             if (i % 3 == 0) {
                 System.out.println("I: " + i);
@@ -112,9 +112,9 @@ public class LevelSelect implements State, InputListener {
                 // Pop back to the main menu so that the pause screen can take them back to the main menu
                 game.popState();
 
-                game.pushState(playing);
+                game.pushState(new Playing(levels.get(finalI).getName()));
 
-                playing.setLevel(levels.get(finalI));
+                //playing.setLevel(levels.get(finalI));
             }));
 
             if (i > currentUnlocked) {

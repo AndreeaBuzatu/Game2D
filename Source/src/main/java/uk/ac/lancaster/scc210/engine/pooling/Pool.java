@@ -8,13 +8,25 @@ import uk.ac.lancaster.scc210.engine.service.Service;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * The type Pool.
+ */
 public abstract class Pool implements Service {
+    /**
+     * The Entities.
+     */
     protected final Queue<Entity> entities;
 
     private final Prototype prototype;
 
     private final int capacity;
 
+    /**
+     * Instantiates a new Pool.
+     *
+     * @param capacity  the capacity
+     * @param prototype the prototype
+     */
     protected Pool(final int capacity, final Prototype prototype) {
         this.capacity = capacity;
         this.prototype = prototype;
@@ -66,6 +78,11 @@ public abstract class Pool implements Service {
         return created;
     }
 
+    /**
+     * Return entity.
+     *
+     * @param entity the entity
+     */
     public void returnEntity(Entity entity) {
         if (entity != null && entities.size() < capacity) {
             entities.add(entity);

@@ -9,7 +9,16 @@ import uk.ac.lancaster.scc210.game.ecs.component.TransformableComponent;
 
 import java.util.Set;
 
+/**
+ * The type Straight line wave.
+ */
 public class StraightLineWave extends Wave {
+    /**
+     * Instantiates a new Straight line wave.
+     *
+     * @param origin      the origin
+     * @param destination the destination
+     */
     public StraightLineWave(Vector2f origin, Vector2f destination) {
         super(origin, destination);
     }
@@ -18,7 +27,7 @@ public class StraightLineWave extends Wave {
     public void update(Set<Entity> entities, Time deltaTime) {
         for (Entity entity : entities) {
             if (toRespawn.contains(entity)) {
-                return;
+                continue;
             }
 
             TransformableComponent transformableComponent = (TransformableComponent) entity.findComponent(TransformableComponent.class);
@@ -33,7 +42,6 @@ public class StraightLineWave extends Wave {
 
             transformable.setRotation(rotateSprite());
 
-
             // If the entity goes out of bounds, reset the entity back to it's starting position
             if (passedDestination(transformable.getPosition())) {
                 transformable.setPosition(-origin.x, -origin.y);
@@ -44,7 +52,5 @@ public class StraightLineWave extends Wave {
                 transformable.move(direction.x * speed, direction.y * speed);
             }
         }
-
-        entities.removeIf(toRespawn::contains);
     }
 }

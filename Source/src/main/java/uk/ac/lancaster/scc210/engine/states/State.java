@@ -15,8 +15,18 @@ public interface State {
      */
     void setup(StateBasedGame game);
 
+    /**
+     * On enter.
+     *
+     * @param game the game
+     */
     void onEnter(StateBasedGame game);
 
+    /**
+     * On exit.
+     *
+     * @param game the game
+     */
     void onExit(StateBasedGame game);
 
     /**

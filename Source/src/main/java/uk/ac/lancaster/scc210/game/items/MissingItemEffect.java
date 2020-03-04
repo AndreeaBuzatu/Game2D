@@ -2,6 +2,9 @@ package uk.ac.lancaster.scc210.game.items;
 
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 
+/**
+ * The type Missing item effect.
+ */
 public class MissingItemEffect extends PowerUpEffect {
     /**
      * Describes what should happen to the entity when it collides with an item

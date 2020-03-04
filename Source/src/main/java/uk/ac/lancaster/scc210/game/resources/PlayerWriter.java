@@ -17,12 +17,20 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 
+/**
+ * The type Player writer.
+ */
 public class PlayerWriter implements Service {
     private final Document document;
     private final NodeList nodes;
 
     private Element playerElement;
 
+    /**
+     * Instantiates a new Player writer.
+     *
+     * @param document the document
+     */
     public PlayerWriter(Document document) {
         this.document = document;
 
@@ -31,6 +39,11 @@ public class PlayerWriter implements Service {
         getPlayerElement();
     }
 
+    /**
+     * Write player level.
+     *
+     * @param playerData the player data
+     */
     public void writePlayerLevel(PlayerData playerData) {
         playerElement.setAttribute("unlocked-level", playerData.getUnlockedLevel());
 

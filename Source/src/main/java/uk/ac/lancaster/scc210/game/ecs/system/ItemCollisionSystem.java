@@ -1,11 +1,8 @@
 package uk.ac.lancaster.scc210.game.ecs.system;
 
-import org.jsfml.audio.Sound;
-import org.jsfml.audio.SoundBuffer;
 import org.jsfml.graphics.RenderTarget;
 import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.collision.OrientatedBox;
-import uk.ac.lancaster.scc210.engine.content.SoundBufferManager;
 import uk.ac.lancaster.scc210.engine.content.SoundManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
@@ -15,8 +12,11 @@ import uk.ac.lancaster.scc210.game.ecs.component.OrientatedBoxComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
 import uk.ac.lancaster.scc210.game.ecs.entity.PlayerFinder;
 
-import java.util.Optional;
+import java.util.Collection;
 
+/**
+ * The type Item collision system.
+ */
 public class ItemCollisionSystem extends IterativeSystem {
     // We only have one player but the abstraction works like so - oh well
     private Entity player;
@@ -39,9 +39,25 @@ public class ItemCollisionSystem extends IterativeSystem {
 
     @Override
     public void entityAdded(Entity entity) {
-        super.entityAdded(entity);
+        entities = world.getEntitiesFor(ItemEffectsComponent.class);
 
-        player = PlayerFinder.findPlayer(world);
+        if (player == null) {
+            player = PlayerFinder.findPlayer(world);
+        }
+    }
+
+    @Override
+    public void entitiesAdded(Collection<? extends Entity> entities) {
+        this.entities = world.getEntitiesFor(ItemEffectsComponent.class);
+
+        if (player == null) {
+            player = PlayerFinder.findPlayer(world);
+        }
+    }
+
+    @Override
+    public void entityRemoved(Entity entity) {
+
     }
 
     @Override
@@ -63,7 +79,7 @@ public class ItemCollisionSystem extends IterativeSystem {
 
                 PlayerComponent playerComponent = (PlayerComponent) player.findComponent(PlayerComponent.class);
 
-                itemEffectsComponent.getItemEffects().parallelStream().forEach(itemEffect -> itemEffect.react(player));
+                itemEffectsComponent.getItemEffects().forEach(itemEffect -> itemEffect.react(player));
 
                 playerComponent.setCurrentItemEffects(itemEffectsComponent.getItemEffects());
 

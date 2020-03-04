@@ -58,9 +58,9 @@ public abstract class Deserialiser<T extends Serialised> {
     /**
      * Instantiates a new Deserialiser.
      *
-     * @param document the xml document
-     * @param nodeListTagName    the child nodeListTagName used to deserialise
-     * @param tagName  the global tag name
+     * @param document        the xml document
+     * @param nodeListTagName the child nodeListTagName used to deserialise
+     * @param tagName         the global tag name
      * @throws ResourceNotFoundException if the resource cannot be created or found
      */
     protected Deserialiser(Document document, String nodeListTagName, String tagName) throws ResourceNotFoundException {
@@ -105,18 +105,28 @@ public abstract class Deserialiser<T extends Serialised> {
         return node.getNodeType() == Node.ELEMENT_NODE && node.getNodeName().equals(tagName);
     }
 
+    /**
+     * Create standin xml.
+     *
+     * @throws ResourceNotFoundException the resource not found exception
+     */
     protected void createStandinXML() throws ResourceNotFoundException {
     }
 
     /**
      * Gets serialised.
      *
-     * @return serialised
+     * @return serialised serialised
      */
     public List<T> getSerialised() {
         return serialised;
     }
 
+    /**
+     * Gets document.
+     *
+     * @return the document
+     */
     public Document getDocument() {
         return document;
     }

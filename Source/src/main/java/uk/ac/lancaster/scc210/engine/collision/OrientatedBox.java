@@ -6,7 +6,14 @@ import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Transform;
 import org.jsfml.system.Vector2f;
 
+/**
+ * The type Orientated box.
+ */
 public class OrientatedBox {
+    //private static Vector2f[] axes = { Vector2f.ZERO, Vector2f.ZERO, Vector2f.ZERO, Vector2f.ZERO };
+
+    private static final float[][] axes = { new float[2], new float[2], new float[2], new float[3] };
+
     private static final int POINTS = 4;
 
     private final Vector2f[] points;
@@ -47,7 +54,10 @@ public class OrientatedBox {
         points = new Vector2f[POINTS];
     }
 
-    private void calculatePoints() {
+    /**
+     * Calculate points.
+     */
+    public void calculatePoints() {
         /*
          * Unfortunately JSFML does not provide an abstraction where Sprite can be considered a Shape (despite storing a RectangleShape).
          * As such, we have to handle to handle two separate cases of Sprite and Shape. This is unfortunate...
@@ -87,14 +97,14 @@ public class OrientatedBox {
         }
     }
 
-    private Vector2f projectOntoAxis(Vector2f axis) {
+    private float[] projectOntoAxis(float[] axis) {
         // Perform dot product on every axis
-        float min = (points[0].x * axis.x + points[0].y * axis.y);
+        float min = (points[0].x * axis[0] + points[0].y * axis[1]);
 
         float max = min;
 
         for (int j = 1; j < POINTS; j++) {
-            float projection = (points[j].x * axis.x + points[j].y * axis.y);
+            float projection = (points[j].x * axis[0] + points[j].y * axis[1]);
 
             if (projection < min) {
                 min = projection;
@@ -105,13 +115,13 @@ public class OrientatedBox {
             }
         }
 
-        return new Vector2f(min, max);
+        return new float[] {min, max};
     }
 
     /**
      * Performs a Separate Axis Theorem collision check between two boxes (including rotation and scaling).
      * This method should be used to account for rotation when performing collision checks between two entities
-     *
+     * <p>
      * See: https://github.com/SFML/SFML/wiki/Source%3A-Simple-Collision-Detection-for-SFML-2 for the exact implementation
      * of the theorem, this code adapts it for Java and changes the abstraction in an attempt to improve performance.
      *
@@ -124,6 +134,29 @@ public class OrientatedBox {
 
         right.calculatePoints();
 
+        axes[0][0] = left.points[1].x - left.points[0].x;
+        axes[0][1] = left.points[1].y - left.points[0].y;
+
+        axes[1][0] = left.points[1].x - left.points[2].x;
+        axes[1][1] = left.points[1].y - left.points[2].y;
+
+        axes[2][0] = right.points[0].x - right.points[3].x;
+        axes[2][1] = right.points[0].y - right.points[3].y;
+
+        axes[3][0] = right.points[0].x - right.points[1].x;
+        axes[3][1] = right.points[0].y - right.points[1].y;
+
+        /*
+        axes[0] = new Vector2f(left.points[1].x - left.points[0].x, left.points[1].y - left.points[0].y);
+
+        axes[1] = new Vector2f(left.points[1].x - left.points[2].x, left.points[1].y - left.points[2].y);
+
+        axes[2] = new Vector2f(right.points[0].x - right.points[3].x, right.points[0].y - right.points[3].y);
+
+        axes[3] = new Vector2f(right.points[0].x - right.points[1].x, right.points[0].y - right.points[1].y);
+         */
+
+        /*
         Vector2f[] axes = {
                 new Vector2f(left.points[1].x - left.points[0].x, left.points[1].y - left.points[0].y),
                 new Vector2f(left.points[1].x - left.points[2].x, left.points[1].y - left.points[2].y),
@@ -131,16 +164,27 @@ public class OrientatedBox {
                 new Vector2f(right.points[0].x - right.points[1].x, right.points[0].y - right.points[1].y)
         };
 
+         */
+
         for (int i = 0; i < POINTS; i++) {
-            Vector2f leftBoxProjections = left.projectOntoAxis(axes[i]);
+            float[] leftBoxProjections = left.projectOntoAxis(axes[i]);
 
-            Vector2f rightBoxProjections = right.projectOntoAxis(axes[i]);
+            float[] rightBoxProjections = right.projectOntoAxis(axes[i]);
 
-            if (!((rightBoxProjections.x <= leftBoxProjections.y) && (rightBoxProjections.y >= leftBoxProjections.x))) {
+            if (!((rightBoxProjections[0] <= leftBoxProjections[1]) && (rightBoxProjections[1] >= leftBoxProjections[0]))) {
                 return false;
             }
         }
 
         return true;
+    }
+
+    /**
+     * Get points vector 2 f [ ].
+     *
+     * @return the vector 2 f [ ]
+     */
+    public Vector2f[] getPoints() {
+        return points;
     }
 }

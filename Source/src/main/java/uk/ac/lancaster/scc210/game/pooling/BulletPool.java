@@ -14,7 +14,7 @@ import uk.ac.lancaster.scc210.game.prototypes.BulletPrototype;
  */
 public class BulletPool extends Pool {
     // Who cares if it's static? I don't
-    private static final int INITIAL_BULLETS = 10;
+    private static final int INITIAL_BULLETS = 5000;
 
     private final TextureManager textureManager;
 

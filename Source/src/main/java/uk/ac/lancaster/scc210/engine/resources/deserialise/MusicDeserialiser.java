@@ -5,7 +5,16 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import uk.ac.lancaster.scc210.engine.resources.ResourceNotFoundException;
 
+/**
+ * The type Music deserialiser.
+ */
 public class MusicDeserialiser extends Deserialiser<SerialisedMusic> {
+    /**
+     * Instantiates a new Music deserialiser.
+     *
+     * @param document the document
+     * @throws ResourceNotFoundException the resource not found exception
+     */
     public MusicDeserialiser(Document document) throws ResourceNotFoundException {
         super(document, "music", "piece");
     }

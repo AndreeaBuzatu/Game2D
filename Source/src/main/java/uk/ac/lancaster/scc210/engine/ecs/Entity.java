@@ -41,6 +41,11 @@ public class Entity {
         }
     }
 
+    /**
+     * Add component.
+     *
+     * @param component the component
+     */
     public void addComponent(Component component) {
         Class<? extends Component> componentClass = component.getClass();
 
@@ -49,6 +54,11 @@ public class Entity {
         }
     }
 
+    /**
+     * Remove component.
+     *
+     * @param component the component
+     */
     public void removeComponent(Class<? extends Component> component) {
         components.remove(component);
     }
@@ -58,10 +68,16 @@ public class Entity {
      *
      * @return the components
      */
-    HashMap<Class<? extends Component>, Component> getComponents() {
+    public HashMap<Class<? extends Component>, Component> getComponents() {
         return components;
     }
 
+    /**
+     * Has component boolean.
+     *
+     * @param component the component
+     * @return the boolean
+     */
     public boolean hasComponent(Class<? extends Component> component) {
         return components.containsKey(component);
     }

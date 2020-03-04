@@ -1,9 +1,7 @@
 package uk.ac.lancaster.scc210.game.prototypes;
 
-import org.jsfml.audio.Sound;
 import org.jsfml.graphics.Sprite;
 import uk.ac.lancaster.scc210.engine.content.ShaderManager;
-import uk.ac.lancaster.scc210.engine.content.SoundBufferManager;
 import uk.ac.lancaster.scc210.engine.content.TextureAnimationManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
@@ -18,6 +16,9 @@ import uk.ac.lancaster.scc210.game.patterns.Pattern;
 import uk.ac.lancaster.scc210.game.patterns.StarSpaceshipPattern;
 import uk.ac.lancaster.scc210.game.resources.SerialisedSpaceShip;
 
+/**
+ * The type Space ship prototype.
+ */
 public class SpaceShipPrototype implements Prototype {
     private final String[] items;
 
@@ -35,6 +36,14 @@ public class SpaceShipPrototype implements Prototype {
 
     private final int speed, score, lives;
 
+    /**
+     * Instantiates a new Space ship prototype.
+     *
+     * @param serviceProvider           the service provider
+     * @param spaceShipPrototypeManager the space ship prototype manager
+     * @param pool                      the pool
+     * @param spaceShip                 the space ship
+     */
     public SpaceShipPrototype(ServiceProvider serviceProvider, SpaceShipPrototypeManager spaceShipPrototypeManager, Pool pool, SerialisedSpaceShip spaceShip) {
         this.animationManager = (TextureAnimationManager) serviceProvider.get(TextureAnimationManager.class);
         this.shaderManager = (ShaderManager) serviceProvider.get(ShaderManager.class);

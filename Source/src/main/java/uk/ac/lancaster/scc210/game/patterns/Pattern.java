@@ -7,21 +7,47 @@ import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
+/**
+ * The type Pattern.
+ */
 public abstract class Pattern {
     private final Time firingGap;
 
     private Time elapsedTime;
 
+    /**
+     * The To fire.
+     */
     protected final Entity[] toFire;
 
+    /**
+     * The Coords.
+     */
     protected final Vector2f[] coords;
 
+    /**
+     * The Space ship sprite.
+     */
     protected final Sprite spaceShipSprite;
 
+    /**
+     * The Spawned entity name.
+     */
     protected final String spawnedEntityName;
 
+    /**
+     * The Space ship.
+     */
     protected final Entity spaceShip;
 
+    /**
+     * Instantiates a new Pattern.
+     *
+     * @param spaceShip         the space ship
+     * @param toFire            the to fire
+     * @param spawnedEntityName the spawned entity name
+     * @param firingGap         the firing gap
+     */
     protected Pattern(Entity spaceShip, Entity[] toFire, String spawnedEntityName, Time firingGap) {
         this.spaceShip = spaceShip;
         this.toFire = toFire;
@@ -35,22 +61,52 @@ public abstract class Pattern {
         spaceShipSprite = ((SpriteComponent) spaceShip.findComponent(SpriteComponent.class)).getSprite();
     }
 
+    /**
+     * Create entity [ ].
+     *
+     * @return the entity [ ]
+     */
     public abstract Entity[] create();
 
+    /**
+     * Position.
+     *
+     * @param toSpawnSprite the to spawn sprite
+     */
     public abstract void position(Sprite toSpawnSprite);
 
+    /**
+     * Gets firing gap.
+     *
+     * @return the firing gap
+     */
     public Time getFiringGap() {
         return firingGap;
     }
 
+    /**
+     * Gets elapsed time.
+     *
+     * @return the elapsed time
+     */
     public Time getElapsedTime() {
         return elapsedTime;
     }
 
+    /**
+     * Sets elapsed time.
+     *
+     * @param elapsedTime the elapsed time
+     */
     public void setElapsedTime(Time elapsedTime) {
         this.elapsedTime = elapsedTime;
     }
 
+    /**
+     * Position star patterns.
+     *
+     * @param bulletSprite the bullet sprite
+     */
     protected void positionStarPatterns(Sprite bulletSprite) {
         float startPoint = -bulletSprite.getLocalBounds().width / 2;
 

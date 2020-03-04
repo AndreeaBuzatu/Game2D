@@ -4,6 +4,9 @@ import uk.ac.lancaster.scc210.engine.content.ContentManager;
 import uk.ac.lancaster.scc210.engine.states.State;
 import uk.ac.lancaster.scc210.game.states.*;
 
+/**
+ * The type State manager.
+ */
 public class StateManager extends ContentManager<State> {
     /**
      * Instantiates a new State manager.

@@ -1,5 +1,6 @@
 package uk.ac.lancaster.scc210.game.resources;
 
+import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Vector2f;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -30,6 +31,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The type Level deserialiser.
+ */
 public class LevelDeserialiser extends Deserialiser<Level> {
     private final String DIALOGUE_TAG = "dialogue";
 
@@ -52,7 +56,8 @@ public class LevelDeserialiser extends Deserialiser<Level> {
     /**
      * Instantiates a new Deserialiser.
      *
-     * @param document the xml document
+     * @param serviceProvider the service provider
+     * @param document        the xml document
      * @throws ResourceNotFoundException if the resource cannot be created or found
      */
     public LevelDeserialiser(ServiceProvider serviceProvider, Document document) throws ResourceNotFoundException {
@@ -229,6 +234,23 @@ public class LevelDeserialiser extends Deserialiser<Level> {
         spaceShip.addComponent(new EnemyComponent());
 
         SpriteComponent spriteComponent = (SpriteComponent) spaceShip.findComponent(SpriteComponent.class);
+
+        Sprite sprite = spriteComponent.getSprite();
+
+        try {
+            int rotation = Integer.parseInt((elem.getAttribute("rotation")));
+
+            if (rotation > RotationComponent.MAX_ROTATION) {
+                sprite.setRotation(rotation - ((int) (rotation / RotationComponent.MAX_ROTATION) * RotationComponent.MAX_ROTATION ));
+
+            } else if (rotation < RotationComponent.MIN_ROTATION) {
+                sprite.setRotation(rotation + ( (int) (Math.abs(rotation) / RotationComponent.MAX_ROTATION) + 1) * RotationComponent.MAX_ROTATION);
+
+            } else {
+                sprite.rotate(rotation);
+            }
+        } catch (NumberFormatException ignored) {
+        }
 
         spriteComponent.getSprite().setPosition(position);
 

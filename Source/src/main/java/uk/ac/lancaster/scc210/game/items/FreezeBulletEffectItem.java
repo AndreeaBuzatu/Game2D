@@ -4,6 +4,9 @@ import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.game.bullets.effects.FreezeBulletEffect;
 import uk.ac.lancaster.scc210.game.ecs.component.PlayerComponent;
 
+/**
+ * The type Freeze bullet effect item.
+ */
 public class FreezeBulletEffectItem extends PowerUpEffect {
     @Override
     public void react(Entity entity) {

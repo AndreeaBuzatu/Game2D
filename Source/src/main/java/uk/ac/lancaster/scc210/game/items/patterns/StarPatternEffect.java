@@ -6,7 +6,15 @@ import uk.ac.lancaster.scc210.engine.pooling.Pool;
 import uk.ac.lancaster.scc210.game.bullets.patterns.StarBulletPattern;
 import uk.ac.lancaster.scc210.game.ecs.component.SpaceShipComponent;
 
+/**
+ * The type Star pattern effect.
+ */
 public class StarPatternEffect extends FiringPatternEffect {
+    /**
+     * Instantiates a new Star pattern effect.
+     *
+     * @param pool the pool
+     */
     public StarPatternEffect(Pool pool) {
         super(pool, Time.getSeconds(4));
     }
