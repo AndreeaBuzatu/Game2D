@@ -306,23 +306,6 @@
 
     <level name="6: Invasion">
 
-        <stage id="63">
-            <wave type="sine" start_x="0" start_y="0" end_x="1280" end_y="1280" num_ships="5"
-                  entity_type="spaceship"
-                  ship_name="enemy-three"/>
-            <wave type="sine" start_x="1280" start_y="0" end_x="0" end_y="1280" num_ships="5"
-                  entity_type="spaceship"
-                  ship_name="enemy-three"/>
-            <stationary pos_x="300" pos_y="100" entity_type="spaceship" ship_name="enemy-four"/>
-            <stationary pos_x="600" pos_y="100" entity_type="spaceship" ship_name="enemy-four"/>
-            <stationary pos_x="900" pos_y="100" entity_type="spaceship" ship_name="enemy-four"/>
-            <stationary pos_x="300" pos_y="400" entity_type="spaceship" ship_name="enemy-four"/>
-            <stationary pos_x="900" pos_y="400" entity_type="spaceship" ship_name="enemy-four"/>
-            <stationary pos_x="300" pos_y="700" entity_type="spaceship" ship_name="enemy-four"/>
-            <stationary pos_x="600" pos_y="700" entity_type="spaceship" ship_name="enemy-four"/>
-            <stationary pos_x="900" pos_y="700" entity_type="spaceship" ship_name="enemy-four"/>
-        </stage>
-
         <dialogue>
             <line character="Mary Sue">
                 Level 6 Stage 1
@@ -376,8 +359,9 @@
                   entity_type="spaceship"
                   ship_name="enemy-three"/>
             <stationary pos_x="300" pos_y="100" entity_type="spaceship" ship_name="enemy-four"/>
-            <stationary pos_x="600" pos_y="100" entity_type="spaceship" ship_name="enemy-four"/>
             <stationary pos_x="900" pos_y="100" entity_type="spaceship" ship_name="enemy-four"/>
+            <stationary pos_x="300" pos_y="700" entity_type="spaceship" ship_name="enemy-four"/>
+            <stationary pos_x="900" pos_y="700" entity_type="spaceship" ship_name="enemy-four"/>
         </stage>
 
     </level>
