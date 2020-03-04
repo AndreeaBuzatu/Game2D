@@ -34,7 +34,8 @@ public class LivesSystem extends IterativeSystem {
 
     @Override
     public void entityRemoved(Entity entity) {
-
+        // Refresh the list of killed entities
+        this.entities = world.getEntitiesFor(LivesComponent.class);
     }
 
     @Override
