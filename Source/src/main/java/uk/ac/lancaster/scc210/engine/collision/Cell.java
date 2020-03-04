@@ -14,7 +14,7 @@ public class Cell {
 
     private final Set<Entity> entities;
 
-    private Set<Entity> collision;
+    private final Set<Entity> collision;
 
     /**
      * Instantiates a new Cell.

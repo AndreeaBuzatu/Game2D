@@ -21,7 +21,7 @@ public class FlashComponent implements Component {
 
     private RenderStates currentState;
 
-    private Shader flashShader;
+    private final Shader flashShader;
 
     private boolean flashing;
 

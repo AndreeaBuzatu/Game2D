@@ -6,15 +6,13 @@ import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Transform;
 import org.jsfml.system.Vector2f;
 
-import java.util.Arrays;
-
 /**
  * The type Orientated box.
  */
 public class OrientatedBox {
     //private static Vector2f[] axes = { Vector2f.ZERO, Vector2f.ZERO, Vector2f.ZERO, Vector2f.ZERO };
 
-    private static float[][] axes = { new float[2], new float[2], new float[2], new float[3] };
+    private static final float[][] axes = { new float[2], new float[2], new float[2], new float[3] };
 
     private static final int POINTS = 4;
 

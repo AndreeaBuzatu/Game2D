@@ -8,7 +8,6 @@ import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.game.ecs.component.*;
-import uk.ac.lancaster.scc210.game.ecs.entity.Player;
 
 import java.util.Collection;
 

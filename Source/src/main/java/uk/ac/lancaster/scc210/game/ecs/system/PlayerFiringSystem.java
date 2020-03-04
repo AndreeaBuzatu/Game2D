@@ -73,7 +73,7 @@ public class PlayerFiringSystem extends IterativeSystem {
             if (player.hasComponent(SpaceShipComponent.class)) {
                 SpaceShipComponent spaceShipComponent = (SpaceShipComponent) player.findComponent(SpaceShipComponent.class);
 
-                //soundManager.playSound(spaceShipComponent.getFiringSound());
+                soundManager.playSound(spaceShipComponent.getFiringSound());
             }
 
             firingPattern.setElapsedTime(Time.ZERO);
