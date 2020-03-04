@@ -10,13 +10,21 @@ import java.util.Set;
  * The type Cell.
  */
 public class Cell {
+    private final Set<Set<Entity>> collisions;
+
     private final Set<Entity> entities;
+
+    private Set<Entity> collision;
 
     /**
      * Instantiates a new Cell.
      */
     Cell() {
+        collisions = new HashSet<>();
+
         entities = new HashSet<>();
+
+        collision = new HashSet<>();
     }
 
     /**
@@ -25,7 +33,9 @@ public class Cell {
      * @return the set
      */
     public Set<Set<Entity>> checkCollision() {
-        Set<Set<Entity>> collisions = new HashSet<>();
+        collisions.clear();
+
+        collision.clear();
 
         for (Entity outer : entities) {
             OrientatedBoxComponent outerOrientatedBoxComponent = (OrientatedBoxComponent) outer.findComponent(OrientatedBoxComponent.class);
@@ -38,7 +48,11 @@ public class Cell {
                 OrientatedBoxComponent innerOrientatedBoxComponent = (OrientatedBoxComponent) inner.findComponent(OrientatedBoxComponent.class);
 
                 if (OrientatedBox.areColliding(outerOrientatedBoxComponent.getOrientatedBox(), innerOrientatedBoxComponent.getOrientatedBox())) {
-                    collisions.add(Set.of(outer, inner));
+                    collision.add(outer);
+
+                    collision.add(inner);
+
+                    collisions.add(collision);
                 }
             }
         }
