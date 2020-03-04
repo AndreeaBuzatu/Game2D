@@ -34,7 +34,7 @@ public class RenderSystem extends IterativeSystem {
 
     @Override
     public void entityRemoved(Entity entity) {
-
+        this.entities = world.getEntitiesFor(SpriteComponent.class);
     }
 
     @Override
@@ -55,6 +55,8 @@ public class RenderSystem extends IterativeSystem {
 
             if (entity.hasComponent(FlashComponent.class)) {
                 FlashComponent flashComponent = (FlashComponent) entity.findComponent(FlashComponent.class);
+
+                // TODO: Fix bug where all entities flash red if player has 1 life remaining
 
                 // Reset the current shader colour back to white if the previous parameter was red
                 flashComponent.setShaderWhite();
