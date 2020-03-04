@@ -256,18 +256,23 @@
         </dialogue>
 
         <stage id="52">
+            <wave type="straight" start_x="600" start_y="800" end_x="600" end_y="-800" num_ships="10"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
             <wave type="straight" start_x="0" start_y="700" end_x="900" end_y="-900" num_ships="5"
                   entity_type="spaceship"
                   ship_name="enemy-one"/>
             <wave type="straight" start_x="1280" start_y="700" end_x="300" end_y="-900" num_ships="5"
                   entity_type="spaceship"
                   ship_name="enemy-one"/>
-            <wave type="straight" start_x="500" start_y="720" end_x="600" end_y="-900" num_ships="5"
+            <wave type="sine" start_x="500" start_y="720" end_x="600" end_y="-900" num_ships="5"
                   entity_type="spaceship"
                   ship_name="enemy-three"/>
-            <wave type="straight" start_x="600" start_y="720" end_x="500" end_y="-900" num_ships="5"
+            <wave type="sine" start_x="700" start_y="720" end_x="600" end_y="-900" num_ships="5"
                   entity_type="spaceship"
                   ship_name="enemy-three"/>
+            <stationary pos_x="200" pos_y="100" entity_type="spaceship" ship_name="enemy-two"/>
+            <stationary pos_x="1100" pos_y="100" entity_type="spaceship" ship_name="enemy-two"/>
         </stage>
 
         <dialogue>
@@ -277,12 +282,21 @@
         </dialogue>
 
         <stage id="53">
+            <wave type="sine" start_x="0" start_y="300" end_x="2560" end_y="300" num_ships="10"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <wave type="straight" start_x="400" start_y="-200" end_x="1280" end_y="1280" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <wave type="straight" start_x="880" start_y="-200" end_x="0" end_y="1280" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
             <wave type="sine" start_x="0" start_y="0" end_x="1280" end_y="1280" num_ships="5"
                   entity_type="spaceship"
-                  ship_name="enemy-one"/>
+                  ship_name="enemy-three"/>
             <wave type="sine" start_x="1280" start_y="0" end_x="0" end_y="1280" num_ships="5"
                   entity_type="spaceship"
-                  ship_name="enemy-one"/>
+                  ship_name="enemy-three"/>
             <stationary pos_x="300" pos_y="100" entity_type="spaceship" ship_name="enemy-two"/>
             <stationary pos_x="600" pos_y="100" entity_type="spaceship" ship_name="enemy-two"/>
             <stationary pos_x="900" pos_y="100" entity_type="spaceship" ship_name="enemy-two"/>
