@@ -77,7 +77,7 @@ public class EnemyFiringSystem extends IterativeSystem {
                 if (entity.hasComponent(SpaceShipComponent.class)) {
                     SpaceShipComponent spaceShipComponent = (SpaceShipComponent) entity.findComponent(SpaceShipComponent.class);
 
-                    //soundManager.playSound(spaceShipComponent.getFiringSound());
+                    soundManager.playSound(spaceShipComponent.getFiringSound());
                 }
 
                 world.addEntities(firingPatternComponent.getPattern().create());
