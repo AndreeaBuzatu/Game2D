@@ -16,9 +16,11 @@ import java.util.Set;
  * The type Level wave.
  */
 public class LevelWave {
-    private final float SPAWN_TIMER = 0.5f;
+    private final float ENTITY_GAP = 150f;
 
-    private final float COUNT_START = 0;
+    private final Time SPAWN_TIMER = Time.getSeconds(0.5f);
+
+    private final Time COUNT_START = Time.ZERO;
 
     private Set<Entity> entities;
 
@@ -28,13 +30,11 @@ public class LevelWave {
 
     private final Prototype prototype;
 
-    private float spawnTime;
+    private Time spawnTime, spawnCountUp, entitySize;
 
     private final int numShips;
 
-    private float spawnCountUp;
-
-    private int numLeftToSpawn, entitySize;
+    private int numLeftToSpawn;
 
     /**
      * Instantiates a new Level wave.
@@ -59,6 +59,8 @@ public class LevelWave {
         spawnCountUp = COUNT_START;
 
         numLeftToSpawn = numShips;
+
+        entitySize = Time.ZERO;
     }
 
     /**
@@ -78,16 +80,16 @@ public class LevelWave {
 
             numLeftToSpawn--;
 
-            spawnCountUp += deltaTime.asSeconds();
+            spawnCountUp = Time.add(spawnCountUp, deltaTime);
 
             return entity;
         }
 
-        spawnCountUp += deltaTime.asSeconds();
+        spawnCountUp = Time.add(spawnCountUp, deltaTime);
 
-        spawnTime = entitySize / 150f;
+        spawnTime = Time.div(entitySize, ENTITY_GAP);
 
-        if (spawnCountUp >= spawnTime) {
+        if (spawnCountUp.asSeconds() >= spawnTime.asSeconds()) {
             if (!allSpawned()) {
                 entity = create();
 
@@ -153,7 +155,8 @@ public class LevelWave {
 
             positionSprite(sprite);
 
-            entitySize = spriteComponent.getSprite().getTexture().getSize().x + 90;
+            // Express the size as some amount of time
+            entitySize = Time.getSeconds(spriteComponent.getSprite().getTexture().getSize().x + 90);
         }
 
         if (entity.hasComponent(AsteroidComponent.class)) {
@@ -161,7 +164,8 @@ public class LevelWave {
 
             asteroidComponent.getCircle().setPosition(spriteStart);
 
-            entitySize = (int) (2 * asteroidComponent.getCircle().getRadius());
+            // Express the size as some amount of time
+            entitySize =  Time.getSeconds(asteroidComponent.getCircle().getRadius() * 2);
         }
 
         return entity;
