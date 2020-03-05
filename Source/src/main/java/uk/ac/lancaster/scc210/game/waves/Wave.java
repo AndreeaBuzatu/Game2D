@@ -109,9 +109,7 @@ public abstract class Wave {
             axis += 180f;
         }
 
-        float angle = (float) (axis + Math.toDegrees(Math.atan(dy / dx)));
-
-        return angle;
+        return (float) (axis + Math.toDegrees(Math.atan(dy / dx)));
     }
 
     /**

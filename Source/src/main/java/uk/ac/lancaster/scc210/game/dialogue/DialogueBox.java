@@ -10,7 +10,6 @@ import uk.ac.lancaster.scc210.engine.InputListener;
 import uk.ac.lancaster.scc210.engine.ViewSize;
 import uk.ac.lancaster.scc210.engine.content.FontManager;
 
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 

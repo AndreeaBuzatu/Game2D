@@ -1,7 +1,6 @@
 package uk.ac.lancaster.scc210.game.level;
 
 import uk.ac.lancaster.scc210.engine.resources.deserialise.Serialised;
-import uk.ac.lancaster.scc210.game.dialogue.Line;
 
 import java.util.Iterator;
 import java.util.List;
