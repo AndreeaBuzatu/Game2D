@@ -1,45 +1,353 @@
 <levels>
-    <level name="thing">
-        <stage id="63">
+    <level name="1: Space School">
+        <stage id="11">
             <dialogue>
-                <line character="Ishmael">
-                    Call me Ishmael. Some years ago—never mind how long precisely—having little
-                    or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about
-                    a little and see the watery part of the world. It is a way I have of driving off the spleen and
-                    regulating the circulation. Whenever I find myself growing grim about the mouth; whenever it is a damp,
-                    drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and
-                    bringing
-                    up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me,
-                    that it requires a strong moral principle to prevent me from deliberately stepping into the street,
-                    and methodically knocking people’s hats off—then, I account it high time to get to sea as soon as I can.
-                    This is my substitute for pistol and ball. With a philosophical flourish Cato throws himself upon his
-                    sword;
-                    I quietly take to the ship. There is nothing surprising in this. If they but knew it, almost all men in
-                    their degree,
-                    some time or other, cherish very nearly the same feelings towards the ocean with me.
-                </line>
-                <line character="Other">
-                    There now is your insular city of the Manhattoes, belted round by wharves as Indian isles by coral
-                    reefs—commerce surrounds it with her surf. Right and left, the streets take you waterward.
-                    Its extreme downtown is the battery, where that noble mole is washed by waves, and cooled by breezes,
-                    which a few hours previous were out of sight of land. Look at the crowds of water-gazers there.
-                </line>
-                <line character="Oscar Gamble">
-                    They don't think it be like it is, but it do.
+                <line character="Mary Sue">
+                    Level 1 Stage 1
                 </line>
             </dialogue>
-            <stationary pos_x="500" pos_y="500" entity_type="spaceship" ship_name="other"/>
+            <stationary pos_x="500" pos_y="500" entity_type="spaceship" ship_name="enemy-one"/>
+        </stage>
+        <stage id="12">
+            <dialogue>
+                <line character="Mary Sue">
+                    Level 1 Stage 2
+                </line>
+            </dialogue>
+            <stationary pos_x="500" pos_y="500" entity_type="spaceship" ship_name="enemy-one"/>
+        </stage>
+        <stage id="13">
+            <dialogue>
+                <line character="Mary Sue">
+                    Level 1 Stage 3
+                </line>
+            </dialogue>
+            <stationary pos_x="500" pos_y="500" entity_type="spaceship" ship_name="player"/>
+        </stage>
+    </level>
+
+    <level name="2: First Contact">
+        <stage id="21">
+            <dialogue>
+                <line character="Mary Sue">
+                    Level 2 Stage 1
+                </line>
+            </dialogue>
+            <wave type="straight" start_x="0" start_y="0" end_x="1280" end_y="1280" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <wave type="straight" start_x="1280" start_y="0" end_x="0" end_y="1280" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+        </stage>
+        <stage id="22">
+            <dialogue>
+                <line character="Mary Sue">
+                    Level 2 Stage 2
+                </line>
+            </dialogue>
+            <wave type="straight" start_x="0" start_y="0" end_x="1280" end_y="1280" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <wave type="straight" start_x="1280" start_y="0" end_x="0" end_y="1280" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <wave type="straight" start_x="0" start_y="100" end_x="2560" end_y="100" num_ships="10"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+        </stage>
+        <stage id="23">
+            <dialogue>
+                <line character="Mary Sue">
+                    Level 2 Stage 3
+                </line>
+            </dialogue>
+            <wave type="straight" start_x="0" start_y="0" end_x="1280" end_y="1280" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <wave type="straight" start_x="1280" start_y="0" end_x="0" end_y="1280" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <wave type="sine" start_x="0" start_y="100" end_x="2560" end_y="100" num_ships="10"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+        </stage>
+    </level>
+
+    <level name="3: Strife on Mars">
+        <stage id="31">
+            <dialogue>
+                <line character="Mary Sue">
+                    Level 3 Stage 1
+                </line>
+            </dialogue>
+            <wave type="straight" start_x="600" start_y="0" end_x="600" end_y="1280" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <wave type="straight" start_x="0" start_y="0" end_x="1280" end_y="1280" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <wave type="straight" start_x="1280" start_y="0" end_x="0" end_y="1280" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <wave type="sine" start_x="0" start_y="100" end_x="2560" end_y="100" num_ships="10"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+        </stage>
+        <stage id="32">
+            <dialogue>
+                <line character="Mary Sue">
+                    Level 3 Stage 2
+                </line>
+            </dialogue>
+            <wave type="straight" start_x="500" start_y="0" end_x="500" end_y="1280" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <wave type="straight" start_x="700" start_y="0" end_x="700" end_y="1280" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <wave type="sine" start_x="0" start_y="0" end_x="1280" end_y="1280" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <wave type="sine" start_x="1280" start_y="0" end_x="0" end_y="1280" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <wave type="straight" start_x="0" start_y="100" end_x="2560" end_y="100" num_ships="10"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+        </stage>
+        <stage id="33">
+            <dialogue>
+                <line character="Mary Sue">
+                    Level 3 Stage 3
+                </line>
+            </dialogue>
+            <wave type="straight" start_x="500" start_y="0" end_x="500" end_y="1280" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <wave type="straight" start_x="700" start_y="0" end_x="700" end_y="1280" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <wave type="straight" start_x="0" start_y="0" end_x="1280" end_y="1280" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <wave type="straight" start_x="1280" start_y="0" end_x="0" end_y="1280" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <wave type="sine" start_x="0" start_y="100" end_x="2560" end_y="100" num_ships="10"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <wave type="sine" start_x="1280" start_y="500" end_x="-1280" end_y="500" num_ships="10"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <stationary pos_x="600" pos_y="600" entity_type="spaceship" ship_name="enemy-two"/>
+        </stage>
+    </level>
+
+    <level name="4: The Plot Thickens">
+        <stage id="41">
+            <dialogue>
+                <line character="Mary Sue">
+                    Level 4 Stage 1
+                </line>
+            </dialogue>
+            <wave type="straight" start_x="0" start_y="0" end_x="1280" end_y="1280" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <wave type="straight" start_x="1280" start_y="0" end_x="0" end_y="1280" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <wave type="sine" start_x="0" start_y="100" end_x="2560" end_y="100" num_ships="10"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <stationary pos_x="300" pos_y="600" entity_type="spaceship" ship_name="enemy-two"/>
+            <stationary pos_x="600" pos_y="600" entity_type="spaceship" ship_name="enemy-two"/>
+            <stationary pos_x="900" pos_y="600" entity_type="spaceship" ship_name="enemy-two"/>
+        </stage>
+        <stage id="42">
+            <dialogue>
+                <line character="Mary Sue">
+                    Level 4 Stage 2
+                </line>
+            </dialogue>
+            <wave type="sine" start_x="0" start_y="0" end_x="1280" end_y="1280" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <wave type="sine" start_x="1280" start_y="0" end_x="0" end_y="1280" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <wave type="sine" start_x="0" start_y="100" end_x="2560" end_y="100" num_ships="10"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <stationary pos_x="300" pos_y="600" entity_type="spaceship" ship_name="enemy-two"/>
+            <stationary pos_x="600" pos_y="600" entity_type="spaceship" ship_name="enemy-two"/>
+            <stationary pos_x="900" pos_y="600" entity_type="spaceship" ship_name="enemy-two"/>
+        </stage>
+        <stage id="43">
+            <dialogue>
+                <line character="Mary Sue">
+                    Level 4 Stage 3
+                </line>
+            </dialogue>
+            <wave type="sine" start_x="0" start_y="0" end_x="1280" end_y="1280" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <wave type="sine" start_x="1280" start_y="0" end_x="0" end_y="1280" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <wave type="straight" start_x="0" start_y="100" end_x="2560" end_y="100" num_ships="10"
+                  entity_type="spaceship"
+                  ship_name="enemy-three"/>
+            <stationary pos_x="300" pos_y="600" entity_type="spaceship" ship_name="enemy-two"/>
+            <stationary pos_x="600" pos_y="600" entity_type="spaceship" ship_name="enemy-two"/>
+            <stationary pos_x="900" pos_y="600" entity_type="spaceship" ship_name="enemy-two"/>
+        </stage>
+    </level>
+
+    <level name="5: Ambush">
+        <stage id="51">
+            <dialogue>
+                <line character="Mary Sue">
+                    Level 5 Stage 1
+                </line>
+            </dialogue>
+            <wave type="sine" start_x="50" start_y="50" end_x="2560" end_y="50" num_ships="10"
+                  entity_type="spaceship"
+                  ship_name="enemy-three"/>
+            <wave type="sine" start_x="1280" start_y="500" end_x="-1280" end_y="50" num_ships="10"
+                  entity_type="spaceship"
+                  ship_name="enemy-three"/>
+            <stationary pos_x="100" pos_y="350" entity_type="spaceship" ship_name="enemy-two"/>
+            <stationary pos_x="1200" pos_y="350" entity_type="spaceship" ship_name="enemy-two"/>
+            <stationary pos_x="600" pos_y="100" entity_type="spaceship" ship_name="enemy-two"/>
+            <stationary pos_x="600" pos_y="600" entity_type="spaceship" ship_name="enemy-two"/>
+        </stage>
+        <stage id="52">
+            <dialogue>
+                <line character="Mary Sue">
+                    Level 5 Stage 2
+                </line>
+            </dialogue>
+            <wave type="straight" start_x="600" start_y="800" end_x="600" end_y="-800" num_ships="10"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <wave type="straight" start_x="0" start_y="700" end_x="900" end_y="-900" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <wave type="straight" start_x="1280" start_y="700" end_x="300" end_y="-900" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <wave type="sine" start_x="500" start_y="720" end_x="600" end_y="-900" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-three"/>
+            <wave type="sine" start_x="700" start_y="720" end_x="600" end_y="-900" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-three"/>
+            <stationary pos_x="200" pos_y="100" entity_type="spaceship" ship_name="enemy-two"/>
+            <stationary pos_x="1100" pos_y="100" entity_type="spaceship" ship_name="enemy-two"/>
+        </stage>
+        <stage id="53">
+            <dialogue>
+                <line character="Mary Sue">
+                    Level 5 Stage 3
+                </line>
+            </dialogue>
+            <wave type="sine" start_x="0" start_y="300" end_x="2560" end_y="300" num_ships="10"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <wave type="straight" start_x="400" start_y="-200" end_x="1280" end_y="1280" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <wave type="straight" start_x="880" start_y="-200" end_x="0" end_y="1280" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-one"/>
+            <wave type="sine" start_x="0" start_y="0" end_x="1280" end_y="1280" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-three"/>
+            <wave type="sine" start_x="1280" start_y="0" end_x="0" end_y="1280" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-three"/>
+            <stationary pos_x="300" pos_y="100" entity_type="spaceship" ship_name="enemy-two"/>
+            <stationary pos_x="600" pos_y="100" entity_type="spaceship" ship_name="enemy-two"/>
+            <stationary pos_x="900" pos_y="100" entity_type="spaceship" ship_name="enemy-two"/>
+        </stage>
+
+    </level>
+
+    <level name="6: Invasion">
+        <stage id="61">
+            <dialogue>
+                <line character="Mary Sue">
+                    Level 6 Stage 1
+                </line>
+            </dialogue>
+            <wave type="sine" start_x="0" start_y="100" end_x="2560" end_y="100" num_ships="10"
+                  entity_type="spaceship"
+                  ship_name="enemy-three"/>
+            <wave type="sine" start_x="1280" start_y="500" end_x="-1280" end_y="500" num_ships="10"
+                  entity_type="spaceship"
+                  ship_name="enemy-three"/>
+            <stationary pos_x="600" pos_y="600" entity_type="spaceship" ship_name="enemy-four"/>
+        </stage>
+        <stage id="62">
+            <dialogue>
+                <line character="Mary Sue">
+                    Level 6 Stage 2
+                </line>
+            </dialogue>
+            <wave type="sine" start_x="0" start_y="700" end_x="900" end_y="-900" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-three"/>
+            <wave type="sine" start_x="1280" start_y="700" end_x="300" end_y="-900" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-three"/>
+            <wave type="sine" start_x="500" start_y="720" end_x="600" end_y="-900" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-three"/>
+            <wave type="sine" start_x="700" start_y="720" end_x="600" end_y="-900" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-three"/>
+            <stationary pos_x="300" pos_y="100" entity_type="spaceship" ship_name="enemy-four"/>
+            <stationary pos_x="900" pos_y="100" entity_type="spaceship" ship_name="enemy-four"/>
+        </stage>
+        <stage id="63">
+            <dialogue>
+                <line character="Mary Sue">
+                    Level 6 Stage 3
+                </line>
+            </dialogue>
+            <wave type="sine" start_x="0" start_y="0" end_x="1280" end_y="1280" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-three"/>
+            <wave type="sine" start_x="1280" start_y="0" end_x="0" end_y="1280" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-three"/>
+            <stationary pos_x="300" pos_y="100" entity_type="spaceship" ship_name="enemy-four"/>
+            <stationary pos_x="900" pos_y="100" entity_type="spaceship" ship_name="enemy-four"/>
+            <stationary pos_x="300" pos_y="700" entity_type="spaceship" ship_name="enemy-four"/>
+            <stationary pos_x="900" pos_y="700" entity_type="spaceship" ship_name="enemy-four"/>
+        </stage>
+
+    </level>
+
+    <level name="7: Conclusion">
+        <stage>
+            <dialogue>
+                <line character="Wagner">
+                    7
+                </line>
+            </dialogue>
+            <wave type="sine" start_x="0" start_y="500" end_x="600" end_y="300" num_ships="2"
+                  entity_type="asteroid"
+                  ship_name="other"/>
+            <stationary pos_x="1280" pos_y="720" entity_type="spaceship" ship_name="other"/>
         </stage>
         <stage>
             <dialogue>
-                <line character="Someone">
-                    Blah blah
-                </line>
-                <line character="Dog">
-                    Bark! Bark! Bark! Bark!
+                <line character="Wagner">
+                    IT'S OVER LOL
                 </line>
             </dialogue>
-            <stationary pos_x="300" pos_y="300" entity_type="asteroid" ship_name="other"/>
         </stage>
     </level>
 </levels>

@@ -1,6 +1,7 @@
 package uk.ac.lancaster.scc210.game.states;
 
 import org.jsfml.audio.Music;
+import org.jsfml.audio.SoundSource;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.RenderTarget;
 import org.jsfml.system.Time;
@@ -75,8 +76,10 @@ public class MainMenu implements State {
     @Override
     public void onEnter(StateBasedGame game) {
         game.addKeyListener(interfaceList);
-        
-        music.play();
+
+        if (music.getStatus().equals(Music.Status.PAUSED) || music.getStatus().equals(Music.Status.STOPPED)) {
+            music.play();
+        }
     }
 
     @Override
