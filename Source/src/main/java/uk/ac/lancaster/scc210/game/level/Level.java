@@ -12,8 +12,6 @@ import java.util.List;
 public class Level implements Serialised {
     private final List<LevelStage> stages;
 
-    private final List<Line> lines;
-
     private Iterator<LevelStage> stageIterator;
 
     private final String name;
@@ -25,12 +23,10 @@ public class Level implements Serialised {
      *
      * @param name   the name
      * @param stages the stages
-     * @param lines  the lines
      */
-    public Level(String name, List<LevelStage> stages, List<Line> lines) {
+    public Level(String name, List<LevelStage> stages) {
         this.name = name;
         this.stages = stages;
-        this.lines = lines;
 
         stageIterator = stages.iterator();
 
@@ -96,14 +92,5 @@ public class Level implements Serialised {
      */
     public LevelStage getCurrentStage() {
         return currentStage;
-    }
-
-    /**
-     * Gets lines.
-     *
-     * @return the lines
-     */
-    public List<Line> getLines() {
-        return lines;
     }
 }

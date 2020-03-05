@@ -3,6 +3,7 @@ package uk.ac.lancaster.scc210.game.level;
 import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
+import uk.ac.lancaster.scc210.game.dialogue.Line;
 import uk.ac.lancaster.scc210.game.ecs.component.FlashComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.LivesComponent;
 
@@ -16,6 +17,8 @@ import java.util.Set;
 public class LevelStage {
     private final List<LevelWave> waves;
 
+    private final List<Line> lines;
+
     private final Set<Entity> stationaryEntities, startingStationary;
 
     private boolean stationarySpawned;
@@ -26,9 +29,9 @@ public class LevelStage {
      * @param waves              the waves
      * @param stationaryEntities the stationary entities
      */
-    public LevelStage(List<LevelWave> waves, Set<Entity> stationaryEntities) {
+    public LevelStage(List<Line> lines, List<LevelWave> waves, Set<Entity> stationaryEntities) {
+        this.lines = lines;
         this.waves = waves;
-
         this.stationaryEntities = stationaryEntities;
 
         startingStationary = new HashSet<>();
@@ -106,6 +109,10 @@ public class LevelStage {
      */
     public Set<Entity> getStationaryEntities() {
         return stationaryEntities;
+    }
+
+    public List<Line> getLines() {
+        return lines;
     }
 
     /**

@@ -86,9 +86,25 @@ public class LevelDeserialiser extends Deserialiser<Level> {
 
                 String name = elem.getAttribute("name");
 
-                serialised.add(new Level(name, deserialiseStage(node.getChildNodes()), deserialiseDialogue(node.getChildNodes())));
+                serialised.add(new Level(name, deserialiseStage(node.getChildNodes())));
             }
         }
+    }
+
+    private List<LevelStage> deserialiseStage(NodeList nodes) throws ResourceNotFoundException {
+        List<LevelStage> stages = new ArrayList<>();
+
+        for (int i = 0; i < nodes.getLength(); i++) {
+            Node node = nodes.item(i);
+
+            if (foundNode(node, STAGE_TAG)) {
+                NodeList childNodes = node.getChildNodes();
+
+                stages.add(new LevelStage(deserialiseDialogue(childNodes), deserialiseWave(childNodes), deserialiseStationary(childNodes)));
+            }
+        }
+
+        return stages;
     }
 
     private List<Line> deserialiseDialogue(NodeList nodes) {
@@ -124,22 +140,6 @@ public class LevelDeserialiser extends Deserialiser<Level> {
         }
 
         return lines;
-    }
-
-    private List<LevelStage> deserialiseStage(NodeList nodes) throws ResourceNotFoundException {
-        List<LevelStage> stages = new ArrayList<>();
-
-        for (int i = 0; i < nodes.getLength(); i++) {
-            Node node = nodes.item(i);
-
-            if (foundNode(node, STAGE_TAG)) {
-                NodeList childNodes = node.getChildNodes();
-
-                stages.add(new LevelStage(deserialiseWave(childNodes), deserialiseStationary(childNodes)));
-            }
-        }
-
-        return stages;
     }
 
     private List<LevelWave> deserialiseWave(NodeList nodes) throws ResourceNotFoundException {
