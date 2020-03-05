@@ -18,7 +18,7 @@ public class UniformGrid implements Service {
     /**
      * The constant CELL_SIZE.
      */
-    public static final int CELL_SIZE = 256;
+    private static final int CELL_SIZE = 256;
 
     private final List<List<Cell>> grid;
 
@@ -120,9 +120,9 @@ public class UniformGrid implements Service {
         Vector2f[] boxPoints = orientatedBoxComponent.getOrientatedBox().getPoints();
 
         for (Vector2f point : boxPoints) {
-            int column = (int) Math.ceil((point.x - 0) / CELL_SIZE);
+            int column = (int) Math.ceil((point.x - 0) / CELL_SIZE) - 1;
 
-            int row = (int) Math.ceil((point.y - 0) / CELL_SIZE);
+            int row = (int) Math.ceil((point.y - 0) / CELL_SIZE) - 1;
 
             if (row >= 0 && row < numRows && column >= 0 && column < numColumns) {
                 grid.get(row).get(column).addEntity(entity);
