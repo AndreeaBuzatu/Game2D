@@ -118,7 +118,14 @@ public class Playing implements State, InputListener {
 
         MusicManager musicManager = (MusicManager) world.getServiceProvider().get(MusicManager.class);
 
-        music = musicManager.get("example");
+
+        // If we're on the last level, then load the boss music instead of the normal music
+        if (levelManager.indexOf(level.getName()) == levelManager.getLevelList().size() - 1) {
+            music = musicManager.get("boss_music");
+
+        } else {
+            music = musicManager.get("battle_music");
+        }
 
         music.setVolume(100);
 
