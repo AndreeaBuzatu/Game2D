@@ -222,7 +222,7 @@ public class DialogueBox implements Drawable, InputListener {
      * @param lines the lines
      */
     public void setDialogue(List<Line> lines) {
-        if (lineIterator == null) {
+        if (!lines.isEmpty()) {
             lineIterator = lines.iterator();
         }
 

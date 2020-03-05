@@ -157,11 +157,9 @@ public class Playing implements State, InputListener {
     }
 
     private void setupWorld() {
-        levelSystem = new LevelSystem(world, level);
+        levelSystem = new LevelSystem(world, level, dialogueBox);
 
         uniformGrid.clear();
-
-        dialogueBox.setDialogue(level.getLines());
 
         world.addPool((BulletPool) game.getServiceProvider().get(BulletPool.class));
 
@@ -257,7 +255,6 @@ public class Playing implements State, InputListener {
 
             shouldFadeOut = false;
 
-            game.removeKeyListener(dialogueBox);
         }
     }
 
@@ -340,15 +337,12 @@ public class Playing implements State, InputListener {
         if (dialogueBox.isOpen()) {
             dialogueBox.update(deltaTime);
 
-        } else if (fadedIn) {
-            updateWorld(deltaTime);
-        }
-    }
+            game.addKeyListener(dialogueBox);
 
-    private void updateWorld(Time deltaTime) {
-
-        if (!level.complete()) {
+        } else if (fadedIn && !level.complete()) {
             world.update(deltaTime);
+
+            game.removeKeyListener(dialogueBox);
         }
     }
 
@@ -398,13 +392,5 @@ public class Playing implements State, InputListener {
 
             asteroidComponent.getCircle().setFillColor(colour);
         }
-    }
-
-    /**
-     * Sets level.
-     *
-     * @param level the level
-     */
-    public void setLevel(Level level) {
     }
 }
