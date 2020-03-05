@@ -118,7 +118,7 @@ public class Playing implements State, InputListener {
 
         MusicManager musicManager = (MusicManager) world.getServiceProvider().get(MusicManager.class);
 
-        music = musicManager.get("example");
+        music = musicManager.get("battle_music");
 
         music.setVolume(100);
 

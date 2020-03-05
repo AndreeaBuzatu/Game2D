@@ -265,6 +265,7 @@
     </level>
 
     <level name="5: Ambush">
+
         <stage id="51">
             <dialogue>
                 <line character="Mary Sue">
@@ -277,11 +278,13 @@
             <wave type="sine" start_x="1280" start_y="500" end_x="-1280" end_y="50" num_ships="10"
                   entity_type="spaceship"
                   ship_name="enemy-three"/>
+
             <stationary pos_x="100" pos_y="350" entity_type="spaceship" ship_name="enemy-two" rotation="90"/>
             <stationary pos_x="1200" pos_y="350" entity_type="spaceship" ship_name="enemy-two" rotation="-90"/>
             <stationary pos_x="600" pos_y="100" entity_type="spaceship" ship_name="enemy-two" rotation="180"/>
             <stationary pos_x="600" pos_y="600" entity_type="spaceship" ship_name="enemy-two" rotation="0"/>
         </stage>
+
         <stage id="52">
             <dialogue>
                 <line character="Mary Sue">
@@ -303,9 +306,11 @@
             <wave type="sine" start_x="700" start_y="720" end_x="600" end_y="-900" num_ships="5"
                   entity_type="spaceship"
                   ship_name="enemy-three"/>
-            <stationary pos_x="200" pos_y="100" entity_type="spaceship" ship_name="enemy-two"/>
-            <stationary pos_x="1100" pos_y="100" entity_type="spaceship" ship_name="enemy-two"/>
+
+            <stationary pos_x="200" pos_y="100" entity_type="spaceship" ship_name="enemy-two" rotation="135"/>
+            <stationary pos_x="1100" pos_y="100" entity_type="spaceship" ship_name="enemy-two" rotation="225"/>
         </stage>
+
         <stage id="53">
             <dialogue>
                 <line character="Mary Sue">
@@ -327,14 +332,16 @@
             <wave type="sine" start_x="1280" start_y="0" end_x="0" end_y="1280" num_ships="5"
                   entity_type="spaceship"
                   ship_name="enemy-three"/>
-            <stationary pos_x="300" pos_y="100" entity_type="spaceship" ship_name="enemy-two"/>
-            <stationary pos_x="600" pos_y="100" entity_type="spaceship" ship_name="enemy-two"/>
-            <stationary pos_x="900" pos_y="100" entity_type="spaceship" ship_name="enemy-two"/>
+
+            <stationary pos_x="300" pos_y="100" entity_type="spaceship" ship_name="enemy-two" rotation="135"/>
+            <stationary pos_x="600" pos_y="100" entity_type="spaceship" ship_name="enemy-two" rotation="180"/>
+            <stationary pos_x="900" pos_y="100" entity_type="spaceship" ship_name="enemy-two" rotation="225"/>
         </stage>
 
     </level>
 
     <level name="6: Invasion">
+
         <stage id="61">
             <dialogue>
                 <line character="Mary Sue">
@@ -349,6 +356,7 @@
                   ship_name="enemy-three"/>
             <stationary pos_x="600" pos_y="600" entity_type="spaceship" ship_name="enemy-four"/>
         </stage>
+
         <stage id="62">
             <dialogue>
                 <line character="Mary Sue">
@@ -370,6 +378,7 @@
             <stationary pos_x="300" pos_y="100" entity_type="spaceship" ship_name="enemy-four"/>
             <stationary pos_x="900" pos_y="100" entity_type="spaceship" ship_name="enemy-four"/>
         </stage>
+
         <stage id="63">
             <dialogue>
                 <line character="Mary Sue">

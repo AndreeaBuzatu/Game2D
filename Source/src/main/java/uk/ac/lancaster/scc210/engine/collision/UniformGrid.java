@@ -18,7 +18,7 @@ public class UniformGrid implements Service {
     /**
      * The constant CELL_SIZE.
      */
-    public static final int CELL_SIZE = 256;
+    public static final int CELL_SIZE = 64;
 
     private final List<List<Cell>> grid;
 
