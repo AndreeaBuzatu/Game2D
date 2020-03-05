@@ -35,8 +35,6 @@ public class LeaderboardSelect implements State, InputListener {
 
     private Text exitText;
 
-
-
     @Override
     public void setup(StateBasedGame game) {
         this.game = game;

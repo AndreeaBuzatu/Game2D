@@ -4,23 +4,20 @@ import org.jsfml.graphics.*;
 import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
-import uk.ac.lancaster.scc210.engine.ViewSize;
 import uk.ac.lancaster.scc210.engine.content.FontManager;
 import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.gui.InterfaceList;
 import uk.ac.lancaster.scc210.engine.states.State;
 
 public class MainMenu implements State {
-    private final int LIST_PADDING = 250;
 
     private FontManager fontManager;
 
-    private ViewSize viewSize;
-
     private InterfaceList interfaceList;
 
-    private Text menuHeaderTitle1;
-    private Text menuHeaderTitle2;
+    private Text titleHeader;
+
+    private Text subtitleHeader;
 
     private Sprite background;
 
@@ -39,8 +36,6 @@ public class MainMenu implements State {
         background.setScale(2, 2);
 
         fontManager = (FontManager) game.getServiceProvider().get(FontManager.class);
-
-        viewSize = (ViewSize) game.getServiceProvider().get(ViewSize.class);
 
         createHeader();
 
@@ -63,24 +58,35 @@ public class MainMenu implements State {
     }
 
     private void createHeader() {
-        menuHeaderTitle1 = new Text();
-        menuHeaderTitle2 = new Text();
-        menuHeaderTitle1.setString("MISSION:");
-        menuHeaderTitle2.setString("SURVIVE");
+        titleHeader = new Text();
 
+        subtitleHeader = new Text();
+
+        titleHeader.setString("MISSION:");
+
+        subtitleHeader.setString("SURVIVE");
 
         Vector2f headerPos = new Vector2f(1060,450);
+
         Vector2f headerPos2 = new Vector2f(880, 390);
 
-        menuHeaderTitle1.setPosition(headerPos);
-        menuHeaderTitle2.setPosition(headerPos2);
-        menuHeaderTitle1.setCharacterSize(60);
-        menuHeaderTitle2.setCharacterSize(310);
-        menuHeaderTitle1.setStyle(TextStyle.ITALIC);
-        menuHeaderTitle1.setColor(Color.CYAN);
-        menuHeaderTitle2.setColor(Color.YELLOW);
-        menuHeaderTitle1.setFont(fontManager.get("font"));
-        menuHeaderTitle2.setFont(fontManager.get("font2"));
+        titleHeader.setPosition(headerPos);
+
+        subtitleHeader.setPosition(headerPos2);
+
+        titleHeader.setCharacterSize(60);
+
+        subtitleHeader.setCharacterSize(310);
+
+        titleHeader.setStyle(TextStyle.ITALIC);
+
+        titleHeader.setColor(Color.CYAN);
+
+        subtitleHeader.setColor(Color.YELLOW);
+
+        titleHeader.setFont(fontManager.get("font"));
+
+        subtitleHeader.setFont(fontManager.get("font2"));
     }
 
     @Override
@@ -94,8 +100,8 @@ public class MainMenu implements State {
 
         target.draw(interfaceList);
 
-        target.draw(menuHeaderTitle1);
+        target.draw(titleHeader);
 
-        target.draw(menuHeaderTitle2);
+        target.draw(subtitleHeader);
     }
 }
