@@ -1,0 +1,176 @@
+package uk.ac.lancaster.scc210.game.states;
+
+import org.jsfml.graphics.*;
+import org.jsfml.system.Time;
+import org.jsfml.window.Keyboard;
+import org.jsfml.window.event.KeyEvent;
+import uk.ac.lancaster.scc210.engine.InputListener;
+import uk.ac.lancaster.scc210.engine.StateBasedGame;
+import uk.ac.lancaster.scc210.engine.ViewSize;
+import uk.ac.lancaster.scc210.engine.content.FontManager;
+import uk.ac.lancaster.scc210.engine.content.TextureManager;
+import uk.ac.lancaster.scc210.engine.states.State;
+
+public class Help implements State, InputListener {
+    private final String aimString =
+            "You are the pilot of a spaceship who's\n" +
+            "aim is to defeat the aliens that are\n" +
+            "trying to invade the Earth\n";
+
+    private final String controlsString =
+            "Q - rotate left  A -  move left\n" +
+            "W - move forward D - move right\n" +
+            "E - rotate right S - move backwards\n" +
+            "Space - shoot";
+
+    private final int SUB_HEADER_FONT_SIZE = 50;
+
+    private final int SUB_HEADER_INFO_YPOS = SUB_HEADER_FONT_SIZE + 5;
+
+    private FontManager fontManager;
+
+    private StateBasedGame game;
+
+    private Sprite background;
+
+    private Keyboard.Key pressedKey;
+
+    private FloatRect viewBounds;
+
+    private Text exitText, pageHeader, aimHeader, controlsHeader;
+
+    private Text aimText, controlsText;
+
+    @Override
+    public void setup(StateBasedGame game) {
+        this.game = game;
+
+        game.addKeyListener(this);
+
+        TextureManager textureManager = (TextureManager) game.getServiceProvider().get(TextureManager.class);
+
+        fontManager = (FontManager) game.getServiceProvider().get(FontManager.class);
+
+        viewBounds = ((ViewSize) game.getServiceProvider().get(ViewSize.class)).getViewBounds();
+
+        background = new Sprite(textureManager.get("level-select.jpg:level-select"));
+
+        background.setScale(2, 2);
+
+        createExitText();
+
+        createHeader();
+
+        createAimText();
+
+        createControlsText();
+
+    }
+
+    @Override
+    public void update(Time deltaTime) {
+        if (game != null && pressedKey != null && pressedKey == Keyboard.Key.ESCAPE) {
+            game.popState();
+        }
+    }
+
+    private void createExitText() {
+        exitText = new Text();
+
+        exitText.setString("Press ESC to go back");
+
+        exitText.setFont(fontManager.get("font"));
+
+        exitText.setPosition(0, 0);
+
+        exitText.setCharacterSize(50);
+
+        exitText.setFont(fontManager.get("font"));
+
+        exitText.setColor(Color.WHITE);
+    }
+
+    private void createHeader() {
+        pageHeader = new Text();
+
+        pageHeader.setString("HELP: ");
+
+        pageHeader.setPosition(viewBounds.width / 3, viewBounds.height / 3);
+
+        pageHeader.setCharacterSize(60);
+
+        pageHeader.setFont(fontManager.get("font"));
+
+        pageHeader.setColor(Color.CYAN);
+    }
+
+    private void createAimText() {
+        float aimTextYPos = viewBounds.height / 2;
+
+        aimHeader = createSubHeader("Aim", aimTextYPos);
+
+        aimText = createInformation(aimString, aimTextYPos);
+    }
+
+    private void createControlsText() {
+        float controlsHeaderYPos = viewBounds.height - (viewBounds.height / 3);
+
+        controlsHeader = createSubHeader("Controls", controlsHeaderYPos);
+
+        controlsText = createInformation(controlsString, controlsHeaderYPos);
+    }
+
+    private Text createSubHeader(String textContent, float yPos) {
+        Text header = new Text();
+
+        header.setCharacterSize(SUB_HEADER_FONT_SIZE);
+
+        header.setString(textContent);
+
+        header.setColor(Color.CYAN);
+
+        header.setFont(fontManager.get("font"));
+
+        header.setPosition((viewBounds.width / 2) - header.getGlobalBounds().width / 2, yPos);
+
+        return header;
+    }
+
+    private Text createInformation(String textContent, float yPos) {
+        Text information = new Text();
+
+        information.setCharacterSize(30);
+
+        information.setString(textContent);
+
+        information.setColor(Color.WHITE);
+
+        information.setFont(fontManager.get("font"));
+
+        information.setPosition((viewBounds.width / 2) - information.getGlobalBounds().width / 2, yPos + SUB_HEADER_INFO_YPOS);
+
+        return information;
+    }
+
+    @Override
+    public void draw(RenderTarget target) {
+        target.draw(background);
+
+        target.draw(exitText);
+
+        target.draw(pageHeader);
+
+        target.draw(aimHeader);
+
+        target.draw(aimText);
+
+        target.draw(controlsHeader);
+
+        target.draw(controlsText);
+    }
+
+    @Override
+    public void keyPressed(KeyEvent keyevent) {
+        pressedKey = keyevent.key;
+    }
+}

@@ -4,12 +4,13 @@ import org.jsfml.audio.Music;
 import org.jsfml.audio.SoundSource;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.RenderTarget;
+import org.jsfml.graphics.*;
 import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
-import uk.ac.lancaster.scc210.engine.ViewSize;
 import uk.ac.lancaster.scc210.engine.content.FontManager;
 import uk.ac.lancaster.scc210.engine.content.MusicManager;
+import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.gui.InterfaceList;
 import uk.ac.lancaster.scc210.engine.states.State;
 import uk.ac.lancaster.scc210.game.content.LevelManager;
@@ -32,6 +33,8 @@ public class MainMenu implements State {
     private MenuHeader menuHeader;
 
     private Music music;
+
+    private Sprite background;
 
     @Override
     public void setup(StateBasedGame game) {
@@ -59,6 +62,10 @@ public class MainMenu implements State {
         interfaceList.addListOption("Level Select", (() -> game.pushState(stateManager.get("level-select"))));
 
         interfaceList.addListOption("High Scores", (() -> game.pushState(stateManager.get("high-score-list"))));
+
+        interfaceList.addListOption("Leaderboard", (() -> game.pushState(leaderboardSelect)));
+
+        interfaceList.addListOption("Help", (() -> game.pushState(help)));
 
         interfaceList.addListOption("Exit", (game::popState));
 
@@ -96,9 +103,13 @@ public class MainMenu implements State {
 
     @Override
     public void draw(RenderTarget target) {
-        target.draw(menuHeader);
+        target.draw(background);
 
         target.draw(interfaceList);
+
+        target.draw(titleHeader);
+
+        target.draw(subtitleHeader);
     }
 
     private String getUnlockedLevel() {

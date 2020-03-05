@@ -95,7 +95,6 @@ public class InterfaceGrid implements InputListener, Drawable {
         }
 
         // Ignore if the previous input is the same as the current
-
         if (previousColumn != currentColumn) {
             if (currentColumn < 0) {
                 currentColumn = lists.size() - 1;
