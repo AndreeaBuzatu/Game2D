@@ -12,11 +12,11 @@
                firing-sound="enemy-one-shoot" hit-sound="enemy-death"/>
 
     <spaceship name="enemy-three" animation="alien-ship-3" speed="5" bullet="sample" pattern="line-bullet" score="15"
-               items="health1effect-item,speed-item" lives="2"
+               items="health2effect-item,speed-item" lives="2"
                firing-sound="enemy-one-shoot" hit-sound="enemy-death"/>
 
     <spaceship name="enemy-four" animation="alien-ship-4" speed="5" bullet="sample" pattern="star-bullet" score="20"
-               items="health1effect-item,speed-item" lives="2"
+               items="health2effect-item,speed-item" lives="2"
                firing-sound="enemy-one-shoot" hit-sound="enemy-death"/>
 
     <spaceship name="spawned-other" animation="player-ship" speed="5" bullet="sample" pattern="star-bullet" score="25"
