@@ -1,5 +1,6 @@
 package uk.ac.lancaster.scc210.game.resources;
 
+import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Vector2f;
 import org.w3c.dom.Document;
@@ -7,6 +8,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
+import uk.ac.lancaster.scc210.engine.ViewSize;
 import uk.ac.lancaster.scc210.engine.content.ShaderManager;
 import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
@@ -252,7 +254,9 @@ public class LevelDeserialiser extends Deserialiser<Level> {
         } catch (NumberFormatException ignored) {
         }
 
-        spriteComponent.getSprite().setPosition(position);
+        Vector2f origin = sprite.getOrigin();
+
+        sprite.setPosition(new Vector2f(position.x + origin.x, position.y + origin.y + Playing.INFO_BOX_HEIGHT));
 
         return spaceShip;
     }
@@ -266,7 +270,9 @@ public class LevelDeserialiser extends Deserialiser<Level> {
 
         asteroid.addComponent(new EnemyComponent());
 
-        asteroidComponent.getCircle().setPosition(pos);
+        Vector2f origin = asteroidComponent.getCircle().getOrigin();
+
+        asteroidComponent.getCircle().setPosition(new Vector2f(pos.x + origin.x, pos.y + origin.y + Playing.INFO_BOX_HEIGHT));
 
         return asteroid;
     }
