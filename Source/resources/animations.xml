@@ -9,4 +9,6 @@
     </animation>
     <animation name="alien-ship-4" atlas="enemy_ship_lv4.png" row="0" column="0" num_frames="1">
     </animation>
+    <animation name="boss" atlas="enemy-spritesheet.png" row="0" column="0" num_frames="4">
+    </animation>
 </animations>

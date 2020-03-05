@@ -354,7 +354,8 @@
             <wave type="sine" start_x="1280" start_y="500" end_x="-1280" end_y="500" num_ships="10"
                   entity_type="spaceship"
                   ship_name="enemy-three"/>
-            <stationary pos_x="600" pos_y="600" entity_type="spaceship" ship_name="enemy-four"/>
+
+            <stationary pos_x="600" pos_y="600" entity_type="spaceship" ship_name="enemy-four" rotation="0"/>
         </stage>
 
         <stage id="62">
@@ -375,8 +376,9 @@
             <wave type="sine" start_x="700" start_y="720" end_x="600" end_y="-900" num_ships="5"
                   entity_type="spaceship"
                   ship_name="enemy-three"/>
-            <stationary pos_x="300" pos_y="100" entity_type="spaceship" ship_name="enemy-four"/>
-            <stationary pos_x="900" pos_y="100" entity_type="spaceship" ship_name="enemy-four"/>
+
+            <stationary pos_x="300" pos_y="100" entity_type="spaceship" ship_name="enemy-four" rotation="180"/>
+            <stationary pos_x="900" pos_y="100" entity_type="spaceship" ship_name="enemy-four" rotation="180"/>
         </stage>
 
         <stage id="63">
@@ -391,32 +393,75 @@
             <wave type="sine" start_x="1280" start_y="0" end_x="0" end_y="1280" num_ships="5"
                   entity_type="spaceship"
                   ship_name="enemy-three"/>
-            <stationary pos_x="300" pos_y="100" entity_type="spaceship" ship_name="enemy-four"/>
-            <stationary pos_x="900" pos_y="100" entity_type="spaceship" ship_name="enemy-four"/>
-            <stationary pos_x="300" pos_y="700" entity_type="spaceship" ship_name="enemy-four"/>
-            <stationary pos_x="900" pos_y="700" entity_type="spaceship" ship_name="enemy-four"/>
+
+            <stationary pos_x="300" pos_y="100" entity_type="spaceship" ship_name="enemy-two" rotation="135"/>
+            <stationary pos_x="900" pos_y="100" entity_type="spaceship" ship_name="enemy-two" rotation="225"/>
+            <stationary pos_x="300" pos_y="600" entity_type="spaceship" ship_name="enemy-two" rotation="45"/>
+            <stationary pos_x="900" pos_y="600" entity_type="spaceship" ship_name="enemy-two" rotation="-45"/>
+            <stationary pos_x="600" pos_y="200" entity_type="spaceship" ship_name="enemy-four" rotation="180"/>
         </stage>
 
     </level>
 
     <level name="7: Conclusion">
-        <stage>
+
+        <stage id="71">
             <dialogue>
-                <line character="Wagner">
-                    7
+                <line character="Mary Sue">
+                    Level 7 Stage 1
                 </line>
             </dialogue>
-            <wave type="sine" start_x="0" start_y="500" end_x="600" end_y="300" num_ships="2"
-                  entity_type="asteroid"
-                  ship_name="other"/>
-            <stationary pos_x="1280" pos_y="720" entity_type="spaceship" ship_name="other"/>
+            <wave type="sine" start_x="0" start_y="100" end_x="2560" end_y="100" num_ships="10"
+                  entity_type="spaceship"
+                  ship_name="enemy-three"/>
+            <wave type="sine" start_x="1280" start_y="500" end_x="-1280" end_y="500" num_ships="10"
+                  entity_type="spaceship"
+                  ship_name="enemy-three"/>
+
+            <stationary pos_x="600" pos_y="600" entity_type="spaceship" ship_name="enemy-four" rotation="0"/>
         </stage>
-        <stage>
+
+        <stage id="72">
             <dialogue>
-                <line character="Wagner">
-                    IT'S OVER LOL
+                <line character="Mary Sue">
+                    Level 7 Stage 2
                 </line>
             </dialogue>
+            <wave type="sine" start_x="0" start_y="700" end_x="900" end_y="-900" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-three"/>
+            <wave type="sine" start_x="1280" start_y="700" end_x="300" end_y="-900" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-three"/>
+            <wave type="sine" start_x="500" start_y="720" end_x="600" end_y="-900" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-three"/>
+            <wave type="sine" start_x="700" start_y="720" end_x="600" end_y="-900" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-three"/>
+
+            <stationary pos_x="300" pos_y="100" entity_type="spaceship" ship_name="enemy-four" rotation="180"/>
+            <stationary pos_x="900" pos_y="100" entity_type="spaceship" ship_name="enemy-four" rotation="180"/>
+        </stage>
+
+        <stage id="73">
+            <dialogue>
+                <line character="Mary Sue">
+                    Level 7 Stage 3
+                </line>
+            </dialogue>
+            <wave type="sine" start_x="0" start_y="0" end_x="1280" end_y="1280" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-three"/>
+            <wave type="sine" start_x="1280" start_y="0" end_x="0" end_y="1280" num_ships="5"
+                  entity_type="spaceship"
+                  ship_name="enemy-three"/>
+
+            <stationary pos_x="300" pos_y="100" entity_type="spaceship" ship_name="enemy-two" rotation="135"/>
+            <stationary pos_x="900" pos_y="100" entity_type="spaceship" ship_name="enemy-two" rotation="225"/>
+            <stationary pos_x="300" pos_y="600" entity_type="spaceship" ship_name="enemy-two" rotation="45"/>
+            <stationary pos_x="900" pos_y="600" entity_type="spaceship" ship_name="enemy-two" rotation="-45"/>
+            <stationary pos_x="600" pos_y="200" entity_type="spaceship" ship_name="enemy-four" rotation="180"/>
         </stage>
     </level>
 </levels>
