@@ -9,11 +9,8 @@ import uk.ac.lancaster.scc210.engine.content.FontManager;
 import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.gui.InterfaceList;
 import uk.ac.lancaster.scc210.engine.states.State;
-import java.awt.Font;
 
 public class MainMenu implements State {
-    // private final int MENU_TEXT_SIZE = 100;
-
     private final int LIST_PADDING = 250;
 
     private FontManager fontManager;
@@ -30,11 +27,15 @@ public class MainMenu implements State {
     @Override
     public void setup(StateBasedGame game) {
         LevelSelect levelSelect = new LevelSelect();
-        HelpSelect helpSelect = new HelpSelect();
+
+        Help help = new Help();
+
         LeaderboardSelect leaderboardSelect = new LeaderboardSelect();
 
         TextureManager textureManager = (TextureManager) game.getServiceProvider().get(TextureManager.class);
+
         background = new Sprite(textureManager.get("level-select.jpg:level-select"));
+
         background.setScale(2, 2);
 
         fontManager = (FontManager) game.getServiceProvider().get(FontManager.class);
@@ -54,7 +55,7 @@ public class MainMenu implements State {
 
         interfaceList.addListOption("Leaderboard", (() -> game.pushState(leaderboardSelect)));
 
-        interfaceList.addListOption("Help", (() -> game.pushState(helpSelect)));
+        interfaceList.addListOption("Help", (() -> game.pushState(help)));
         
         interfaceList.addListOption("Exit", (game::popState));
 
@@ -90,8 +91,11 @@ public class MainMenu implements State {
     @Override
     public void draw(RenderTarget target) {
         target.draw(background);
+
         target.draw(interfaceList);
+
         target.draw(menuHeaderTitle1);
+
         target.draw(menuHeaderTitle2);
     }
 }
