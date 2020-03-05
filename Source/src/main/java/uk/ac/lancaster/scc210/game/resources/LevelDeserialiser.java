@@ -1,12 +1,15 @@
 package uk.ac.lancaster.scc210.game.resources;
 
+import org.jsfml.graphics.CircleShape;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Vector2f;
+import org.jsfml.system.Vector2i;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
+import uk.ac.lancaster.scc210.engine.ViewSize;
 import uk.ac.lancaster.scc210.engine.content.ShaderManager;
 import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
@@ -21,6 +24,7 @@ import uk.ac.lancaster.scc210.game.level.Level;
 import uk.ac.lancaster.scc210.game.level.LevelStage;
 import uk.ac.lancaster.scc210.game.level.LevelWave;
 import uk.ac.lancaster.scc210.game.prototypes.AsteroidPrototype;
+import uk.ac.lancaster.scc210.game.prototypes.SpaceShipPrototype;
 import uk.ac.lancaster.scc210.game.states.Playing;
 import uk.ac.lancaster.scc210.game.waves.SineWave;
 import uk.ac.lancaster.scc210.game.waves.StraightLineWave;
@@ -35,6 +39,8 @@ import java.util.Set;
  * The type Level deserialiser.
  */
 public class LevelDeserialiser extends Deserialiser<Level> {
+    private final ViewSize viewSize;
+
     private final String DIALOGUE_TAG = "dialogue";
 
     private final String LINE_TAG = "line";
@@ -64,6 +70,8 @@ public class LevelDeserialiser extends Deserialiser<Level> {
         super(document, "level");
 
         this.spaceShipManager = (SpaceShipPrototypeManager) serviceProvider.get(SpaceShipPrototypeManager.class);
+
+        viewSize = (ViewSize) serviceProvider.get(ViewSize.class);
 
         asteroidPrototype = new AsteroidPrototype((TextureManager) serviceProvider.get(TextureManager.class), (ShaderManager) serviceProvider.get(ShaderManager.class));
 
@@ -166,6 +174,7 @@ public class LevelDeserialiser extends Deserialiser<Level> {
                 if (entityType.equals(SPACE_SHIP)) {
                     prototype = spaceShipManager.get(elem.getAttribute("ship_name"));
 
+
                 } else if (entityType.equals(ASTEROID)) {
                     prototype = asteroidPrototype;
                 }
@@ -177,7 +186,7 @@ public class LevelDeserialiser extends Deserialiser<Level> {
                 Wave wave = deserialiseWaveName(elem.getAttribute("type"), origin, destination);
 
                 if (prototype != null) {
-                    waves.add(new LevelWave(wave, origin, destination, numShips, prototype));
+                    waves.add(new LevelWave(wave, origin, viewSize, numShips, prototype));
                 }
             }
         }
@@ -254,7 +263,7 @@ public class LevelDeserialiser extends Deserialiser<Level> {
 
         Vector2f origin = sprite.getOrigin();
 
-        sprite.setPosition(new Vector2f(position.x + origin.x, position.y + origin.y + Playing.INFO_BOX_HEIGHT));
+        SpaceShipPrototype.positionSpaceShip(viewSize,sprite,position);
 
         return spaceShip;
     }
@@ -268,9 +277,7 @@ public class LevelDeserialiser extends Deserialiser<Level> {
 
         asteroid.addComponent(new EnemyComponent());
 
-        Vector2f origin = asteroidComponent.getCircle().getOrigin();
-
-        asteroidComponent.getCircle().setPosition(new Vector2f(pos.x + origin.x, pos.y + origin.y + Playing.INFO_BOX_HEIGHT));
+        AsteroidPrototype.positionAsteroid(viewSize, asteroidComponent, pos);
 
         return asteroid;
     }
