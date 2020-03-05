@@ -1,26 +1,33 @@
 package uk.ac.lancaster.scc210.game.states;
 
+import org.jsfml.audio.Music;
 import org.jsfml.graphics.*;
 import org.jsfml.system.Time;
+import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.event.KeyEvent;
+import org.jsfml.window.event.TextEvent;
 import uk.ac.lancaster.scc210.engine.InputListener;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import uk.ac.lancaster.scc210.engine.ViewSize;
 import uk.ac.lancaster.scc210.engine.content.FontManager;
+import uk.ac.lancaster.scc210.engine.content.MusicManager;
 import uk.ac.lancaster.scc210.engine.content.TextureManager;
+import uk.ac.lancaster.scc210.engine.gui.InterfaceList;
 import uk.ac.lancaster.scc210.engine.states.State;
+import uk.ac.lancaster.scc210.game.gui.EscapeText;
+import uk.ac.lancaster.scc210.game.gui.MenuHeader;
 
 public class Help implements State, InputListener {
     private final String aimString =
-            "You are the pilot of a spaceship who's\n" +
-            "aim is to defeat the aliens that are\n" +
-            "trying to invade the Earth\n";
+            "You are the pilot of a spaceship who's\n\n" +
+            "aim is to defeat the aliens that are\n\n" +
+            "trying to invade the Earth\n\n";
 
     private final String controlsString =
-            "Q - rotate left  A -  move left\n" +
-            "W - move forward D - move right\n" +
-            "E - rotate right S - move backwards\n" +
+            "Q - rotate left  A -  move left\n\n" +
+            "W - move forward D - move right\n\n" +
+            "E - rotate right S - move backwards\n\n" +
             "Space - shoot";
 
     private final int SUB_HEADER_FONT_SIZE = 50;
@@ -31,13 +38,19 @@ public class Help implements State, InputListener {
 
     private StateBasedGame game;
 
+    private EscapeText escapeText;
+
+    private MenuHeader menuHeader;
+
+    private Music music;
+
     private Sprite background;
 
     private Keyboard.Key pressedKey;
 
     private FloatRect viewBounds;
 
-    private Text exitText, pageHeader, aimHeader, controlsHeader;
+    private Text aimHeader, controlsHeader;
 
     private Text aimText, controlsText;
 
@@ -47,24 +60,39 @@ public class Help implements State, InputListener {
 
         game.addKeyListener(this);
 
+        MusicManager musicManager = (MusicManager) game.getServiceProvider().get(MusicManager.class);
+
         TextureManager textureManager = (TextureManager) game.getServiceProvider().get(TextureManager.class);
 
         fontManager = (FontManager) game.getServiceProvider().get(FontManager.class);
 
         viewBounds = ((ViewSize) game.getServiceProvider().get(ViewSize.class)).getViewBounds();
 
+        escapeText = new EscapeText(fontManager, game);
+
+        menuHeader = new MenuHeader("HELP", fontManager, viewBounds);
+
+        music = musicManager.get("menu_music");
+
         background = new Sprite(textureManager.get("level-select.jpg:level-select"));
 
         background.setScale(2, 2);
 
-        createExitText();
-
-        createHeader();
-
         createAimText();
 
         createControlsText();
+    }
 
+    @Override
+    public void onEnter(StateBasedGame game) {
+        game.addKeyListener(escapeText);
+
+        music.play();
+    }
+
+    @Override
+    public void onExit(StateBasedGame game) {
+        game.removeKeyListener(escapeText);
     }
 
     @Override
@@ -74,38 +102,10 @@ public class Help implements State, InputListener {
         }
     }
 
-    private void createExitText() {
-        exitText = new Text();
-
-        exitText.setString("Press ESC to go back");
-
-        exitText.setFont(fontManager.get("font"));
-
-        exitText.setPosition(0, 0);
-
-        exitText.setCharacterSize(50);
-
-        exitText.setFont(fontManager.get("font"));
-
-        exitText.setColor(Color.WHITE);
-    }
-
-    private void createHeader() {
-        pageHeader = new Text();
-
-        pageHeader.setString("HELP: ");
-
-        pageHeader.setPosition(viewBounds.width / 3, viewBounds.height / 3);
-
-        pageHeader.setCharacterSize(60);
-
-        pageHeader.setFont(fontManager.get("font"));
-
-        pageHeader.setColor(Color.CYAN);
-    }
-
     private void createAimText() {
-        float aimTextYPos = viewBounds.height / 2;
+        Vector2f headerPos = menuHeader.getPosition();
+
+        float aimTextYPos = headerPos.y + (InterfaceList.LIST_PADDING >> 1);
 
         aimHeader = createSubHeader("Aim", aimTextYPos);
 
@@ -113,7 +113,9 @@ public class Help implements State, InputListener {
     }
 
     private void createControlsText() {
-        float controlsHeaderYPos = viewBounds.height - (viewBounds.height / 3);
+        Vector2f headerPos = menuHeader.getPosition();
+
+        float controlsHeaderYPos = headerPos.y + (InterfaceList.LIST_PADDING + (InterfaceList.LIST_PADDING >> 1));
 
         controlsHeader = createSubHeader("Controls", controlsHeaderYPos);
 
@@ -156,9 +158,9 @@ public class Help implements State, InputListener {
     public void draw(RenderTarget target) {
         target.draw(background);
 
-        target.draw(exitText);
+        target.draw(escapeText);
 
-        target.draw(pageHeader);
+        target.draw(menuHeader);
 
         target.draw(aimHeader);
 
@@ -172,5 +174,10 @@ public class Help implements State, InputListener {
     @Override
     public void keyPressed(KeyEvent keyevent) {
         pressedKey = keyevent.key;
+    }
+
+    @Override
+    public void keyTyped(TextEvent textevent) {
+
     }
 }
