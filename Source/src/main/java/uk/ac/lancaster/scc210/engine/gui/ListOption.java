@@ -10,7 +10,7 @@ import org.jsfml.system.Vector2f;
  * The type List option.
  */
 public class ListOption {
-    private final int TEXT_SIZE = 70;
+    private final int TEXT_SIZE = 40;
 
     private final char SELECTED_LEFT = '>';
 

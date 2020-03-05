@@ -1,9 +1,7 @@
 package uk.ac.lancaster.scc210.game.resources;
 
-import org.jsfml.graphics.CircleShape;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Vector2f;
-import org.jsfml.system.Vector2i;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

@@ -40,7 +40,7 @@ public class PauseMenu implements State {
 
         music = musicManager.get("example");
 
-        menuHeader = new MenuHeader("We Don't Have A Name", fontManager, viewBounds);
+        menuHeader = new MenuHeader("Paused", fontManager, viewBounds);
 
         Vector2f headerPos = menuHeader.getPosition();
 
