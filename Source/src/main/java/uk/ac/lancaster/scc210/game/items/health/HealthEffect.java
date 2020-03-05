@@ -32,6 +32,7 @@ public abstract class HealthEffect extends PowerUpEffect {
 
             int newLives = livesComponent.getLives() + healthIncrease;
 
+            // Set the current lives to the minimum possible (either potential new lives or maximum possible)
             livesComponent.setLives(Math.min(newLives, MAX_LIVES));
         }
     }
