@@ -120,14 +120,11 @@ public class UniformGrid implements Service {
         Vector2f[] boxPoints = orientatedBoxComponent.getOrientatedBox().getPoints();
 
         for (Vector2f point : boxPoints) {
-            int column = (int) Math.ceil((point.x - 0) / CELL_SIZE) - 1;
+            int column = (int) Math.ceil((point.x - 0) / CELL_SIZE);
 
-            int row = (int) Math.ceil((point.y - 0) / CELL_SIZE) - 1;
+            int row = (int) Math.ceil((point.y - 0) / CELL_SIZE);
 
-            //System.out.printf("Total: (%d, %d), Current: (%d, %d)\n", numRows, numColumns, row, column);
-
-            // Don't allow out of bounds columns
-            if (row > 0 && row < numRows && column > 0 && column < numColumns) {
+            if (row >= 0 && row < numRows && column >= 0 && column < numColumns) {
                 grid.get(row).get(column).addEntity(entity);
             }
         }
