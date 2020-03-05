@@ -19,9 +19,9 @@
                items="starPattern-item,speed-item" lives="2"
                firing-sound="enemy-one-shoot" hit-sound="enemy-death"/>
 
-    <spaceship name="boss" animation="alien-ship-4" speed="5" bullet="sample" pattern="star-bullet" score="20"
-               items="starPattern-item,speed-item" lives="2"
-               firing-sound="enemy-one-shoot" hit-sound="enemy-death"/>
+    <spaceship name="boss" animation="boss" speed="5" bullet="sample" pattern="star-bullet" score="50"
+               items="" lives="10"
+               firing-sound="boss-shoot" hit-sound="enemy-death"/>
 
     <spaceship name="spawned-other" animation="player-ship" speed="5" bullet="sample" pattern="star-bullet" score="25"
                items="other-item,test-item" lives="1"
