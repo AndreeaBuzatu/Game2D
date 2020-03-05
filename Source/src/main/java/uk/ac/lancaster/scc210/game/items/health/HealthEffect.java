@@ -30,11 +30,9 @@ public abstract class HealthEffect extends PowerUpEffect {
         if (entity.hasComponent(LivesComponent.class)) {
             LivesComponent livesComponent = (LivesComponent) entity.findComponent(LivesComponent.class);
 
-            if (livesComponent.getLives() < MAX_LIVES) {
-                newLives = livesComponent.getLives() + healthIncrease;
+            int newLives = livesComponent.getLives() + healthIncrease;
 
-                livesComponent.setLives(newLives);
-            }
+            livesComponent.setLives(Math.min(newLives, MAX_LIVES));
         }
     }
 }
