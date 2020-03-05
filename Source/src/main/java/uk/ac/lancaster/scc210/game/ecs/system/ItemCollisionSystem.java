@@ -57,7 +57,11 @@ public class ItemCollisionSystem extends IterativeSystem {
 
     @Override
     public void entityRemoved(Entity entity) {
+        this.entities = world.getEntitiesFor(ItemEffectsComponent.class);
 
+        if (player == null) {
+            player = PlayerFinder.findPlayer(world);
+        }
     }
 
     @Override
