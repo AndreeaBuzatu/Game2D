@@ -3,6 +3,7 @@ package uk.ac.lancaster.scc210.game.gui;
 import org.jsfml.graphics.*;
 import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.content.FontManager;
+import uk.ac.lancaster.scc210.engine.gui.TextContainer;
 
 /**
  * The type Menu header.
@@ -10,9 +11,15 @@ import uk.ac.lancaster.scc210.engine.content.FontManager;
 public class MenuHeader implements Drawable {
     private final int MENU_TEXT_SIZE = 100;
 
-    private final Text menuHeader;
+    private final FontManager fontManager;
 
-    private final Vector2f position;
+    private final TextContainer textContainer;
+
+    private final FloatRect viewBounds;
+
+    private Vector2f position;
+
+    private final String label;
 
     /**
      * Instantiates a new Menu header.
@@ -22,24 +29,73 @@ public class MenuHeader implements Drawable {
      * @param viewBounds  the view bounds
      */
     public MenuHeader(String label, FontManager fontManager, FloatRect viewBounds) {
-        menuHeader = new Text();
+        this.label = label;
+        this.fontManager = fontManager;
+        this.viewBounds = viewBounds;
 
-        menuHeader.setString(label);
+        textContainer = new TextContainer();
 
-        menuHeader.setFont(fontManager.get("font"));
+        createText();
+    }
 
-        menuHeader.setCharacterSize(MENU_TEXT_SIZE);
+    private void createText() {
+        String[] items = label.split(" ");
 
-        FloatRect headerBounds = menuHeader.getGlobalBounds();
+        int i = 0;
 
-        position = new Vector2f((viewBounds.width / 2) - (headerBounds.width / 2), viewBounds.height / 5f);
+        float widthSum = 0;
 
-        menuHeader.setPosition(position);
+        float firstTextX = 0;
+
+        FloatRect previousBounds = null;
+
+        for (String item : items) {
+            Text text = new Text();
+
+            text.setString(item);
+
+            text.setCharacterSize(MENU_TEXT_SIZE);
+
+            text.setFont(fontManager.get("font"));
+
+            FloatRect headerBounds = text.getGlobalBounds();
+
+            if (i == 0) {
+                widthSum = ((viewBounds.width/ 2) - (headerBounds.width));
+
+                firstTextX = widthSum;
+
+            } else {
+                widthSum += ((previousBounds.width));
+            }
+
+            Vector2f position = new Vector2f(widthSum, viewBounds.height / 5f);
+
+            text.setPosition(position);
+
+            if (i % 2 == 0) {
+                text.setStyle(Text.ITALIC);
+
+                text.setColor(Color.CYAN);
+
+            } else {
+                text.setColor(Color.YELLOW);
+            }
+
+            textContainer.add(text);
+
+            previousBounds = headerBounds;
+
+            i++;
+        }
+
+        position = new Vector2f(firstTextX, viewBounds.height / 5f);
     }
 
     @Override
     public void draw(RenderTarget renderTarget, RenderStates renderStates) {
-        renderTarget.draw(menuHeader);
+        //renderTarget.draw(menuHeader);
+        renderTarget.draw(textContainer);
     }
 
     /**
