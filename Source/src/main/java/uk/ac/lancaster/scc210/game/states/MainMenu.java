@@ -56,7 +56,7 @@ public class MainMenu implements State {
         interfaceList.addListOption("Leaderboard", (() -> game.pushState(leaderboardSelect)));
 
         interfaceList.addListOption("Help", (() -> game.pushState(help)));
-        
+
         interfaceList.addListOption("Exit", (game::popState));
 
         interfaceList.setEnabled(true);
