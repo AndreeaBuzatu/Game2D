@@ -47,7 +47,6 @@ public class BulletCollisionSystem extends IterativeSystem {
 
     @Override
     public void entityRemoved(Entity entity) {
-
     }
 
     @Override

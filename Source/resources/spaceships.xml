@@ -1,5 +1,5 @@
 <spaceships>
-    <spaceship name="player" animation="player-ship" speed="5" bullet="player-shoot" pattern="line-bullet"
+    <spaceship name="player" animation="player-ship" speed="5" bullet="player-shoot" pattern="straight-bullet"
                items="" score="0"
                lives="3" firing-sound="player-shoot" hit-sound="player-death"/>
 
@@ -7,17 +7,29 @@
                items="health1effect-item,speed-item" lives="1"
                firing-sound="enemy-one-shoot" hit-sound="enemy-death"/>
 
-    <spaceship name="enemy-two" animation="alien-ship-2" speed="5" bullet="sample" pattern="line-bullet" score="10"
+    <spaceship name="enemy-two" animation="alien-ship-2" speed="5" bullet="sample" pattern="straight-bullet" score="10"
                items="health1effect-item,speed-item" lives="1"
                firing-sound="enemy-one-shoot" hit-sound="enemy-death"/>
 
-    <spaceship name="enemy-three" animation="alien-ship-3" speed="5" bullet="sample" pattern="line-bullet" score="15"
-               items="health1effect-item,speed-item" lives="2"
+    <spaceship name="enemy-three" animation="alien-ship-3" speed="5" bullet="sample" pattern="straight-bullet" score="15"
+               items="health2effect-item,speed-item,freezebulleteffect-item" lives="2"
                firing-sound="enemy-one-shoot" hit-sound="enemy-death"/>
 
     <spaceship name="enemy-four" animation="alien-ship-4" speed="5" bullet="sample" pattern="star-bullet" score="20"
-               items="health1effect-item,speed-item" lives="2"
+               items="starPattern-item,speed-item" lives="2"
                firing-sound="enemy-one-shoot" hit-sound="enemy-death"/>
+
+    <spaceship name="boss-s1" animation="boss" speed="5" bullet="enemy-one" pattern="star-spaceship" score="50"
+               items="" lives="50"
+               firing-sound="boss-shoot" hit-sound="enemy-death"/>
+
+    <spaceship name="boss-s2" animation="boss" speed="5" bullet="enemy-three" pattern="star-spaceship" score="50"
+               items="" lives="50"
+               firing-sound="boss-shoot" hit-sound="enemy-death"/>
+
+    <spaceship name="boss-s3" animation="boss" speed="5" bullet="enemy-four" pattern="star-spaceship" score="100"
+               items="" lives="50"
+               firing-sound="boss-shoot" hit-sound="enemy-death"/>
 
     <spaceship name="spawned-other" animation="player-ship" speed="5" bullet="sample" pattern="star-bullet" score="25"
                items="other-item,test-item" lives="1"

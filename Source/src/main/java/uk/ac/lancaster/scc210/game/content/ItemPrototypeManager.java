@@ -29,15 +29,15 @@ public class ItemPrototypeManager extends ContentManager<ItemPrototype> {
     public ItemPrototypeManager(TextureManager textureManager, BulletPool bulletPool) {
         super(new ItemPrototype(textureManager.get(""), new MissingItemEffect()));
 
-        put("speed-item", new ItemPrototype(textureManager.get("spritesheet.png:item"), new SpeedIncreaseEffect()));
+        put("speed-item", new ItemPrototype(textureManager.get("speed_spritesheet_final.png:last"), new SpeedIncreaseEffect()));
 
-        put("starPattern-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new StarPatternEffect(bulletPool)));
+        put("starPattern-item", new ItemPrototype(textureManager.get("spritesheet.png:other"), new StarPatternEffect(bulletPool)));
 
         put("linePattern-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new LinePatternEffect(bulletPool)));
 
-        put("morningStarPattern-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new MorningStarPatternEffect(bulletPool)));
+        put("morningStarPattern-item", new ItemPrototype(textureManager.get("spritesheet.png:item"), new MorningStarPatternEffect(bulletPool)));
 
-        put("freezebulleteffect-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new FreezeBulletEffectItem()));
+        put("freezebulleteffect-item", new ItemPrototype(textureManager.get("spritesheet.png:other"), new FreezeBulletEffectItem()));
 
         put("damage1effect-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new Damage1EffectItem()));
 
@@ -45,7 +45,7 @@ public class ItemPrototypeManager extends ContentManager<ItemPrototype> {
 
         put("degradinglivesbulleteffect-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new DegradingLivesBulletEffectItem()));
 
-        put("health1effect-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new Health1Effect()));
+        put("health1effect-item", new ItemPrototype(textureManager.get("health_item.png:health"), new Health1Effect()));
 
         put("health2effect-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new Health2Effect()));
     }

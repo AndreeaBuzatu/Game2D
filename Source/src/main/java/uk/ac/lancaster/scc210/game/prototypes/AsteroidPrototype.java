@@ -35,7 +35,7 @@ public class AsteroidPrototype implements Prototype {
 
     @Override
     public Entity create() {
-        final AsteroidComponent asteroidComponent = new AsteroidComponent(textureManager.get("enemy-spritesheet.png:asteroid"));
+        final AsteroidComponent asteroidComponent = new AsteroidComponent(textureManager.get("Asteroid_128.png:asteroid"));
 
         final SpeedComponent speedComponent = new SpeedComponent(5);
 
