@@ -12,6 +12,7 @@ import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.pooling.Pool;
 import uk.ac.lancaster.scc210.engine.prototypes.Prototype;
 import uk.ac.lancaster.scc210.engine.service.ServiceProvider;
+import uk.ac.lancaster.scc210.game.bullets.patterns.MorningStarBulletPattern;
 import uk.ac.lancaster.scc210.game.bullets.patterns.StarBulletPattern;
 import uk.ac.lancaster.scc210.game.bullets.patterns.StraightLineBulletPattern;
 import uk.ac.lancaster.scc210.game.content.SpaceShipPrototypeManager;
@@ -131,6 +132,9 @@ public class SpaceShipPrototype implements Prototype {
 
             case "star-spaceship":
                 return new StarSpaceshipPattern(spaceShip, spaceShipPrototypeManager, bulletName);
+
+            case "morningstar-bullet":
+                return new MorningStarBulletPattern(pool, spaceShip, bulletName);
 
             case "straight-bullet":
             default:
