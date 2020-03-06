@@ -7,6 +7,7 @@ import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.game.dialogue.DialogueBox;
 import uk.ac.lancaster.scc210.game.ecs.component.*;
+import uk.ac.lancaster.scc210.game.ecs.entity.PlayerFinder;
 import uk.ac.lancaster.scc210.game.level.Level;
 import uk.ac.lancaster.scc210.game.level.LevelStage;
 
@@ -17,6 +18,8 @@ import java.util.Collection;
  */
 public class LevelSystem extends IterativeSystem {
     private final DialogueBox dialogueBox;
+
+    private Entity player;
 
     private Level level;
 
@@ -41,16 +44,22 @@ public class LevelSystem extends IterativeSystem {
         dialogueBox.setDialogue(currentStage.getLines());
 
         world.addEntities(currentStage.getStationaryEntities());
+
+        player = PlayerFinder.findPlayer(world);
     }
 
     @Override
     public void entityAdded(Entity entity) {
-
+        if (player == null) {
+            player = PlayerFinder.findPlayer(world);
+        }
     }
 
     @Override
     public void entitiesAdded(Collection<? extends Entity> entities) {
-
+        if (player == null) {
+            player = PlayerFinder.findPlayer(world);
+        }
     }
 
     @Override
@@ -83,6 +92,19 @@ public class LevelSystem extends IterativeSystem {
             // Only show dialogue if there's another stage!
             if (currentStage != null) {
                 dialogueBox.setDialogue(currentStage.getLines());
+
+                // Reset item and bullet effects on stage change
+                if (player != null) {
+                    PlayerComponent playerComponent = (PlayerComponent) player.findComponent(PlayerComponent.class);
+
+                    // Reset item effects
+                    playerComponent.getCurrentItemEffects().forEach(itemEffect -> itemEffect.reset(player));
+
+                    // Reset bullet effects
+                    playerComponent.getBulletEffect().reset();
+
+                    System.out.println("Clearing effects");
+                }
             }
 
         } else {
