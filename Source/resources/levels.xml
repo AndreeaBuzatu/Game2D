@@ -342,10 +342,24 @@
 
         <stage id="41">
             <dialogue>
-                <line character="Mary Sue">
-                    Level 4 Stage 1
-                </line>
+                <line character="Douglas">It all started long ago…</line>
+                <line character="Douglas">Earth was overpopulated and there was a shortage of drinkable water</line>
+                <line character="Douglas">When we invented more sustainable space travel we began colonising the entire solar system</line>
+                <line character="Douglas">The most obvious choice for our first colony was Mars</line>
+                <line character="Douglas">While studying Mars, scientists found a liquid that could make salt water drinkable</line>
+                <line character="Douglas">The liquid proved to be highly efficient and vast quantities of the liquid were exported to Earth</line>
+                <line character="Wagner">What has this got to do with this “Voda”?</line>
+                <line character="Douglas">Don’t you see private?</line>
+                <line character="Douglas">Voda IS that liquid</line>
+                <line character="Wagner">How do you know, captain?</line>
+                <line character="Douglas">I don’t really private…</line>
+                <line character="Douglas">But it’s literally the only thing of value on Mars, so…</line>
+                <line character="Wagner">Fair enough</line>
+                <line character="Douglas">Anyway</line>
+                <line character="Douglas">We have to stop them</line>
+                <line character="Wagner">Got it!</line>
             </dialogue>
+
             <wave type="straight" start_x="0" start_y="0" end_x="1280" end_y="1280" num_ships="5"
                   entity_type="spaceship"
                   ship_name="enemy-one"/>
@@ -362,10 +376,16 @@
 
         <stage id="42">
             <dialogue>
-                <line character="Mary Sue">
-                    Level 4 Stage 2
-                </line>
+                <line character="Douglas">Hughes, status report?</line>
+                <line character="Douglas">…</line>
+                <line character="Douglas">Hughes?</line>
+                <line character="Douglas">Uh oh…</line>
+                <line character="Wagner">What’s wrong captain?</line>
+                <line character="Douglas">Hughes isn’t responding!</line>
+                <line character="Douglas">Private Wagner, I’m gonna need you to find Private Hughes on Mars!</line>
+                <line character="Wagner">Give me a moment, we’ve got company...</line>
             </dialogue>
+
             <wave type="sine" start_x="0" start_y="0" end_x="1280" end_y="1280" num_ships="5"
                   entity_type="spaceship"
                   ship_name="enemy-one"/>
@@ -382,10 +402,17 @@
 
         <stage id="43">
             <dialogue>
-                <line character="Mary Sue">
-                    Level 4 Stage 3
-                </line>
+                <line character="Wagner">BeepBoop, set a course for Mars.</line>
+                <line character="BeepBoop">Beep Boop.</line>
+                <line character="Wagner">How long?!</line>
+                <line character="BeepBoop">Beep Boop.</line>
+                <line character="Wagner">That’s not ideal</line>
+                <line character="BeepBoop">Beep Boop.</line>
+                <line character="Wagner">It’s fine, we’ve got enemies to deal with anyway</line>
+                <line character="Wagner">Let me know when we’re ready to jump, okay?</line>
+                <line character="BeepBoop">Beep Boop.</line>
             </dialogue>
+            
             <wave type="sine" start_x="0" start_y="0" end_x="1280" end_y="1280" num_ships="5"
                   entity_type="spaceship"
                   ship_name="enemy-one"/>
