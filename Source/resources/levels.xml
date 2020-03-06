@@ -659,9 +659,13 @@
 
         <stage id="71">
             <dialogue>
-                <line character="Mary Sue">
-                    Level 7 Stage 1
-                </line>
+                <line character="Mothership">FOOL</line>
+                <line character="Mothership">LEAVE NOW OR PERISH</line>
+                <line character="Wagner">You underestimate us humans</line>
+                <line character="Wagner">If there’s anything we’re good at, it’s making stupid decisions</line>
+                <line character="Wagner">And I’ve made up my mind</line>
+                <line character="Mothership">SO BE IT</line>
+                <line character="Mothership">PREPARE TO DIE~!</line>
             </dialogue>
 
             <stationary pos_x="575" pos_y="100" entity_type="spaceship" ship_name="boss-s1" rotation="180"/>
@@ -669,9 +673,9 @@
 
         <stage id="72">
             <dialogue>
-                <line character="Mary Sue">
-                    Level 7 Stage 2
-                </line>
+                <line character="Mothership">DO NOT THINK YOU HAVE BESTED ME!</line>
+                <line character="Mothership">YOU WILL FALL BEFORE OUR ARMIES!</line>
+                <line character="Mothership">ENTERING PHASE 2~!</line>
             </dialogue>
 
             <stationary pos_x="575" pos_y="100" entity_type="spaceship" ship_name="boss-s2" rotation="180"/>
@@ -680,8 +684,14 @@
         <stage id="73">
             <dialogue>
                 <line character="Mary Sue">
-                    Level 7 Stage 3
+                    M: PUNY HUMAN!
+                    M:
+                    M:
                 </line>
+
+                <line character="Mothership">PUNY HUMAN!</line>
+                <line character="Mothership">YOUR TIME IS UP!</line>
+                <line character="Mothership">ENTERING PHASE 3~!</line>
             </dialogue>
 
             <stationary pos_x="575" pos_y="100" entity_type="spaceship" ship_name="boss-s3" rotation="180"/>
