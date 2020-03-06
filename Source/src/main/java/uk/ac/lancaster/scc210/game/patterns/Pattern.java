@@ -5,6 +5,7 @@ import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
+import uk.ac.lancaster.scc210.game.ecs.component.SpeedComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
 /**
@@ -14,6 +15,8 @@ public abstract class Pattern {
     private Time firingGap;
 
     private Time elapsedTime;
+
+    private SpeedComponent spaceShipSpeedComponent;
 
     /**
      * The To fire.
@@ -59,6 +62,8 @@ public abstract class Pattern {
         coords = new Vector2f[toFire.length];
 
         spaceShipSprite = ((SpriteComponent) spaceShip.findComponent(SpriteComponent.class)).getSprite();
+
+        spaceShipSpeedComponent = (SpeedComponent) spaceShip.findComponent(SpeedComponent.class);
     }
 
     /**
@@ -104,6 +109,12 @@ public abstract class Pattern {
 
     public void setFiringGap(Time firingGap) {
         this.firingGap = firingGap;
+    }
+
+    protected void setBulletSpeed(Entity bullet) {
+        SpeedComponent bulletSpeedComponent = (SpeedComponent) bullet.findComponent(SpeedComponent.class);
+
+        bulletSpeedComponent.setSpeed(spaceShipSpeedComponent.getSpeed() + bulletSpeedComponent.getSpeed());
     }
 
     /**

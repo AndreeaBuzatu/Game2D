@@ -40,6 +40,8 @@ public class StraightLineBulletPattern extends BulletPattern {
 
         Sprite bulletSprite = ((SpriteComponent) toFire[NUM_BULLETS - 1].findComponent(SpriteComponent.class)).getSprite();
 
+        setBulletSpeed(toFire[NUM_BULLETS - 1]);
+
         position(bulletSprite);
 
         return toFire;
