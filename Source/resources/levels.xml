@@ -132,10 +132,15 @@
 
         <stage id="21">
             <dialogue>
-                <line character="Mary Sue">
-                    Level 2 Stage 1
-                </line>
+                <line character="Wagner">Captain, I’m at the waypoint!</line>
+                <line character="Douglas">Good, keep an eye out and keep me posted.</line>
+                <line character="Wagner">Yes ma’am!</line>
+                <line character="Wagner">BeepBoop, are you picking up any signs of life?</line>
+                <line character="BeepBoop">Beep Boop.</line>
+                <line character="Wagner">No? That’s weird-</line>
+                <line character="Alien">YOU ARE SURROUNDED~!</line>
             </dialogue>
+
             <wave type="straight" start_x="0" start_y="0" end_x="1280" end_y="1280" num_ships="5"
                   entity_type="spaceship"
                   ship_name="enemy-one"/>
@@ -146,10 +151,16 @@
 
         <stage id="22">
             <dialogue>
-                <line character="Mary Sue">
-                    Level 2 Stage 2
-                </line>
+                <line character="Wagner">BeepBoop, what’s happening?</line>
+                <line character="BeepBoop">Beep Boop.</line>
+                <line character="Wagner">You can’t detect them? Why?</line>
+                <line character="BeepBoop">Beep Boop.</line>
+                <line character="Wagner">They’re jamming our sensors?</line>
+                <line character="BeepBoop">Beep Boop.</line>
+                <line character="Wagner">What do you mean stop repeating everything you-</line>
+                <line character="Alien">SURRENDER!</line>
             </dialogue>
+            
             <wave type="straight" start_x="0" start_y="0" end_x="1280" end_y="1280" num_ships="5"
                   entity_type="spaceship"
                   ship_name="enemy-one"/>
@@ -163,10 +174,15 @@
 
         <stage id="23">
             <dialogue>
-                <line character="Mary Sue">
-                    Level 2 Stage 3
-                </line>
+                <line character="Wagner">Who are you?</line>
+                <line character="Alien">We are the Keplons, from planet Kepler!</line>
+                <line character="Alien">You have invaded our home-away-from-home!</line>
+                <line character="Alien">The red planet you call “Mars”!</line>
+                <line character="Alien">You have bled it dry of our precious Voda!</line>
+                <line character="Alien">We will get it back…</line>
+                <line character="Alien">…one way or another…</line>
             </dialogue>
+            
             <wave type="straight" start_x="0" start_y="0" end_x="1280" end_y="1280" num_ships="5"
                   entity_type="spaceship"
                   ship_name="enemy-one"/>
