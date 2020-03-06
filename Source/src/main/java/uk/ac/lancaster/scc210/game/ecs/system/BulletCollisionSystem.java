@@ -92,8 +92,6 @@ public class BulletCollisionSystem extends IterativeSystem {
                         PlayerComponent playerComponent = (PlayerComponent) bulletCreator.findComponent(PlayerComponent.class);
 
                         playerComponent.getBulletEffect().react(flashable);
-
-                        System.out.println("Called");
                     }
 
                     if (flashable.hasComponent(SpaceShipComponent.class)) {

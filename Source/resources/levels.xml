@@ -412,7 +412,7 @@
                 </line>
             </dialogue>
 
-            <stationary pos_x="575" pos_y="100" entity_type="spaceship" ship_name="boss" rotation="180"/>
+            <stationary pos_x="575" pos_y="100" entity_type="spaceship" ship_name="boss-s1" rotation="180"/>
         </stage>
 
         <stage id="72">
@@ -422,7 +422,7 @@
                 </line>
             </dialogue>
 
-            <stationary pos_x="575" pos_y="100" entity_type="spaceship" ship_name="boss" rotation="180"/>
+            <stationary pos_x="575" pos_y="100" entity_type="spaceship" ship_name="boss-s2" rotation="180"/>
         </stage>
 
         <stage id="73">
@@ -432,7 +432,7 @@
                 </line>
             </dialogue>
 
-            <stationary pos_x="575" pos_y="100" entity_type="spaceship" ship_name="boss" rotation="180"/>
+            <stationary pos_x="575" pos_y="100" entity_type="spaceship" ship_name="boss-s3" rotation="180"/>
         </stage>
     </level>
 </levels>

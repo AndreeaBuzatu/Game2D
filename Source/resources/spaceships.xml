@@ -19,7 +19,15 @@
                items="starPattern-item,speed-item" lives="2"
                firing-sound="enemy-one-shoot" hit-sound="enemy-death"/>
 
-    <spaceship name="boss" animation="boss" speed="5" bullet="sample" pattern="star-bullet" score="50"
+    <spaceship name="boss-s1" animation="boss" speed="5" bullet="enemy-one" pattern="star-spaceship" score="50"
+               items="" lives="10"
+               firing-sound="boss-shoot" hit-sound="enemy-death"/>
+
+    <spaceship name="boss-s2" animation="boss" speed="5" bullet="enemy-three" pattern="star-spaceship" score="50"
+               items="" lives="10"
+               firing-sound="boss-shoot" hit-sound="enemy-death"/>
+
+    <spaceship name="boss-s3" animation="boss" speed="5" bullet="enemy-four" pattern="star-spaceship" score="50"
                items="" lives="10"
                firing-sound="boss-shoot" hit-sound="enemy-death"/>
 
