@@ -79,7 +79,7 @@ public class Completion implements State, InputListener {
 
         FloatRect viewBounds = ((ViewSize) game.getServiceProvider().get(ViewSize.class)).getViewBounds();
 
-        menuHeader = new MenuHeader("High Scores", fontManager, viewBounds);
+        menuHeader = new MenuHeader("High: Scores", fontManager, viewBounds);
 
         highScoreWriter = (HighScoreWriter) game.getServiceProvider().get(HighScoreWriter.class);
 

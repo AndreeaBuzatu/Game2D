@@ -1,4 +1,4 @@
 <bullets>
     <bullet name="player-shoot" texture="bullets.png:example_bullet" speed="13"/>
-    <bullet name="other-shoot" texture="spritesheet.png:other" speed="15"/>
+    <bullet name="other-shoot" texture="spritesheet.png:other" speed="25"/>
 </bullets>

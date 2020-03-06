@@ -22,6 +22,8 @@ public class SpeedIncreaseEffect extends TimedItemEffect {
 
         // Entities shouldn't have a speed of -1
         oldSpeed = -1;
+
+        oldGap = null;
     }
 
     @Override
@@ -39,9 +41,11 @@ public class SpeedIncreaseEffect extends TimedItemEffect {
                 oldSpeed = speedComponent.getSpeed();
             }
 
-            oldGap = pattern.getFiringGap();
+            if (oldGap == null) {
+                oldGap = pattern.getFiringGap();
+            }
 
-            pattern.setFiringGap(Time.getSeconds(oldGap.asSeconds() / 4));
+            pattern.setFiringGap(Time.div(pattern.getFiringGap(), 4));
 
             speedComponent.setSpeed(20);
         }
@@ -53,7 +57,14 @@ public class SpeedIncreaseEffect extends TimedItemEffect {
             SpeedComponent speedComponent = (SpeedComponent) entity.findComponent(SpeedComponent.class);
             FiringPatternComponent firingPatternComponent = (FiringPatternComponent) entity.findComponent(FiringPatternComponent.class);
 
-            firingPatternComponent.getPattern().setFiringGap(oldGap);
+            // Let's not assign a null value for time shall we
+            if (oldGap != null) {
+                firingPatternComponent.getPattern().setFiringGap(oldGap);
+
+            } else {
+                // Worst case scenario: 1 second gap.
+                firingPatternComponent.getPattern().setFiringGap(Time.getSeconds(1));
+            }
 
             speedComponent.setSpeed(oldSpeed);
         }

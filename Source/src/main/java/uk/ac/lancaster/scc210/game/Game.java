@@ -29,7 +29,7 @@ public class Game extends StateBasedGame {
      * Instantiates a new Game.
      */
     public Game() {
-        super("Shooter", 1280, 720);
+        super("Mission: Survival", 1280, 720);
 
         try {
             TextureAnimationManager animationManager = (TextureAnimationManager) serviceProvider.get(TextureAnimationManager.class);

@@ -70,6 +70,11 @@ public abstract class FiringPatternEffect extends TimedItemEffect {
             FiringPatternComponent firingPatternComponent = (FiringPatternComponent) entity.findComponent(FiringPatternComponent.class);
 
             firingPatternComponent.setPattern(oldPattern);
+
+            oldPattern = null;
+
+            // Reset the pattern effect to be alive again, so it can be reused
+            isDead = false;
         }
     }
 

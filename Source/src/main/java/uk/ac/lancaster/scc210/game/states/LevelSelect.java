@@ -1,6 +1,9 @@
 package uk.ac.lancaster.scc210.game.states;
 
-import org.jsfml.graphics.*;
+import org.jsfml.audio.Music;
+import org.jsfml.graphics.FloatRect;
+import org.jsfml.graphics.RenderTarget;
+import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
@@ -10,11 +13,14 @@ import uk.ac.lancaster.scc210.engine.InputListener;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import uk.ac.lancaster.scc210.engine.ViewSize;
 import uk.ac.lancaster.scc210.engine.content.FontManager;
+import uk.ac.lancaster.scc210.engine.content.MusicManager;
 import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.gui.InterfaceGrid;
 import uk.ac.lancaster.scc210.engine.gui.InterfaceList;
 import uk.ac.lancaster.scc210.engine.states.State;
 import uk.ac.lancaster.scc210.game.content.LevelManager;
+import uk.ac.lancaster.scc210.game.gui.EscapeText;
+import uk.ac.lancaster.scc210.game.gui.MenuHeader;
 import uk.ac.lancaster.scc210.game.level.Level;
 import uk.ac.lancaster.scc210.game.resources.PlayerData;
 
@@ -25,19 +31,25 @@ import java.util.List;
  * The type Level select.
  */
 public class LevelSelect implements State, InputListener {
+    private final int NUM_ROWS = 4;
+
     private StateBasedGame game;
 
     private FontManager fontManager;
 
     private LevelManager levelManager;
 
+    private EscapeText escapeText;
+
+    private MenuHeader menuHeader;
+
+    private Music music;
+
     private Sprite background;
 
     private FloatRect viewBounds;
 
     private InterfaceGrid interfaceGrid;
-
-    private Text exitText;
 
     private Keyboard.Key pressedKey;
 
@@ -49,17 +61,25 @@ public class LevelSelect implements State, InputListener {
 
         game.addKeyListener(this);
 
+        MusicManager musicManager = (MusicManager) game.getServiceProvider().get(MusicManager.class);
+
         fontManager = (FontManager) game.getServiceProvider().get(FontManager.class);
 
         levelManager = (LevelManager) game.getServiceProvider().get(LevelManager.class);
 
         viewBounds = ((ViewSize) game.getServiceProvider().get(ViewSize.class)).getViewBounds();
 
+        escapeText = new EscapeText(fontManager, game);
+
+        menuHeader = new MenuHeader("Level: Select", fontManager, viewBounds);
+
         PlayerData playerData = (PlayerData) game.getServiceProvider().get(PlayerData.class);
 
         TextureManager textureManager = (TextureManager) game.getServiceProvider().get(TextureManager.class);
 
         currentUnlocked = levelManager.indexOf(playerData.getUnlockedLevel());
+
+        music = musicManager.get("menu_music");
 
         // If the level can't be found, default to the first level
         if (currentUnlocked < 0) {
@@ -71,32 +91,32 @@ public class LevelSelect implements State, InputListener {
         background.setScale(2, 2);
 
         createGrid();
-
-        createExitText();
     }
 
     @Override
     public void onEnter(StateBasedGame game) {
+        game.addKeyListener(escapeText);
 
+        music.play();
     }
 
     @Override
     public void onExit(StateBasedGame game) {
-
+        game.removeKeyListener(escapeText);
     }
 
     private void createGrid() {
-        // TODO: Update this with the develop branch to use the new level manager and level access system
-        // TODO: Prevent the user (or hide) locked levels from being loaded
-        interfaceGrid = new InterfaceGrid(game, new Vector2f(viewBounds.width / 4 + 50, viewBounds.height / 3));
+        Vector2f headerPos = menuHeader.getPosition();
+
+        interfaceGrid = new InterfaceGrid(game, new Vector2f(headerPos.x, headerPos.y + InterfaceList.LIST_PADDING));
 
         List<Level> levels = new ArrayList<>(levelManager.getLevelList());
 
         InterfaceList interfaceList = null;
 
         for (int i = 0; i < levels.size(); i++) {
-            if (i % 3 == 0) {
-                // i % 3 == 0, will == true when i = 0, so in that instance don't add a new column (as one hasn't been created yet)
+            if (i % NUM_ROWS == 0) {
+                // i % NUM_ROWS == 0, will == true when i = 0, so in that instance don't add a new column (as one hasn't been created yet)
                 if (i > 0) {
                     interfaceGrid.addColumn(interfaceList);
                 }
@@ -111,30 +131,14 @@ public class LevelSelect implements State, InputListener {
                 game.popState();
 
                 game.pushState(new Playing(levels.get(finalI).getName()));
-
-                //playing.setLevel(levels.get(finalI));
             }));
 
             if (i > currentUnlocked) {
-                interfaceList.getOptions().get(i % 3).setEnabled(false);
+                interfaceList.getOptions().get(i % NUM_ROWS).setEnabled(false);
             }
         }
 
         interfaceGrid.addColumn(interfaceList);
-    }
-
-    private void createExitText() {
-        exitText = new Text();
-
-        exitText.setString("Press ESC to go back");
-
-        exitText.setFont(fontManager.get("font"));
-
-        exitText.setPosition(0, 0);
-
-        exitText.setCharacterSize(50);
-
-        exitText.setColor(Color.WHITE);
     }
 
     @Override
@@ -150,9 +154,11 @@ public class LevelSelect implements State, InputListener {
     public void draw(RenderTarget target) {
         target.draw(background);
 
-        target.draw(interfaceGrid);
+        target.draw(escapeText);
 
-        target.draw(exitText);
+        target.draw(menuHeader);
+
+        target.draw(interfaceGrid);
     }
 
     @Override

@@ -14,11 +14,13 @@ import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
  * The type Star spaceship pattern.
  */
 public class StarSpaceshipPattern extends Pattern {
-    private static final Time FIRING_GAP = Time.getSeconds(5);
+    private static final Time FIRING_GAP = Time.getSeconds(1.3f);
 
     private static final int NUM_BULLETS = 8;
 
     private final SpaceShipPrototypeManager spaceShipPrototypeManager;
+
+    private float angle;
 
     /**
      * Instantiates a new Star spaceship pattern.
@@ -31,10 +33,15 @@ public class StarSpaceshipPattern extends Pattern {
         super(spaceShip, new Entity[NUM_BULLETS], shipName, FIRING_GAP);
 
         this.spaceShipPrototypeManager = spaceShipPrototypeManager;
+
+        this.angle = 0f;
     }
 
     @Override
     public Entity[] create() {
+
+        getAngle();
+
         for (int i = 0; i < NUM_BULLETS; i++) {
             if (i == 0) {
                 // It doesn't matter if we waste one allocation that's okay...
@@ -60,7 +67,7 @@ public class StarSpaceshipPattern extends Pattern {
 
             firedSpaceShipSprite.setPosition(firedShipPos);
 
-            firedSpaceShipSprite.setRotation(spaceShipSprite.getRotation() + (i - 1) * 45);
+            firedSpaceShipSprite.setRotation(spaceShipSprite.getRotation() + (i - 1) * (360f / NUM_BULLETS) - angle);
         }
 
         return toFire;
@@ -71,5 +78,27 @@ public class StarSpaceshipPattern extends Pattern {
         FloatRect localBounds = toSpawnSprite.getLocalBounds();
 
         positionStarPatterns(toSpawnSprite);
+    }
+
+    @Override
+    protected void positionStarPatterns(Sprite bulletSprite) {
+
+        FloatRect localBounds = spaceShipSprite.getLocalBounds();
+
+        float width = localBounds.width;
+
+        float height = localBounds.height;
+
+        for (int i = 0; i < NUM_BULLETS; i++){
+            coords[i] = new Vector2f(width / 2, height / 2);
+        }
+    }
+
+    private void getAngle() {
+        angle += 30;
+
+        if (angle>=360) {
+            angle -= 360;
+        }
     }
 }

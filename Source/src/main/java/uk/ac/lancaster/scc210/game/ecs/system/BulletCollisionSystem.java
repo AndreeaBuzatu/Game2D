@@ -11,7 +11,9 @@ import uk.ac.lancaster.scc210.engine.ecs.component.PooledComponent;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
 import uk.ac.lancaster.scc210.game.ecs.component.*;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -45,7 +47,7 @@ public class BulletCollisionSystem extends IterativeSystem {
 
     @Override
     public void entityRemoved(Entity entity) {
-
+        uniformGrid.removeEntity(entity);
     }
 
     @Override
@@ -93,14 +95,17 @@ public class BulletCollisionSystem extends IterativeSystem {
                         PlayerComponent playerComponent = (PlayerComponent) bulletCreator.findComponent(PlayerComponent.class);
 
                         playerComponent.getBulletEffect().react(flashable);
+
+                    } else if (bulletCreator.hasComponent(SpaceShipComponent.class)) {
+                        SpaceShipComponent spaceShipComponent = (SpaceShipComponent) bulletCreator.findComponent(SpaceShipComponent.class);
+
+                        spaceShipComponent.getBulletEffect().react(flashable);
                     }
 
                     if (flashable.hasComponent(SpaceShipComponent.class)) {
                         SpaceShipComponent spaceShipComponent = (SpaceShipComponent) flashable.findComponent(SpaceShipComponent.class);
 
                         soundManager.playSound(spaceShipComponent.getHitSound());
-
-                        spaceShipComponent.getBulletEffect().react(flashable);
                     }
 
                     // Return the bullet back to the pool and remove it from the world

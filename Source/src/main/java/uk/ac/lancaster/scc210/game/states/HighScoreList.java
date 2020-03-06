@@ -1,12 +1,16 @@
 package uk.ac.lancaster.scc210.game.states;
 
+import org.jsfml.audio.Music;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.RenderTarget;
+import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import uk.ac.lancaster.scc210.engine.ViewSize;
 import uk.ac.lancaster.scc210.engine.content.FontManager;
+import uk.ac.lancaster.scc210.engine.content.MusicManager;
+import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.gui.InterfaceList;
 import uk.ac.lancaster.scc210.engine.states.State;
 import uk.ac.lancaster.scc210.game.content.HighScores;
@@ -34,6 +38,10 @@ public class HighScoreList implements State {
 
     private EscapeText escapeText;
 
+    private Music music;
+
+    private Sprite background;
+
     /**
      * Setup for the current state (like a constructor).
      *
@@ -43,15 +51,25 @@ public class HighScoreList implements State {
     public void setup(StateBasedGame game) {
         this.game = game;
 
+        MusicManager musicManager = (MusicManager) game.getServiceProvider().get(MusicManager.class);
+
         fontManager = (FontManager) game.getServiceProvider().get(FontManager.class);
 
         highScores = (HighScores) game.getServiceProvider().get(HighScores.class);
 
         FloatRect viewBounds = ((ViewSize) game.getServiceProvider().get(ViewSize.class)).getViewBounds();
 
-        menuHeader = new MenuHeader("High Scores", fontManager, viewBounds);
+        menuHeader = new MenuHeader("High: Scores", fontManager, viewBounds);
 
         escapeText = new EscapeText(fontManager, game);
+
+        music = musicManager.get("menu_music");
+
+        TextureManager textureManager = (TextureManager) game.getServiceProvider().get(TextureManager.class);
+
+        background = new Sprite(textureManager.get("level-select.jpg:level-select"));
+
+        background.setScale(2, 2);
 
         createHighScoreList();
     }
@@ -59,6 +77,8 @@ public class HighScoreList implements State {
     @Override
     public void onEnter(StateBasedGame game) {
         game.addKeyListener(escapeText);
+
+        music.play();
     }
 
     @Override
@@ -73,6 +93,8 @@ public class HighScoreList implements State {
 
     @Override
     public void draw(RenderTarget target) {
+        target.draw(background);
+
         target.draw(menuHeader);
 
         target.draw(escapeText);

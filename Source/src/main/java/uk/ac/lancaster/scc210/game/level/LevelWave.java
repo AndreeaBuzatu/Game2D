@@ -4,9 +4,12 @@ import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
+import uk.ac.lancaster.scc210.engine.ViewSize;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.prototypes.Prototype;
 import uk.ac.lancaster.scc210.game.ecs.component.*;
+import uk.ac.lancaster.scc210.game.prototypes.AsteroidPrototype;
+import uk.ac.lancaster.scc210.game.prototypes.SpaceShipPrototype;
 import uk.ac.lancaster.scc210.game.waves.Wave;
 
 import java.util.HashSet;
@@ -16,6 +19,8 @@ import java.util.Set;
  * The type Level wave.
  */
 public class LevelWave {
+    private final ViewSize viewSize;
+
     private final float ENTITY_GAP = 150f;
 
     private final Time SPAWN_TIMER = Time.getSeconds(0.5f);
@@ -41,12 +46,13 @@ public class LevelWave {
      *
      * @param wave        the wave
      * @param origin      the origin
-     * @param destination the destination
+     * @param viewSize    the viewSize
      * @param numShips    the num ships
      * @param prototype   the prototype
      */
-    public LevelWave(Wave wave, Vector2f origin, Vector2f destination, int numShips, Prototype prototype) {
+    public LevelWave(Wave wave, Vector2f origin, ViewSize viewSize, int numShips, Prototype prototype) {
         this.wave = wave;
+        this.viewSize = viewSize;
         this.numShips = numShips;
         this.prototype = prototype;
 
@@ -127,7 +133,7 @@ public class LevelWave {
      *
      * @return the boolean
      */
-    boolean allSpawned() {
+    private boolean allSpawned() {
         return numLeftToSpawn <= 0;
     }
 
@@ -153,7 +159,8 @@ public class LevelWave {
 
             Sprite sprite = spriteComponent.getSprite();
 
-            positionSprite(sprite);
+          //  positionSprite(sprite);
+            SpaceShipPrototype.positionSpaceShip(viewSize, sprite, spriteStart);
 
             // Express the size as some amount of time
             entitySize = Time.getSeconds(spriteComponent.getSprite().getTexture().getSize().x + 90);
@@ -162,7 +169,7 @@ public class LevelWave {
         if (entity.hasComponent(AsteroidComponent.class)) {
             AsteroidComponent asteroidComponent = (AsteroidComponent) entity.findComponent(AsteroidComponent.class);
 
-            asteroidComponent.getCircle().setPosition(spriteStart);
+           AsteroidPrototype.positionAsteroid(viewSize, asteroidComponent, spriteStart);
 
             // Express the size as some amount of time
             entitySize =  Time.getSeconds(asteroidComponent.getCircle().getRadius() * 2);

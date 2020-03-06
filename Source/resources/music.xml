@@ -1,5 +1,5 @@
 <music>
     <piece name="boss_music" src="boss_music.ogg"/>
-    <piece name="battle_music" src="boss_music.ogg"/>
+    <piece name="battle_music" src="battle_music.ogg"/>
     <piece name="menu_music" src="menu_music.ogg"/>
 </music>

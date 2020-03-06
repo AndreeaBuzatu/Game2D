@@ -10,7 +10,7 @@ public abstract class ItemEffect {
     /**
      * The Is dead.
      */
-    boolean isDead;
+    protected boolean isDead;
 
     /**
      * Instantiates a new Item effect.
@@ -42,7 +42,7 @@ public abstract class ItemEffect {
      * @param entity the entity to reset
      */
     public void reset(Entity entity) {
-        isDead = true;
+        isDead = false;
     }
 
     /**

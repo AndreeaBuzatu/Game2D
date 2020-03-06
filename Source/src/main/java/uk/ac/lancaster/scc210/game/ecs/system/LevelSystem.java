@@ -5,7 +5,9 @@ import org.jsfml.system.Time;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.ecs.system.IterativeSystem;
+import uk.ac.lancaster.scc210.game.dialogue.DialogueBox;
 import uk.ac.lancaster.scc210.game.ecs.component.*;
+import uk.ac.lancaster.scc210.game.ecs.entity.PlayerFinder;
 import uk.ac.lancaster.scc210.game.level.Level;
 import uk.ac.lancaster.scc210.game.level.LevelStage;
 
@@ -15,6 +17,10 @@ import java.util.Collection;
  * The type Level system.
  */
 public class LevelSystem extends IterativeSystem {
+    private final DialogueBox dialogueBox;
+
+    private Entity player;
+
     private Level level;
 
     private LevelStage currentStage;
@@ -25,24 +31,35 @@ public class LevelSystem extends IterativeSystem {
      * @param world the world containing entities to use
      * @param level the level
      */
-    public LevelSystem(World world, Level level) {
+    public LevelSystem(World world, Level level, DialogueBox dialogueBox) {
         super(world);
 
         this.level = level;
+        this.dialogueBox = dialogueBox;
 
-        currentStage = level.getCurrentStage();
+        //currentStage = level.getCurrentStage();
+
+        currentStage = level.changeStage();
+
+        dialogueBox.setDialogue(currentStage.getLines());
 
         world.addEntities(currentStage.getStationaryEntities());
+
+        player = PlayerFinder.findPlayer(world);
     }
 
     @Override
     public void entityAdded(Entity entity) {
-
+        if (player == null) {
+            player = PlayerFinder.findPlayer(world);
+        }
     }
 
     @Override
     public void entitiesAdded(Collection<? extends Entity> entities) {
-
+        if (player == null) {
+            player = PlayerFinder.findPlayer(world);
+        }
     }
 
     @Override
@@ -71,6 +88,24 @@ public class LevelSystem extends IterativeSystem {
     public void update(Time deltaTime) {
         if (currentStage != null && currentStage.complete()) {
             currentStage = level.changeStage();
+
+            // Only show dialogue if there's another stage!
+            if (currentStage != null) {
+                dialogueBox.setDialogue(currentStage.getLines());
+
+                // Reset item and bullet effects on stage change
+                if (player != null) {
+                    PlayerComponent playerComponent = (PlayerComponent) player.findComponent(PlayerComponent.class);
+
+                    // Reset item effects
+                    playerComponent.getCurrentItemEffects().forEach(itemEffect -> itemEffect.reset(player));
+
+                    // Reset bullet effects
+                    playerComponent.getBulletEffect().reset();
+
+                    System.out.println("Clearing effects");
+                }
+            }
 
         } else {
             if (currentStage != null) {

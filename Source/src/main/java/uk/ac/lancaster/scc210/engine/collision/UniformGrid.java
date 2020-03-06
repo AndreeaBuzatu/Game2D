@@ -18,7 +18,7 @@ public class UniformGrid implements Service {
     /**
      * The constant CELL_SIZE.
      */
-    public static final int CELL_SIZE = 256;
+    public static final int CELL_SIZE = 64;
 
     private final List<List<Cell>> grid;
 
@@ -124,10 +124,7 @@ public class UniformGrid implements Service {
 
             int row = (int) Math.ceil((point.y - 0) / CELL_SIZE) - 1;
 
-            //System.out.printf("Total: (%d, %d), Current: (%d, %d)\n", numRows, numColumns, row, column);
-
-            // Don't allow out of bounds columns
-            if (row > 0 && row < numRows && column > 0 && column < numColumns) {
+            if (row >= 0 && row < numRows && column >= 0 && column < numColumns) {
                 grid.get(row).get(column).addEntity(entity);
             }
         }

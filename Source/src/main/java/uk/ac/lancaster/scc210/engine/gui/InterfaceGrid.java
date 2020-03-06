@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class InterfaceGrid implements InputListener, Drawable {
     private final int FIRST_LIST_PADDING = 50;
 
-    private final int LIST_WIDTH_PADDING = 280;
+    private final int LIST_WIDTH_PADDING = 320;
 
     private final ArrayList<InterfaceList> lists;
 
@@ -95,7 +95,6 @@ public class InterfaceGrid implements InputListener, Drawable {
         }
 
         // Ignore if the previous input is the same as the current
-
         if (previousColumn != currentColumn) {
             if (currentColumn < 0) {
                 currentColumn = lists.size() - 1;
@@ -114,6 +113,11 @@ public class InterfaceGrid implements InputListener, Drawable {
 
                 // Find the number of items in the current list. Subtract 1 to account for 0-indexed arrays
                 int currentOptionsLength = currentList.getOptions().size() - 1;
+
+                // If the previous column was longer than the current column, go the last item on this column
+                if (previousIndex > currentOptionsLength) {
+                    previousIndex -= 1;
+                }
 
                 if (!currentList.getOptions().get(previousIndex).isEnabled()) {
                     return;

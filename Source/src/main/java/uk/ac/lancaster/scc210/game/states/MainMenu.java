@@ -1,14 +1,14 @@
 package uk.ac.lancaster.scc210.game.states;
 
 import org.jsfml.audio.Music;
-import org.jsfml.graphics.FloatRect;
-import org.jsfml.graphics.RenderTarget;
+import org.jsfml.graphics.*;
 import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.StateBasedGame;
 import uk.ac.lancaster.scc210.engine.ViewSize;
 import uk.ac.lancaster.scc210.engine.content.FontManager;
 import uk.ac.lancaster.scc210.engine.content.MusicManager;
+import uk.ac.lancaster.scc210.engine.content.TextureManager;
 import uk.ac.lancaster.scc210.engine.gui.InterfaceList;
 import uk.ac.lancaster.scc210.engine.states.State;
 import uk.ac.lancaster.scc210.game.content.LevelManager;
@@ -20,8 +20,6 @@ import uk.ac.lancaster.scc210.game.resources.PlayerData;
  * The type Main menu.
  */
 public class MainMenu implements State {
-    private final int LIST_PADDING = 250;
-
     private LevelManager levelManager;
 
     private PlayerData playerData;
@@ -32,11 +30,15 @@ public class MainMenu implements State {
 
     private Music music;
 
+    private Sprite background;
+
     @Override
     public void setup(StateBasedGame game) {
         StateManager stateManager = (StateManager) game.getServiceProvider().get(StateManager.class);
 
         FontManager fontManager = (FontManager) game.getServiceProvider().get(FontManager.class);
+
+        TextureManager textureManager = (TextureManager) game.getServiceProvider().get(TextureManager.class);
 
         ViewSize viewSize = (ViewSize) game.getServiceProvider().get(ViewSize.class);
 
@@ -46,11 +48,11 @@ public class MainMenu implements State {
 
         playerData = (PlayerData) game.getServiceProvider().get(PlayerData.class);
 
-        menuHeader = new MenuHeader("We Don't Have A Name", fontManager, viewBounds);
+        menuHeader = new MenuHeader("Mission: Survival", fontManager, viewBounds);
 
         Vector2f headerPos = menuHeader.getPosition();
 
-        interfaceList = new InterfaceList(game, fontManager.get("font"), new Vector2f(headerPos.x, headerPos.y + LIST_PADDING));
+        interfaceList = new InterfaceList(game, fontManager.get("font"), new Vector2f(headerPos.x, headerPos.y + InterfaceList.LIST_PADDING));
 
         // For play create a new playing state so we can easily reset the game
         interfaceList.addListOption("Play", (() -> game.pushState(new Playing(getUnlockedLevel()))));
@@ -58,6 +60,8 @@ public class MainMenu implements State {
         interfaceList.addListOption("Level Select", (() -> game.pushState(stateManager.get("level-select"))));
 
         interfaceList.addListOption("High Scores", (() -> game.pushState(stateManager.get("high-score-list"))));
+
+        interfaceList.addListOption("Help", (() -> game.pushState(stateManager.get("help"))));
 
         interfaceList.addListOption("Exit", (game::popState));
 
@@ -70,13 +74,19 @@ public class MainMenu implements State {
         music.setVolume(100);
 
         music.setLoop(true);
+
+        background = new Sprite(textureManager.get("level-select.jpg:level-select"));
+
+        background.setScale(2, 2);
     }
 
     @Override
     public void onEnter(StateBasedGame game) {
         game.addKeyListener(interfaceList);
-        
-        music.play();
+
+        if (music.getStatus().equals(Music.Status.PAUSED) || music.getStatus().equals(Music.Status.STOPPED)) {
+            music.play();
+        }
     }
 
     @Override
@@ -93,6 +103,8 @@ public class MainMenu implements State {
 
     @Override
     public void draw(RenderTarget target) {
+        target.draw(background);
+
         target.draw(menuHeader);
 
         target.draw(interfaceList);

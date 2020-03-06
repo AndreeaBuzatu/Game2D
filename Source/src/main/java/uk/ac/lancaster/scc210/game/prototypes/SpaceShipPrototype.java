@@ -1,6 +1,9 @@
 package uk.ac.lancaster.scc210.game.prototypes;
 
 import org.jsfml.graphics.Sprite;
+import org.jsfml.system.Vector2f;
+import org.jsfml.system.Vector2i;
+import uk.ac.lancaster.scc210.engine.ViewSize;
 import uk.ac.lancaster.scc210.engine.content.ShaderManager;
 import uk.ac.lancaster.scc210.engine.content.TextureAnimationManager;
 import uk.ac.lancaster.scc210.engine.content.TextureManager;
@@ -9,6 +12,7 @@ import uk.ac.lancaster.scc210.engine.ecs.World;
 import uk.ac.lancaster.scc210.engine.pooling.Pool;
 import uk.ac.lancaster.scc210.engine.prototypes.Prototype;
 import uk.ac.lancaster.scc210.engine.service.ServiceProvider;
+import uk.ac.lancaster.scc210.game.bullets.patterns.MorningStarBulletPattern;
 import uk.ac.lancaster.scc210.game.bullets.patterns.StarBulletPattern;
 import uk.ac.lancaster.scc210.game.bullets.patterns.StraightLineBulletPattern;
 import uk.ac.lancaster.scc210.game.content.SpaceShipPrototypeManager;
@@ -16,12 +20,15 @@ import uk.ac.lancaster.scc210.game.ecs.component.*;
 import uk.ac.lancaster.scc210.game.patterns.Pattern;
 import uk.ac.lancaster.scc210.game.patterns.StarSpaceshipPattern;
 import uk.ac.lancaster.scc210.game.resources.SerialisedSpaceShip;
+import uk.ac.lancaster.scc210.game.states.Playing;
 
 /**
  * The type Space ship prototype.
  */
 public class SpaceShipPrototype implements Prototype {
     private final String[] items;
+
+    private final ViewSize viewSize;
 
     private final TextureAnimationManager animationManager;
 
@@ -64,6 +71,8 @@ public class SpaceShipPrototype implements Prototype {
         this.hitSound = spaceShip.getHitSound();
         this.texture = spaceShip.getTexture();
 
+
+        viewSize = (ViewSize) serviceProvider.get(ViewSize.class);
     }
 
     public Entity create() {
@@ -124,9 +133,46 @@ public class SpaceShipPrototype implements Prototype {
             case "star-spaceship":
                 return new StarSpaceshipPattern(spaceShip, spaceShipPrototypeManager, bulletName);
 
+            case "morningstar-bullet":
+                return new MorningStarBulletPattern(pool, spaceShip, bulletName);
+
             case "straight-bullet":
             default:
                 return new StraightLineBulletPattern(pool, spaceShip, bulletName);
+        }
+    }
+
+    public static void positionSpaceShip(ViewSize viewSize, Sprite sprite, Vector2f givenPosition) {
+        Vector2i size = sprite.getTexture().getSize();
+
+        float posX = givenPosition.x;
+        float posY = givenPosition.y;
+
+        if (givenPosition.x < size.x >> 1) {
+            posX = size.x >> 1;
+
+            sprite.setPosition(new Vector2f(posX , posY));
+        }
+
+        if (givenPosition.x > (viewSize.getViewBounds().width - (size.x >> 1))) {
+            posX = viewSize.getViewBounds().width - (size.x >> 1);
+
+            sprite.setPosition(new Vector2f(posX,posY));
+        }
+
+        if (givenPosition.y > viewSize.getViewBounds().height - (size.y >> 1)) {
+            posY = viewSize.getViewBounds().height - (size.y >> 1);
+
+            sprite.setPosition(new Vector2f(posX, posY));
+        }
+
+        if (givenPosition.y < Playing.INFO_BOX_HEIGHT) {
+            posY = Playing.INFO_BOX_HEIGHT;
+
+            sprite.setPosition(new Vector2f(posX, posY + (size.y >> 1)));
+
+        } else {
+            sprite.setPosition(new Vector2f(posX, posY));
         }
     }
 }

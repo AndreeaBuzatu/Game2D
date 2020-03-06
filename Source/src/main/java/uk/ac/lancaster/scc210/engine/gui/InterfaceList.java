@@ -15,6 +15,8 @@ import java.util.List;
  * The type Interface list.
  */
 public class InterfaceList implements InputListener, Drawable {
+    public static final int LIST_PADDING = 250;
+
     private final int OPTION_HEIGHT_PADDING = 50;
 
     private final List<ListOption> options;

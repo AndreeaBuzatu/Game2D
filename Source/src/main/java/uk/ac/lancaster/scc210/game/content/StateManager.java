@@ -23,5 +23,7 @@ public class StateManager extends ContentManager<State> {
         put("level-select", new LevelSelect());
 
         put("pause", new PauseMenu());
+
+        put("help", new Help());
     }
 }
