@@ -554,10 +554,27 @@
 
         <stage id="61">
             <dialogue>
-                <line character="Mary Sue">
-                    Level 6 Stage 1
-                </line>
+                <line character="Douglas">*static* Urgent message to all fighters</line>
+                <line character="Wagner">Great…</line>
+                <line character="Douglas">*static* Earth is under attack!</line>
+                <line character="Douglas">*static* The mothership is here!</line>
+                <line character="Douglas">*static* We won’t survive much longer!</line>
+                <line character="Douglas">*static* OH N-</line>
+                <line character="Wagner">Captain?!</line>
+                <line character="Douglas">*static*</line>
+                <line character="Wagner">Hughes, we have to go save the Captain!</line>
+                <line character="Hughes">Ermmmm…</line>
+                <line character="Hughes">You go ahead…</line>
+                <line character="Hughes">I’ll be there in a minute…</line>
+                <line character="Wagner">Coward…</line>
+                <line character="Hughes">I CAN STILL HEAR YOU, YOU KNOW!</line>
+                <line character="Wagner">BeepBoop, set a course for Earth</line>
+                <line character="BeepBoop">Beep Boop.</line>
+                <line character="Wagner">Oh, we’re already here…</line>
+                <line character="Wagner">I must’ve blinked…</line>
+                <line character="Alien">STAND DOWN OR DIE!</line>
             </dialogue>
+            
             <wave type="sine" start_x="0" start_y="100" end_x="2560" end_y="100" num_ships="10"
                   entity_type="spaceship"
                   ship_name="enemy-three"/>
@@ -570,10 +587,14 @@
 
         <stage id="62">
             <dialogue>
-                <line character="Mary Sue">
-                    Level 6 Stage 2
-                </line>
+                <line character="Wagner">BeepBoop, can you find the source of Captain Douglas’ transmission?</line>
+                <line character="BeepBoop">Beep Boop.</line>
+                <line character="Wagner">Nice one!</line>
+                <line character="Wagner">Let’s save Captain Douglas, BeepBoop</line>
+                <line character="Alien">YOU WILL SAVE NOTHING</line>
+                <line character="Alien">EARTH IS DOOMED~!</line>
             </dialogue>
+            
             <wave type="sine" start_x="0" start_y="700" end_x="900" end_y="-900" num_ships="5"
                   entity_type="spaceship"
                   ship_name="enemy-three"/>
@@ -594,10 +615,30 @@
 
         <stage id="63">
             <dialogue>
-                <line character="Mary Sue">
-                    Level 6 Stage 3
-                </line>
+                <line character="BeepBoop">Beep Boop.</line>
+                <line character="Wagner">Excellent! Patch her through!</line>
+                <line character="BeepBoop">Beep Boop.</line>
+                <line character="Douglas">*static*</line>
+                <line character="Douglas">Wagner?</line>
+                <line character="Wagner">Captain!</line>
+                <line character="Douglas">Get out of there Wagner</line>
+                <line character="Douglas">It’s too risky</line>
+                <line character="Douglas">The Mothership is closing in on Earth</line>
+                <line character="Douglas">It’s over…</line>
+                <line character="Wagner">…</line>
+                <line character="Wagner">No!</line>
+                <line character="Wagner">It’s not over!</line>
+                <line character="Douglas">Private Wagner! This is a direct order from your captain!</line>
+                <line character="Douglas">Don’t you dare confront that Mothership!</line>
+                <line character="Douglas">You have one mission:</line>
+                <line character="Douglas">SURVIVE</line>
+                <line character="Wagner">I’m sorry Captain…</line>
+                <line character="Wagner">You’re breaking up…</line>
+                <line character="Douglas">Wagn- *static*</line>
+                <line character="Wagner">BeepBoop, let’s go</line>
+                <line character="BeepBoop">Beep Boop.</line>
             </dialogue>
+
             <wave type="sine" start_x="0" start_y="0" end_x="1280" end_y="1280" num_ships="5"
                   entity_type="spaceship"
                   ship_name="enemy-three"/>
