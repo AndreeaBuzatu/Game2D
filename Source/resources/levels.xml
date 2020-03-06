@@ -4,22 +4,22 @@
         <stage id="11">
             <dialogue>
                 <line character="Douglas">Welcome to Space School, private!</line>
-                <line character="Douglas">This is a rare, once-in-a-lifetime opportunity to fight for your planet and your people! </line>
-                <line character="Douglas">My name is Captain Douglas</line>
+                <line character="Douglas">This is a rare, once-in-a-lifetime opportunity to fight for your planet and your people!.</line>
+                <line character="Douglas">My name is Captain Douglas.</line>
                 <line character="Douglas">But you can call me Captain!</line>
                 <line character="Douglas">Do you understand?</line>
                 <line character="Wagner">YES SIR- I mean, MA’AM!</line>
-                <line character="Douglas">Good! Now, do you see the interface in front of you?</line>
+                <line character="Douglas">Good! Now, do you see the interface in front of you?.</line>
                 <line character="Wagner">Yes, ma’am!</line>
-                <line character="Douglas">Unfortunately all our ships come with different setups</line>
-                <line character="Douglas">But I’m not going to ask you what setup you have</line>
-                <line character="Douglas">That would take waaaaaay too much effort</line>
+                <line character="Douglas">Unfortunately all our ships come with different setups..</line>
+                <line character="Douglas">But I’m not going to ask you what setup you have..</line>
+                <line character="Douglas">That would take waaaaaay too much effort..</line>
                 <line character="Wagner">Oh... Okay...</line>
-                <line character="Douglas">First, you need to learn how to shoot</line>
-                <line character="Douglas">One can only progress through life by shooting things</line>
-                <line character="Wagner">That sounds perfectly reasonable</line>
-                <line character="Douglas">If you have a controller in front of you, use the A button</line>
-                <line character="Douglas">If you have a keyboard in front of you, use the SPACE key</line>
+                <line character="Douglas">First, you need to learn how to shoot..</line>
+                <line character="Douglas">One can only progress through life by shooting things..</line>
+                <line character="Wagner">That sounds perfectly reasonable.</line>
+                <line character="Douglas">If you have a controller in front of you, use the A button..</line>
+                <line character="Douglas">If you have a keyboard in front of you, use the SPACE key..</line>
                 <line character="Douglas">Is that clear?</line>
                 <line character="Wagner">Yes, ma’am!</line>
                 <line character="Douglas">Show me what you got, private!</line>
@@ -30,10 +30,22 @@
 
         <stage id="12">
             <dialogue>
-                <line character="Mary Sue">
-                    Level 1 Stage 2
-                </line>
-
+                <line character="Wagner">I got one! I got one!</line>
+                <line character="Douglas">Okay kid, don’t get cocky!</line>
+                <line character="Douglas">You still have to pilot your ship!</line>
+                <line character="Wagner">How did I get here if I didn’t know how to fly the ship already…?.</line>
+                <line character="Douglas">We put it on autopilot.</line>
+                <line character="Douglas">Well, BeepBoop did…</line>
+                <line character="Wagner">Who?</line>
+                <line character="Douglas">We’ll explain later...</line>
+                <line character="Douglas">If you have a controller in front of you, use the left joystick to move..</line>
+                <line character="Douglas">If you have a keyboard in front of you, use the WASD keys..</line>
+                <line character="Douglas">You can also rotate using the right joystick, the Q and E keys or the arrow keys..</line>
+                <line character="Douglas">Whatever floats your ship.</line>
+                <line character="Wagner">My wings I guess…?</line>
+                <line character="Douglas">Those wings are purely for aesthetic purposes private!.</line>
+                <line character="Douglas">Now stop dilly-dallying!</line>
+                <line character="Douglas">Move around and shoot those ships!</line>
             </dialogue>
 
             <wave type="straight" start_x="0" start_y="0" end_x="1300" end_y="1300" num_ships="1"
@@ -46,12 +58,72 @@
 
         <stage id="13">
             <dialogue>
-                <line character="Mary Sue">
-                    Level 1 Stage 3
-                </line>
+                <line character="Douglas">Excellent work!</line>
+                <line character="Douglas">Do you see that item the ship dropped?.</line>
+                <line character="Wagner">I think so.</line>
+                <line character="Douglas">That’s a module from another ship.</line>
+                <line character="Douglas">Your automated co-pilot will use it to power up your ship..</line>
+                <line character="Wagner">Automated co-pilot?</line>
+                <line character="Douglas">It’s a droid. BeepBoop-DeepBoop.</line>
+                <line character="BeepBoop">Beep Boop.</line>
+                <line character="Douglas">I know right?</line>
+                <line character="Douglas">Creative...</line>
+                <line character="BeepBoop">Beep Boop.</line>
+                <line character="Wagner">Cool! I get a co-pilot?!</line>
+                <line character="Douglas">I guess co-pilot is a bit of a stretch….</line>
+                <line character="Douglas">More like automated comic relief…</line>
+                <line character="Douglas">...</line>
+                <line character="Douglas">I guess that’s a bit of a stretch too now that I think about it….</line>
+                <line character="Douglas">ANYWAY</line>
+                <line character="Douglas">Move over there and pick up that item!.</line>
+                <line character="Douglas">Assuming there is an item to pick up….</line>
+                <line character="Douglas">It’s kinda down to random chance…</line>
             </dialogue>
 
             <stationary pos_x="590" pos_y="200" entity_type="spaceship" ship_name="enemy-two" rotation="180"/>
+        </stage>
+
+        <stage id="14">
+            <dialogue>
+                <line character="BeepBoop">Beep Boop.</line>
+                <line character="Wagner">Woah! Nice work BeepBoop!</line>
+                <line character="BeepBoop">Beep Boop.</line>
+                <line character="Douglas">Well done, private! You’ve graduated flight school!</line>
+                <line character="Wagner">Wait, that was it?</line>
+                <line character="Douglas">Yep!</line>
+                <line character="Douglas">If you need to review the controls, there is a Help menu</line>
+                <line character="Douglas">Just hit ESC on a keyboard, or START on a controller</line>
+                <line character="Wagner">Nice.</line>
+                <line character="Wagner">So, when do I start? Do I get to fight in some kind of space wars?</line>
+                <line character="Douglas">HA</line>
+                <line character="Douglas">Oh boy</line>
+                <line character="Douglas">We haven’t had a space war in years, private</line>
+                <line character="Douglas">Not since those “angels” came to Earth and threatened to take all the kittens and puppies…</line>
+                <line character="Douglas">We lost a lot of good bananas that day…</line>
+                <line character="Wagner">Aw man…</line>
+                <line character="Wagner">I hate everything you just said…</line>
+                <line character="Control">WARNING! WARNING! EARTH IS UNDER ATTACK!</line>
+                <line character="Douglas">Disregard everything I just said!</line>
+                <line character="Douglas">You’re going to the front lines, private!</line>
+                <line character="Wagner">Woohoo!</line>
+                <line character="Douglas">And you’re going to be all alone!</line>
+                <line character="Wagner">Woo- wait what?</line>
+                <line character="Douglas">Well, we disbanded the fleet after the last space war…</line>
+                <line character="Douglas">In hindsight, that was probably a bad decision…</line>
+                <line character="Wagner">Surely you can’t be serious?</line>
+                <line character="Douglas">I am serious, private…</line>
+                <line character="Douglas">...</line>
+                <line character="Wagner">...</line>
+                <line character="Douglas">...</line>
+                <line character="Douglas">…and don’t call me Shirley…</line>
+                <line character="Wagner">...</line>
+                <line character="Douglas">Now GO!</line>
+                <line character="Douglas">The world is depending on YOU…</line>
+                <line character="Douglas">…randomly selected new recruit…</line>
+                <line character="Douglas">...</line>
+                <line character="Douglas">Oh boy…</line>
+            </dialogue>
+
         </stage>
 
     </level>
