@@ -385,8 +385,9 @@
                   entity_type="spaceship"
                   ship_name="enemy-three"/>
 
-            <stationary pos_x="300" pos_y="100" entity_type="spaceship" ship_name="enemy-four" rotation="180"/>
-            <stationary pos_x="900" pos_y="100" entity_type="spaceship" ship_name="enemy-four" rotation="180"/>
+            <stationary pos_x="300" pos_y="100" entity_type="spaceship" ship_name="enemy-two" rotation="135"/>
+            <stationary pos_x="900" pos_y="100" entity_type="spaceship" ship_name="enemy-two" rotation="225"/>
+            <stationary pos_x="600" pos_y="600" entity_type="spaceship" ship_name="enemy-four" rotation="0"/>
         </stage>
 
         <stage id="63">
