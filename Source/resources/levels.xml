@@ -3,9 +3,26 @@
 
         <stage id="11">
             <dialogue>
-                <line character="Mary Sue">
-                    Level 1 Stage 1
-                </line>
+                <line character="Douglas">Welcome to Space School, private!</line>
+                <line character="Douglas">This is a rare, once-in-a-lifetime opportunity to fight for your planet and your people! </line>
+                <line character="Douglas">My name is Captain Douglas</line>
+                <line character="Douglas">But you can call me Captain!</line>
+                <line character="Douglas">Do you understand?</line>
+                <line character="Wagner">YES SIR- I mean, MA’AM!</line>
+                <line character="Douglas">Good! Now, do you see the interface in front of you?</line>
+                <line character="Wagner">Yes, ma’am!</line>
+                <line character="Douglas">Unfortunately all our ships come with different setups</line>
+                <line character="Douglas">But I’m not going to ask you what setup you have</line>
+                <line character="Douglas">That would take waaaaaay too much effort</line>
+                <line character="Wagner">Oh... Okay...</line>
+                <line character="Douglas">First, you need to learn how to shoot</line>
+                <line character="Douglas">One can only progress through life by shooting things</line>
+                <line character="Wagner">That sounds perfectly reasonable</line>
+                <line character="Douglas">If you have a controller in front of you, use the A button</line>
+                <line character="Douglas">If you have a keyboard in front of you, use the SPACE key</line>
+                <line character="Douglas">Is that clear?</line>
+                <line character="Wagner">Yes, ma’am!</line>
+                <line character="Douglas">Show me what you got, private!</line>
             </dialogue>
 
             <stationary pos_x="590" pos_y="200" entity_type="spaceship" ship_name="enemy-one" rotation="0"/>
@@ -16,6 +33,7 @@
                 <line character="Mary Sue">
                     Level 1 Stage 2
                 </line>
+
             </dialogue>
 
             <wave type="straight" start_x="0" start_y="0" end_x="1300" end_y="1300" num_ships="1"
@@ -385,8 +403,9 @@
                   entity_type="spaceship"
                   ship_name="enemy-three"/>
 
-            <stationary pos_x="300" pos_y="100" entity_type="spaceship" ship_name="enemy-four" rotation="180"/>
-            <stationary pos_x="900" pos_y="100" entity_type="spaceship" ship_name="enemy-four" rotation="180"/>
+            <stationary pos_x="300" pos_y="100" entity_type="spaceship" ship_name="enemy-two" rotation="135"/>
+            <stationary pos_x="900" pos_y="100" entity_type="spaceship" ship_name="enemy-two" rotation="225"/>
+            <stationary pos_x="600" pos_y="600" entity_type="spaceship" ship_name="enemy-four" rotation="0"/>
         </stage>
 
         <stage id="63">

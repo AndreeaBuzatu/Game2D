@@ -14,7 +14,7 @@ import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
  * The type Star spaceship pattern.
  */
 public class StarSpaceshipPattern extends Pattern {
-    private static final Time FIRING_GAP = Time.getSeconds(1);
+    private static final Time FIRING_GAP = Time.getSeconds(1.3f);
 
     private static final int NUM_BULLETS = 8;
 
@@ -95,7 +95,7 @@ public class StarSpaceshipPattern extends Pattern {
     }
 
     private void getAngle() {
-        angle += 20;
+        angle += 30;
 
         if (angle>=360) {
             angle -= 360;

@@ -19,19 +19,27 @@
                items="starPattern-item,speed-item" lives="2"
                firing-sound="enemy-one-shoot" hit-sound="enemy-death"/>
 
-    <spaceship name="boss-s1" animation="boss" speed="5" bullet="enemy-one" pattern="star-spaceship" score="50"
+    <spaceship name="boss-s1" animation="boss" speed="5" bullet="enemy-one-spawn" pattern="star-spaceship" score="50"
                items="" lives="50"
                firing-sound="boss-shoot" hit-sound="enemy-death"/>
 
-    <spaceship name="boss-s2" animation="boss" speed="5" bullet="enemy-three" pattern="star-spaceship" score="50"
+    <spaceship name="boss-s2" animation="boss" speed="5" bullet="enemy-two-spawn" pattern="star-spaceship" score="50"
                items="" lives="50"
                firing-sound="boss-shoot" hit-sound="enemy-death"/>
 
-    <spaceship name="boss-s3" animation="boss" speed="5" bullet="enemy-four" pattern="star-spaceship" score="100"
+    <spaceship name="boss-s3" animation="boss" speed="5" bullet="enemy-three-spawn" pattern="star-spaceship" score="100"
                items="" lives="50"
                firing-sound="boss-shoot" hit-sound="enemy-death"/>
 
-    <spaceship name="spawned-other" animation="player-ship" speed="5" bullet="sample" pattern="star-bullet" score="25"
-               items="other-item,test-item" lives="1"
+    <spaceship name="enemy-one-spawn" animation="alien-ship-1" speed="5" bullet="sample" pattern="" score="5"
+               items="health1effect-item,speed-item,degradinglivesbulleteffect-item" lives="1"
+               firing-sound="enemy-one-shoot" hit-sound="enemy-death"/>
+
+    <spaceship name="enemy-two-spawn" animation="alien-ship-2" speed="5" bullet="sample" pattern="straight-bullet" score="10"
+               items="health1effect-item,starPattern-item" lives="1"
+               firing-sound="enemy-one-shoot" hit-sound="enemy-death"/>
+
+    <spaceship name="enemy-three-spawn" animation="alien-ship-3" speed="5" bullet="sample" pattern="straight-bullet" score="15"
+               items="health2effect-item,freezebulleteffect-item,morningStarPattern-item" lives="2"
                firing-sound="enemy-one-shoot" hit-sound="enemy-death"/>
 </spaceships>

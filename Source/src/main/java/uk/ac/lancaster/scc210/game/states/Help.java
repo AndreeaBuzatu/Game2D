@@ -28,7 +28,10 @@ public class Help implements State, InputListener {
             "Q - rotate left  A -  move left\n\n" +
             "W - move forward D - move right\n\n" +
             "E - rotate right S - move backwards\n\n" +
-            "Space - shoot";
+            "Space - shoot\n\n\n" +
+            "Alternate rotation keys:\n\n" +
+            "LEFT arrow - rotate left\n\n" +
+            "RIGHT arrow - rotate right\n\n";
 
     private final int SUB_HEADER_FONT_SIZE = 50;
 

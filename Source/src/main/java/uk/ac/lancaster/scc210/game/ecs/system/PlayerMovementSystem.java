@@ -138,10 +138,10 @@ public class PlayerMovementSystem extends IterativeSystem {
             toRotate = (float) Math.atan2(yPosition, xPosition) > RotationComponent.MIN_ROTATION ? -rotationAmount : rotationAmount;
         }
 
-        if (Keyboard.isKeyPressed(Keyboard.Key.E) || ControllerButton.RIGHT_BUMPER.isPressed()) {
+        if (Keyboard.isKeyPressed(Keyboard.Key.E) || Keyboard.isKeyPressed(Keyboard.Key.RIGHT) || ControllerButton.RIGHT_BUMPER.isPressed()) {
             toRotate = rotationAmount;
 
-        } else if (Keyboard.isKeyPressed(Keyboard.Key.Q) || ControllerButton.LEFT_BUMPER.isPressed()) {
+        } else if (Keyboard.isKeyPressed(Keyboard.Key.Q) || Keyboard.isKeyPressed(Keyboard.Key.LEFT) || ControllerButton.LEFT_BUMPER.isPressed()) {
             toRotate = -rotationAmount;
         }
 
