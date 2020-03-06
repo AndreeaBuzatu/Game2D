@@ -32,7 +32,7 @@
                firing-sound="boss-shoot" hit-sound="enemy-death"/>
 
     <spaceship name="enemy-one-spawn" animation="alien-ship-1" speed="5" bullet="sample" pattern="" score="5"
-               items="health1effect-item,speed-item" lives="1"
+               items="health1effect-item,speed-item,degradinglivesbulleteffect-item" lives="1"
                firing-sound="enemy-one-shoot" hit-sound="enemy-death"/>
 
     <spaceship name="enemy-two-spawn" animation="alien-ship-2" speed="5" bullet="sample" pattern="straight-bullet" score="10"
@@ -40,6 +40,6 @@
                firing-sound="enemy-one-shoot" hit-sound="enemy-death"/>
 
     <spaceship name="enemy-three-spawn" animation="alien-ship-3" speed="5" bullet="sample" pattern="straight-bullet" score="15"
-               items="health2effect-item,freezebulleteffect-item" lives="2"
+               items="health2effect-item,freezebulleteffect-item,morningStarPattern-item" lives="2"
                firing-sound="enemy-one-shoot" hit-sound="enemy-death"/>
 </spaceships>
