@@ -29,7 +29,7 @@ public class ItemPrototypeManager extends ContentManager<ItemPrototype> {
     public ItemPrototypeManager(TextureManager textureManager, BulletPool bulletPool) {
         super(new ItemPrototype(textureManager.get(""), new MissingItemEffect()));
 
-        put("speed-item", new ItemPrototype(textureManager.get("speed_spritesheet_final.png:last"), new SpeedIncreaseEffect()));
+        put("speed-item", new ItemPrototype(textureManager.get("speed_item.png:last"), new SpeedIncreaseEffect()));
 
         put("starPattern-item", new ItemPrototype(textureManager.get("special_bullets.png:default"), new StarPatternEffect(bulletPool)));
 
