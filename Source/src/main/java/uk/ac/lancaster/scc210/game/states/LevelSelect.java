@@ -1,7 +1,9 @@
 package uk.ac.lancaster.scc210.game.states;
 
 import org.jsfml.audio.Music;
-import org.jsfml.graphics.*;
+import org.jsfml.graphics.FloatRect;
+import org.jsfml.graphics.RenderTarget;
+import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
@@ -29,6 +31,8 @@ import java.util.List;
  * The type Level select.
  */
 public class LevelSelect implements State, InputListener {
+    private final int NUM_ROWS = 4;
+
     private StateBasedGame game;
 
     private FontManager fontManager;
@@ -111,8 +115,8 @@ public class LevelSelect implements State, InputListener {
         InterfaceList interfaceList = null;
 
         for (int i = 0; i < levels.size(); i++) {
-            if (i % 3 == 0) {
-                // i % 3 == 0, will == true when i = 0, so in that instance don't add a new column (as one hasn't been created yet)
+            if (i % NUM_ROWS == 0) {
+                // i % NUM_ROWS == 0, will == true when i = 0, so in that instance don't add a new column (as one hasn't been created yet)
                 if (i > 0) {
                     interfaceGrid.addColumn(interfaceList);
                 }
@@ -130,7 +134,7 @@ public class LevelSelect implements State, InputListener {
             }));
 
             if (i > currentUnlocked) {
-                interfaceList.getOptions().get(i % 3).setEnabled(false);
+                interfaceList.getOptions().get(i % NUM_ROWS).setEnabled(false);
             }
         }
 
