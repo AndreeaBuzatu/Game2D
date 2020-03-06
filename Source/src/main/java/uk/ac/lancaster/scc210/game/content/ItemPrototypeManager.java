@@ -45,7 +45,7 @@ public class ItemPrototypeManager extends ContentManager<ItemPrototype> {
 
         put("degradinglivesbulleteffect-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new DegradingLivesBulletEffectItem()));
 
-        put("health1effect-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new Health1Effect()));
+        put("health1effect-item", new ItemPrototype(textureManager.get("health_item.png:health"), new Health1Effect()));
 
         put("health2effect-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new Health2Effect()));
     }

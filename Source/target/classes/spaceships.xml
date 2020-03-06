@@ -27,7 +27,7 @@
                items="" lives="50"
                firing-sound="boss-shoot" hit-sound="enemy-death"/>
 
-    <spaceship name="boss-s3" animation="boss" speed="5" bullet="enemy-one,enemy-three" pattern="star-spaceship" score="100"
+    <spaceship name="boss-s3" animation="boss" speed="5" bullet="enemy-four" pattern="star-spaceship" score="100"
                items="" lives="50"
                firing-sound="boss-shoot" hit-sound="enemy-death"/>
 
