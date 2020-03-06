@@ -20,15 +20,15 @@
                firing-sound="enemy-one-shoot" hit-sound="enemy-death"/>
 
     <spaceship name="boss-s1" animation="boss" speed="5" bullet="enemy-one" pattern="star-spaceship" score="50"
-               items="" lives="10"
+               items="" lives="50"
                firing-sound="boss-shoot" hit-sound="enemy-death"/>
 
     <spaceship name="boss-s2" animation="boss" speed="5" bullet="enemy-three" pattern="star-spaceship" score="50"
-               items="" lives="10"
+               items="" lives="50"
                firing-sound="boss-shoot" hit-sound="enemy-death"/>
 
-    <spaceship name="boss-s3" animation="boss" speed="5" bullet="enemy-four" pattern="star-spaceship" score="50"
-               items="" lives="10"
+    <spaceship name="boss-s3" animation="boss" speed="5" bullet="enemy-four" pattern="star-spaceship" score="100"
+               items="" lives="50"
                firing-sound="boss-shoot" hit-sound="enemy-death"/>
 
     <spaceship name="spawned-other" animation="player-ship" speed="5" bullet="sample" pattern="star-bullet" score="25"

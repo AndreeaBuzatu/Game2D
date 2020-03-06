@@ -7,7 +7,7 @@
                     Level 1 Stage 1
                 </line>
             </dialogue>
-            <stationary pos_x="500" pos_y="500" entity_type="spaceship" ship_name="enemy-one"/>
+            <stationary pos_x="550" pos_y="500" entity_type="spaceship" ship_name="enemy-one"/>
         </stage>
 
         <stage id="12">

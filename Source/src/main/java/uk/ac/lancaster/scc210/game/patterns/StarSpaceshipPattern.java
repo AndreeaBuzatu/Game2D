@@ -39,6 +39,9 @@ public class StarSpaceshipPattern extends Pattern {
 
     @Override
     public Entity[] create() {
+
+        getAngle();
+
         for (int i = 0; i < NUM_BULLETS; i++) {
             if (i == 0) {
                 // It doesn't matter if we waste one allocation that's okay...
@@ -64,7 +67,7 @@ public class StarSpaceshipPattern extends Pattern {
 
             firedSpaceShipSprite.setPosition(firedShipPos);
 
-            firedSpaceShipSprite.setRotation(spaceShipSprite.getRotation() + (i - 1) * (360f / NUM_BULLETS));
+            firedSpaceShipSprite.setRotation(spaceShipSprite.getRotation() + (i - 1) * (360f / NUM_BULLETS) - angle);
         }
 
         return toFire;
@@ -91,17 +94,11 @@ public class StarSpaceshipPattern extends Pattern {
         }
     }
 
-    private Vector2f coolThing(float height, float width) {
-        angle += 10;
+    private void getAngle() {
+        angle += 20;
 
-        if (angle>=360){
+        if (angle>=360) {
             angle -= 360;
         }
-
-        float hyp = (float) Math.sqrt(Math.pow(height, 2) + Math.pow(width, 2));
-        float x = (float) (height * Math.cos(angle));
-        float y = (float) (height * Math.sin(angle));
-
-        return new Vector2f(x+width, y+height);
     }
 }
