@@ -37,7 +37,7 @@ public class ItemPrototypeManager extends ContentManager<ItemPrototype> {
 
         put("morningStarPattern-item", new ItemPrototype(textureManager.get("spritesheet.png:item"), new MorningStarPatternEffect(bulletPool)));
 
-        put("freezebulleteffect-item", new ItemPrototype(textureManager.get("spritesheet.png:other"), new FreezeBulletEffectItem()));
+        put("freezebulleteffect-item", new ItemPrototype(textureManager.get("freeze_item.png:freeze"), new FreezeBulletEffectItem()));
 
         put("damage1effect-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new Damage1EffectItem()));
 
@@ -47,6 +47,6 @@ public class ItemPrototypeManager extends ContentManager<ItemPrototype> {
 
         put("health1effect-item", new ItemPrototype(textureManager.get("health_item.png:health"), new Health1Effect()));
 
-        put("health2effect-item", new ItemPrototype(textureManager.get("spritesheet.png:example"), new Health2Effect()));
+        put("health2effect-item", new ItemPrototype(textureManager.get("health_item.png:health"), new Health2Effect()));
     }
 }

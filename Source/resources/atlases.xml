@@ -40,4 +40,7 @@
     <atlas src="health_item.png" texture_width="64" texture_height="64">
         <texture name="health" row="0" column="0"/>
     </atlas>
+    <atlas src="freeze_item.png" texture_width="64" texture_height="64">
+        <texture name="freeze" row="0" column="0"/>
+    </atlas>
 </atlases>
