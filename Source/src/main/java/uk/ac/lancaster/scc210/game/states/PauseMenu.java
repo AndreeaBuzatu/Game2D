@@ -51,6 +51,8 @@ public class PauseMenu implements State {
 
         interfaceList.addListOption("Resume", game::popState);
 
+        interfaceList.addListOption("Help", (() -> game.pushState(stateManager.get("help"))));
+
         interfaceList.addListOption("Main Menu", () -> {
             game.popState();
 
@@ -58,8 +60,6 @@ public class PauseMenu implements State {
 
             music.pause();
         });
-
-        interfaceList.addListOption("Help", (() -> game.pushState(stateManager.get("help"))));
 
         interfaceList.setEnabled(true);
     }
