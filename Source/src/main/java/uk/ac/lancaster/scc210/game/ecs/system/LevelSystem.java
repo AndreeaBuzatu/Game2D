@@ -80,7 +80,10 @@ public class LevelSystem extends IterativeSystem {
         if (currentStage != null && currentStage.complete()) {
             currentStage = level.changeStage();
 
-            dialogueBox.setDialogue(currentStage.getLines());
+            // Only show dialogue if there's another stage!
+            if (currentStage != null) {
+                dialogueBox.setDialogue(currentStage.getLines());
+            }
 
         } else {
             if (currentStage != null) {
