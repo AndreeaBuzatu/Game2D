@@ -200,10 +200,19 @@
 
         <stage id="31">
             <dialogue>
-                <line character="Mary Sue">
-                    Level 3 Stage 1
-                </line>
+                <line character="Douglas">Nice work pilot!</line>
+                <line character="Wagner">Thanks…</line>
+                <line character="Wagner">Captain, the aliens mentioned something concerning…</line>
+                <line character="Wagner">They said we’d taken all of their “Voda”</line>
+                <line character="Wagner">Thanks…</line>
+                <line character="Wagner">Apparently Mars was rich with the stuff…</line>
+                <line character="Douglas">Uh oh…</line>
+                <line character="BeepBoop">Beep Boop.</line>
+                <line character="Wagner">An asteroid field up ahead? Thanks for the warning BeepBoop!</line>
+                <line character="BeepBoop">Beep Boop.</line>
+                <line character="Alien">SURRENDER!</line>
             </dialogue>
+            
             <wave type="straight" start_x="600" start_y="0" end_x="600" end_y="1280" num_ships="5"
                   entity_type="spaceship"
                   ship_name="enemy-one"/>
@@ -233,10 +242,17 @@
 
         <stage id="32">
             <dialogue>
-                <line character="Mary Sue">
-                    Level 3 Stage 2
-                </line>
+                <line character="Douglas">Private Hughes are you there?</line>
+                <line character="Hughes">Yeah...</line>
+                <line character="Hughes">I wish I wasn’t...</line>
+                <line character="Douglas">Hughes this is important!</line>
+                <line character="Douglas">I’m gonna need you to get to Mars and warn the colony.</line>
+                <line character="Hughes">But I’m scared...</line>
+                <line character="Douglas">Hughes! Pull yourself together man!</line>
+                <line character="Wagner">Captain, can you hurry it up?</line>
+                <line character="Wagner">I’ve got kills, but they’re multiplying...</line>
             </dialogue>
+
             <wave type="straight" start_x="500" start_y="0" end_x="500" end_y="1280" num_ships="5"
                   entity_type="spaceship"
                   ship_name="enemy-one"/>
@@ -275,10 +291,17 @@
 
         <stage id="33">
             <dialogue>
-                <line character="Mary Sue">
-                    Level 3 Stage 3
-                </line>
+                 <line character="Douglas">Wagner, report!</line>
+                <line character="Wagner">I’m good. All hostiles taken care of.</line>
+                <line character="Douglas">Gosh darn it you’re good.</line>
+                <line character="Wagner">Captain!</line>
+                <line character="Douglas">My apologies private, how unprofessional of me.</line>
+                <line character="Douglas">I shouldn’t use Admiral Gosh’s name in vain...</line>
+                <line character="Wagner">What do they want captain?</line>
+                <line character="Douglas">That is a great question…</line>
+                <line character="Douglas">One I will answer in unnecessarily specific detail right about now...</line>
             </dialogue>
+            
             <wave type="straight" start_x="500" start_y="0" end_x="500" end_y="1280" num_ships="5"
                   entity_type="spaceship"
                   ship_name="enemy-one"/>
