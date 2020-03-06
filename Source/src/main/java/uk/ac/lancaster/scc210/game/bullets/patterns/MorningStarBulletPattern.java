@@ -6,6 +6,7 @@ import org.jsfml.system.Vector2f;
 import uk.ac.lancaster.scc210.engine.ecs.Entity;
 import uk.ac.lancaster.scc210.engine.pooling.Pool;
 import uk.ac.lancaster.scc210.game.ecs.component.BulletComponent;
+import uk.ac.lancaster.scc210.game.ecs.component.FiredComponent;
 import uk.ac.lancaster.scc210.game.ecs.component.SpriteComponent;
 
 /**
@@ -46,13 +47,15 @@ public class MorningStarBulletPattern extends BulletPattern {
 
             toFire[i].addComponent(new BulletComponent(spaceShip));
 
+            toFire[i].addComponent(new FiredComponent());
+
             Sprite bulletSprite = ((SpriteComponent) toFire[i].findComponent(SpriteComponent.class)).getSprite();
 
             Vector2f bulletPos = spaceShipSprite.getTransform().transformPoint(coords[i]);
 
             bulletSprite.setPosition(bulletPos);
 
-             bulletSprite.setRotation(spaceShipSprite.getRotation());
+            bulletSprite.setRotation(spaceShipSprite.getRotation());
         }
 
         return toFire;

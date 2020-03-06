@@ -31,13 +31,19 @@
     <atlas src="player-ship.png" texture_width="64" texture_height="64">
         <texture name="player-ship" row="0" column="0" />
     </atlas>
-    <atlas src="Asteroid_128.png" texture_width="128" texture_height="128">
-        <texture name="asteroid" row="0" column="0"/>
+    <atlas src="asteroid.png" texture_width="128" texture_height="128">
+        <texture name="default" row="0" column="0"/>
     </atlas>
-    <atlas src="speed_spritesheet_final.png" texture_width="64" texture_height="64">
+    <atlas src="speed_item.png" texture_width="64" texture_height="64">
         <texture name="last" row="0" column="6"/>
     </atlas>
     <atlas src="health_item.png" texture_width="64" texture_height="64">
         <texture name="health" row="0" column="0"/>
+    </atlas>
+    <atlas src="freeze_item.png" texture_width="64" texture_height="64">
+        <texture name="freeze" row="0" column="0"/>
+    </atlas>
+    <atlas src="special_bullets.png" texture_width="64" texture_height="64">
+        <texture name="default" row="0" column="0"/>
     </atlas>
 </atlases>

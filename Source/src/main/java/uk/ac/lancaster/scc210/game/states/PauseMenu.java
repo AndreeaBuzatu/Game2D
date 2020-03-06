@@ -11,6 +11,7 @@ import uk.ac.lancaster.scc210.engine.content.FontManager;
 import uk.ac.lancaster.scc210.engine.content.MusicManager;
 import uk.ac.lancaster.scc210.engine.gui.InterfaceList;
 import uk.ac.lancaster.scc210.engine.states.State;
+import uk.ac.lancaster.scc210.game.content.StateManager;
 import uk.ac.lancaster.scc210.game.gui.MenuHeader;
 
 /**
@@ -32,6 +33,8 @@ public class PauseMenu implements State {
      */
     @Override
     public void setup(StateBasedGame game) {
+        StateManager stateManager = (StateManager) game.getServiceProvider().get(StateManager.class);
+
         FontManager fontManager = (FontManager) game.getServiceProvider().get(FontManager.class);
 
         MusicManager musicManager = (MusicManager) game.getServiceProvider().get(MusicManager.class);
@@ -48,6 +51,8 @@ public class PauseMenu implements State {
 
         interfaceList.addListOption("Resume", game::popState);
 
+        interfaceList.addListOption("Help", (() -> game.pushState(stateManager.get("help"))));
+
         interfaceList.addListOption("Main Menu", () -> {
             game.popState();
 
@@ -55,8 +60,6 @@ public class PauseMenu implements State {
 
             music.pause();
         });
-
-        //interfaceList.addListOption("Help", () -> { game.pushState(stateManager.get("help")); });
 
         interfaceList.setEnabled(true);
     }
