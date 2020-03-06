@@ -412,7 +412,7 @@
                 <line character="Wagner">Let me know when we’re ready to jump, okay?</line>
                 <line character="BeepBoop">Beep Boop.</line>
             </dialogue>
-            
+
             <wave type="sine" start_x="0" start_y="0" end_x="1280" end_y="1280" num_ships="5"
                   entity_type="spaceship"
                   ship_name="enemy-one"/>
@@ -432,10 +432,19 @@
 
         <stage id="51">
             <dialogue>
-                <line character="Mary Sue">
-                    Level 5 Stage 1
-                </line>
+                <line character="Wagner">BeepBoop, are you picking up any signals?</line>
+                <line character="BeepBoop">Beep Boop.</line>
+                <line character="Wagner">Excellent! That’s Hughes’ ship!</line>
+                <line character="Wagner">Can we send a transmission?</line>
+                <line character="BeepBoop">Beep Boop.</line>
+                <line character="Hughes">*static*</line>
+                <line character="Wagner">Hughes, can you hear me?</line>
+                <line character="Hughes">*static* It- *static*</line>
+                <line character="Wagner">Hughes?</line>
+                <line character="Hughes">*static* It’s a trap!</line>
+                <line character="Wagner">Tell me something I don’t know...</line>
             </dialogue>
+
             <wave type="sine" start_x="50" start_y="50" end_x="2560" end_y="50" num_ships="10"
                   entity_type="spaceship"
                   ship_name="enemy-three"/>
@@ -451,10 +460,31 @@
 
         <stage id="52">
             <dialogue>
-                <line character="Mary Sue">
-                    Level 5 Stage 2
-                </line>
+                <line character="Wagner">There’s too many of them to fight at once…</line>
+                <line character="Wagner">Hmmmm...</line>
+                <line character="Wagner">Hughes, send me your coordinates</line>
+                <line character="Wagner">If they’re picking up and blocking our comms, we can trick them!</line>
+                <line character="Hughes">Can do…</line>
+                <line character="Hughes">…</line>
+                <line character="Hughes">Wait…</line>
+                <line character="Hughes">Doesn’t that mean they’ll come for me too?!</line>
+                <line character="Wagner">Yep! I’m setting a trap!</line>
+                <line character="Wagner">And I’m using YOU as live bait!</line>
+                <line character="Hughes">Nuh-uh! No way!</line>
+                <line character="Wagner">Will you do it for a Hughesy snack?</line>
+                <line character="Hughes">I don’t know what you’re talking about…</line>
+                <line character="Hughes">…but yes…</line>
+                <line character="Hughes">I will do ANYTHING for food…</line>
+                <line character="Wagner">Good man, get on it!</line>
+                <line character="Hughes">I need to find an available frequency</line>
+                <line character="Hughes">Because that’s probably how this works</line>
+                <line character="Hughes">That’s how they do it in video games anyway…</line>
+                <line character="Hughes">…</line>
+                <line character="Hughes">Done! It worked!</line>
+                <line character="Hughes">…</line>
+                <line character="Hughes">Oh no! It worked!</line>
             </dialogue>
+            
             <wave type="straight" start_x="600" start_y="800" end_x="600" end_y="-800" num_ships="10"
                   entity_type="spaceship"
                   ship_name="enemy-one"/>
@@ -478,8 +508,24 @@
         <stage id="53">
             <dialogue>
                 <line character="Mary Sue">
-                    Level 5 Stage 3
+                    W: How are we doing Hughes?
+                    H: I’m still alive…
+                    H: But I’m gonna need some new pants...
+                    W: Alright, I think these are the last few
+                    W: Once we’ve destroyed their ships we should be clear to receive
+                    H: Please be quick!
+                    H: I’m scared…
+                    W: Stop panicking Hughes! We’re on our way…
                 </line>
+
+                <line character="Wagner">How are we doing Hughes?</line>
+                <line character="Hughes">I’m still alive…</line>
+                <line character="Hughes">But I’m gonna need some new pants...</line>
+                <line character="Wagner">Alright, I think these are the last few</line>
+                <line character="Wagner">Once we’ve destroyed their ships we should be clear to receive</line>
+                <line character="Hughes">Please be quick!</line>
+                <line character="Hughes">I’m scared…</line>
+                <line character="Wagner">Stop panicking Hughes! We’re on our way…</line>
             </dialogue>
             <wave type="sine" start_x="0" start_y="300" end_x="2560" end_y="300" num_ships="10"
                   entity_type="spaceship"
